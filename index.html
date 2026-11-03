@@ -292,7 +292,7 @@ details summary{color:var(--text2)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 03/11 15h25</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 03/11 15h44</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -484,20 +484,23 @@ const BG=v=>hiddenMode?'<span class="badge pos">***</span>':'<span class="badge 
 const PC=v=>hiddenMode?'<td>***</td>':(v!=null?'<td class="'+(v>=0?'cg':'cr')+'">'+(v>=0?'+':'')+v.toFixed(2)+'%</td>':'<td style="color:var(--muted)">—</td>');
 const VC=v=>hiddenMode?'<span>***</span>':((!v&&v!==0)?'<span style="color:var(--muted)">—</span>':'<span class="vc '+(v>=0?'cg':'cr')+'">'+(v>=0?'+':'')+v.toFixed(2)+'%</span>');
 
-function cAm(e,tx,d,diff){if(!e||!d)return{m:0,t:[]};const r=tx/100/12;const diffMois=diff||0;let rest=e;const t=[];
-/* Phase différé: on ne paye que les intérêts */
-for(let i=1;i<=diffMois;i++){const int=rest*r;t.push({n:i,m:Math.round(int*100)/100,i:Math.round(int*100)/100,c:0,r:Math.round(rest*100)/100,diff:true})}
+function cAm(e,tx,d,diff,debloque){if(!e||!d)return{m:0,t:[]};const r=tx/100/12;const diffMois=diff||0;let rest=e;const t=[];
+/* Phase différé : on ne paye que les intérêts, et seulement sur le capital réellement
+   débloqué. Sur un achat avec travaux, la banque ne verse les fonds que par tranches :
+   calculer les intérêts sur la totalité empruntée gonflerait artificiellement la charge. */
+const baseInt=(debloque&&debloque>0&&debloque<e)?debloque:e;
+for(let i=1;i<=diffMois;i++){const int=baseInt*r;t.push({n:i,m:Math.round(int*100)/100,i:Math.round(int*100)/100,c:0,r:Math.round(rest*100)/100,diff:true,base:baseInt})}
 /* Phase amortissement normal */
 const dAmort=d-diffMois;let m;if(r===0)m=e/Math.max(1,dAmort);else m=e*r*Math.pow(1+r,dAmort)/(Math.pow(1+r,dAmort)-1);
 for(let i=diffMois+1;i<=d&&rest>0;i++){const int=rest*r;const cap=Math.min(m-int,rest);rest=Math.max(0,rest-cap);t.push({n:i,m:Math.round(m*100)/100,i:Math.round(int*100)/100,c:Math.round(cap*100)/100,r:Math.round(rest*100)/100})}
-return{m:Math.round(m*100)/100,mDiff:diffMois>0?Math.round(e*r*100)/100:0,t}}
+return{m:Math.round(m*100)/100,mDiff:diffMois>0?Math.round(baseInt*r*100)/100:0,t,baseInt}}
 function moisEcoules(dateDebut){if(!dateDebut)return 0;const parts=dateDebut.split('-');if(parts.length!==2)return 0;const y=parseInt(parts[0]),m=parseInt(parts[1]);const now=new Date();const diff=(now.getFullYear()-y)*12+(now.getMonth()+1-m);return Math.max(0,diff)}
 /* Où en est le remboursement d'un prêt, et ce que l'échéance du mois rembourse vraiment.
    La mensualité se partage entre intérêts (perdus) et capital (qui enrichit) : c'est cette
    part de capital qui fait grandir le patrimoine chaque mois. */
 function avancePret(cr){
   if(!cr||!cr.emprunte)return null;
-  const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0);
+  const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0,cr.debloque);
   if(!am.t.length)return null;
   const me=moisEcoules(cr.dateDebut);
   const idx=Math.max(0,Math.min(me,am.t.length)-1);
@@ -1308,7 +1311,7 @@ function fiscBien(b,mensCred){
   let interetsAn=0;
   const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
   if(cr){
-    const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0);
+    const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0,cr.debloque);
     const me=moisEcoules(cr.dateDebut);
     if(me>0&&am.t.length)for(let k=Math.max(0,me-12);k<Math.min(me,am.t.length);k++)interetsAn+=am.t[k].i;
   }
@@ -2794,7 +2797,7 @@ function R(dc){
 try{
 /* Mettre à jour le restant dû de chaque dette AVANT les calculs */
 S.dettes.forEach(d=>{
-  const am=cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0);
+  const am=cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0,d.debloque);
   const me=moisEcoules(d.dateDebut);
   if(me>0&&am.t.length>0){const idx=Math.min(me,am.t.length)-1;d.restant=am.t[idx].r}
   else{d.restant=d.emprunte}
@@ -2830,7 +2833,7 @@ const alertes=[];
   const debut=new Date(parseInt(parts[0]),parseInt(parts[1])-1,1);
   const jours=Math.ceil((debut-new Date())/(1000*60*60*24));
   if(jours>0&&jours<=60){
-    const am3=cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0);
+    const am3=cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0,d.debloque);
     const mens=d.differe>0?(am3.mDiff||0):am3.m;
     alertes.push({icon:'§',txt:'Le prêt <b>'+d.nom+'</b> démarre dans '+jours+' jours ('+F2(mens)+'/mois'+(d.differe>0?' en différé':'')+')',color:'var(--muted)'});
   }
@@ -3308,7 +3311,7 @@ const imBrut100=S.immo.reduce((a,x)=>a+x.valeur,0);/* Valeur totale des biens (i
 /* Mensualité réellement payée aujourd'hui pour une dette */
 const mensDette=d=>{
   if(!d)return 0;
-  const am=cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0);
+  const am=cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0,d.debloque);
   if(!d.dateDebut)return Math.abs(am.m);/* pas de date = prêt considéré en cours */
   const me=moisEcoules(d.dateDebut);
   if(me<=0)return 0;/* démarre plus tard */
@@ -3345,22 +3348,23 @@ const rdtBrutMoy=investTot>0?(loyerTotal*12/investTot*100):0;
 let netAnnuel=0;
 immoLoc.forEach(b=>{
   const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
-  let m=0;if(cr){const me=moisEcoules(cr.dateDebut);if(me>0){const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0);m=Math.abs(me<=(cr.differe||0)?(am.mDiff||0):am.m)}}
+  let m=0;if(cr){const me=moisEcoules(cr.dateDebut);if(me>0){const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0,cr.debloque);m=Math.abs(me<=(cr.differe||0)?(am.mDiff||0):am.m)}}
   const f=fiscBien(b,m);netAnnuel+=f.loyerAn-f.chargesAn-f.impot;
 });
 const rdtNetMoy=investTot>0?(netAnnuel/investTot*100):0;
 
 /* Ce que vos échéances remboursent réellement chaque mois, tous biens locatifs confondus */
 const capTot=(function(){
-  let emprunte=0,restant=0,capMois=0,intMois=0,cap12=0;
+  let emprunte=0,restant=0,capMois=0,intMois=0,cap12=0,enDiffere=false;
   S.immo.filter(b=>!estRP(b)).forEach(b=>{
     const c=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
     const a=avancePret(c);
     if(!a)return;
     emprunte+=a.emprunte;restant+=a.restant;capMois+=a.capMois;intMois+=a.intMois;cap12+=a.cap12;
+    if(a.differe)enDiffere=true;
   });
   const rembourse=Math.max(0,emprunte-restant);
-  return {emprunte,restant,rembourse,capMois,intMois,cap12,
+  return {emprunte,restant,rembourse,capMois,intMois,cap12,enDiffere,
     pctG:emprunte>0?Math.min(100,rembourse/emprunte*100):0};
 })();
 
@@ -3372,7 +3376,8 @@ document.getElementById('ik').innerHTML=
 +'<div class="kpi"><div class="kl">Rendement net moyen</div><div class="kv" style="color:var(--accent)">'+rdtNetMoy.toFixed(1)+' %</div><div class="ks">net d\'impôts</div></div>'
 +'<div class="kpi"><div class="kl">Plus-value latente</div><div class="kv" style="color:'+(pvLatente>=0?'var(--green)':'var(--red)')+'">'+(pvLatente>=0?'+':'')+F(Math.round(pvLatente))+'</div><div class="ks">valeur moins investi</div></div>'
 +'<div class="kpi"><div class="kl">Capital restant dû</div><div class="kv" style="color:var(--red)">'+F(Math.round(dettesLoc))+'</div>'+(capTot.emprunte>0?'<div class="ks">'+capTot.pctG.toFixed(1)+' % déjà remboursé</div>':'')+'</div>'
-+(capTot.capMois>0?'<div class="kpi"><div class="kl">Capital remboursé / mois</div><div class="kv" style="color:var(--green)">'+F2(capTot.capMois)+'</div><div class="ks">'+F2(capTot.intMois)+' d\'intérêts à côté</div></div>':'');
++(capTot.emprunte>0?'<div class="kpi"><div class="kl">Capital remboursé / mois</div><div class="kv" style="color:'+(capTot.capMois>0?'var(--green)':'var(--muted)')+'">'+F2(capTot.capMois)+'</div><div class="ks">'+
+   (capTot.capMois>0?F2(capTot.intMois)+' d\'intérêts à côté':(capTot.enDiffere?'prêts en différé : '+F2(capTot.intMois)+' d\'intérêts seuls':F2(capTot.intMois)+' d\'intérêts'))+'</div></div>':'');
 
 /* Graphique immo net */
 document.getElementById('immoPs').innerHTML=[{l:'6M',m:6},{l:'1A',m:12},{l:'Année',m:-1},{l:'Tout',m:999}].map(x=>'<button class="pb '+(immoPr===x.m?'on':'')+'" onclick="sIP('+x.m+')">'+x.l+'</button>').join('');
@@ -3454,7 +3459,7 @@ document.getElementById('immoRecap').innerHTML=rcH;
   const lignes=[];
   S.immo.filter(b=>!estRP(b)).forEach(b=>{
     const c=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
-    const mC=c?cAm(c.emprunte,c.taux||0,c.dureeMois||0,c.differe||0).m:0;
+    const mC=c?cAm(c.emprunte,c.taux||0,c.dureeMois||0,c.differe||0,c.debloque).m:0;
     const ch=(b.charges||0)+(b.taxeFonciere||0)/12+(b.assurance||0)/12+(b.gestion||0);
     const cfB=loyerBien(b)-ch-mC;
     const e=enrichiBien(b,c,cfB);
@@ -3500,7 +3505,7 @@ else{
     const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
     let mens=0;
     if(cr){const me=moisEcoules(cr.dateDebut);
-      if(me>0){const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0);mens=Math.abs(me<=(cr.differe||0)?(am.mDiff||0):am.m)}}
+      if(me>0){const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0,cr.debloque);mens=Math.abs(me<=(cr.differe||0)?(am.mDiff||0):am.m)}}
     const f=fiscBien(b,mens);
     /* Année d'autofinancement : le cash devient positif quand le crédit s'arrête */
     let anAuto='—';
@@ -3576,7 +3581,7 @@ if(sciBiens.length>0){
 /* Fiches détaillées par bien */
 let imH='';S.immo.forEach(b=>{
   const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
-  const mensC=cr?cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0).m:0;
+  const mensC=cr?cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0,cr.debloque).m:0;
   const chM=(b.charges||0)+(b.taxeFonciere||0)/12+(b.assurance||0)/12+(b.gestion||0);
   const cf=(b.loyer||0)-chM-mensC;
   const rb=b.valeur>0?((b.loyer||0)*12/b.valeur*100).toFixed(1):0;
@@ -3594,17 +3599,30 @@ let imH='';S.immo.forEach(b=>{
   const av=avancePret(cr);
   if(av)imH+=jaugePret(av);
 
-  /* 2. Les trois chiffres qui comptent */
+  /* 2. Les chiffres qui comptent. Une résidence principale ne se juge pas à son
+        rendement : on n'affiche que ce qui a du sens pour elle. */
+  const rp=estRP(b);
   imH+='<div class="mkpi">';
-  imH+='<div><div class="ml">Cashflow net</div><div class="mv" style="color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+(cf>=0?'+':'')+F(Math.round(cf))+'</div><div class="ms">par mois</div></div>';
-  imH+='<div><div class="ml">Rendement net</div><div class="mv" style="color:var(--accent)">'+rn+' %</div><div class="ms">brut '+rb+' %</div></div>';
-  if(av)imH+='<div><div class="ml">Capital remboursé</div><div class="mv" style="color:var(--green)">'+F(Math.round(av.capMois))+'</div><div class="ms">par mois</div></div>';
-  else imH+='<div><div class="ml">Ta part</div><div class="mv" style="color:var(--orange)">'+F(Math.round(b.valeur*((b.partsPct||100)/100)))+'</div><div class="ms">'+(b.partsPct||100)+' % du bien</div></div>';
+  if(rp){
+    imH+='<div><div class="ml">Valeur du bien</div><div class="mv" style="color:#e8a33d">'+F(nb(b.valeur))+'</div><div class="ms">'+(b.partsPct||100)+' % à vous</div></div>';
+    if(av){
+      imH+='<div><div class="ml">Capital remboursé</div><div class="mv" style="color:var(--green)">'+F(Math.round(av.capMois))+'</div><div class="ms">par mois</div></div>';
+      imH+='<div><div class="ml">Reste à rembourser</div><div class="mv" style="color:var(--red)">'+F(av.restant)+'</div><div class="ms">'+av.reste+' échéances</div></div>';
+    }else{
+      imH+='<div><div class="ml">Prix d\'achat</div><div class="mv">'+F(nb(b.prixAchat))+'</div><div class="ms">hors travaux</div></div>';
+      imH+='<div><div class="ml">Travaux</div><div class="mv">'+F(totalTravaux(b))+'</div><div class="ms">cumulés</div></div>';
+    }
+  }else{
+    imH+='<div><div class="ml">Cashflow net</div><div class="mv" style="color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+(cf>=0?'+':'')+F(Math.round(cf))+'</div><div class="ms">par mois</div></div>';
+    imH+='<div><div class="ml">Rendement net</div><div class="mv" style="color:var(--accent)">'+rn+' %</div><div class="ms">brut '+rb+' %</div></div>';
+    if(av)imH+='<div><div class="ml">Capital remboursé</div><div class="mv" style="color:var(--green)">'+F(Math.round(av.capMois))+'</div><div class="ms">par mois</div></div>';
+    else imH+='<div><div class="ml">Ta part</div><div class="mv" style="color:var(--orange)">'+F(Math.round(nb(b.valeur)*((b.partsPct||100)/100)))+'</div><div class="ms">'+(b.partsPct||100)+' % du bien</div></div>';
+  }
   imH+='</div>';
 
   /* 2bis. Ce que le bien rapporte vraiment, cashflow seul étant trompeur */
   const en=enrichiBien(b,cr,cf);
-  if(en.certain!==0||en.valo!==0){
+  if(!rp&&(en.certain!==0||en.valo!==0)){
     imH+='<div style="background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:12px 14px;margin-bottom:16px">';
     imH+='<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px">'+
       '<span style="font-size:11.5px;color:var(--muted)">Ce que ce bien vous rapporte par mois</span>'+
@@ -3636,8 +3654,8 @@ let imH='';S.immo.forEach(b=>{
   imH+='<div class="lr"><span>Ta part (valeur)</span><span style="font-weight:700;color:var(--orange)">'+F(Math.round(b.valeur*((b.partsPct||100)/100)))+'</span></div>';
   imH+='</div><div>';
   const aLots=b.lots&&b.lots.length;
-  imH+='<div class="sect">Revenus et charges</div>';
-  imH+='<div class="lr"><span>Loyer/mois'+(aLots?' <span style="color:var(--muted);font-size:11px">('+b.lots.length+' logements)</span>':'')+'</span>'
+  imH+='<div class="sect">'+(rp?'Charges':'Revenus et charges')+'</div>';
+  if(!rp)imH+='<div class="lr"><span>Loyer/mois'+(aLots?' <span style="color:var(--muted);font-size:11px">('+b.lots.length+' logements)</span>':'')+'</span>'
     +(aLots?'<span style="color:var(--green);font-weight:700">'+F(loyerBien(b))+'</span>'
            :'<span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'loyer\')" style="color:var(--green);font-weight:700">'+F(b.loyer||0)+'</span>')+'</div>';
   imH+='<div class="lr"><span>Charges/mois</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'charges\')" style="color:var(--red)">'+F(b.charges||0)+'</span></div>';
@@ -3645,7 +3663,8 @@ let imH='';S.immo.forEach(b=>{
   imH+='<div class="lr"><span>Assurance/an</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'assurance\')">'+F(b.assurance||0)+'</span></div>';
   imH+='<div class="lr"><span>Gestion/mois</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'gestion\')">'+F(b.gestion||0)+'</span></div>';
   if(mensC)imH+='<div class="lr"><span>Mensualité du prêt</span><span style="color:var(--red)">'+F(Math.round(mensC))+'</span></div>';
-  imH+='<div class="lr"><span style="font-weight:700">Cashflow net</span><span style="font-weight:800;color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(cf))+'/mois</span></div>';
+  if(!rp)imH+='<div class="lr"><span style="font-weight:700">Cashflow net</span><span style="font-weight:800;color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(cf))+'/mois</span></div>';
+  else imH+='<div class="lr"><span style="font-weight:700">Coût mensuel du logement</span><span style="font-weight:800;color:var(--red)">'+F(Math.round(chM+mensC))+'/mois</span></div>';
   imH+='</div></div>';
 
   /* 4. Le crédit, regroupé */
@@ -3664,6 +3683,7 @@ let imH='';S.immo.forEach(b=>{
   imH+='</div>';
   /* Fiscalité */
   const fb=fiscBien(b,mensC);
+  if(!rp){
   imH+='<details style="margin-top:12px"><summary style="font-size:12px;font-weight:600;cursor:pointer">§ Fiscalité — '+fb.reg.n+'</summary><div style="margin-top:10px">';
   imH+='<div class="lr"><span>Régime</span><span class="ed" onclick="edRegime(\''+b.id+'\')" style="font-weight:600">'+fb.reg.n+'</span></div>';
   imH+='<div style="font-size:11px;color:var(--muted);margin:-6px 0 8px">'+fb.reg.info+'</div>';
@@ -3677,8 +3697,10 @@ let imH='';S.immo.forEach(b=>{
   imH+='<div class="lr"><span>Rendement net d\'impôts</span><span style="font-weight:600">'+fb.rdtNet.toFixed(2)+'%</span></div>';
   imH+='<div style="font-size:10.5px;color:var(--muted);margin-top:8px">Estimation indicative, à confirmer avec ton comptable.</div>';
   imH+='</div></details>';
+  }
 
   /* Logements du bien */
+  if(!rp){
   imH+='<details style="margin-top:12px"'+(aLots?' open':'')+'><summary style="font-size:12px;font-weight:600;cursor:pointer">⌂ Logements loués ('+(aLots?b.lots.length:0)+')</summary><div style="margin-top:8px">';
   if(aLots){
     imH+='<table style="font-size:12px"><thead><tr><th class="l">Logement</th><th>Loyer</th><th>État</th><th>Occupation 12 mois</th><th>Manque à gagner</th><th></th></tr></thead><tbody>';
@@ -3701,6 +3723,7 @@ let imH='';S.immo.forEach(b=>{
     if(loue<loyerBien(b))imH+='<div style="font-size:11px;color:var(--accent);margin-top:8px">Loyers effectivement perçus : '+F(loue)+' — écart de '+F(loyerBien(b)-loue)+' dû aux logements vacants.</div>';
   }else imH+='<div style="font-size:11.5px;color:var(--muted)">Ce bien est traité comme un logement unique. Ajoute des logements s\'il en compte plusieurs : le loyer total sera alors calculé automatiquement.</div>';
   imH+='<button class="ab" onclick="addLot(\''+b.id+'\')">+ Logement</button></div></details>';
+  }
 
   /* Travaux / historique dépenses */
   imH+='<details style="margin-top:12px"><summary style="font-size:12px;font-weight:600;cursor:pointer">⚒ Travaux & dépenses ('+(b.travaux||[]).length+')</summary><div style="margin-top:8px">';
@@ -3714,6 +3737,7 @@ let imH='';S.immo.forEach(b=>{
   const anStr=String(annee);
   if(!b.revenusMois[anStr])b.revenusMois[anStr]={};
   const totRevAn=moisRev.reduce((a,m)=>a+(b.revenusMois[anStr][m]||0),0);
+  if(!rp){
   imH+='<details style="margin-top:12px"><summary style="font-size:12px;font-weight:600;cursor:pointer">◈ Revenus perçus '+annee+' — '+F(totRevAn)+'</summary><div style="margin-top:8px">';
   imH+='<table style="font-size:11px"><thead><tr><th></th>';
   moisRev.forEach(m=>{imH+='<th>'+m+'</th>'});
@@ -3725,6 +3749,7 @@ let imH='';S.immo.forEach(b=>{
   if(b.revenusMois[anPrec]){const totPrev=moisRev.reduce((a,m)=>a+(b.revenusMois[anPrec][m]||0),0);
   if(totPrev>0){imH+='<div style="margin-top:8px;font-size:11px;color:var(--muted)">'+anPrec+' : '+F(totPrev)+' ('+(totRevAn>0?((totRevAn-totPrev)/totPrev*100>0?'+':'')+(((totRevAn-totPrev)/totPrev)*100).toFixed(0)+'% vs '+anPrec:'—')+')</div>'}}
   imH+='</div></details>';
+  }
 
   imH+='</div>';
 });
@@ -3813,9 +3838,9 @@ document.getElementById('cryEcart').innerHTML=ecH;
 document.getElementById('cra').innerHTML=addB('cra',[{k:'nom',label:'Nom',w:2},{k:'symbol',label:'Symbol'},{k:'qte',label:'Qté',num:true},{k:'pru',label:'PRU',num:true}],'crypto',{prix:0,var:0,pru:0,montant:0});
 
 /* Dettes — avec calcul auto du restant basé sur date début */
-document.getElementById('dk').innerHTML='<div class="kpi"><div class="kl">Dettes</div><div class="kv" style="color:var(--red)">'+F(t.de)+'</div></div><div class="kpi"><div class="kl">Mensualités</div><div class="kv">'+F(S.dettes.reduce((a,d)=>a+cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0).m,0))+'</div><div class="ks">/mois</div></div>';
+document.getElementById('dk').innerHTML='<div class="kpi"><div class="kl">Dettes</div><div class="kv" style="color:var(--red)">'+F(t.de)+'</div></div><div class="kpi"><div class="kl">Mensualités</div><div class="kv">'+F(S.dettes.reduce((a,d)=>a+cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0,d.debloque).m,0))+'</div><div class="ks">/mois</div></div>';
 let dH='';S.dettes.forEach(d=>{
-  const am=cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0);
+  const am=cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0,d.debloque);
   const me=moisEcoules(d.dateDebut);
   const p=d.emprunte>0?((d.emprunte-d.restant)/d.emprunte*100).toFixed(1):'0';
   dH+='<div class="card"><div style="display:flex;justify-content:space-between"><div style="font-weight:700">'+d.nom+'</div><button class="db" onclick="dI(\'dettes\',\''+d.id+'\')">✕</button></div>';
@@ -3824,6 +3849,14 @@ let dH='';S.dettes.forEach(d=>{
   dH+='<div class="lr"><span>Taux annuel</span><span class="ed" onclick="eI(this,\'dettes\',\''+d.id+'\',\'taux\')">'+(d.taux||0).toFixed(2)+'%</span></div>';
   dH+='<div class="lr"><span>Durée</span><span class="ed" onclick="eI(this,\'dettes\',\''+d.id+'\',\'dureeMois\')">'+(d.dureeMois||0)+' mois</span></div>';
   dH+='<div class="lr"><span>Différé (mois)</span><span class="ed" onclick="eI(this,\'dettes\',\''+d.id+'\',\'differe\')">'+(d.differe||0)+' mois</span></div>';
+  /* Sur un achat avec travaux, la banque débloque les fonds par tranches : pendant le
+     différé, les intérêts ne portent que sur ce qui a réellement été versé. */
+  if(d.differe>0){
+    const dbq=nb(d.debloque);
+    dH+='<div class="lr"><span>Capital débloqué</span><span class="ed" onclick="eI(this,\'dettes\',\''+d.id+'\',\'debloque\')">'+(dbq>0?F(dbq):'tout ('+F(nb(d.emprunte))+')')+'</span></div>';
+    const amD=cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0,d.debloque);
+    if(amD.t.length)dH+='<div class="lr"><span>Intérêts pendant le différé</span><span style="color:var(--red);font-weight:600">'+F2(amD.t[0].i)+'/mois</span></div>';
+  }
   const enDiffere=me>0&&me<=(d.differe||0);
   dH+='<div class="lr"><span>Mensualité'+(enDiffere?' <span style="color:var(--orange);font-size:10px">(différé)</span>':'')+'</span><span style="font-weight:700">'+(enDiffere?F2(am.mDiff||0):F2(am.m))+'</span></div>';
   dH+='<div class="lr"><span>Restant dû (total)</span><span style="font-weight:700;color:var(--red)">'+F(d.restant)+'</span></div>';
@@ -4117,7 +4150,7 @@ document.getElementById('widgetResume').innerHTML=wH;
   let loyN=0,valN=0;
   S.immo.filter(b=>!(b.typeLocation==='rp'||b.type==='RP')).forEach(b=>{
     const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
-    let m=0;if(cr){const me=moisEcoules(cr.dateDebut);if(me>0){const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0);m=Math.abs(me<=(cr.differe||0)?(am.mDiff||0):am.m)}}
+    let m=0;if(cr){const me=moisEcoules(cr.dateDebut);if(me>0){const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0,cr.debloque);m=Math.abs(me<=(cr.differe||0)?(am.mDiff||0):am.m)}}
     const f=fiscBien(b,m);
     loyN+=f.loyerAn-f.chargesAn-f.impot;valN+=b.valeur||0;
   });
@@ -4275,7 +4308,7 @@ document.getElementById('revDetail').innerHTML=rvH;
   let cashImmo=0;
   S.immo.filter(b=>!(b.typeLocation==='rp'||b.type==='RP')).forEach(b=>{
     const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
-    let m=0;if(cr){const me=moisEcoules(cr.dateDebut);if(me>0){const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0);m=Math.abs(me<=(cr.differe||0)?(am.mDiff||0):am.m)}}
+    let m=0;if(cr){const me=moisEcoules(cr.dateDebut);if(me>0){const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0,cr.debloque);m=Math.abs(me<=(cr.differe||0)?(am.mDiff||0):am.m)}}
     cashImmo+=fiscBien(b,m).effort;
   });
   const partImmo=(S.fiscParams&&S.fiscParams.partImmo!=null)?S.fiscParams.partImmo:70;
