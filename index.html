@@ -292,7 +292,7 @@ details summary{color:var(--text2)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 03/11 14h51</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 03/11 15h11</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -313,7 +313,7 @@ details summary{color:var(--text2)}
 <div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div id="rstat" class="rs" style="margin:12px 0"></div><div class="card"><div class="fb"><div class="ct" style="margin:0">PEA — Fortuneo</div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — Saxo <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — IBKR</div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">AV — Linxea</div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">◫ Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:#7c3aed">● Portf.</span><span style="color:#e8a33d">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">↕ Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">◎ Objectifs Bourse</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addBourseGoal()">+ Objectif</button></div><div id="bourseGoals" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">◌ Watchlist</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch()">+ Suivre</button></div><div id="watchlist" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">✎ Journal d'investissement</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addJournal()">+ Entrée</button></div><div id="journal" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">◈ Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici les dividendes que tu reçois réellement chaque mois (tous portefeuilles confondus). Clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div></div>
 <div class="page" id="page-epargne"><div class="kr" id="ek"></div><div class="g2"><div class="card"><div class="ct" id="ct1"></div><div id="cl1"></div><div id="af1"></div></div><div class="card"><div class="ct" id="ct2"></div><div id="cl2"></div><div id="af2"></div></div><div class="card sf"><div class="ct" id="ct3"></div><div id="cl3"></div><div id="af3"></div></div></div></div>
 <div class="page" id="page-immo"><div class="kr kr4" id="ik"></div><div class="g2" style="margin-bottom:16px"><div class="g2" style="margin-bottom:16px"><div class="card"><div class="ct">Répartition par régime fiscal</div><div class="cbs" style="height:230px"><canvas id="cImmoReg"></canvas></div><div id="immoRegimes" style="margin-top:10px"></div></div><div class="card"><div class="ct">Répartition des loyers</div><div class="cbs" style="height:230px"><canvas id="cImmoLoy"></canvas></div><div id="immoLoyers" style="margin-top:10px"></div></div></div>
-<div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Patrimoine Immo Net</div><div style="display:flex;gap:4px" id="immoPs"></div></div><div class="cb"><canvas id="cImmoNet"></canvas></div></div><div class="card"><div class="ct">Tableau récapitulatif mensuel</div><div class="tw" id="immoRecap"></div></div></div><div class="card" id="immoSCI" style="display:none"><div class="ct">⬡ Tableau de bord SCI</div><div id="sciDash"></div></div><div id="ic"></div>
+<div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Patrimoine Immo Net</div><div style="display:flex;gap:4px" id="immoPs"></div></div><div class="cb"><canvas id="cImmoNet"></canvas></div></div><div class="card"><div class="ct">Tableau récapitulatif mensuel</div><div class="tw" id="immoRecap"></div></div></div><div class="card" id="immoOccup" style="display:none"><div class="ct">◷ Occupation et vacance</div><div id="occupCorps"></div></div><div class="card" id="immoEnrichi" style="display:none"><div class="ct">◈ Enrichissement mensuel</div><div id="enrichiCorps"></div></div><div class="card" id="immoSCI" style="display:none"><div class="ct">⬡ Tableau de bord SCI</div><div id="sciDash"></div></div><div id="ic"></div>
 <div class="card"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">⇄ Comparatif des biens</div><div style="font-size:11.5px;color:var(--muted)">TMI : <span class="ed" onclick="edTMI()" id="tmiVal"></span></div></div><div class="tw" id="immoCompare"></div><div style="font-size:11px;color:var(--muted);margin-top:12px">Effort d'épargne : ce que le bien te coûte (négatif) ou te rapporte (positif) chaque mois, impôts déduits.</div></div>
 <div class="card"><div class="fb"><div class="ct" style="margin:0">△ Projets d'achat</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addProjet()">+ Projet</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Prépare tes futurs achats : simule le cashflow avant de te lancer, puis transforme le projet en vrai bien le jour de l'achat.</div><div id="projetsList"></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">◫ Suivi courte durée</div></div><div id="immoCD"></div></div></div>
 <div class="page" id="page-ope"><div class="dropzone" id="opeZone" ondrop="opeDrop(event)" ondragover="opeOver(event)" ondragleave="opeLeave()" onclick="document.getElementById('opeFile').click()"><div style="font-size:26px;margin-bottom:8px;color:var(--muted)">⤓</div><div style="font-weight:600;margin-bottom:5px">Importer vos opérations bancaires</div><div style="font-size:12.5px;color:var(--muted);line-height:1.6">Glissez ici le fichier CSV exporté depuis votre banque, ou cliquez pour le choisir.<br>Fortuneo, Crédit Agricole, La Banque Postale, Indy et la plupart des autres sont reconnus automatiquement.</div><input type="file" id="opeFile" accept=".csv,.txt,.pdf" multiple style="display:none" onchange="opeFichiers(this.files);this.value=''"></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 2px 0;font-size:12.5px"><span style="color:var(--muted)">Ranger ce fichier dans :</span><select class="sel" id="opeDest"></select><span style="color:var(--muted);font-size:11.5px">ou tapez un nom si le compte est nouveau</span><input class="sel" id="opeDestNom" placeholder="Nom du compte" style="display:none;max-width:180px" oninput="document.getElementById('opeDest').dataset.libre=this.value"></div>
@@ -985,8 +985,86 @@ window.cmLot=function(inp,id,li,champ){
 };
 window.togLot=function(id,li){
   const b=S.immo.find(x=>x.id===id);if(!b||!b.lots||!b.lots[li])return;
-  b.lots[li].occupe=!b.lots[li].occupe;autoSave();R(true);
+  const l=b.lots[li];
+  const neuf=l.occupe===false;
+  l.occupe=neuf;
+  /* On date le changement : sans historique, impossible de calculer un taux d'occupation */
+  noteVacance(l,neuf);
+  autoSave();R(true);
 };
+/* Journal des entrées et sorties de locataire, une ligne par changement d'état */
+function noteVacance(o,loue){
+  if(!o.vac)o.vac=[];
+  const j=new Date().toISOString().slice(0,10);
+  const der=o.vac[o.vac.length-1];
+  if(der&&der.d===j){der.o=loue;return}
+  o.vac.push({d:j,o:loue});
+  if(o.vac.length>60)o.vac=o.vac.slice(-60);
+}
+/* Corriger une date d'entrée ou de sortie saisie par erreur */
+window.edVacDate=function(id,li,k){
+  const b=S.immo.find(x=>x.id===id);if(!b)return;
+  const o=li>=0?(b.lots||[])[li]:b;
+  if(!o||!o.vac||!o.vac[k])return;
+  const v=prompt('Date du changement (JJ/MM/AAAA)',o.vac[k].d.slice(8)+'/'+o.vac[k].d.slice(5,7)+'/'+o.vac[k].d.slice(0,4));
+  if(!v)return;
+  const d=parseDateFR(v);
+  if(!d){alert('Date non reconnue');return}
+  o.vac[k].d=d;
+  o.vac.sort((a,b2)=>a.d<b2.d?-1:1);
+  autoSave();R(true);
+};
+window.suppVacDate=function(id,li,k){
+  const b=S.immo.find(x=>x.id===id);if(!b)return;
+  const o=li>=0?(b.lots||[])[li]:b;
+  if(!o||!o.vac)return;
+  o.vac.splice(k,1);autoSave();R(true);
+};
+/* Taux d'occupation sur les douze derniers mois, d'après le journal.
+   Avant le premier événement connu, on considère le logement loué : on ne va pas
+   inventer une vacance sur une période dont on ne sait rien. */
+function occupation(o,loyer){
+  const fin=new Date();
+  const deb=new Date();deb.setFullYear(deb.getFullYear()-1);
+  const jours=Math.round((fin-deb)/86400000);
+  const ev=(o&&o.vac?o.vac.slice():[]).sort((a,b)=>a.d<b.d?-1:1);
+  if(!ev.length){
+    const loue=o&&o.occupe===false?false:true;
+    return {jours,joursVac:loue?0:null,pct:loue?100:null,perte:0,connu:false,loue};
+  }
+  /* État au début de la fenêtre */
+  let etat=true;
+  ev.forEach(e=>{if(new Date(e.d)<=deb)etat=e.o});
+  const dansFen=ev.filter(e=>{const d=new Date(e.d);return d>deb&&d<=fin});
+  let curseur=new Date(deb),joursVac=0;
+  dansFen.forEach(e=>{
+    const d=new Date(e.d);
+    if(!etat)joursVac+=Math.round((d-curseur)/86400000);
+    curseur=d;etat=e.o;
+  });
+  if(!etat)joursVac+=Math.round((fin-curseur)/86400000);
+  joursVac=Math.max(0,Math.min(jours,joursVac));
+  const pct=Math.round((1-joursVac/jours)*1000)/10;
+  const perte=Math.round((loyer||0)*12*(joursVac/jours));
+  return {jours,joursVac,pct,perte,connu:true,loue:etat,depuis:dansFen.length?dansFen[dansFen.length-1].d:(ev[ev.length-1]||{}).d};
+}
+/* Occupation d'un bien : moyenne de ses logements, pondérée par les loyers */
+function occupationBien(b){
+  const lots=(b.lots&&b.lots.length)?b.lots:null;
+  if(!lots){
+    const o=occupation(b,b.loyer||0);
+    return {pct:o.pct,perte:o.perte,joursVac:o.joursVac,connu:o.connu,detail:[{nom:b.nom,loyer:b.loyer||0,o}]};
+  }
+  let perte=0,joursVac=0,poids=0,somme=0,connu=false;
+  const detail=lots.map(l=>{
+    const o=occupation(l,l.loyer||0);
+    perte+=o.perte;
+    if(o.connu)connu=true;
+    if(o.pct!=null){somme+=o.pct*(l.loyer||1);poids+=(l.loyer||1);joursVac+=o.joursVac||0}
+    return {nom:l.nom,loyer:l.loyer||0,o};
+  });
+  return {pct:poids>0?Math.round(somme/poids*10)/10:null,perte,joursVac,connu,detail};
+}
 window.delLot=function(id,li){
   const b=S.immo.find(x=>x.id===id);if(!b||!b.lots)return;
   if(!confirm('Supprimer ce logement ?'))return;
@@ -1131,6 +1209,53 @@ const REGIMES={
   lmnp_reel:{n:'LMNP au réel',ab:0,soc:.172,charges:true,amort:true,info:'Meublé au réel · amortissement du bien'},
   sci_is:{n:'SCI à l\'IS',is:true,soc:0,charges:true,amort:true,info:'Impôt sur les sociétés · 15 % jusqu\'à 42 500 € de bénéfice'}
 };
+/* Ce qu'un bien rapporte vraiment chaque mois.
+   Le cashflow seul est trompeur : une mensualité de 483 € dont 385 € de capital n'est pas
+   une dépense, c'est de l'épargne forcée. On distingue donc ce qui est certain (cashflow
+   encaissé et capital remboursé) de ce qui est estimé (la valorisation du bien). */
+function enrichiBien(b,cr,cf){
+  const av=avancePret(cr);
+  const cash=cf||0;
+  const capital=av?av.capMois:0;
+  /* Valorisation : la plus-value constatée, étalée sur la durée de détention.
+     Faute de date d'achat, on prend le début du crédit. */
+  let valo=0,moisDet=0,valoSure=false;
+  const pv=(b.valeur||0)-(b.prixAchat||0)-(b.travaux||0);
+  if(cr&&cr.dateDebut){moisDet=moisEcoules(cr.dateDebut)}
+  /* Moins d'un an de détention : étaler la plus-value donnerait un rythme absurde
+     (20 000 € sur 6 mois feraient 3 300 € par mois), on s'abstient. */
+  if(moisDet>=12&&pv!==0){valo=pv/moisDet;valoSure=true}
+  const base=(b.prixAchat||b.valeur||0);
+  const tauxAn=(valoSure&&base>0)?(valo*12/base*100):null;
+  const certain=cash+capital;
+  return {cash:Math.round(cash*100)/100,capital:Math.round(capital*100)/100,
+    valo:Math.round(valo*100)/100,certain:Math.round(certain*100)/100,
+    total:Math.round((certain+valo)*100)/100,moisDet,valoSure,pv:Math.round(pv),
+    tauxAn:tauxAn!=null?Math.round(tauxAn*10)/10:null,
+    /* Au-delà de 8 % par an, c'est plus vraisemblablement une bonne affaire faite à l'achat
+       qu'une revalorisation qui se reproduira chaque année. */
+    valoForte:tauxAn!=null&&Math.abs(tauxAn)>8};
+}
+/* Barre empilée des trois sources d'enrichissement */
+function barreEnrichi(en){
+  const parts=[{v:Math.max(0,en.cash),c:CV('--green')},{v:Math.max(0,en.capital),c:CV('--p1')},{v:Math.max(0,en.valo),c:CV('--p2')}];
+  const tot=parts.reduce((a,p)=>a+p.v,0);
+  if(tot<=0)return'';
+  return '<div style="display:flex;height:9px;border-radius:5px;overflow:hidden;background:var(--card)">'+
+    parts.filter(p=>p.v>0).map(p=>'<div style="width:'+(p.v/tot*100).toFixed(1)+'%;background:'+p.c+'"></div>').join('')+'</div>';
+}
+/* Petite barre d'occupation sur douze mois */
+function barreOccup(oc){
+  if(oc.pct==null)return '<span style="color:var(--muted);font-size:11px">—</span>';
+  const c=oc.pct>=95?'var(--green)':(oc.pct>=85?'var(--accent)':'var(--red)');
+  return '<div style="min-width:92px">'+
+    '<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">'+
+      '<span style="font-weight:700;color:'+c+'">'+oc.pct+' %</span>'+
+      (oc.joursVac>0?'<span style="color:var(--muted)">'+oc.joursVac+' j vides</span>':'')+'</div>'+
+    '<div style="height:5px;border-radius:3px;background:var(--card2);overflow:hidden">'+
+      '<div style="height:100%;width:'+oc.pct+'%;background:'+c+';border-radius:3px"></div></div>'+
+    (oc.connu?'':'<div class="tk" style="margin-top:2px">supposé loué</div>')+'</div>';
+}
 function fiscBien(b,mensCred){
   const tmi=(S.fiscParams&&S.fiscParams.tmi)||30;
   const reg=REGIMES[b.regime||'micro_foncier']||REGIMES.micro_foncier;
@@ -3198,7 +3323,6 @@ const capTot=(function(){
 
 document.getElementById('ik').innerHTML=
  '<div class="kpi"><div class="kl">Biens en location</div><div class="kv" style="color:'+CV('--p5')+'">'+nbBiens+'</div><div class="ks">'+nbLots+' logement'+(nbLots>1?'s':'')+' · hors RP</div></div>'
-+'<div class="kpi"><div class="kl">Investissement total</div><div class="kv" style="color:'+CV('--p6')+'">'+F(Math.round(investTot))+'</div><div class="ks">achat et travaux</div></div>'
 +'<div class="kpi"><div class="kl">Loyers mensuels</div><div class="kv" style="color:var(--green)">'+F(Math.round(loyerTotal))+'</div></div>'
 +'<div class="kpi"><div class="kl">Cashflow mensuel</div><div class="kv" style="color:'+(cashflowTotal>=0?'var(--green)':'var(--red)')+'">'+(cashflowTotal>=0?'+':'')+F(Math.round(cashflowTotal))+'</div><div class="ks">après charges et crédit</div></div>'
 +'<div class="kpi"><div class="kl">Rendement brut moyen</div><div class="kv" style="color:var(--accent)">'+rdtBrutMoy.toFixed(1)+' %</div></div>'
@@ -3236,6 +3360,92 @@ if(immoLoc.length===0)rcH+='<tr><td colspan="6" style="text-align:center;color:v
 rcH+='<tr style="background:rgba(122,162,247,.05);font-weight:800"><td class="l">Total</td><td style="color:var(--green)">'+F(Math.round(totLoy))+'</td><td style="color:var(--red)">'+F(Math.round(totCh))+'</td><td style="color:var(--red)">'+F(Math.round(totCr))+'</td><td style="color:'+(totCf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(totCf))+'</td><td>'+(totValLoc>0?(totLoy*12/totValLoc*100).toFixed(1):0)+'%</td></tr>';
 rcH+='</tbody></table>';
 document.getElementById('immoRecap').innerHTML=rcH;
+
+/* Occupation et vacance locative */
+(function(){
+  const carte=document.getElementById('immoOccup');if(!carte)return;
+  const biens=S.immo.filter(b=>b.type!=='RP');
+  if(!biens.length){carte.style.display='none';return}
+  carte.style.display='';
+  let perteTot=0,sommePct=0,poids=0,nbLogts=0,nbVides=0,aHisto=false;
+  const lignes=[];
+  biens.forEach(b=>{
+    const ob=occupationBien(b);
+    perteTot+=ob.perte;
+    if(ob.connu)aHisto=true;
+    ob.detail.forEach(d=>{
+      nbLogts++;
+      if(d.o.loue===false)nbVides++;
+      if(d.o.pct!=null){sommePct+=d.o.pct*(d.loyer||1);poids+=(d.loyer||1)}
+      lignes.push({bien:b.nom,nom:d.nom,loyer:d.loyer,o:d.o});
+    });
+  });
+  const pctG=poids>0?Math.round(sommePct/poids*10)/10:100;
+  const loyerTh=biens.reduce((a,b)=>a+loyerBien(b),0)*12;
+  let h='<div class="mkpi" style="margin-top:14px">';
+  h+='<div><div class="ml">Taux d\'occupation</div><div class="mv" style="color:'+(pctG>=95?'var(--green)':pctG>=85?'var(--accent)':'var(--red)')+'">'+pctG+' %</div><div class="ms">sur douze mois</div></div>';
+  h+='<div><div class="ml">Manque à gagner</div><div class="mv" style="color:'+(perteTot>0?'var(--red)':'var(--green)')+'">'+F(perteTot)+'</div><div class="ms">'+(loyerTh>0?'soit '+(perteTot/loyerTh*100).toFixed(1)+' % des loyers':'sur douze mois')+'</div></div>';
+  h+='<div><div class="ml">Logements vides</div><div class="mv" style="color:'+(nbVides?'var(--red)':'var(--green)')+'">'+nbVides+' / '+nbLogts+'</div><div class="ms">aujourd\'hui</div></div>';
+  h+='</div>';
+  h+='<div class="tw"><table><thead><tr><th class="l">Logement</th><th>Loyer</th><th>État</th><th>Occupation 12 mois</th><th>Manque à gagner</th></tr></thead><tbody>';
+  lignes.sort((a,b2)=>(a.o.pct==null?101:a.o.pct)-(b2.o.pct==null?101:b2.o.pct)).forEach(x=>{
+    h+='<tr><td class="l"><b style="font-size:12px">'+x.nom+'</b><div class="tk">'+x.bien+'</div></td>'+
+      '<td style="color:var(--green)">'+F(x.loyer)+'</td>'+
+      '<td><span class="badge '+(x.o.loue===false?'neg':'pos')+'">'+(x.o.loue===false?'Vacant':'Loué')+'</span>'+
+        (x.o.connu&&x.o.depuis?'<div class="tk">depuis le '+x.o.depuis.slice(8)+'/'+x.o.depuis.slice(5,7)+'</div>':'')+'</td>'+
+      '<td>'+barreOccup(x.o)+'</td>'+
+      '<td style="font-weight:'+(x.o.perte>0?'700':'400')+';color:'+(x.o.perte>0?'var(--red)':'var(--muted)')+'">'+(x.o.perte>0?F(x.o.perte):'—')+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div style="font-size:11.5px;color:var(--muted);margin-top:11px;line-height:1.6">'+
+    'Le taux se calcule sur les douze derniers mois, d\'après les dates auxquelles vous basculez un logement entre « Loué » et « Vacant » dans sa fiche. '+
+    (aHisto?'Le manque à gagner est le loyer que la vacance vous a coûté sur la période.'
+          :'Aucun changement n\'a encore été enregistré : tous les logements sont supposés loués. Basculez l\'état d\'un logement le jour où il se libère, et le calcul démarrera.')+
+    '</div>';
+  document.getElementById('occupCorps').innerHTML=h;
+})();
+
+/* Enrichissement mensuel, tous biens locatifs confondus */
+(function(){
+  const carte=document.getElementById('immoEnrichi');if(!carte)return;
+  const lignes=[];
+  S.immo.filter(b=>b.type!=='RP').forEach(b=>{
+    const c=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
+    const mC=c?cAm(c.emprunte,c.taux||0,c.dureeMois||0,c.differe||0).m:0;
+    const ch=(b.charges||0)+(b.taxeFonciere||0)/12+(b.assurance||0)/12+(b.gestion||0);
+    const cfB=loyerBien(b)-ch-mC;
+    const e=enrichiBien(b,c,cfB);
+    if(e.certain!==0||e.valo!==0)lignes.push({b,e});
+  });
+  if(!lignes.length){carte.style.display='none';return}
+  carte.style.display='';
+  const T={cash:0,capital:0,valo:0,certain:0,total:0};
+  lignes.forEach(x=>{T.cash+=x.e.cash;T.capital+=x.e.capital;T.valo+=x.e.valo;T.certain+=x.e.certain;T.total+=x.e.total});
+  let h='<div class="mkpi" style="margin-top:14px">';
+  h+='<div><div class="ml">Total par mois</div><div class="mv" style="color:'+(T.total>=0?'var(--green)':'var(--red)')+'">'+(T.total>=0?'+':'')+F(Math.round(T.total))+'</div><div class="ms">soit '+F(Math.round(T.total*12))+' par an</div></div>';
+  h+='<div><div class="ml">Dont certain</div><div class="mv" style="color:'+CV('--p1')+'">'+F(Math.round(T.certain))+'</div><div class="ms">cashflow et capital</div></div>';
+  h+='<div><div class="ml">Dont estimé</div><div class="mv" style="color:'+CV('--p2')+'">'+F(Math.round(T.valo))+'</div><div class="ms">valorisation des biens</div></div>';
+  h+='</div>';
+  h+='<div class="tw"><table><thead><tr><th class="l">Bien</th><th>Cashflow</th><th>Capital</th><th>Valorisation</th><th>Total / mois</th><th>Par an</th></tr></thead><tbody>';
+  lignes.sort((x,y)=>y.e.total-x.e.total).forEach(x=>{
+    h+='<tr><td class="l"><b style="font-size:12px">'+x.b.nom+'</b></td>'+
+      '<td style="color:'+(x.e.cash>=0?'var(--green)':'var(--red)')+'">'+F2(x.e.cash)+'</td>'+
+      '<td style="color:'+CV('--p1')+'">'+F2(x.e.capital)+'</td>'+
+      '<td style="color:'+(x.e.valoSure?(x.e.valoForte?'var(--accent)':CV('--p2')):'var(--muted)')+'">'+(x.e.valoSure?F2(x.e.valo)+'<div class="tk">'+(x.e.tauxAn>=0?'+':'')+x.e.tauxAn+' %/an</div>':'—')+'</td>'+
+      '<td style="font-weight:700;color:'+(x.e.total>=0?'var(--green)':'var(--red)')+'">'+(x.e.total>=0?'+':'')+F2(x.e.total)+'</td>'+
+      '<td style="color:var(--muted)">'+F(Math.round(x.e.total*12))+'</td></tr>';
+  });
+  h+='<tr style="border-top:2px solid var(--border)"><td class="l"><b>Total</b></td>'+
+    '<td style="font-weight:600">'+F2(T.cash)+'</td><td style="font-weight:600;color:'+CV('--p1')+'">'+F2(T.capital)+'</td>'+
+    '<td style="font-weight:600;color:'+CV('--p2')+'">'+F2(T.valo)+'</td>'+
+    '<td style="font-weight:800;color:'+(T.total>=0?'var(--green)':'var(--red)')+'">'+(T.total>=0?'+':'')+F2(T.total)+'</td>'+
+    '<td style="font-weight:600">'+F(Math.round(T.total*12))+'</td></tr>';
+  h+='</tbody></table></div>';
+  h+='<div style="font-size:11.5px;color:var(--muted);margin-top:11px;line-height:1.6">'+
+    'Le cashflow est ce qui reste sur votre compte chaque mois. Le capital remboursé est de la dette en moins : il ne passe pas par votre compte mais augmente bien votre patrimoine. '+
+    'La valorisation étale la plus-value constatée sur la durée de détention — c\'est la seule part estimée, et elle dépend des valeurs que vous saisissez.</div>';
+  document.getElementById('enrichiCorps').innerHTML=h;
+})();
 
 /* Comparatif des biens */
 const tmiCur=(S.fiscParams&&S.fiscParams.tmi)||30;
@@ -3349,6 +3559,27 @@ let imH='';S.immo.forEach(b=>{
   else imH+='<div><div class="ml">Ta part</div><div class="mv" style="color:var(--orange)">'+F(Math.round(b.valeur*((b.partsPct||100)/100)))+'</div><div class="ms">'+(b.partsPct||100)+' % du bien</div></div>';
   imH+='</div>';
 
+  /* 2bis. Ce que le bien rapporte vraiment, cashflow seul étant trompeur */
+  const en=enrichiBien(b,cr,cf);
+  if(en.certain!==0||en.valo!==0){
+    imH+='<div style="background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:12px 14px;margin-bottom:16px">';
+    imH+='<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px">'+
+      '<span style="font-size:11.5px;color:var(--muted)">Ce que ce bien vous rapporte par mois</span>'+
+      '<span style="font-size:18px;font-weight:800;color:'+(en.total>=0?'var(--green)':'var(--red)')+'">'+(en.total>=0?'+':'')+F2(en.total)+'</span></div>';
+    imH+=barreEnrichi(en);
+    imH+='<div style="display:flex;flex-wrap:wrap;gap:4px 16px;font-size:11.5px;margin-top:9px">'+
+      '<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--green);margin-right:5px"></span>Cashflow '+F2(en.cash)+'</span>'+
+      '<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+CV('--p1')+';margin-right:5px"></span>Capital remboursé '+F2(en.capital)+'</span>'+
+      (en.valoSure?'<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+CV('--p2')+';margin-right:5px"></span>Valorisation '+F2(en.valo)+'</span>':'')+
+      '</div>';
+    imH+='<div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.55">'+
+      'Le cashflow est ce qui reste sur votre compte. Le capital remboursé n\'est pas une dépense : c\'est de la dette en moins, donc du patrimoine en plus.'+
+      (en.valoSure?' La valorisation étale la plus-value constatée ('+F(en.pv)+') sur '+en.moisDet+' mois de détention, soit '+(en.tauxAn>=0?'+':'')+en.tauxAn+' % par an'+
+        (en.valoForte?' — un rythme élevé, qui vient sans doute d\'une bonne affaire faite à l\'achat plutôt que d\'une hausse qui se répétera.':'.'):
+        ' La valorisation n\'est pas comptée : il faut au moins un an de détention pour l\'estimer sans fausser le rythme.')+
+      '</div></div>';
+  }
+
   /* 3. Le détail, rangé par thème */
   imH+='<div class="g2"><div>';
   imH+='<div class="sect">Le bien</div>';
@@ -3407,15 +3638,22 @@ let imH='';S.immo.forEach(b=>{
   /* Logements du bien */
   imH+='<details style="margin-top:12px"'+(aLots?' open':'')+'><summary style="font-size:12px;font-weight:600;cursor:pointer">⌂ Logements loués ('+(aLots?b.lots.length:0)+')</summary><div style="margin-top:8px">';
   if(aLots){
-    imH+='<table style="font-size:12px"><thead><tr><th class="l">Logement</th><th>Loyer</th><th>État</th><th></th></tr></thead><tbody>';
+    imH+='<table style="font-size:12px"><thead><tr><th class="l">Logement</th><th>Loyer</th><th>État</th><th>Occupation 12 mois</th><th>Manque à gagner</th><th></th></tr></thead><tbody>';
     b.lots.forEach((l,li)=>{
+      const oc=occupation(l,l.loyer||0);
       imH+='<tr><td class="l"><span class="ed" onclick="edLot(this,\''+b.id+'\','+li+',\'nom\')">'+l.nom+'</span></td>';
       imH+='<td><span class="ed" onclick="edLot(this,\''+b.id+'\','+li+',\'loyer\')" style="color:var(--green);font-weight:600">'+F(l.loyer||0)+'</span></td>';
-      imH+='<td><span class="ed" onclick="togLot(\''+b.id+'\','+li+')"><span class="badge '+(l.occupe!==false?'pos':'neg')+'">'+(l.occupe!==false?'Loué':'Vacant')+'</span></span></td>';
+      imH+='<td><span class="ed" onclick="togLot(\''+b.id+'\','+li+')"><span class="badge '+(l.occupe!==false?'pos':'neg')+'">'+(l.occupe!==false?'Loué':'Vacant')+'</span></span>'+
+        (oc.connu&&oc.depuis?'<div class="tk">depuis le '+oc.depuis.slice(8)+'/'+oc.depuis.slice(5,7)+'</div>':'')+'</td>';
+      imH+='<td>'+barreOccup(oc)+'</td>';
+      imH+='<td style="color:'+(oc.perte>0?'var(--red)':'var(--muted)')+';font-weight:'+(oc.perte>0?'700':'400')+'">'+(oc.perte>0?F(oc.perte):'—')+'</td>';
       imH+='<td><button class="db" onclick="delLot(\''+b.id+'\','+li+')">✕</button></td></tr>';
     });
     const loue=b.lots.filter(l=>l.occupe!==false).reduce((a,l)=>a+(l.loyer||0),0);
-    imH+='<tr class="total-row"><td class="l">Total</td><td style="color:var(--green)">'+F(loyerBien(b))+'</td><td>'+b.lots.filter(l=>l.occupe!==false).length+'/'+b.lots.length+' loués</td><td></td></tr>';
+    const ocB=occupationBien(b);
+    imH+='<tr class="total-row"><td class="l">Total</td><td style="color:var(--green)">'+F(loyerBien(b))+'</td><td>'+b.lots.filter(l=>l.occupe!==false).length+'/'+b.lots.length+' loués</td>'+
+      '<td style="font-weight:700;color:'+(ocB.pct>=95?'var(--green)':ocB.pct>=85?'var(--accent)':'var(--red)')+'">'+(ocB.pct!=null?ocB.pct+' %':'—')+'</td>'+
+      '<td style="font-weight:700;color:'+(ocB.perte>0?'var(--red)':'var(--muted)')+'">'+(ocB.perte>0?F(ocB.perte):'—')+'</td><td></td></tr>';
     imH+='</tbody></table>';
     if(loue<loyerBien(b))imH+='<div style="font-size:11px;color:var(--accent);margin-top:8px">Loyers effectivement perçus : '+F(loue)+' — écart de '+F(loyerBien(b)-loue)+' dû aux logements vacants.</div>';
   }else imH+='<div style="font-size:11.5px;color:var(--muted)">Ce bien est traité comme un logement unique. Ajoute des logements s\'il en compte plusieurs : le loyer total sera alors calculé automatiquement.</div>';
