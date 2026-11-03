@@ -292,7 +292,7 @@ details summary{color:var(--text2)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 03/11 15h11</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 03/11 15h25</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -529,6 +529,49 @@ function jaugePret(a,coul){
     '<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:5px">'+
       '<span>'+F(a.rembourse)+' sur '+F(a.emprunte)+'</span>'+
       '<span>reste '+F(a.restant)+'</span></div></div>';
+}
+/* Résidence principale : le type a pu être saisi de plusieurs façons au fil du temps */
+function estRP(b){
+  if(!b)return false;
+  return b.type==='RP'||String(b.typeLocation||'').toLowerCase()==='rp'||b.rp===true;
+}
+/* Les travaux sont une liste de dépenses, pas un nombre : il faut en faire la somme.
+   Les anciennes données pouvaient stocker un simple montant, on accepte les deux. */
+function totalTravaux(b){
+  const t=b&&b.travaux;
+  if(!t)return 0;
+  if(Array.isArray(t))return t.reduce((a,x)=>a+nb(x&&x.montant),0);
+  return nb(t);
+}
+/* Convertit en nombre sûr : évite qu'une valeur inattendue propage un NaN dans tout un tableau.
+   Accepte aussi « 5 000,50 » saisi à la française. */
+function nb(v){
+  if(typeof v==='number')return isFinite(v)?v:0;
+  if(v==null)return 0;
+  const n=parseFloat(String(v).replace(/\s|\u00a0|€/g,'').replace(',','.'));
+  return isNaN(n)?0:n;
+}
+/* Filet de sécurité : un montant stocké sous forme de texte (import, saisie ancienne,
+   restauration d'une sauvegarde) propagerait des NaN dans tous les calculs. On remet
+   les champs numériques au propre une fois, au chargement. */
+function nettoieNombres(){
+  if(!S)return;
+  const num=(o,champs)=>{if(!o)return;champs.forEach(c=>{if(o[c]!==undefined&&o[c]!==null&&typeof o[c]!=='number')o[c]=nb(o[c])})};
+  (S.immo||[]).forEach(b=>{
+    num(b,['valeur','prixAchat','surface','loyer','charges','taxeFonciere','assurance','gestion','partsPct','nuits','prixNuit']);
+    (b.lots||[]).forEach(l=>num(l,['loyer']));
+    if(Array.isArray(b.travaux))b.travaux.forEach(t=>num(t,['montant']));
+  });
+  (S.dettes||[]).forEach(d=>num(d,['emprunte','restant','taux','dureeMois','differe','partsPct','mensualite']));
+  (S.comptes||[]).forEach(c=>num(c,['montant']));
+  (S.epLibre||[]).forEach(c=>num(c,['montant']));
+  (S.epBloq||[]).forEach(c=>num(c,['montant']));
+  (S.crypto||[]).forEach(c=>num(c,['qte','pru','prix','montant']));
+  ['pea','ctosb','ctoibkr','avl'].forEach(k=>{
+    const pf=S.pf&&S.pf[k];if(!pf)return;
+    num(pf,['esp','ver']);
+    (pf.l||[]).forEach(l=>num(l,['p','pr','co','div','usd']));
+  });
 }
 function cTWR(key){
   /* Ligne i : valeur = relevée au 1er du mois SUIVANT, versement = viré pendant ce mois
@@ -1215,17 +1258,17 @@ const REGIMES={
    encaissé et capital remboursé) de ce qui est estimé (la valorisation du bien). */
 function enrichiBien(b,cr,cf){
   const av=avancePret(cr);
-  const cash=cf||0;
-  const capital=av?av.capMois:0;
+  const cash=nb(cf);
+  const capital=av?nb(av.capMois):0;
   /* Valorisation : la plus-value constatée, étalée sur la durée de détention.
      Faute de date d'achat, on prend le début du crédit. */
   let valo=0,moisDet=0,valoSure=false;
-  const pv=(b.valeur||0)-(b.prixAchat||0)-(b.travaux||0);
+  const pv=nb(b.valeur)-nb(b.prixAchat)-totalTravaux(b);
   if(cr&&cr.dateDebut){moisDet=moisEcoules(cr.dateDebut)}
   /* Moins d'un an de détention : étaler la plus-value donnerait un rythme absurde
      (20 000 € sur 6 mois feraient 3 300 € par mois), on s'abstient. */
   if(moisDet>=12&&pv!==0){valo=pv/moisDet;valoSure=true}
-  const base=(b.prixAchat||b.valeur||0);
+  const base=nb(b.prixAchat)||nb(b.valeur);
   const tauxAn=(valoSure&&base>0)?(valo*12/base*100):null;
   const certain=cash+capital;
   return {cash:Math.round(cash*100)/100,capital:Math.round(capital*100)/100,
@@ -2589,7 +2632,7 @@ function opeHtmlComptes(){
 
 /* Charges réellement payées par bien, d'après les opérations rattachées */
 function chargesReelles(){
-  const biens=(S.immo||[]).filter(b=>b.type!=='RP');
+  const biens=(S.immo||[]).filter(b=>!estRP(b));
   if(!biens.length)return null;
   const an=opeAn||String(new Date().getFullYear());
   const res=biens.map(b=>{
@@ -2694,7 +2737,7 @@ function opeHtmlBiens(){
 }
 function opeHtmlTable(ftout){
   const opts=c=>OCATS.map(x=>'<option'+(x.n===c?' selected':'')+'>'+x.n+'</option>').join('');
-  const biens=(S.immo||[]).filter(b=>b.type!=='RP');
+  const biens=(S.immo||[]).filter(b=>!estRP(b));
   /* Compteurs calculés avant filtrage, pour que les pastilles restent parlantes */
   const nAcl=ftout.filter(o=>o.c==='Non catégorisé').length;
   const nSansB=biens.length?ftout.filter(o=>!o.bien&&o.m<0).length:0;
@@ -3272,7 +3315,7 @@ const mensDette=d=>{
   return Math.abs(me<=(d.differe||0)?(am.mDiff||0):am.m);
 };
 /* Biens locatifs (hors résidence principale) */
-const isRP=b=>b.typeLocation==='rp'||b.type==='RP'||(b.typeLocation||'').toLowerCase()==='rp';
+const isRP=estRP;
 const immoLoc=S.immo.filter(b=>!isRP(b)&&(b.loyer>0||b.typeLocation));
 const loyerTotal=immoLoc.reduce((a,x)=>a+(x.loyer||0),0);
 const chargesTotal=immoLoc.reduce((a,x)=>a+(x.charges||0)+(x.taxeFonciere||0)/12+(x.assurance||0)/12+(x.gestion||0),0);
@@ -3310,7 +3353,7 @@ const rdtNetMoy=investTot>0?(netAnnuel/investTot*100):0;
 /* Ce que vos échéances remboursent réellement chaque mois, tous biens locatifs confondus */
 const capTot=(function(){
   let emprunte=0,restant=0,capMois=0,intMois=0,cap12=0;
-  S.immo.filter(b=>b.type!=='RP').forEach(b=>{
+  S.immo.filter(b=>!estRP(b)).forEach(b=>{
     const c=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
     const a=avancePret(c);
     if(!a)return;
@@ -3364,7 +3407,7 @@ document.getElementById('immoRecap').innerHTML=rcH;
 /* Occupation et vacance locative */
 (function(){
   const carte=document.getElementById('immoOccup');if(!carte)return;
-  const biens=S.immo.filter(b=>b.type!=='RP');
+  const biens=S.immo.filter(b=>!estRP(b));
   if(!biens.length){carte.style.display='none';return}
   carte.style.display='';
   let perteTot=0,sommePct=0,poids=0,nbLogts=0,nbVides=0,aHisto=false;
@@ -3409,7 +3452,7 @@ document.getElementById('immoRecap').innerHTML=rcH;
 (function(){
   const carte=document.getElementById('immoEnrichi');if(!carte)return;
   const lignes=[];
-  S.immo.filter(b=>b.type!=='RP').forEach(b=>{
+  S.immo.filter(b=>!estRP(b)).forEach(b=>{
     const c=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
     const mC=c?cAm(c.emprunte,c.taux||0,c.dureeMois||0,c.differe||0).m:0;
     const ch=(b.charges||0)+(b.taxeFonciere||0)/12+(b.assurance||0)/12+(b.gestion||0);
@@ -4578,6 +4621,7 @@ function noteBtn(section){const has=S&&S.notes&&S.notes[section];return ' <butto
 function noteDisp(section){if(!S||!S.notes)return '';const n=S.notes[section];return n?'<div style="background:rgba(62,207,142,.05);border:1px solid rgba(62,207,142,.15);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--text);margin-bottom:12px">✎ '+n+'</div>':''}
 
 function initApp(){
+  try{nettoieNombres()}catch(e){}
   /* Les chiffres de marché enregistrés avant la correction du 14/10 pouvaient mélanger
      deux périodes : on les jette une fois pour repartir sur des données sûres. */
   if(S&&!S._marchesOk){
