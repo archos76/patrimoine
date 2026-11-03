@@ -152,6 +152,15 @@ body.light .pf::after,body.light .obj-fill::after,body.light .dbar i::after{
 .sel-min:hover{border-color:var(--border)}
 .dropzone{border:1.5px dashed var(--border);border-radius:14px;padding:26px 20px;text-align:center;cursor:pointer;transition:all .15s;background:var(--card)}
 .dropzone:hover,.dropzone.survol{border-color:var(--accent);background:var(--card2)}
+
+/* Fiches de biens : sous-titres de section et mini-indicateurs */
+.sect{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.11em;font-weight:600;margin:2px 0 4px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.mkpi{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0 18px}
+.mkpi>div{background:var(--card2);border-radius:10px;padding:10px 12px;border:1px solid var(--border)}
+.mkpi .ml{font-size:10px;color:var(--muted);letter-spacing:.03em;margin-bottom:3px}
+.mkpi .mv{font-size:16.5px;font-weight:700;letter-spacing:-.02em}
+.mkpi .ms{font-size:10.5px;color:var(--muted);margin-top:2px}
+@media(max-width:700px){.mkpi{grid-template-columns:repeat(2,1fr);gap:8px}.mkpi .mv{font-size:15px}}
 .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
 /* Tableau plus large que l'écran : on peut le faire glisser du doigt */
 .tw::-webkit-scrollbar{height:6px}
@@ -283,7 +292,7 @@ details summary{color:var(--text2)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 03/11 14h41</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 03/11 14h51</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -3328,7 +3337,21 @@ let imH='';S.immo.forEach(b=>{
   if(b.surface)imH+='<span style="font-size:11px;color:var(--muted)">'+b.surface+' m²</span>';
   imH+='</div>';
 
+  /* 1. Où en est le remboursement : l'information se lit avant tout le reste */
+  const av=avancePret(cr);
+  if(av)imH+=jaugePret(av);
+
+  /* 2. Les trois chiffres qui comptent */
+  imH+='<div class="mkpi">';
+  imH+='<div><div class="ml">Cashflow net</div><div class="mv" style="color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+(cf>=0?'+':'')+F(Math.round(cf))+'</div><div class="ms">par mois</div></div>';
+  imH+='<div><div class="ml">Rendement net</div><div class="mv" style="color:var(--accent)">'+rn+' %</div><div class="ms">brut '+rb+' %</div></div>';
+  if(av)imH+='<div><div class="ml">Capital remboursé</div><div class="mv" style="color:var(--green)">'+F(Math.round(av.capMois))+'</div><div class="ms">par mois</div></div>';
+  else imH+='<div><div class="ml">Ta part</div><div class="mv" style="color:var(--orange)">'+F(Math.round(b.valeur*((b.partsPct||100)/100)))+'</div><div class="ms">'+(b.partsPct||100)+' % du bien</div></div>';
+  imH+='</div>';
+
+  /* 3. Le détail, rangé par thème */
   imH+='<div class="g2"><div>';
+  imH+='<div class="sect">Le bien</div>';
   imH+='<div class="lr"><span>Valeur</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'valeur\')" style="font-weight:700;color:#e8a33d">'+F(b.valeur)+'</span></div>';
   imH+='<div class="lr"><span>Prix achat</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'prixAchat\')">'+F(b.prixAchat)+'</span></div>';
   imH+='<div class="lr"><span>Surface m²</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'surface\')">'+(b.surface||'—')+'</span></div>';
@@ -3337,19 +3360,9 @@ let imH='';S.immo.forEach(b=>{
   imH+='<div class="lr"><span>SCI</span><span class="ed" onclick="togSCI(\''+b.id+'\')">'+(b.sci?'Oui':'Non')+'</span></div>';
   imH+='<div class="lr"><span>% détention (ta part)</span><span class="ed" onclick="edPct(this,\''+b.id+'\')" style="font-weight:700;color:var(--accent)">'+(b.partsPct||100)+'%</span></div>';
   imH+='<div class="lr"><span>Ta part (valeur)</span><span style="font-weight:700;color:var(--orange)">'+F(Math.round(b.valeur*((b.partsPct||100)/100)))+'</span></div>';
-  imH+='<div class="lr"><span>Crédit lié</span><span class="ed" onclick="edImmoCredit(\''+b.id+'\')">'+(cr?cr.nom:'—')+'</span></div>';
-  /* Avancement du remboursement, et part de capital de l'échéance du mois */
-  const av=avancePret(cr);
-  if(av){
-    imH+=jaugePret(av);
-    imH+='<div class="lr"><span>Capital remboursé ce mois</span><span style="font-weight:700;color:var(--green)">'+F2(av.capMois)+'</span></div>';
-    imH+='<div class="lr"><span>Dont intérêts</span><span style="color:var(--red)">'+F2(av.intMois)+'</span></div>';
-    imH+='<div class="lr"><span>Capital sur 12 mois</span><span style="font-weight:600;color:var(--green)">'+F(av.cap12)+'</span></div>';
-    imH+='<div class="lr"><span>Échéances restantes</span><span style="color:var(--muted)">'+av.reste+' sur '+av.total+(av.reste>12?' ('+Math.floor(av.reste/12)+' an'+(av.reste>=24?'s':'')+')':'')+'</span></div>';
-    if(av.differe)imH+='<div style="font-size:11px;color:var(--accent);margin-top:4px">⚠ Période de différé : vous ne payez que les intérêts, le capital ne baisse pas encore.</div>';
-  }
   imH+='</div><div>';
   const aLots=b.lots&&b.lots.length;
+  imH+='<div class="sect">Revenus et charges</div>';
   imH+='<div class="lr"><span>Loyer/mois'+(aLots?' <span style="color:var(--muted);font-size:11px">('+b.lots.length+' logements)</span>':'')+'</span>'
     +(aLots?'<span style="color:var(--green);font-weight:700">'+F(loyerBien(b))+'</span>'
            :'<span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'loyer\')" style="color:var(--green);font-weight:700">'+F(b.loyer||0)+'</span>')+'</div>';
@@ -3357,9 +3370,24 @@ let imH='';S.immo.forEach(b=>{
   imH+='<div class="lr"><span>Taxe foncière/an</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'taxeFonciere\')">'+F(b.taxeFonciere||0)+'</span></div>';
   imH+='<div class="lr"><span>Assurance/an</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'assurance\')">'+F(b.assurance||0)+'</span></div>';
   imH+='<div class="lr"><span>Gestion/mois</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'gestion\')">'+F(b.gestion||0)+'</span></div>';
+  if(mensC)imH+='<div class="lr"><span>Mensualité du prêt</span><span style="color:var(--red)">'+F(Math.round(mensC))+'</span></div>';
   imH+='<div class="lr"><span style="font-weight:700">Cashflow net</span><span style="font-weight:800;color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(cf))+'/mois</span></div>';
-  imH+='<div class="lr"><span>Rendement</span><span style="font-weight:600">Brut '+rb+'% — Net '+rn+'%</span></div>';
   imH+='</div></div>';
+
+  /* 4. Le crédit, regroupé */
+  imH+='<div style="margin-top:14px"><div class="sect">Crédit</div>';
+  imH+='<div class="lr"><span>Prêt rattaché</span><span class="ed" onclick="edImmoCredit(\''+b.id+'\')">'+(cr?cr.nom:'— cliquer pour rattacher')+'</span></div>';
+  if(av){
+    imH+='<div class="g2" style="gap:0 18px"><div>';
+    imH+='<div class="lr"><span>Capital remboursé ce mois</span><span style="font-weight:700;color:var(--green)">'+F2(av.capMois)+'</span></div>';
+    imH+='<div class="lr"><span>Intérêts ce mois</span><span style="color:var(--red)">'+F2(av.intMois)+'</span></div>';
+    imH+='</div><div>';
+    imH+='<div class="lr"><span>Capital sur 12 mois</span><span style="font-weight:600;color:var(--green)">'+F(av.cap12)+'</span></div>';
+    imH+='<div class="lr"><span>Échéances restantes</span><span style="color:var(--muted)">'+av.reste+' sur '+av.total+(av.reste>12?' ('+Math.floor(av.reste/12)+' an'+(av.reste>=24?'s':'')+')':'')+'</span></div>';
+    imH+='</div></div>';
+    if(av.differe)imH+='<div style="font-size:11px;color:var(--accent);margin-top:6px">⚠ Période de différé : vous ne payez que les intérêts, le capital ne baisse pas encore.</div>';
+  }
+  imH+='</div>';
   /* Fiscalité */
   const fb=fiscBien(b,mensC);
   imH+='<details style="margin-top:12px"><summary style="font-size:12px;font-weight:600;cursor:pointer">§ Fiscalité — '+fb.reg.n+'</summary><div style="margin-top:10px">';
