@@ -283,7 +283,7 @@ details summary{color:var(--text2)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 14/10 09h11</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 03/11 14h41</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -483,6 +483,44 @@ const dAmort=d-diffMois;let m;if(r===0)m=e/Math.max(1,dAmort);else m=e*r*Math.po
 for(let i=diffMois+1;i<=d&&rest>0;i++){const int=rest*r;const cap=Math.min(m-int,rest);rest=Math.max(0,rest-cap);t.push({n:i,m:Math.round(m*100)/100,i:Math.round(int*100)/100,c:Math.round(cap*100)/100,r:Math.round(rest*100)/100})}
 return{m:Math.round(m*100)/100,mDiff:diffMois>0?Math.round(e*r*100)/100:0,t}}
 function moisEcoules(dateDebut){if(!dateDebut)return 0;const parts=dateDebut.split('-');if(parts.length!==2)return 0;const y=parseInt(parts[0]),m=parseInt(parts[1]);const now=new Date();const diff=(now.getFullYear()-y)*12+(now.getMonth()+1-m);return Math.max(0,diff)}
+/* Où en est le remboursement d'un prêt, et ce que l'échéance du mois rembourse vraiment.
+   La mensualité se partage entre intérêts (perdus) et capital (qui enrichit) : c'est cette
+   part de capital qui fait grandir le patrimoine chaque mois. */
+function avancePret(cr){
+  if(!cr||!cr.emprunte)return null;
+  const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0);
+  if(!am.t.length)return null;
+  const me=moisEcoules(cr.dateDebut);
+  const idx=Math.max(0,Math.min(me,am.t.length)-1);
+  const ligne=me>0?am.t[idx]:null;
+  const restant=me>0?am.t[idx].r:cr.emprunte;
+  const rembourse=Math.max(0,cr.emprunte-restant);
+  const pct=cr.emprunte>0?Math.min(100,rembourse/cr.emprunte*100):0;
+  /* Échéance du mois en cours : pendant un différé, on ne paie que les intérêts */
+  const suiv=me>0?am.t[Math.min(me,am.t.length-1)]:am.t[0];
+  const capMois=suiv?(suiv.c||0):0;
+  const intMois=suiv?(suiv.i||0):0;
+  const reste=Math.max(0,am.t.length-me);
+  /* Capital qui sera remboursé sur les douze prochains mois */
+  let cap12=0;
+  for(let k=me;k<Math.min(me+12,am.t.length);k++)cap12+=am.t[k].c||0;
+  return {emprunte:cr.emprunte,restant:Math.round(restant),rembourse:Math.round(rembourse),pct,
+    capMois:Math.round(capMois*100)/100,intMois:Math.round(intMois*100)/100,
+    cap12:Math.round(cap12),mois:me,reste,total:am.t.length,differe:suiv&&suiv.diff};
+}
+/* Petite barre de progression réutilisable */
+function jaugePret(a,coul){
+  const c=coul||'var(--green)';
+  return '<div style="margin:10px 0 2px">'+
+    '<div style="display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:5px">'+
+      '<span style="color:var(--muted)">Capital remboursé</span>'+
+      '<span style="font-weight:700;color:'+c+'">'+a.pct.toFixed(1)+' %</span></div>'+
+    '<div style="height:8px;border-radius:5px;background:var(--card2);overflow:hidden">'+
+      '<div style="height:100%;width:'+a.pct.toFixed(1)+'%;background:'+c+';border-radius:5px;transition:width .4s"></div></div>'+
+    '<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:5px">'+
+      '<span>'+F(a.rembourse)+' sur '+F(a.emprunte)+'</span>'+
+      '<span>reste '+F(a.restant)+'</span></div></div>';
+}
 function cTWR(key){
   /* Ligne i : valeur = relevée au 1er du mois SUIVANT, versement = viré pendant ce mois
      Perf du mois i = (valeur_i - versement_i - valeur_(i-1)) / valeur_(i-1)
@@ -3135,6 +3173,20 @@ immoLoc.forEach(b=>{
 });
 const rdtNetMoy=investTot>0?(netAnnuel/investTot*100):0;
 
+/* Ce que vos échéances remboursent réellement chaque mois, tous biens locatifs confondus */
+const capTot=(function(){
+  let emprunte=0,restant=0,capMois=0,intMois=0,cap12=0;
+  S.immo.filter(b=>b.type!=='RP').forEach(b=>{
+    const c=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
+    const a=avancePret(c);
+    if(!a)return;
+    emprunte+=a.emprunte;restant+=a.restant;capMois+=a.capMois;intMois+=a.intMois;cap12+=a.cap12;
+  });
+  const rembourse=Math.max(0,emprunte-restant);
+  return {emprunte,restant,rembourse,capMois,intMois,cap12,
+    pctG:emprunte>0?Math.min(100,rembourse/emprunte*100):0};
+})();
+
 document.getElementById('ik').innerHTML=
  '<div class="kpi"><div class="kl">Biens en location</div><div class="kv" style="color:'+CV('--p5')+'">'+nbBiens+'</div><div class="ks">'+nbLots+' logement'+(nbLots>1?'s':'')+' · hors RP</div></div>'
 +'<div class="kpi"><div class="kl">Investissement total</div><div class="kv" style="color:'+CV('--p6')+'">'+F(Math.round(investTot))+'</div><div class="ks">achat et travaux</div></div>'
@@ -3143,7 +3195,8 @@ document.getElementById('ik').innerHTML=
 +'<div class="kpi"><div class="kl">Rendement brut moyen</div><div class="kv" style="color:var(--accent)">'+rdtBrutMoy.toFixed(1)+' %</div></div>'
 +'<div class="kpi"><div class="kl">Rendement net moyen</div><div class="kv" style="color:var(--accent)">'+rdtNetMoy.toFixed(1)+' %</div><div class="ks">net d\'impôts</div></div>'
 +'<div class="kpi"><div class="kl">Plus-value latente</div><div class="kv" style="color:'+(pvLatente>=0?'var(--green)':'var(--red)')+'">'+(pvLatente>=0?'+':'')+F(Math.round(pvLatente))+'</div><div class="ks">valeur moins investi</div></div>'
-+'<div class="kpi"><div class="kl">Capital restant dû</div><div class="kv" style="color:var(--red)">'+F(Math.round(dettesLoc))+'</div></div>';
++'<div class="kpi"><div class="kl">Capital restant dû</div><div class="kv" style="color:var(--red)">'+F(Math.round(dettesLoc))+'</div>'+(capTot.emprunte>0?'<div class="ks">'+capTot.pctG.toFixed(1)+' % déjà remboursé</div>':'')+'</div>'
++(capTot.capMois>0?'<div class="kpi"><div class="kl">Capital remboursé / mois</div><div class="kv" style="color:var(--green)">'+F2(capTot.capMois)+'</div><div class="ks">'+F2(capTot.intMois)+' d\'intérêts à côté</div></div>':'');
 
 /* Graphique immo net */
 document.getElementById('immoPs').innerHTML=[{l:'6M',m:6},{l:'1A',m:12},{l:'Année',m:-1},{l:'Tout',m:999}].map(x=>'<button class="pb '+(immoPr===x.m?'on':'')+'" onclick="sIP('+x.m+')">'+x.l+'</button>').join('');
@@ -3285,6 +3338,16 @@ let imH='';S.immo.forEach(b=>{
   imH+='<div class="lr"><span>% détention (ta part)</span><span class="ed" onclick="edPct(this,\''+b.id+'\')" style="font-weight:700;color:var(--accent)">'+(b.partsPct||100)+'%</span></div>';
   imH+='<div class="lr"><span>Ta part (valeur)</span><span style="font-weight:700;color:var(--orange)">'+F(Math.round(b.valeur*((b.partsPct||100)/100)))+'</span></div>';
   imH+='<div class="lr"><span>Crédit lié</span><span class="ed" onclick="edImmoCredit(\''+b.id+'\')">'+(cr?cr.nom:'—')+'</span></div>';
+  /* Avancement du remboursement, et part de capital de l'échéance du mois */
+  const av=avancePret(cr);
+  if(av){
+    imH+=jaugePret(av);
+    imH+='<div class="lr"><span>Capital remboursé ce mois</span><span style="font-weight:700;color:var(--green)">'+F2(av.capMois)+'</span></div>';
+    imH+='<div class="lr"><span>Dont intérêts</span><span style="color:var(--red)">'+F2(av.intMois)+'</span></div>';
+    imH+='<div class="lr"><span>Capital sur 12 mois</span><span style="font-weight:600;color:var(--green)">'+F(av.cap12)+'</span></div>';
+    imH+='<div class="lr"><span>Échéances restantes</span><span style="color:var(--muted)">'+av.reste+' sur '+av.total+(av.reste>12?' ('+Math.floor(av.reste/12)+' an'+(av.reste>=24?'s':'')+')':'')+'</span></div>';
+    if(av.differe)imH+='<div style="font-size:11px;color:var(--accent);margin-top:4px">⚠ Période de différé : vous ne payez que les intérêts, le capital ne baisse pas encore.</div>';
+  }
   imH+='</div><div>';
   const aLots=b.lots&&b.lots.length;
   imH+='<div class="lr"><span>Loyer/mois'+(aLots?' <span style="color:var(--muted);font-size:11px">('+b.lots.length+' logements)</span>':'')+'</span>'
