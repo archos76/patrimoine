@@ -287,7 +287,7 @@ details summary{color:var(--text2)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 09h05</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 10h15</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -350,7 +350,7 @@ details summary{color:var(--text2)}
 <div class="page" id="page-brokers"><div class="kr" id="brokersKpi"></div><div class="card"><div class="ct">⇄ Comparateur de brokers</div><div class="tw" id="brokersTable"></div></div><div class="card"><div class="ct">⇋ Impact devises EUR/USD</div><div id="devisesInfo"></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">◫ Benchmark personnalisé</div><div style="display:flex;gap:4px" id="benchBtns"></div></div><div class="cb"><canvas id="cBench"></canvas></div></div></div>
 <div class="page" id="page-analyse"><div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Évolution par poste</div><div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button class="pb" onclick="edHistPoste()">Historique</button><span id="envPs" style="display:flex;gap:4px"></span></div></div><div class="cto" id="envCases"></div><div class="cb" style="height:310px"><canvas id="cEnv"></canvas></div><div id="envLeg" style="margin-top:14px"></div></div><div class="card"><div class="ct">◫ Rendement par poche</div><div id="rdtPoches"></div></div></div>
 <div class="page" id="page-resume"><div class="kr" id="resumeKpi"></div><div class="card"><div class="ct">Heatmap portefeuille</div><div id="heatmap" class="tw" style="width:100%"></div></div><div class="card"><div class="ct">▤ Résumé du mois</div><div id="resumeDetail"></div></div></div>
-<div class="page" id="page-simulator"><div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">◷ Où j'en serai</div><div style="display:flex;gap:4px" id="projAgeBtns"></div></div><div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;line-height:1.6">Ton patrimoine d'aujourd'hui, prolongé avec ce que tu rembourses chaque mois, ce que tes biens rapportent et ce que tu épargnes. Le trait plein est du réel, les pointillés une estimation.</div><div class="kr" id="projKpi" style="margin-bottom:14px"></div><div class="cb"><canvas id="cProjPat"></canvas></div><div id="projReglages" style="margin-top:16px"></div><div id="projNote" style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6"></div></div><div id="simContent"></div></div>
+<div class="page" id="page-simulator"><div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">◷ Où j'en serai</div><div style="display:flex;gap:4px" id="projAgeBtns"></div></div><div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;line-height:1.6">Ton patrimoine d'aujourd'hui, prolongé avec ce que tu rembourses chaque mois, ce que tes biens rapportent et ce que tu épargnes.</div><div class="kr" id="projKpi" style="margin-bottom:14px"></div><div class="cb"><canvas id="cProjPat"></canvas></div><div id="projReglages" style="margin-top:16px"></div><div id="projNote" style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6"></div></div><div id="simContent"></div></div>
 </main></div></div>
 <button class="dm-btn" onclick="toggleHide()" id="dmBtn" title="Masquer les montants">◉</button>
 <script>
@@ -553,6 +553,8 @@ function projParams(){
   if(p.rend==null)p.rend=nb(sp.rend)||7;
   if(p.immo==null)p.immo=1.5;
   if(p.ep==null)p.ep=nb(sp.ep)||0;
+  /* La résidence principale n'est pas un placement : on la laisse de côté par défaut */
+  if(p.rp==null)p.rp=false;
   return p;
 }
 /* Mois par mois, de maintenant jusqu'à l'âge visé.
@@ -565,8 +567,13 @@ function projection(){
   const annees=Math.max(1,Math.min(50,nb(p.age)-ageAuj));
   const n=Math.round(annees*12);
   const t=Tot();
+  /* La résidence principale compte dans le patrimoine, mais ce n'est pas un placement :
+     on peut la mettre de côté, elle et son crédit, pour ne regarder que ce qui travaille. */
+  const avecRP=p.rp===true;
+  const estPretRP=d=>{const b=S.immo.find(x=>x.creditId===d.id);return !!(b&&estRP(b))};
+  const valeurRP=S.immo.filter(estRP).reduce((a,x)=>a+nb(x.valeur)*((x.partsPct||100)/100),0);
   /* Chaque prêt avec son tableau et sa part de détention */
-  const prets=S.dettes.map(d=>{
+  const prets=S.dettes.filter(d=>avecRP||!estPretRP(d)).map(d=>{
     const bienLie=S.immo.find(b=>b.creditId===d.id);
     const pct=(d.partsPct!=null?d.partsPct:(bienLie?(bienLie.partsPct||100):100))/100;
     const am=cAm(nb(d.emprunte),nb(d.taux),nb(d.dureeMois),nb(d.differe),d.debloque);
@@ -580,12 +587,46 @@ function projection(){
     return s+pr.t[i-1].r*pr.pct;
   },0);
   const cf=cashflowLocatif();
+  /* Les achats à venir : chacun arrive à sa date, avec son apport, ses frais
+     de notaire, son crédit et ce qu'il rapporte ensuite. */
+  const achats=(S.projets||[]).filter(x=>x.enProj!==false).map(x=>{
+    const prix=nb(x.prix), frais=nb(x.fraisNotaire), trav=nb(x.travaux), apport=nb(x.apport);
+    const emprunte=Math.max(0,prix+frais+trav-apport);
+    const differe=Math.max(0,Math.round(nb(x.differe)));
+    const am=cAm(emprunte,nb(x.taux),nb(x.dureeMois),differe);
+    const mens=Math.abs(nb(am.m));
+    const mensDiff=Math.abs(nb(am.mDiff));/* pendant le différé, on ne paie que les intérêts */
+    const recettes=nb(x.loyer)-nb(x.charges)-nb(x.taxeFonciere)/12;
+    return{nom:x.nom||'Projet',mois:Math.max(0,Math.round(nb(x.dansMois))),
+           prix,frais,trav,apport,emprunte,t:am.t,mens,mensDiff,differe,recettes,
+           cfMois:recettes-mens,valeur:prix+trav};
+  });
+  /* Ce qu'un futur bien laisse le mois k, différé compris */
+  const cfAchat=(a,k)=>{
+    if(k<a.mois)return 0;
+    const i=k-a.mois+1;
+    return a.recettes-((a.differe>0&&i<=a.differe)?a.mensDiff:a.mens);
+  };
   const rM=nb(p.rend)/100/12, iM=nb(p.immo)/100/12;
-  let bourse=t.bo+t.cr, immo=t.im, liquide=t.co+t.ep;
+  let bourse=t.bo+t.cr, immo=avecRP?t.im:Math.max(0,t.im-valeurRP), liquide=t.co+t.ep;
   const pts=[];
   const auj=new Date();
+  /* Dette restante des achats à venir, au mois k */
+  const detteAchats=k=>achats.reduce((s,a)=>{
+    if(k<a.mois||!a.t.length)return s;
+    const i=k-a.mois;
+    if(i<=0)return s+a.emprunte;
+    if(i>=a.t.length)return s;
+    return s+a.t[i-1].r;
+  },0);
   for(let k=0;k<=n;k++){
-    const dette=detteA(k);
+    /* Le mois de l'achat : l'apport et les frais sortent, le bien entre */
+    achats.forEach(a=>{
+      if(a.mois!==k)return;
+      liquide-=a.apport;
+      immo+=a.valeur;
+    });
+    const dette=detteA(k)+detteAchats(k);
     pts.push({k,
       ts:new Date(auj.getFullYear(),auj.getMonth()+k,1).getTime(),
       age:Math.round((ageAuj+k/12)*10)/10,
@@ -596,6 +637,7 @@ function projection(){
     immo*=(1+iM);
     bourse=bourse*(1+rM)+nb(p.ep);
     liquide+=cf.net;/* un cashflow négatif creuse bien les liquidités */
+    achats.forEach(a=>{liquide+=cfAchat(a,k)});
   }
   /* Repères utiles */
   const depart=pts[0];
@@ -603,10 +645,11 @@ function projection(){
   const sansDette=pts.find(x=>x.dette<=0);
   /* Le mois où le patrimoine net dépasse les dettes restantes */
   const bascule=pts.find(x=>x.net>=x.dette);
-  return{pts,depart,arrivee,sansDette,bascule,annees,ageAuj,cf,p};
+  return{pts,depart,arrivee,sansDette,bascule,annees,ageAuj,cf,p,avecRP,valeurRP,achats};
 }
 window.setProjAge=function(a){projParams().age=nb(a);autoSave();R(true)};
 window.setProjVal=function(champ,val){
+  if(typeof val==='boolean'){projParams()[champ]=val;autoSave();R(true);return}
   const v=parseFloat(String(val).replace(',','.'));
   if(isNaN(v))return;
   projParams()[champ]=v;autoSave();R(true);
@@ -1204,7 +1247,10 @@ window.delTravaux=function(id,i){const b=S.immo.find(x=>x.id===id);if(b&&b.trava
 window.edDettePct=function(el,id){const d=S.dettes.find(x=>x.id===id);if(!d)return;const bienLie=S.immo.find(b=>b.creditId===id);const actuel=d.partsPct!=null?d.partsPct:(bienLie?(bienLie.partsPct||100):100);const v=parseInt(prompt('Quelle part de ce prêt est à ta charge ?\n\n100 = tu paies tout\n50 = moitié (achat à deux)',actuel));if(isNaN(v)||v<1||v>100)return;d.partsPct=v;autoSave();R(true)};
 
 /* Projets d'achat */
-window.addProjet=function(){const nom=prompt('Nom du projet (ex: Lot 3 maisons Rouen)','');if(!nom)return;const prix=parseFloat(prompt('Prix visé (€)','200000'))||0;if(!S.projets)S.projets=[];S.projets.push({id:'pj'+nid(),nom,prix,fraisNotaire:Math.round(prix*0.08),travaux:0,apport:0,taux:3.5,dureeMois:240,differe:0,loyer:0,charges:0,taxeFonciere:0});autoSave();R(true)};
+window.addProjet=function(){const nom=prompt('Nom du projet (ex: Lot 3 maisons Rouen)','');if(!nom)return;const prix=parseFloat(prompt('Prix visé (€)','200000'))||0;const ans=parseFloat(String(prompt('Dans combien d\'années comptes-tu acheter ?','2')||'2').replace(',','.'));if(!S.projets)S.projets=[];S.projets.push({id:'pj'+nid(),nom,prix,fraisNotaire:Math.round(prix*0.08),travaux:0,apport:0,taux:3.5,dureeMois:240,differe:0,loyer:0,charges:0,taxeFonciere:0,dansMois:isNaN(ans)?24:Math.max(0,Math.round(ans*12)),enProj:true});autoSave();R(true)};
+/* Quand l'achat est prévu, et faut-il le compter dans la projection */
+window.setProjetDelai=function(id,ans){const p=(S.projets||[]).find(x=>x.id===id);if(!p)return;const v=parseFloat(String(ans).replace(',','.'));if(isNaN(v))return;p.dansMois=Math.max(0,Math.round(v*12));autoSave();R(true)};
+window.toggleProjetProj=function(id){const p=(S.projets||[]).find(x=>x.id===id);if(!p)return;p.enProj=!(p.enProj!==false);autoSave();R(true)};
 window.edProjet=function(el,id,f){const p=S.projets.find(x=>x.id===id);if(!p)return;const v=parseFloat(prompt('Nouvelle valeur',p[f]||0));if(isNaN(v))return;p[f]=v;autoSave();R(true)};
 window.delProjet=function(id){if(!confirm('Supprimer ce projet ?'))return;S.projets=S.projets.filter(x=>x.id!==id);autoSave();R(true)};
 window.convertProjet=function(id){
@@ -2203,17 +2249,56 @@ document.getElementById('sl').innerHTML=sH;
       champ('Rendement bourse et crypto','rend','% / an','7 % est la moyenne historique long terme')+
       champ('Revalorisation immobilier','immo','% / an','1,5 % reste prudent')+
       champ('Épargne versée en bourse','ep','€ / mois','en plus de ce que tes biens rapportent')+
+      '<div style="flex:1;min-width:150px">'+
+        '<div style="font-size:11px;color:var(--muted);margin-bottom:4px">Résidence principale</div>'+
+        '<div style="display:flex;gap:4px">'+
+          [{v:false,l:'De côté'},{v:true,l:'Comptée'}].map(x=>'<button class="pb '+(pr.avecRP===x.v?'on':'')+'" onclick="setProjVal(\'rp\','+x.v+')">'+x.l+'</button>').join('')+
+        '</div>'+
+        '<div style="font-size:10.5px;color:var(--muted);margin-top:3px">'+(pr.valeurRP>0?(pr.avecRP?'sa valeur et son crédit sont dans le calcul':'ni sa valeur ni son crédit ne comptent'):'aucune résidence principale saisie')+'</div></div>'+
       '</div>';
+
+    /* Les achats à venir */
+    const tous=S.projets||[];
+    let aH='<div style="margin-top:16px"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px">'+
+      '<div style="font-weight:600;font-size:13px">⌂ Achats à venir</div>'+
+      '<button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addProjet()">+ Ajouter un achat</button></div>';
+    if(!tous.length){
+      aH+='<div style="font-size:11.5px;color:var(--muted);line-height:1.6">Tu peux ajouter un bien que tu comptes acheter plus tard : son apport, ses frais de notaire et son crédit entrent dans la courbe le mois venu. Les projets créés ici apparaissent aussi sur la page Immo, où tu règles le loyer, les charges et le crédit en détail.</div>';
+    }else{
+      aH+='<div class="tw"><table style="font-size:11.5px"><thead><tr><th class="l">Projet</th><th>Prix</th><th>Apport</th><th>Dans</th><th>Cashflow</th><th>Compté</th></tr></thead><tbody>';
+      tous.forEach(x=>{
+        const inclus=x.enProj!==false;
+        const a=pr.achats.find(y=>y.nom===(x.nom||'Projet'));
+        const cfp=a?a.cfMois:null;
+        const ans=Math.round(nb(x.dansMois)/12*10)/10;
+        aH+='<tr'+(inclus?'':' style="opacity:.45"')+'>'+
+          '<td class="l" style="font-weight:600">'+String(x.nom||'Projet').slice(0,28)+'</td>'+
+          '<td>'+F(nb(x.prix))+'</td>'+
+          '<td>'+F(nb(x.apport))+'</td>'+
+          '<td><input class="ci" style="width:48px" value="'+ans+'" onchange="setProjetDelai(\''+x.id+'\',this.value)"> an'+(ans>1?'s':'')+'</td>'+
+          '<td style="color:'+(cfp==null?'var(--muted)':(cfp>=0?'var(--green)':'var(--red)'))+'">'+(cfp==null?'—':(cfp>=0?'+':'')+F2(cfp))+(a&&a.differe>0?'<div style="font-size:10px;color:var(--muted)">après '+a.differe+' mois de différé</div>':'')+'</td>'+
+          '<td><button class="pb '+(inclus?'on':'')+'" onclick="toggleProjetProj(\''+x.id+'\')">'+(inclus?'Oui':'Non')+'</button></td></tr>';
+      });
+      aH+='</tbody></table></div>';
+      aH+='<div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6">Le jour de l\'achat, l\'apport sort de tes liquidités et les frais de notaire sont perdus : la courbe plonge un peu, puis le bien et son remboursement la font remonter. Loyer, charges et crédit se règlent sur la page Immo.</div>';
+    }
+    aH+='</div>';
+    rg.innerHTML+=aH;
   }
 
   /* Note explicative, avec ce qui est certain et ce qui ne l'est pas */
   const note=document.getElementById('projNote');
   if(note){
     const cf=pr.cf;
-    note.innerHTML='Le remboursement de tes prêts suit leur vrai tableau d\'amortissement : cette partie-là est certaine. '+
+    note.innerHTML=(pr.valeurRP>0?(pr.avecRP
+        ?'Ta résidence principale est comptée ici, avec son crédit. '
+        :'Ta résidence principale est laissée de côté, ainsi que son crédit : tu ne vois que ce qui travaille pour toi. ')
+      :'')+
+      'Le remboursement de tes prêts suit leur vrai tableau d\'amortissement : cette partie-là est certaine. '+
       (cf.net!==0?'On ajoute '+F(Math.round(cf.net))+' par mois de cashflow locatif'+(cf.net<0?' (négatif : tes biens te coûtent de l\'argent chaque mois)':'')+'. ':'')+
       'Le reste dépend des trois réglages ci-dessus : personne ne connaît le rendement des vingt prochaines années. '+
-      'Attention à ne pas confondre avec les cartes du dessous : celle-ci couvre tout ton patrimoine, biens et crédits compris, alors que le simulateur FIRE ne regarde que la bourse.';
+      'Attention à ne pas confondre avec les cartes du dessous : celle-ci couvre tes biens et tes crédits, alors que le simulateur FIRE ne regarde que la bourse.'+
+      (pr.valeurRP>0&&!pr.avecRP?' La courbe du réel n\'est pas affichée : ton historique, lui, contient ta résidence principale, les deux ne se compareraient pas.':'');
   }
 
   /* Courbe : le passé en trait plein, le futur en pointillés */
@@ -2226,7 +2311,10 @@ document.getElementById('sl').innerHTML=sH;
       /* Quelques points de passé pour rattacher la courbe au réel.
          L'historique ne porte pas toujours d'horodatage : on retrouve le mois
          à partir de son libellé, comme sur la courbe d'évolution. */
-      const H=parMois(gH()).slice(-13);
+      /* L'historique enregistré contient toujours la résidence principale. Si on l'a
+         mise de côté, les deux courbes ne parlent pas de la même chose : on n'affiche
+         alors que la projection, plutôt qu'un décrochage qui n'existe pas. */
+      const H=(pr.valeurRP>0&&!pr.avecRP)?[]:parMois(gH()).slice(-13);
       const passe=H.map(x=>{
         const k=moisDe(x);
         return{ts:new Date(Math.floor(k/100),(k%100)-1,1).getTime(),
@@ -2237,11 +2325,13 @@ document.getElementById('sl').innerHTML=sH;
       const serFut=passe.map((x,i)=>i===passe.length-1?x.net:null).concat(fut.map(x=>x.net));
       const serDette=passe.map(()=>null).concat(fut.map(x=>x.dette));
       const fmtD=ts=>{const d=new Date(ts);return d.toLocaleDateString('fr-FR',{month:'short',year:'2-digit'})};
-      window._cProjPat=new Chart(el,{type:'line',data:{labels:labels.map(fmtD),datasets:[
-        {label:'Réel',data:serPasse,borderColor:CV('--green'),backgroundColor:hexA(CV('--green'),.12),fill:true,tension:.3,borderWidth:2.5,pointRadius:0},
+      /* Pas de série « Réel » quand il n'y a rien à tracer : une légende vide égare */
+      const dsProjPat=[];
+      if(passe.length)dsProjPat.push({label:'Réel',data:serPasse,borderColor:CV('--green'),backgroundColor:hexA(CV('--green'),.12),fill:true,tension:.3,borderWidth:2.5,pointRadius:0});
+      window._cProjPat=new Chart(el,{type:'line',data:{labels:labels.map(fmtD),datasets:dsProjPat.concat([
         {label:'Projection',data:serFut,borderColor:CV('--accent'),backgroundColor:hexA(CV('--accent'),.10),fill:true,tension:.3,borderWidth:2.5,borderDash:[6,4],pointRadius:0},
         {label:'Ce qu\'il reste à rembourser',data:serDette,borderColor:CV('--red'),backgroundColor:'transparent',fill:false,tension:.3,borderWidth:1.8,borderDash:[2,3],pointRadius:0}
-      ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,
+      ])},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,
         plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7,padding:14,color:CV('--muted')}},
           tooltip:tipOpts(c=>c.dataset.label+' : '+F(Math.abs(c.raw)))},
         scales:{x:{grid:{display:false},ticks:{color:CV('--muted'),font:{size:10},maxTicksLimit:8,autoSkip:true}},
