@@ -306,7 +306,7 @@ details summary{color:var(--text2)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 13h05</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 13h45</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -341,8 +341,11 @@ details summary{color:var(--text2)}
 </div>
 
 <div class="svue" id="ivue-annuel" style="display:none">
+<div style="display:flex;justify-content:flex-end;gap:4px;margin-bottom:12px" id="bilanAnBtns"></div>
 <div class="kr kr4" id="ikAn"></div>
-<div class="card"><div class="ct">Revenus et dépenses par mois</div><div style="font-size:11px;color:var(--muted);margin:-6px 0 10px">Année en cours</div><div class="cb"><canvas id="cImmoAn"></canvas></div></div>
+<div id="bilanNote"></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">Revenus et dépenses par mois</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px">Loyers réellement encaissés, face aux dépenses du mois</div><div class="cb"><canvas id="cImmoAn"></canvas></div></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">▤ Détail mensuel</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px">Revenus, dépenses et cashflow par mois</div><div class="tw" id="bilanTable"></div><div id="bilanAide" style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6"></div></div>
 <div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Patrimoine Immo Net</div><div style="display:flex;gap:4px" id="immoPs"></div></div><div class="cb"><canvas id="cImmoNet"></canvas></div></div>
 <div class="card" id="immoEnrichi" style="display:none"><div class="ct">◈ Enrichissement mensuel</div><div id="enrichiCorps"></div></div>
 </div>
@@ -745,6 +748,33 @@ window.setCfProjet=function(id,val){
   else{const v=parseFloat(s.replace(',','.').replace(/\s|€/g,''));if(isNaN(v))return;p.cfManuel=v}
   autoSave();R(true);
 };
+/* ====== BILAN ANNUEL IMMOBILIER ====== */
+let bilanAn=new Date().getFullYear();
+window.setBilanAn=function(a){bilanAn=parseInt(a)||new Date().getFullYear();R(true)};
+/* Loyers réellement encaissés sur un mois donné */
+function loyersEncaisses(annee,moisIdx){
+  const cle=annee+'-'+String(moisIdx+1).padStart(2,'0');
+  const m=(S.loyersRecus||{})[cle]||{};
+  let t=0;
+  biensLocatifs().forEach(b=>{
+    const lots=(b.lots&&b.lots.length)?b.lots:[{id:'_',loyer:nb(b.loyer)}];
+    lots.forEach(l=>{if(m[b.id+'|'+(l.id||'_')])t+=nb(l.loyer)});
+  });
+  return t;
+}
+/* Dépenses d'un mois : ce que tu as saisi, sinon l'estimation de l'app */
+function depensesMois(annee,moisIdx,estimation){
+  const cle=annee+'-'+String(moisIdx+1).padStart(2,'0');
+  const v=(S.depReelles||{})[cle];
+  return v!=null?{m:nb(v),reel:true}:{m:estimation,reel:false};
+}
+window.setDepMois=function(cle,val){
+  if(!S.depReelles)S.depReelles={};
+  const s=String(val==null?'':val).trim();
+  if(s===''){delete S.depReelles[cle]}
+  else{const v=parseFloat(s.replace(',','.').replace(/\s|€/g,''));if(isNaN(v))return;S.depReelles[cle]=Math.abs(v)}
+  autoSave();R(true);
+};
 /* Loyer encaissé ou non, pour le mois en cours */
 window.togLoyerRecu=function(cle){
   const d=new Date(), mois=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
@@ -757,6 +787,14 @@ window.togLoyerRecu=function(cle){
   while(cles.length>24)delete S.loyersRecus[cles.shift()];
   autoSave();R(true);
 };
+/* Le cashflow d'un bien tel que la page le calcule partout : logements vides
+   écartés, et cashflow saisi à la main respecté. */
+function cfDuBien(b){
+  const d=(cashflowLocatif(0).detail||[]).find(x=>x.id===b.id);
+  if(d)return d.net;
+  const ch=nb(b.charges)+nb(b.taxeFonciere)/12+nb(b.assurance)/12+nb(b.gestion);
+  return loyerBien(b)-ch-mensualiteBien(b);
+}
 window.setLoyerDelai=function(id,ans){
   const b=S.immo.find(x=>x.id===id);if(!b)return;
   const v=parseFloat(String(ans).replace(',','.'));
@@ -3192,41 +3230,102 @@ document.getElementById('ik').innerHTML=
   }
 })();
 
-/* Onglet Bilan annuel : indicateurs et courbe des douze mois */
+/* ====== ONGLET BILAN ANNUEL ====== */
 (function(){
   const k=document.getElementById('ikAn');if(!k)return;
-  const an=new Date().getFullYear();
-  const cfAn=cashflowLocatif(0);
-  const loyersAn=cfAn.loyers*12;
-  const depAn=(cfAn.charges+cfAn.mens)*12;
-  k.innerHTML=
-    '<div class="kpi"><div class="kl">Revenus '+an+'</div><div class="kv" style="color:var(--green)">'+F(Math.round(loyersAn))+'</div><div class="ks">loyers sur douze mois</div></div>'+
-    '<div class="kpi"><div class="kl">Dépenses '+an+'</div><div class="kv" style="color:var(--red)">'+(cfIncomplet?'<span style="color:var(--orange)">≥ </span>':'')+F(Math.round(depAn))+'</div><div class="ks">charges et crédits</div></div>'+
-    '<div class="kpi"><div class="kl">Cashflow annuel</div><div class="kv" style="color:'+(cfAn.net>=0?'var(--green)':'var(--red)')+'">'+(cfIncomplet?'<span style="color:var(--orange)">≤ </span>':'')+(cfAn.net>=0?'+':'')+F(Math.round(cfAn.net*12))+'</div></div>'+
-    '<div class="kpi"><div class="kl">Capital remboursé</div><div class="kv" style="color:var(--green)">'+F(Math.round(capTot.capMois*12))+'</div><div class="ks">sur douze mois</div></div>';
+  const ml=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
+  const mlLong=['Janv.','Févr.','Mars','Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'];
+  const anAct=new Date().getFullYear(), moisAct=new Date().getMonth();
+  /* Les années pour lesquelles on a quelque chose, plus l'année en cours */
+  const anneesDispo=[...new Set([anAct,
+    ...Object.keys(S.loyersRecus||{}).map(x=>parseInt(x.slice(0,4))),
+    ...Object.keys(S.depReelles||{}).map(x=>parseInt(x.slice(0,4)))])]
+    .filter(x=>x>2000).sort((a,b)=>b-a);
+  if(anneesDispo.indexOf(bilanAn)<0)bilanAn=anAct;
+  const bb=document.getElementById('bilanAnBtns');
+  if(bb)bb.innerHTML=anneesDispo.slice(0,5).map(a=>'<button class="pb '+(a===bilanAn?'on':'')+'" onclick="setBilanAn('+a+')">'+a+'</button>').join('');
 
+  /* Estimation mensuelle des dépenses, d'après les biens */
+  const cfAn=cashflowLocatif(0);
+  const estDep=Math.round(cfAn.charges+cfAn.mens);
+  const dernierMois=bilanAn<anAct?11:moisAct;
+
+  /* Mois par mois */
+  const lignes=[];
+  for(let i=0;i<=11;i++){
+    const passe=i<=dernierMois;
+    const cle=bilanAn+'-'+String(i+1).padStart(2,'0');
+    const rev=loyersEncaisses(bilanAn,i);
+    const d=depensesMois(bilanAn,i,estDep);
+    lignes.push({i,cle,nom:mlLong[i],passe,rev,dep:d.m,reel:d.reel,cf:rev-d.m});
+  }
+  const ecoules=lignes.filter(x=>x.passe);
+  const revYTD=ecoules.reduce((a,x)=>a+x.rev,0);
+  const depYTD=ecoules.reduce((a,x)=>a+x.dep,0);
+  const cfYTD=revYTD-depYTD;
+  const nbSaisis=ecoules.filter(x=>x.reel).length;
+  const moisSansRevenu=ecoules.filter(x=>x.rev===0).length;
+
+  /* Indicateurs */
+  const libYTD=bilanAn<anAct?'sur l\'année':'depuis janvier';
+  k.innerHTML=
+    '<div class="kpi"><div class="kl">Loyers encaissés '+bilanAn+'</div><div class="kv" style="color:var(--green)">'+F(Math.round(revYTD))+'</div><div class="ks">'+libYTD+' · '+ecoules.length+' mois</div></div>'+
+    '<div class="kpi"><div class="kl">Dépenses '+bilanAn+'</div><div class="kv" style="color:var(--red)">'+(cfIncomplet&&nbSaisis<ecoules.length?'<span style="color:var(--orange)">≥ </span>':'')+F(Math.round(depYTD))+'</div><div class="ks">'+(nbSaisis?nbSaisis+' mois saisi'+(nbSaisis>1?'s':'')+' sur '+ecoules.length:'estimation sur tous les mois')+'</div></div>'+
+    '<div class="kpi"><div class="kl">Cashflow réel</div><div class="kv" style="color:'+(cfYTD>=0?'var(--green)':'var(--red)')+'">'+(cfYTD>=0?'+':'')+F(Math.round(cfYTD))+'</div><div class="ks">'+(ecoules.length?F(Math.round(cfYTD/ecoules.length))+' / mois en moyenne':'—')+'</div></div>'+
+    '<div class="kpi"><div class="kl">Capital remboursé</div><div class="kv" style="color:var(--green)">'+F(Math.round(capTot.capMois*ecoules.length))+'</div><div class="ks">'+libYTD+'</div></div>';
+
+  /* Avertissement si les loyers ne sont pas pointés */
+  const nt=document.getElementById('bilanNote');
+  if(nt){
+    if(moisSansRevenu===ecoules.length&&ecoules.length){
+      nt.innerHTML='<div class="manq">Aucun loyer n\'est encore pointé comme reçu pour '+bilanAn+' : les revenus affichés sont donc à zéro.<br>'+
+        '<span class="mlien" onclick="setImmoVue(\'mensuel\')">Pointer les loyers du mois →</span>'+
+        '<div style="font-size:11px;color:var(--muted);margin-top:6px">Ce tableau ne compte que l\'argent réellement encaissé, mois par mois. C\'est ce qui le rend utile : il montre ce qui est entré, pas ce qui aurait dû entrer.</div></div>';
+    }else if(moisSansRevenu){
+      nt.innerHTML='<div class="manq">'+moisSansRevenu+' mois sans aucun loyer pointé sur '+ecoules.length+'. Si des loyers ont bien été reçus, pense à les marquer pour que le bilan soit juste.<br>'+
+        '<span class="mlien" onclick="setImmoVue(\'mensuel\')">Aller aux loyers du mois →</span></div>';
+    }else nt.innerHTML='';
+  }
+
+  /* Tableau détaillé */
+  const tb=document.getElementById('bilanTable');
+  if(tb){
+    let h='<table style="font-size:12px"><thead><tr><th class="l">Mois</th><th>Revenus</th><th>Dépenses</th><th>Cashflow</th></tr></thead><tbody>';
+    lignes.forEach(x=>{
+      if(!x.passe){
+        h+='<tr style="opacity:.4"><td class="l">'+x.nom+'</td><td colspan="3" style="color:var(--muted);text-align:center">à venir</td></tr>';
+        return;
+      }
+      h+='<tr><td class="l" style="font-weight:600">'+x.nom+'</td>'+
+        '<td style="color:'+(x.rev>0?'var(--green)':'var(--muted)')+'">'+F(Math.round(x.rev))+'</td>'+
+        '<td><input class="ci" style="width:72px" placeholder="'+Math.round(estDep)+'" value="'+(x.reel?Math.round(x.dep):'')+'" onchange="setDepMois(\''+x.cle+'\',this.value)" title="Laisse vide pour utiliser l\'estimation">'+
+          (x.reel?'':'<div style="font-size:10px;color:var(--muted)">estimé</div>')+'</td>'+
+        '<td style="font-weight:700;color:'+(x.cf>=0?'var(--green)':'var(--red)')+'">'+(x.cf>=0?'+':'')+F(Math.round(x.cf))+'</td></tr>';
+    });
+    h+='<tr style="font-weight:800;border-top:2px solid var(--border)"><td class="l">Total '+bilanAn+'</td>'+
+      '<td style="color:var(--green)">'+F(Math.round(revYTD))+'</td>'+
+      '<td style="color:var(--red)">'+F(Math.round(depYTD))+'</td>'+
+      '<td style="color:'+(cfYTD>=0?'var(--green)':'var(--red)')+'">'+(cfYTD>=0?'+':'')+F(Math.round(cfYTD))+'</td></tr>';
+    h+='</tbody></table>';
+    tb.innerHTML=h;
+  }
+  const aide=document.getElementById('bilanAide');
+  if(aide)aide.innerHTML='<strong style="color:var(--text2)">Revenus :</strong> les loyers que tu as pointés comme reçus dans l\'onglet Mensuel. '+
+    '<strong style="color:var(--text2)">Dépenses :</strong> l\'app propose '+F(estDep)+' par mois (charges et crédits de tes biens). '+
+    'Écris le vrai montant dans la case si tu le connais ; laisse-la vide pour garder l\'estimation.';
+
+  /* Graphique */
   if(dc){
     const el=document.getElementById('cImmoAn');
     if(el){
       if(window._cImAn)window._cImAn.destroy();
-      const ml=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
-      const moisAct=new Date().getMonth();
-      /* loyers réellement encaissés, mois par mois */
-      const rec=S.loyersRecus||{};
-      const encaisse=ml.map((_,i)=>{
-        const cle=an+'-'+String(i+1).padStart(2,'0');
-        const m=rec[cle]||{};
-        let t=0;
-        biensLocatifs().forEach(b=>{
-          const lots=(b.lots&&b.lots.length)?b.lots:[{id:'_',loyer:nb(b.loyer)}];
-          lots.forEach(l=>{if(m[b.id+'|'+(l.id||'_')])t+=nb(l.loyer)});
-        });
-        return i>moisAct?null:t;
-      });
-      const dep=ml.map((_,i)=>i>moisAct?null:-Math.round(cfAn.charges+cfAn.mens));
-      window._cImAn=new Chart(el,{type:'bar',data:{labels:ml,datasets:[
-        {label:'Loyers encaissés',data:encaisse,backgroundColor:CV('--green'),borderRadius:5,borderSkipped:false,barPercentage:.7,categoryPercentage:.8,borderWidth:0},
-        {label:'Dépenses',data:dep,backgroundColor:hexA(CV('--red'),.75),borderRadius:5,borderSkipped:false,barPercentage:.7,categoryPercentage:.8,borderWidth:0}]},
+      const rev=lignes.map(x=>x.passe?Math.round(x.rev):null);
+      const dep=lignes.map(x=>x.passe?-Math.round(x.dep):null);
+      const cf=lignes.map(x=>x.passe?Math.round(x.cf):null);
+      window._cImAn=new Chart(el,{data:{labels:ml,datasets:[
+        {type:'bar',label:'Loyers encaissés',data:rev,backgroundColor:CV('--green'),borderRadius:5,borderSkipped:false,barPercentage:.75,categoryPercentage:.8,borderWidth:0,order:2},
+        {type:'bar',label:'Dépenses',data:dep,backgroundColor:hexA(CV('--red'),.75),borderRadius:5,borderSkipped:false,barPercentage:.75,categoryPercentage:.8,borderWidth:0,order:2},
+        {type:'line',label:'Cashflow',data:cf,borderColor:CV('--accent'),backgroundColor:'transparent',borderWidth:2,tension:.3,pointRadius:2.5,pointBackgroundColor:CV('--accent'),order:1,spanGaps:false}]},
         options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,
           plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7,padding:14,color:CV('--muted')}},
             tooltip:tipOpts(c=>c.dataset.label+' : '+F(Math.abs(c.raw)))},
@@ -3320,8 +3419,7 @@ document.getElementById('immoRecap').innerHTML=rcH;
   S.immo.filter(b=>!estRP(b)).forEach(b=>{
     const c=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
     const mC=c?cAm(c.emprunte,c.taux||0,c.dureeMois||0,c.differe||0,c.debloque).m:0;
-    const ch=(b.charges||0)+(b.taxeFonciere||0)/12+(b.assurance||0)/12+(b.gestion||0);
-    const cfB=loyerBien(b)-ch-mC;
+    const cfB=cfDuBien(b);
     const e=enrichiBien(b,c,cfB);
     if(e.certain!==0||e.valo!==0)lignes.push({b,e});
   });
@@ -3443,7 +3541,7 @@ let imH='';S.immo.forEach(b=>{
   const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
   const mensC=cr?cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0,cr.debloque).m:0;
   const chM=(b.charges||0)+(b.taxeFonciere||0)/12+(b.assurance||0)/12+(b.gestion||0);
-  const cf=(b.loyer||0)-chM-mensC;
+  const cf=estRP(b)?((b.loyer||0)-chM-mensC):cfDuBien(b);
   const rb=b.valeur>0?((b.loyer||0)*12/b.valeur*100).toFixed(1):0;
   const rn=b.valeur>0?(((b.loyer||0)-chM)*12/b.valeur*100).toFixed(1):0;
 
