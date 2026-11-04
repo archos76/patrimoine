@@ -13,36 +13,38 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&display=swap');
 :root{
---bg:#0a0c0f;--card:#181c22;--card2:#212630;--border:#2c333e;--line:rgba(255,255,255,.07);
---text:#e8eaed;--text2:#c3c8d0;--muted:#7d8695;
---accent:#d99a3c;--abg:rgba(217,154,60,.12);
---green:#2ee6a0;--red:#ff5c6c;--orange:#d99a3c;--bourse:#5b8fd9;--crypto:#a97fd0;
---c1:#5b8fd9;--c2:#2ee6a0;--c3:#d99a3c;--c4:#a97fd0;--c5:#6c93b8;--c6:#ff8a94;
---grid:rgba(255,255,255,.06);--shadow:0 1px 3px rgba(0,0,0,.35);
---p1:#22d3ee;--p2:#fbbf24;--p3:#94a3b8;--p4:#fb5779;--p5:#4f6ef7;--p6:#a78bfa;--p7:#34d399;--p8:#f97362;
+/* Une seule rampe de neutres, tintée vers l'encre du registre.
+   La couleur ne vit que dans l'accent et dans ce qui porte du sens. */
+--bg:#0f1012;--card:#17181b;--card2:#202226;--border:rgba(237,237,237,.09);--line:rgba(237,237,237,.07);
+--text:#ededed;--text2:#a1a1a6;--muted:#85858b;
+--accent:#d99a3c;--abg:rgba(217,154,60,.10);
+--green:#4cc38a;--red:#e5484d;--orange:#d99a3c;--bourse:#8c8f96;--crypto:#6f727a;
+--c1:#d99a3c;--c2:#9ba0a8;--c3:#75797f;--c4:#595d63;--c5:#43464b;--c6:#8c8f96;
+--grid:rgba(237,237,237,.05);--shadow:none;
+--p1:#d99a3c;--p2:#9ba0a8;--p3:#75797f;--p4:#595d63;--p5:#43464b;--p6:#8c8f96;--p7:#4cc38a;--p8:#e5484d;
 --font:'Onest',system-ui,sans-serif}
 body.light{
---bg:#f2f4f7;--card:#ffffff;--card2:#f7f8fa;--border:#dde1e8;--line:rgba(0,0,0,.06);
---text:#15181d;--text2:#3d444f;--muted:#767e8c;
---accent:#c07f22;--abg:rgba(192,127,34,.10);
---green:#2f9478;--red:#c9505a;--orange:#c07f22;--bourse:#4a7fc8;--crypto:#8f63bb;
---c1:#4a7fc8;--c2:#2f9478;--c3:#c07f22;--c4:#8f63bb;--c5:#5c81a6;--c6:#b25f66;
---grid:rgba(0,0,0,.06);--shadow:0 1px 3px rgba(21,24,29,.07);
---p1:#06b6d4;--p2:#f5b715;--p3:#9aa4b2;--p4:#f43f5e;--p5:#3b56e0;--p6:#8b5cf6;--p7:#10b981;--p8:#f2683f}
+--bg:#fafafa;--card:#ffffff;--card2:#f4f4f5;--border:rgba(23,23,23,.10);--line:rgba(23,23,23,.07);
+--text:#171717;--text2:#525252;--muted:#737373;
+--accent:#9a6a16;--abg:rgba(154,106,22,.08);
+--green:#16a34a;--red:#dc2626;--orange:#9a6a16;--bourse:#6b6f76;--crypto:#575b61;
+--c1:#9a6a16;--c2:#6b6f76;--c3:#8a8e95;--c4:#a4a8ae;--c5:#c0c3c8;--c6:#6b6f76;
+--grid:rgba(23,23,23,.06);--shadow:0 1px 2px rgba(0,0,0,.05);
+--p1:#9a6a16;--p2:#6b6f76;--p3:#8a8e95;--p4:#a4a8ae;--p5:#c0c3c8;--p6:#6b6f76;--p7:#16a34a;--p8:#dc2626}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.5;transition:background .25s,color .25s}
 
 .logo{display:flex;align-items:center;gap:10px}
-.li{width:32px;height:32px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg)}
-.lt{font-size:16px;font-weight:500;letter-spacing:-.01em;color:var(--text)}
+.li{width:32px;height:32px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg)}
+.lt{font-size:16px;font-weight:500;letter-spacing:0;color:var(--text)}
 .nr{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .tabs{display:flex;flex-direction:column;gap:1px;overflow-y:auto}
-.tab{display:flex;align-items:center;gap:10px;padding:8px 11px;border-radius:8px;border:none;background:0;color:var(--muted);font-size:13px;font-weight:450;cursor:pointer;font-family:var(--font);transition:all .15s;text-align:left;width:100%}
+.tab{display:flex;align-items:center;gap:10px;padding:8px 11px;border-radius:8px;border:none;background:0;color:var(--muted);font-size:13px;font-weight:450;cursor:pointer;font-family:var(--font);transition:background-color .15s,color .15s,border-color .15s;text-align:left;width:100%}
 .tab .ti{width:15px;text-align:center;font-size:13px;opacity:.75}
 .tab:hover{color:var(--text);background:var(--card2)}
 .tab.active{color:var(--text);background:var(--card2);font-weight:550}
 .tab.active .ti{opacity:1;color:var(--accent)}
-.btn{padding:7px 13px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;border:1px solid;font-family:var(--font);transition:all .15s}
+.btn{padding:7px 13px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;border:1px solid;font-family:var(--font);transition:background-color .15s,color .15s,border-color .15s}
 .btn-g{background:var(--accent);border-color:var(--accent);color:var(--bg)}
 .btn-g:hover{filter:brightness(1.08)}
 .btn-o{background:transparent;border-color:var(--border);color:var(--muted)}
@@ -51,42 +53,42 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 
 /* Répartitions en barres */
-.dist{display:flex;height:9px;border-radius:5px;overflow:hidden;background:var(--card2);margin-bottom:18px;gap:2px}
-.dist i{height:100%;border-radius:2px;transition:width .45s ease}
+.dist{display:flex;height:9px;border-radius:6px;overflow:hidden;background:var(--card2);margin-bottom:18px;gap:2px}
+.dist i{height:100%;border-radius:4px;transition:width .45s ease}
 .drow{padding:9px 0;border-bottom:1px solid var(--line)}
 .drow:last-child{border-bottom:none}
-.drow-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;font-size:12.5px}
+.drow-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;font-size:13px}
 .drow-n{display:flex;align-items:center;gap:8px;color:var(--text2);min-width:0}
 .drow-n b{font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .drow-v{display:flex;align-items:baseline;gap:9px;flex-shrink:0}
 .drow-v b{font-weight:600}
-.drow-v em{color:var(--muted);font-size:11.5px;font-style:normal;min-width:44px;text-align:right}
-.dbar{height:6px;border-radius:3px;background:var(--card2);overflow:hidden;position:relative}
-.dbar i{display:block;height:100%;border-radius:3px;transition:width .45s ease}
+.drow-v em{color:var(--muted);font-size:12px;font-style:normal;min-width:44px;text-align:right}
+.dbar{height:6px;border-radius:4px;background:var(--card2);overflow:hidden;position:relative}
+.dbar i{display:block;height:100%;border-radius:4px;transition:width .45s ease}
 .dbar u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--text);opacity:.6;border-radius:1px;text-decoration:none}
-.dot2{width:8px;height:8px;border-radius:3px;flex-shrink:0}
+.dot2{width:8px;height:8px;border-radius:4px;flex-shrink:0}
 /* Fourchette d'achat (watchlist) */
 .zwrap{min-width:170px}
-.zhead{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11.5px;margin-bottom:5px}
+.zhead{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;margin-bottom:5px}
 .zbar{position:relative;height:20px;border-radius:6px;background:var(--card2);border:1px solid var(--border);overflow:hidden}
 .zbar .zz{position:absolute;top:0;bottom:0;background:linear-gradient(180deg,rgba(46,230,160,.28),rgba(46,230,160,.12))}
 .zbar .zz:before,.zbar .zz:after{content:'';position:absolute;top:0;bottom:0;width:1px;background:var(--green);opacity:.7}
 .zbar .zz:before{left:0}.zbar .zz:after{right:0}
-.zbar .zc{position:absolute;top:-1px;bottom:-1px;width:3px;border-radius:2px;box-shadow:0 0 0 2px var(--card)}
-.zfoot{font-size:10.5px;margin-top:5px;display:flex;justify-content:space-between;color:var(--muted)}
+.zbar .zc{position:absolute;top:-1px;bottom:-1px;width:3px;border-radius:4px;box-shadow:0 0 0 2px var(--card)}
+.zfoot{font-size:12px;margin-top:5px;display:flex;justify-content:space-between;color:var(--muted)}
 
 /* Mise en page : barre latérale + contenu */
 .side{position:fixed;top:0;left:0;width:224px;height:100vh;background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:18px 12px;z-index:40;transition:transform .25s}
 .side-head{display:flex;align-items:center;gap:10px;padding:4px 8px 20px}
-.side-sec{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.13em;font-weight:600;padding:20px 10px 8px}
+.side-sec{font-size:12px;color:var(--muted);letter-spacing:0;font-weight:600;padding:20px 10px 8px}
 .tab-grp{margin-top:10px;justify-content:flex-start;position:relative}
-.tab-grp .chev{position:absolute;right:10px;font-size:10px;transition:transform .2s;opacity:.6}
+.tab-grp .chev{position:absolute;right:10px;font-size:12px;transition:transform .2s;opacity:.6}
 .tab-grp.ouvert .chev{transform:rotate(90deg)}
 .sous{display:none;flex-direction:column;gap:1px;padding-left:9px;margin-left:11px;border-left:1px solid var(--border)}
 .sous.ouvert{display:flex}
-.sous .tab{font-size:12.5px;padding:7px 10px}
-.side-perf{margin-top:auto;border:1px solid var(--border);border-radius:10px;padding:12px 13px;font-size:11px;background:var(--card2)}
-.side-perf .sp-t{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.11em;font-weight:600;margin-bottom:9px}
+.sous .tab{font-size:13px;padding:7px 10px}
+.side-perf{margin-top:auto;border:1px solid var(--border);border-radius:10px;padding:12px 13px;font-size:12px;background:var(--card2)}
+.side-perf .sp-t{font-size:12px;color:var(--muted);letter-spacing:0;font-weight:600;margin-bottom:9px}
 .side-perf .sp-r{display:flex;justify-content:space-between;gap:8px;padding:2.5px 0;color:var(--text2)}
 .side-perf .sp-tot{border-top:1px solid var(--border);margin-top:9px;padding-top:9px;font-weight:600}
 .side-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:39}
@@ -111,16 +113,16 @@ main{max-width:1240px;margin:0 auto;padding:26px 22px 60px}
 @media(max-width:900px){.kr4{grid-template-columns:repeat(2,1fr)}}
 .kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;transition:border-color .15s}
 .kpi:hover{border-color:var(--muted)}
-.kl{font-size:10.5px;color:var(--muted);letter-spacing:.02em;font-weight:500;margin-bottom:6px}
-.kv{font-size:25px;font-weight:400;letter-spacing:-.025em;line-height:1.15}
-.ks{font-size:11.5px;color:var(--muted);margin-top:3px}
+.kl{font-size:12px;color:var(--muted);letter-spacing:.02em;font-weight:500;margin-bottom:6px}
+.kv{font-size:25px;font-weight:400;letter-spacing:0;line-height:1.15}
+.ks{font-size:12px;color:var(--muted);margin-top:3px}
 .kpi.sm .kv{font-size:18px}.kpi.sm{padding:14px 16px}
 td,th,.vc,.kv,.ks,.drow-v{font-variant-numeric:tabular-nums}
 
 
 /* Jauges pleines, arrondies, avec piste discrète */
-.pg,.obj-bar,.dbar{background:var(--card2);border-radius:99px;overflow:hidden}
-.pf,.obj-fill,.dbar i{border-radius:99px;position:relative;overflow:hidden}
+.pg,.obj-bar,.dbar{background:var(--card2);border-radius:6px;overflow:hidden}
+.pf,.obj-fill,.dbar i{border-radius:6px;position:relative;overflow:hidden}
 /* Éclaircissement progressif vers la droite */
 .pf::after,.obj-fill::after,.dbar i::after{
   content:'';position:absolute;inset:0;pointer-events:none;
@@ -131,7 +133,7 @@ body.light .pf::after,body.light .obj-fill::after,body.light .dbar i::after{
 .pg{height:8px}
 .dbar{height:8px}
 /* Répartitions : blocs contigus */
-.dist,.wb{border-radius:99px;overflow:hidden;background:var(--card2)}
+.dist,.wb{border-radius:6px;overflow:hidden;background:var(--card2)}
 .dist i,.wb div{border-radius:0}
 .dist i::after,.wb div::after{display:none}
 
@@ -140,7 +142,7 @@ body.light .pf::after,body.light .obj-fill::after,body.light .dbar i::after{
 .reveal.vu{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:18px;box-shadow:var(--shadow)}
-.ct{font-size:14px;font-weight:550;margin-bottom:18px;letter-spacing:-.01em}
+.ct{font-size:14px;font-weight:550;margin-bottom:18px;letter-spacing:0}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .g21{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:22px}
 .sf{grid-column:1/-1}
@@ -150,40 +152,40 @@ body.light .pf::after,body.light .obj-fill::after,body.light .dbar i::after{
 .sel:focus{outline:none;border-color:var(--accent)}
 
 /* Fiches de biens : sous-titres de section et mini-indicateurs */
-.sect{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.11em;font-weight:600;margin:2px 0 4px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.sect{font-size:12px;color:var(--muted);letter-spacing:0;font-weight:600;margin:2px 0 4px;padding-bottom:6px;border-bottom:1px solid var(--border)}
 .mkpi{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0 18px}
 .mkpi>div{background:var(--card2);border-radius:10px;padding:10px 12px;border:1px solid var(--border)}
-.mkpi .ml{font-size:10px;color:var(--muted);letter-spacing:.03em;margin-bottom:3px}
-.mkpi .mv{font-size:16.5px;font-weight:700;letter-spacing:-.02em}
-.mkpi .ms{font-size:10.5px;color:var(--muted);margin-top:2px}
+.mkpi .ml{font-size:12px;color:var(--muted);letter-spacing:.03em;margin-bottom:3px}
+.mkpi .mv{font-size:16.5px;font-weight:500;letter-spacing:0}
+.mkpi .ms{font-size:12px;color:var(--muted);margin-top:2px}
 @media(max-width:700px){.mkpi{grid-template-columns:repeat(2,1fr);gap:8px}.mkpi .mv{font-size:15px}}
 .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
 /* Tableau plus large que l'écran : on peut le faire glisser du doigt */
 .tw::-webkit-scrollbar{height:6px}
-.tw::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.tw::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 .tw.deborde{border-right:1px dashed var(--border)}
-.twhint{font-size:10px;color:var(--muted);margin:0 0 6px;letter-spacing:.03em;opacity:.8}
+.twhint{font-size:12px;color:var(--muted);margin:0 0 6px;letter-spacing:.03em;opacity:.8}
 table{width:100%;border-collapse:collapse;font-size:12px}
-th{text-align:right;padding:9px 10px;color:var(--muted);font-weight:500;font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;border-bottom:1px solid var(--border);white-space:nowrap}
+th{text-align:right;padding:9px 10px;color:var(--muted);font-weight:500;font-size:12px;letter-spacing:0;border-bottom:1px solid var(--border);white-space:nowrap}
 th.l,td.l{text-align:left}
 td{text-align:right;padding:11px 10px;white-space:nowrap;border-bottom:1px solid var(--line);color:var(--text2)}
 td.l{color:var(--text)}
 tr:hover{background:var(--card2)}
-.tk{font-size:10px;color:var(--muted)}
-.badge{display:inline-flex;padding:2px 8px;border-radius:5px;font-size:10.5px;font-weight:550}
+.tk{font-size:12px;color:var(--muted)}
+.badge{display:inline-flex;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:550}
 .badge.pos{background:rgba(46,230,160,.14);color:var(--green)}
 .badge.neg{background:rgba(255,92,108,.14);color:var(--red)}
 .lr{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}
-.ln{font-weight:500}.ls{font-size:11px;color:var(--muted)}
-.wb{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--card2);margin-bottom:16px}.wb div{height:100%}
-.pg{height:5px;border-radius:3px;background:var(--card2);overflow:hidden;margin-top:6px}
-.pf{height:100%;border-radius:3px;background:var(--accent)}
-.ed{cursor:pointer;padding:2px 7px;border-radius:5px;border:1px dashed transparent;transition:all .15s}
+.ln{font-weight:500}.ls{font-size:12px;color:var(--muted)}
+.wb{display:flex;height:6px;border-radius:4px;overflow:hidden;background:var(--card2);margin-bottom:16px}.wb div{height:100%}
+.pg{height:5px;border-radius:4px;background:var(--card2);overflow:hidden;margin-top:6px}
+.pf{height:100%;border-radius:4px;background:var(--accent)}
+.ed{cursor:pointer;padding:2px 7px;border-radius:6px;border:1px dashed transparent;transition:background-color .15s,color .15s,border-color .15s}
 .ed:hover{border-color:var(--accent);background:var(--abg);color:var(--accent)}
-.ci{width:90px;padding:5px 9px;border-radius:7px;background:var(--card2);border:1px solid var(--accent);color:var(--text);font-size:12px;font-weight:500;outline:0;text-align:right;font-family:var(--font)}
-.db{width:24px;height:24px;border-radius:6px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.ci{width:90px;padding:5px 9px;border-radius:8px;background:var(--card2);border:1px solid var(--accent);color:var(--text);font-size:12px;font-weight:500;outline:0;text-align:right;font-family:var(--font)}
+.db{width:24px;height:24px;border-radius:6px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background-color .15s,color .15s,border-color .15s}
 .db:hover{background:var(--red);color:var(--bg);border-color:var(--red)}
-.ab{display:block;width:100%;padding:11px;margin-top:10px;background:0;border:1px dashed var(--border);border-radius:9px;color:var(--muted);font-size:12px;font-weight:450;cursor:pointer;text-align:center;font-family:var(--font);transition:all .15s}
+.ab{display:block;width:100%;padding:11px;margin-top:10px;background:0;border:1px dashed var(--border);border-radius:8px;color:var(--muted);font-size:12px;font-weight:450;cursor:pointer;text-align:center;font-family:var(--font);transition:background-color .15s,color .15s,border-color .15s}
 .ab:hover{border-color:var(--accent);color:var(--accent)}
 .ar{display:flex;gap:6px;align-items:center;margin-top:8px;flex-wrap:wrap}
 .ai{flex:1;min-width:70px;padding:9px 11px;border-radius:8px;background:var(--card2);border:1px solid var(--border);color:var(--text);font-size:12px;outline:0;font-family:var(--font)}
@@ -193,14 +195,14 @@ tr:hover{background:var(--card2)}
 .ax{width:32px;height:32px;border-radius:8px;background:var(--card2);border:1px solid var(--border);color:var(--muted);cursor:pointer}
 /* Sous-onglets d'une page, façon barre segmentée */
 .stabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:18px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.stab{flex:1 1 0;min-width:104px;white-space:nowrap;padding:9px 12px;border-radius:9px;border:0;background:transparent;color:var(--muted);font-size:12.5px;font-weight:500;font-family:var(--font);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.stab{flex:1 1 0;min-width:104px;white-space:nowrap;padding:9px 12px;border-radius:8px;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:500;font-family:var(--font);cursor:pointer;transition:background-color .15s,color .15s,border-color .15s;display:flex;align-items:center;justify-content:center;gap:6px}
 .stab:hover{color:var(--text)}
 .stab.on{background:var(--accent);color:#1a1205;font-weight:650}
-.stab .sbadge{background:rgba(0,0,0,.18);border-radius:20px;padding:1px 7px;font-size:10.5px;font-weight:700}
+.stab .sbadge{background:rgba(0,0,0,.18);border-radius:16px;padding:1px 7px;font-size:12px;font-weight:500}
 .stab .scourt{display:none}
 @media(max-width:620px){
   .stabs{padding:3px;gap:2px}
-  .stab{min-width:0;padding:9px 4px;font-size:11.5px;gap:4px}
+  .stab{min-width:0;padding:9px 4px;font-size:12px;gap:4px}
   .stab .slong{display:none}
   .stab .scourt{display:inline}
   .stab .sico{display:none}
@@ -210,53 +212,53 @@ tr:hover{background:var(--card2)}
 .manq{background:var(--card);border:1px solid var(--orange);border-left-width:3px;border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:12px;line-height:1.65;color:var(--text2)}
 .manq b{color:var(--orange)}
 .manq .mlien{color:var(--accent);cursor:pointer;text-decoration:underline;font-weight:600}
-.pb{padding:5px 12px;border-radius:7px;border:1px solid var(--border);font-size:11.5px;font-weight:450;cursor:pointer;background:transparent;color:var(--muted);font-family:var(--font);transition:all .15s}
+.pb{padding:5px 12px;border-radius:8px;border:1px solid var(--border);font-size:12px;font-weight:450;cursor:pointer;background:transparent;color:var(--muted);font-family:var(--font);transition:background-color .15s,color .15s,border-color .15s}
 .pb:hover{color:var(--text);border-color:var(--muted)}
 .pb.on{background:var(--card2);color:var(--text);border-color:var(--muted);font-weight:550}
 .cb{position:relative;height:280px}.cbs{position:relative;height:210px}
 .cl{display:flex;gap:20px;justify-content:center;margin-top:10px;font-size:12px;color:var(--muted)}
-.hc{background:none;border:none;border-top:2px solid var(--accent);border-radius:0;padding:16px 0 20px;margin-bottom:30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.hc{background:none;border:none;border-top:1px solid var(--border);border-radius:0;padding:16px 0 20px;margin-bottom:30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .sr{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border-radius:8px;margin-bottom:5px;background:var(--card2);font-size:12px;border:1px solid var(--border)}
 .sd{background:0;border:0;color:var(--red);cursor:pointer;font-size:14px;opacity:.4;padding:2px 6px}.sd:hover{opacity:1}
 .fb{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .fr{display:flex;gap:10px;flex-wrap:wrap}
 .cto{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.ctb{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:11.5px;padding:5px 11px;border-radius:7px;border:1px solid var(--border);background:transparent;user-select:none;transition:all .15s;color:var(--muted)}
+.ctb{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:5px 11px;border-radius:8px;border:1px solid var(--border);background:transparent;user-select:none;transition:background-color .15s,color .15s,border-color .15s;color:var(--muted)}
 .ctb.on{border-color:currentColor;font-weight:550}
 .ctb.active{background:var(--card2);color:var(--text);border-color:var(--accent);font-weight:600}
-.ctb .dot{width:7px;height:7px;border-radius:2px}
+.ctb .dot{width:7px;height:7px;border-radius:4px}
 .pt{width:100%;font-size:13px;margin-top:12px}
-.pt th{text-align:center;padding:11px 14px;font-size:9.5px;font-weight:500;text-transform:uppercase;letter-spacing:.09em;border-bottom:1px solid var(--border);color:var(--muted)}
+.pt th{text-align:center;padding:11px 14px;font-size:12px;font-weight:500;letter-spacing:0;border-bottom:1px solid var(--border);color:var(--muted)}
 .pt td{text-align:center;padding:11px 14px;border-bottom:1px solid var(--line);font-weight:450}
 .pt .rl{text-align:left;font-weight:550}
 .pt .total-row{background:var(--card2);font-weight:600}
 .cg{color:var(--green)}.cr{color:var(--red)}
 body:not(.light) .cg,body:not(.light) .vc.cg{text-shadow:0 0 14px rgba(46,230,160,.35)}
 body:not(.light) .cr,body:not(.light) .vc.cr{text-shadow:0 0 14px rgba(255,92,108,.3)}
-body:not(.light) .badge.pos{box-shadow:0 0 12px rgba(46,230,160,.12)}
-body:not(.light) .badge.neg{box-shadow:0 0 12px rgba(255,92,108,.1)}
-.ss{font-size:11px;color:var(--muted);margin-top:6px}
-.rs{display:inline-flex;font-size:11px;padding:4px 0}.rs.ok{color:var(--green)}.rs.err{color:var(--red)}.rs.load{color:var(--muted)}
-.vc{font-size:11.5px;font-weight:550}
-.reset-btn{font-size:10px;color:var(--muted);background:0;border:1px solid var(--border);border-radius:6px;padding:3px 9px;cursor:pointer}.reset-btn:hover{color:var(--red);border-color:var(--red)}
-.amor-table{font-size:11px;margin-top:8px;max-height:200px;overflow-y:auto;border:1px solid var(--border);border-radius:9px}
+body:not(.light) .badge.pos{box-shadow:none}
+body:not(.light) .badge.neg{box-shadow:none}
+.ss{font-size:12px;color:var(--muted);margin-top:6px}
+.rs{display:inline-flex;font-size:12px;padding:4px 0}.rs.ok{color:var(--green)}.rs.err{color:var(--red)}.rs.load{color:var(--muted)}
+.vc{font-size:12px;font-weight:550}
+.reset-btn{font-size:12px;color:var(--muted);background:0;border:1px solid var(--border);border-radius:6px;padding:3px 9px;cursor:pointer}.reset-btn:hover{color:var(--red);border-color:var(--red)}
+.amor-table{font-size:12px;margin-top:8px;max-height:200px;overflow-y:auto;border:1px solid var(--border);border-radius:8px}
 .vm-table{font-size:12px;margin-top:8px}.vm-table td{padding:7px 10px}
 #login-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center}
 #login-screen .login-box{text-align:center;background:var(--card);padding:44px;border-radius:16px;max-width:380px;width:90%;border:1px solid var(--border)}
 #login-screen .login-icon{width:60px;height:60px;border-radius:14px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--bg);margin:0 auto 20px;font-weight:600}
-#login-screen h1{font-size:22px;font-weight:400;margin-bottom:6px;letter-spacing:-.02em}
+#login-screen h1{font-size:22px;font-weight:400;margin-bottom:6px;letter-spacing:0}
 #login-screen p{font-size:13px;color:var(--muted);margin-bottom:24px}
-#login-screen .g-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 24px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--text);font-size:15px;font-weight:450;cursor:pointer;width:100%;font-family:var(--font);transition:all .15s}
+#login-screen .g-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 24px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--text);font-size:15px;font-weight:450;cursor:pointer;width:100%;font-family:var(--font);transition:background-color .15s,color .15s,border-color .15s}
 #login-screen .g-btn:hover{border-color:var(--accent)}
 .user-bar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
 .user-bar img{width:26px;height:26px;border-radius:50%}
-.user-bar .logout{font-size:11px;cursor:pointer;text-decoration:underline}
+.user-bar .logout{font-size:12px;cursor:pointer;text-decoration:underline}
 #app{display:none}
 .obj-bar{height:16px;border-radius:8px;background:var(--card2);overflow:hidden;margin:8px 0}
 .obj-fill{height:100%;border-radius:8px;transition:width .4s ease}
 .fire-card{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:22px}
 .sankey-row{display:flex;align-items:center;margin-bottom:6px;font-size:12px}
-.sankey-bar{height:28px;border-radius:5px;display:flex;align-items:center;padding:0 10px;color:var(--bg);font-weight:550;font-size:11px;min-width:40px}
+.sankey-bar{height:28px;border-radius:6px;display:flex;align-items:center;padding:0 10px;color:var(--bg);font-weight:550;font-size:12px;min-width:40px}
 details summary{color:var(--text2)}
 @media(max-width:900px){.side{transform:translateX(-100%)}.side.open{transform:none}.shell{margin-left:0}}
 @media(max-width:700px){/* Téléphone : le bandeau défilant passe sous les boutons pour ne plus les écraser */
@@ -266,15 +268,86 @@ details summary{color:var(--text2)}
 .user-bar span:not(.logout){display:none}
 .user-bar img{width:22px;height:22px}
 .btn{padding:6px 8px}
-.g2,.g21{grid-template-columns:1fr}.g2>*,.g21>*,.kr>*{min-width:0}.kr{grid-template-columns:repeat(2,1fr);gap:8px}.kpi{padding:13px 14px}.kv{font-size:19px}.card{padding:16px;margin-bottom:14px}.hc{flex-direction:column;align-items:flex-start}.cb{height:215px}.cbs{height:170px}main{padding:16px 10px 60px}.topbar{padding:8px 12px;gap:8px}.topacts .btn{padding:6px 9px}table{font-size:11px}td,th{padding:7px 5px}.lr{font-size:12px;padding:10px 0}.ct{font-size:13px}.vm-table td{padding:5px 6px;font-size:11px}}
+.g2,.g21{grid-template-columns:1fr}.g2>*,.g21>*,.kr>*{min-width:0}.kr{grid-template-columns:repeat(2,1fr);gap:8px}.kpi{padding:13px 14px}.kv{font-size:19px}.card{padding:16px;margin-bottom:14px}.hc{flex-direction:column;align-items:flex-start}.cb{height:215px}.cbs{height:170px}main{padding:16px 10px 60px}.topbar{padding:8px 12px;gap:8px}.topacts .btn{padding:6px 9px}table{font-size:12px}td,th{padding:7px 5px}.lr{font-size:12px;padding:10px 0}.ct{font-size:13px}.vm-table td{padding:5px 6px;font-size:12px}}
 .hamburger{display:none;background:none;border:none;font-size:20px;cursor:pointer;padding:2px 6px;color:var(--muted);flex-shrink:0}
 @media(max-width:900px){.hamburger{display:block}}
 .dm-btn{position:fixed;bottom:18px;right:18px;width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:99999}
 .dm-btn:hover{border-color:var(--accent);color:var(--accent)}
 .hm-grid{display:flex;flex-wrap:wrap;gap:3px}
 .hm-cell{border-radius:6px;padding:8px 6px;display:flex;flex-direction:column;justify-content:center;color:#fff;font-weight:550;min-height:60px;min-width:70px;overflow:hidden}
-.hm-cell .hm-n{font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hm-cell .hm-v{font-size:10px;opacity:.85}
+.hm-cell .hm-n{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hm-cell .hm-v{font-size:12px;opacity:.85}
+
+/* Passe de design menée avec la méthode unslop de Damir Sokolovsky
+   (@heydamir), CC BY 4.0 — https://heydamir.design/unslop
+   Direction : registre comptable. Une rampe de neutres encrés, un seul
+   accent ambre, les chiffres en colonnes tabulaires. */
+/* ---- Fondations posées par la passe de redesign ------------------------ */
+/* Les chiffres s'alignent en colonne, comme dans un registre */
+body{font-variant-numeric:tabular-nums;letter-spacing:0}
+/* Seuls les grands nombres et le logo resserrent leur chasse */
+.kv,.mv,.logo span{letter-spacing:-.02em}
+.kv{font-size:26px;font-weight:500}
+.kpi.sm .kv{font-size:20px}
+.ct{font-weight:500;font-size:15px;color:var(--text)}
+th{font-weight:400;font-size:12px;color:var(--muted)}
+b,strong{font-weight:500}
+/* La profondeur vient des paliers de surface et des filets, pas des ombres */
+.kpi,.card{box-shadow:none}
+.card{padding:20px;border-radius:14px}
+.kpi{padding:16px;border-radius:12px}
+.kpi.sm{padding:12px;border-radius:10px}
+.kr{gap:12px}
+.g2,.g21{gap:16px}
+/* La barre latérale est la partie la plus dense de l'écran */
+.tab{height:36px;padding:0 12px;border-radius:8px;font-size:14px;gap:10px;
+     display:flex;align-items:center}
+.tabs{gap:2px}
+.sous .tab{height:32px;font-size:13.5px}
+.tab.active{background:var(--card2);color:var(--text);
+            box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
+/* Un seul jeu d'icônes, une seule taille, une seule couleur */
+.ti{width:18px;height:18px;flex:0 0 18px;display:inline-flex;
+    align-items:center;justify-content:center;color:var(--muted);opacity:.9}
+.tab.active .ti{color:inherit;opacity:1}
+.ti svg{display:block}
+/* Une seule courbe d'accélération */
+*{transition-timing-function:cubic-bezier(.22,1,.36,1)}
+
+/* ---- Accueil : un chiffre domine, le reste l'entoure ------------------- */
+.hTete{padding:24px 0 32px}
+.hTete .hSur{font-size:13px;color:var(--muted);margin-bottom:10px;
+  font-variant-numeric:normal;text-transform:capitalize}
+.hTete .hChiffre{font-size:56px;line-height:1.02;font-weight:400;letter-spacing:-.03em;color:var(--text)}
+.hTete .hVar{margin-top:10px;font-size:15px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.hTete .hVarPct{font-size:13px;opacity:.75}
+.hTete .hRef{color:var(--muted);font-size:13px}
+.hTete .hSous{display:flex;gap:32px;flex-wrap:wrap;margin-top:24px;padding-top:20px;
+  border-top:1px solid var(--border)}
+.hTete .hSous span{display:flex;flex-direction:column;gap:4px;font-size:15px;color:var(--text)}
+.hTete .hSous em{font-style:normal;font-size:12px;color:var(--muted)}
+.gSeul{grid-template-columns:1fr !important}
+.gSeul .cb{height:340px}
+/* Le registre : une ligne par poste, les montants en colonne */
+.hRegistre .hL{display:grid;grid-template-columns:140px 1fr auto 56px;align-items:center;
+  gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
+.hRegistre .hN{font-size:14px;color:var(--text)}
+.hRegistre .hB{height:6px;border-radius:4px;background:var(--card2);overflow:hidden;display:block}
+.hRegistre .hB i{display:block;height:100%;border-radius:4px}
+.hRegistre .hV{font-size:15px;color:var(--text);text-align:right}
+.hRegistre .hP{font-size:13px;color:var(--muted);text-align:right}
+.hRegistre .hDette,.hRegistre .hNet{display:flex;justify-content:space-between;
+  padding:12px 0;font-size:15px}
+.hRegistre .hDette{color:var(--red);border-bottom:1px solid var(--line)}
+.hRegistre .hNet{font-weight:500;padding-top:16px}
+.hRegistre .hNet span:last-child{color:var(--accent);font-size:18px}
+@media(max-width:620px){
+  .hTete .hChiffre{font-size:40px}
+  .hTete .hSous{gap:20px}
+  .hRegistre .hL{grid-template-columns:1fr auto;gap:8px}
+  .hRegistre .hB{display:none}
+}
 </style>
 </head>
 <body>
@@ -283,30 +356,30 @@ details summary{color:var(--text2)}
 <aside class="side" id="side">
 <div class="side-head"><div class="li">€</div><span class="lt">Mon Patrimoine</span></div>
 <div class="tabs" id="tabs">
-<button class="tab active" data-page="home"><span class="ti">◈</span>Vue d'ensemble</button>
-<button class="tab" data-page="bourse"><span class="ti">◪</span>Bourse</button>
-<button class="tab" data-page="epargne"><span class="ti">◐</span>Épargne</button>
-<button class="tab" data-page="immo"><span class="ti">⌂</span>Immo</button>
-<button class="tab" data-page="crypto"><span class="ti">◇</span>Crypto</button>
-<button class="tab" data-page="dettes"><span class="ti">◑</span>Dettes</button>
-<button class="tab tab-grp" id="btnOutils" onclick="toggleOutils()"><span class="ti">⋯</span>Outils<span class="chev" id="chevOutils">▸</span></button>
+<button class="tab active" data-page="home"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></span>Vue d'ensemble</button>
+<button class="tab" data-page="bourse"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5.5-6 4 4L21 6"/><path d="M15 6h6v6"/></svg></span>Bourse</button>
+<button class="tab" data-page="epargne"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 11h18"/><path d="M7 15h3"/></svg></span>Épargne</button>
+<button class="tab" data-page="immo"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.8V20h12V9.8"/><path d="M10 20v-5h4v5"/></svg></span>Immo</button>
+<button class="tab" data-page="crypto"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M9.5 8.5h4a2.25 2.25 0 0 1 0 4.5h-4"/><path d="M9.5 13h4.5a2.25 2.25 0 0 1 0 4.5H9.5"/><path d="M9.5 6.5v11"/></svg></span>Crypto</button>
+<button class="tab" data-page="dettes"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 1 9 9"/><path d="M3 12h4"/><path d="M12 7v5l3 2"/></svg></span>Dettes</button>
+<button class="tab tab-grp" id="btnOutils" onclick="toggleOutils()"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></svg></span>Outils<span class="chev" id="chevOutils">▸</span></button>
 <div class="sous" id="sousOutils">
-<button class="tab" data-page="releve"><span class="ti">✎</span>Relevé du mois</button>
-<button class="tab" data-page="budget"><span class="ti">▤</span>Budget</button>
-<button class="tab" data-page="objectifs"><span class="ti">◎</span>Objectifs</button>
-<button class="tab" data-page="alloc"><span class="ti">◕</span>Allocation cible</button>
-<button class="tab" data-page="revenus"><span class="ti">↗</span>Revenus</button>
-<button class="tab" data-page="analyse"><span class="ti">◫</span>Analyse</button>
-<button class="tab" data-page="resume"><span class="ti">▦</span>Résumé</button>
-<button class="tab" data-page="marches"><span class="ti">◉</span>Revue de marchés</button>
-<button class="tab" data-page="brokers"><span class="ti">⊞</span>Brokers</button>
-<button class="tab" data-page="bilan"><span class="ti">▣</span>Bilan annuel</button>
-<button class="tab" data-page="simulator"><span class="ti">◔</span>Simulateur</button>
-<button class="tab" data-page="reglages"><span class="ti">⚙</span>Réglages</button>
+<button class="tab" data-page="releve"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4"/><path d="M9 13h6"/><path d="M9 17h4"/></svg></span>Relevé du mois</button>
+<button class="tab" data-page="budget"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 10h18"/><path d="M8 5V3"/><path d="M16 5V3"/></svg></span>Budget</button>
+<button class="tab" data-page="objectifs"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/></svg></span>Objectifs</button>
+<button class="tab" data-page="alloc"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v8.5h8.5"/></svg></span>Allocation cible</button>
+<button class="tab" data-page="revenus"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 10 11l4 3.5L20 7"/><path d="M14 7h6v6"/></svg></span>Revenus</button>
+<button class="tab" data-page="analyse"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 15v-4"/><path d="M12 15V9"/><path d="M16 15v-2"/></svg></span>Analyse</button>
+<button class="tab" data-page="resume"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M9 9v11"/></svg></span>Résumé</button>
+<button class="tab" data-page="marches"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17"/></svg></span>Revue de marchés</button>
+<button class="tab" data-page="brokers"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M9 4v16"/></svg></span>Brokers</button>
+<button class="tab" data-page="bilan"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v16H5z"/><path d="M9 9h6"/><path d="M9 13h6"/><path d="M9 17h3"/></svg></span>Bilan annuel</button>
+<button class="tab" data-page="simulator"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg></span>Simulateur</button>
+<button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 14h30</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 15h10</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -322,9 +395,9 @@ details summary{color:var(--text2)}
 </div>
 </header>
 <main>
-<div class="page active" id="page-home"><div id="homeAlerts"></div><div class="kr" id="hk"></div><div id="widgetResume" style="margin-bottom:20px"></div><div class="hc"><div><span style="font-size:12px;color:var(--muted)">◆ Règle des 4%</span><div style="font-size:20px;font-weight:800;color:var(--accent);margin-top:2px" id="k4"></div></div><div style="font-size:13px;color:var(--muted)" id="k4m"></div></div><div class="g21"><div class="card"><div class="fb" style="margin-bottom:10px"><div class="ct" style="margin:0" id="netTitre">Évolution du patrimoine</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div style="display:flex;gap:4px"><button class="ctb" id="netMode_brut" onclick="setNetMode('brut')">Brut</button><button class="ctb active" id="netMode_net" onclick="setNetMode('net')">Net</button></div><div style="display:flex;gap:4px"><button class="ctb active" id="netVue_courbe" onclick="setNetVue('courbe')">⌁ Courbes</button><button class="ctb" id="netVue_barres" onclick="setNetVue('barres')">▮ Barres</button></div><div style="display:flex;gap:4px" id="netPs"></div></div></div><div class="cto" id="netCases"></div><div class="cb"><canvas id="cN"></canvas></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Répartition</div><div style="display:flex;gap:4px"><button class="ctb active" id="pieMode_brut" onclick="setPieMode('brut')">Brut</button><button class="ctb" id="pieMode_net" onclick="setPieMode('net')">Net</button></div></div><div class="cbs" style="height:230px"><canvas id="cP"></canvas></div><div id="pl" style="padding:8px 12px 0"></div></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">◷ Historique</div><button class="reset-btn" onclick="if(confirm('Reset?'))doReset()">↺ Réinitialiser</button></div><div id="sl" style="margin-top:12px"></div></div></div>
+<div class="page active" id="page-home"><div id="homeAlerts"></div><div class="hTete" id="hTete"></div><div class="kr" id="hk" style="display:none"></div><div id="widgetResume" style="display:none"></div><div class="hc"><div><span style="font-size:12px;color:var(--muted)">Règle des 4%</span><div style="font-size:20px;font-weight:800;color:var(--accent);margin-top:2px" id="k4"></div></div><div style="font-size:13px;color:var(--muted)" id="k4m"></div></div><div class="g21 gSeul"><div class="card"><div class="fb" style="margin-bottom:10px"><div class="ct" style="margin:0" id="netTitre">Évolution du patrimoine</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div style="display:flex;gap:4px"><button class="ctb" id="netMode_brut" onclick="setNetMode('brut')">Brut</button><button class="ctb active" id="netMode_net" onclick="setNetMode('net')">Net</button></div><div style="display:flex;gap:4px"><button class="ctb active" id="netVue_courbe" onclick="setNetVue('courbe')">Courbes</button><button class="ctb" id="netVue_barres" onclick="setNetVue('barres')">Barres</button></div><div style="display:flex;gap:4px" id="netPs"></div></div></div><div class="cto" id="netCases"></div><div class="cb"><canvas id="cN"></canvas></div></div><div class="card hRegistre" id="hRegistre"></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Historique</div><button class="reset-btn" onclick="if(confirm('Reset?'))doReset()">Réinitialiser</button></div><div id="sl" style="margin-top:12px"></div></div></div>
 <div class="page" id="page-bourse"><div class="kr" id="bk"></div>
-<div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div id="rstat" class="rs" style="margin:12px 0"></div><div class="card"><div class="fb"><div class="ct" style="margin:0">PEA — Fortuneo</div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — Saxo <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — IBKR</div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">AV — Linxea</div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">◫ Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:#7c3aed">● Portf.</span><span style="color:#e8a33d">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">↕ Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">◎ Objectifs Bourse</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addBourseGoal()">+ Objectif</button></div><div id="bourseGoals" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">◌ Watchlist</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch()">+ Suivre</button></div><div id="watchlist" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">✎ Journal d'investissement</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addJournal()">+ Entrée</button></div><div id="journal" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">◈ Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div></div>
+<div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div id="rstat" class="rs" style="margin:12px 0"></div><div class="card"><div class="fb"><div class="ct" style="margin:0">PEA — Fortuneo</div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — Saxo <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — IBKR</div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">AV — Linxea</div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:#7c3aed">● Portf.</span><span style="color:#e8a33d">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Objectifs Bourse</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addBourseGoal()">+ Objectif</button></div><div id="bourseGoals" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch()">+ Suivre</button></div><div id="watchlist" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Journal d'investissement</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addJournal()">+ Entrée</button></div><div id="journal" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div></div>
 <div class="page" id="page-epargne"><div class="kr" id="ek"></div><div class="g2"><div class="card"><div class="ct" id="ct1"></div><div id="cl1"></div><div id="af1"></div></div><div class="card"><div class="ct" id="ct2"></div><div id="cl2"></div><div id="af2"></div></div><div class="card sf"><div class="ct" id="ct3"></div><div id="cl3"></div><div id="af3"></div></div></div></div>
 <div class="page" id="page-immo">
 <div class="stabs" id="immoTabs"></div>
@@ -333,11 +406,11 @@ details summary{color:var(--text2)}
 <div class="kr kr4" id="ik"></div>
 <div id="immoManques"></div>
 <div class="g2" style="margin-bottom:16px">
-<div class="card"><div class="ct">◷ Loyers du mois</div><div id="loyersMois"></div></div>
-<div class="card"><div class="fb"><div class="ct" style="margin:0">▤ Dépenses mensuelles</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px">Charges fixes récurrentes</div><div id="depMois"></div></div>
+<div class="card"><div class="ct">Loyers du mois</div><div id="loyersMois"></div></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">Dépenses mensuelles</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px">Charges fixes récurrentes</div><div id="depMois"></div></div>
 </div>
 <div class="card"><div class="ct">Tableau récapitulatif mensuel</div><div class="tw" id="immoRecap"></div></div>
-<div class="card" id="immoOccup" style="display:none"><div class="ct">◷ Occupation et vacance</div><div id="occupCorps"></div></div>
+<div class="card" id="immoOccup" style="display:none"><div class="ct">Occupation et vacance</div><div id="occupCorps"></div></div>
 </div>
 
 <div class="svue" id="ivue-annuel" style="display:none">
@@ -345,80 +418,80 @@ details summary{color:var(--text2)}
 <div class="kr kr4" id="ikAn"></div>
 <div id="bilanNote"></div>
 <div class="card"><div class="fb"><div class="ct" style="margin:0">Revenus et dépenses par mois</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px">Loyers réellement encaissés, face aux dépenses du mois</div><div class="cb"><canvas id="cImmoAn"></canvas></div></div>
-<div class="card"><div class="fb"><div class="ct" style="margin:0">▤ Détail mensuel</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px">Revenus, dépenses et cashflow par mois</div><div class="tw" id="bilanTable"></div><div id="bilanAide" style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6"></div></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">Détail mensuel</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px">Revenus, dépenses et cashflow par mois</div><div class="tw" id="bilanTable"></div><div id="bilanAide" style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6"></div></div>
 <div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Patrimoine Immo Net</div><div style="display:flex;gap:4px" id="immoPs"></div></div><div class="cb"><canvas id="cImmoNet"></canvas></div></div>
-<div class="card" id="immoEnrichi" style="display:none"><div class="ct">◈ Enrichissement mensuel</div><div id="enrichiCorps"></div></div>
+<div class="card" id="immoEnrichi" style="display:none"><div class="ct">Enrichissement mensuel</div><div id="enrichiCorps"></div></div>
 </div>
 
 <div class="svue" id="ivue-prets" style="display:none">
 <div class="kr kr4" id="ikPret"></div>
-<div class="card"><div class="ct">◑ Progression globale</div><div id="pretGlobal"></div></div>
-<div class="card"><div class="fb"><div class="ct" style="margin:0">▤ Prêts par bien</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px">Chaque crédit rattaché à un bien, et où il en est</div><div id="pretsParBien"></div></div>
+<div class="card"><div class="ct">Progression globale</div><div id="pretGlobal"></div></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">Prêts par bien</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px">Chaque crédit rattaché à un bien, et où il en est</div><div id="pretsParBien"></div></div>
 </div>
 
 <div class="svue" id="ivue-fisca" style="display:none">
 <div class="g2" style="margin-bottom:16px">
-<div class="card"><div class="ct">◱ Détention</div><div style="font-size:11px;color:var(--muted);margin:-6px 0 10px">Quels biens veux-tu regarder ?</div><div id="fiscProfil"></div></div>
-<div class="card"><div class="ct">▣ Ta tranche d'imposition</div><div style="font-size:11px;color:var(--muted);margin:-6px 0 10px">La TMI change l'impôt sur tes loyers</div><div id="fiscTmi"></div></div>
+<div class="card"><div class="ct">Détention</div><div style="font-size:11px;color:var(--muted);margin:-6px 0 10px">Quels biens veux-tu regarder ?</div><div id="fiscProfil"></div></div>
+<div class="card"><div class="ct">Ta tranche d'imposition</div><div style="font-size:11px;color:var(--muted);margin:-6px 0 10px">La TMI change l'impôt sur tes loyers</div><div id="fiscTmi"></div></div>
 </div>
 <div class="kr kr4" id="ikFisc"></div>
 <div id="fiscNote"></div>
-<div class="card"><div class="fb"><div class="ct" style="margin:0">▤ Détail fiscal par bien</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px" id="fiscSousTitre"></div><div class="tw" id="fiscTable"></div></div>
-<div class="card"><div class="ct">◉ Pression fiscale</div><div style="font-size:11px;color:var(--muted);margin:-6px 0 12px">Ce que l'impôt prélève sur tes loyers</div><div id="fiscPression"></div></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">Détail fiscal par bien</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px" id="fiscSousTitre"></div><div class="tw" id="fiscTable"></div></div>
+<div class="card"><div class="ct">Pression fiscale</div><div style="font-size:11px;color:var(--muted);margin:-6px 0 12px">Ce que l'impôt prélève sur tes loyers</div><div id="fiscPression"></div></div>
 <div class="g2" style="margin-bottom:16px">
 <div class="card"><div class="ct">Répartition par régime fiscal</div><div class="cbs" style="height:230px"><canvas id="cImmoReg"></canvas></div><div id="immoRegimes" style="margin-top:10px"></div></div>
 <div class="card"><div class="ct">Répartition des loyers</div><div class="cbs" style="height:230px"><canvas id="cImmoLoy"></canvas></div><div id="immoLoyers" style="margin-top:10px"></div></div>
 </div>
-<div class="card"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">⇄ Comparatif des biens</div><div style="font-size:11.5px;color:var(--muted)">TMI : <span class="ed" onclick="edTMI()" id="tmiVal"></span></div></div><div class="tw" id="immoCompare"></div><div style="font-size:11px;color:var(--muted);margin-top:12px">Effort d'épargne : ce que le bien te coûte (négatif) ou te rapporte (positif) chaque mois, impôts déduits.</div></div>
-<div class="card" id="immoSCI" style="display:none"><div class="ct">⬡ Tableau de bord SCI</div><div id="sciDash"></div></div>
+<div class="card"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Comparatif des biens</div><div style="font-size:11.5px;color:var(--muted)">TMI : <span class="ed" onclick="edTMI()" id="tmiVal"></span></div></div><div class="tw" id="immoCompare"></div><div style="font-size:11px;color:var(--muted);margin-top:12px">Effort d'épargne : ce que le bien te coûte (négatif) ou te rapporte (positif) chaque mois, impôts déduits.</div></div>
+<div class="card" id="immoSCI" style="display:none"><div class="ct">Tableau de bord SCI</div><div id="sciDash"></div></div>
 </div>
 
 <div class="svue" id="ivue-biens" style="display:none">
 <div id="ic"></div>
-<div class="card"><div class="fb"><div class="ct" style="margin:0">△ Projets d'achat</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addProjet()">+ Projet</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Prépare tes futurs achats : simule le cashflow avant de te lancer, puis transforme le projet en vrai bien le jour de l'achat.</div><div id="projetsList"></div></div>
-<div class="card"><div class="fb"><div class="ct" style="margin:0">◫ Suivi courte durée</div></div><div id="immoCD"></div></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">Projets d'achat</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addProjet()">+ Projet</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Prépare tes futurs achats : simule le cashflow avant de te lancer, puis transforme le projet en vrai bien le jour de l'achat.</div><div id="projetsList"></div></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">Suivi courte durée</div></div><div id="immoCD"></div></div>
 </div>
 </div>
 <div class="page" id="page-reglages">
-<div class="card"><div class="ct">⤓ Sauvegarde de secours</div>
+<div class="card"><div class="ct">Sauvegarde de secours</div>
 <div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:16px">Tes données sont stockées sur ton compte Google. Ce fichier de sauvegarde te permet de tout récupérer en cas de problème, ou de repartir d'une version antérieure. Pense à en faire une de temps en temps.</div>
-<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-g" onclick="expSauvegarde()">⤓ Télécharger une sauvegarde</button><button class="btn btn-o" onclick="document.getElementById('impFile').click()">⤒ Restaurer un fichier</button></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-g" onclick="expSauvegarde()">Télécharger une sauvegarde</button><button class="btn btn-o" onclick="document.getElementById('impFile').click()">⤒ Restaurer un fichier</button></div>
 <input type="file" id="impFile" accept=".json,application/json" style="display:none" onchange="impSauvegarde(this)">
 <div id="sauveInfo" style="font-size:12px;margin-top:14px"></div></div>
-<div class="card"><div class="ct">⎘ Export tableur</div>
+<div class="card"><div class="ct">Export tableur</div>
 <div style="font-size:12.5px;color:var(--text2);margin-bottom:14px">Un fichier lisible dans Excel ou LibreOffice. Pratique pour consulter ou imprimer, mais il ne permet pas de restaurer l'application.</div>
-<button class="btn btn-o" onclick="exportCSV()">⤓ Télécharger en CSV</button></div>
+<button class="btn btn-o" onclick="exportCSV()">Télécharger en CSV</button></div>
 <div class="card"><div class="ct">⚠ Zone sensible</div>
 <div style="font-size:12.5px;color:var(--text2);margin-bottom:14px">Efface toutes tes données et repart des valeurs d'exemple. Fais une sauvegarde avant.</div>
 <button class="btn btn-o" style="border-color:var(--red);color:var(--red)" onclick="if(confirm('Tout effacer et repartir de zéro ?\n\nCette action est irréversible.'))doReset()">Réinitialiser l'application</button></div>
 </div>
-<div class="page" id="page-bilan"><div class="kr" id="bilanKpi"></div><div class="card"><div class="ct">◷ Bilan de l'année</div><div id="bilanDetail"></div></div></div>
+<div class="page" id="page-bilan"><div class="kr" id="bilanKpi"></div><div class="card"><div class="ct">Bilan de l'année</div><div id="bilanDetail"></div></div></div>
 <div class="page" id="page-crypto"><div class="kr" id="ck"></div><div id="rstatc" class="rs" style="margin-bottom:8px"></div>
 <div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Valeur vs montant investi</div><div style="display:flex;gap:4px;align-items:center"><button class="pb" onclick="edCryptoInvest()">Apports</button><span id="cryPs" style="display:flex;gap:4px"></span></div></div><div class="cb"><canvas id="cCry"></canvas></div><div id="cryEcart" style="margin-top:14px"></div></div>
 <div class="card"><div class="ct">Portefeuille Crypto</div><div class="tw" id="crt"></div><div id="cra"></div></div></div>
 <div class="page" id="page-dettes"><div class="kr" id="dk"></div><div id="dl2"></div></div>
 <div class="page" id="page-releve">
-<div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">✎ Relevé du mois</div><div style="display:flex;gap:8px;align-items:center"><span id="relMois" style="font-size:12px;color:var(--muted)"></span><button class="btn btn-g" onclick="validerReleve()">Enregistrer le relevé</button></div></div><div style="font-size:11.5px;color:var(--muted)">Mets à jour tes montants une fois par mois, puis enregistre. Tout l'historique de l'application en découle.</div></div>
+<div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Relevé du mois</div><div style="display:flex;gap:8px;align-items:center"><span id="relMois" style="font-size:12px;color:var(--muted)"></span><button class="btn btn-g" onclick="validerReleve()">Enregistrer le relevé</button></div></div><div style="font-size:11.5px;color:var(--muted)">Mets à jour tes montants une fois par mois, puis enregistre. Tout l'historique de l'application en découle.</div></div>
 <div id="relEtat"></div>
 <div class="card"><div class="ct">Comptes et épargne</div><div class="tw" id="relEpargne"></div></div>
 <div class="card"><div class="ct">Enveloppes boursières</div><div class="tw" id="relBourse"></div></div>
 <div class="card"><div class="ct">Autres postes</div><div class="tw" id="relAutres"></div></div>
 </div>
 <div class="page" id="page-budget"><div class="kr" id="budgetKpi"></div><div class="card"><div class="ct">Flux mensuel</div><div id="sankeyDiv" style="width:100%;overflow-x:auto"><svg id="sankeySvg"></svg></div></div><div class="card"><div class="ct">Détail du budget</div><div id="budgetDetail"></div></div></div>
-<div class="page" id="page-alloc"><div class="card"><div class="fb" style="margin-bottom:16px"><div class="ct" style="margin:0">Allocation du patrimoine</div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="allocSum" style="font-size:12px;color:var(--muted)"></span><button class="pb" onclick="cibleEgalActuel()">Cible = actuel</button><button class="pb" onclick="resetCibles()">↺ Réinitialiser</button></div></div><div class="g21"><div class="tw" id="allocTable"></div><div><div class="cbs" style="height:230px"><canvas id="cAlloc"></canvas></div><div id="allocLeg" style="padding:10px 4px 0"></div></div></div><div style="font-size:11px;color:var(--muted);margin-top:14px">Clique sur une cible en % pour la modifier. Les écarts et les montants à ajuster se recalculent aussitôt.</div></div></div>
+<div class="page" id="page-alloc"><div class="card"><div class="fb" style="margin-bottom:16px"><div class="ct" style="margin:0">Allocation du patrimoine</div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="allocSum" style="font-size:12px;color:var(--muted)"></span><button class="pb" onclick="cibleEgalActuel()">Cible = actuel</button><button class="pb" onclick="resetCibles()">Réinitialiser</button></div></div><div class="g21"><div class="tw" id="allocTable"></div><div><div class="cbs" style="height:230px"><canvas id="cAlloc"></canvas></div><div id="allocLeg" style="padding:10px 4px 0"></div></div></div><div style="font-size:11px;color:var(--muted);margin-top:14px">Clique sur une cible en % pour la modifier. Les écarts et les montants à ajuster se recalculent aussitôt.</div></div></div>
 <div class="page" id="page-objectifs"><div id="objContent"></div></div>
-<div class="page" id="page-revenus"><div class="kr" id="revKpi"></div><div class="g2"><div class="card"><div class="ct">Revenus passifs mensuels</div><div class="cbs" style="height:230px"><canvas id="cRevPie"></canvas></div><div id="revLeg" style="padding:8px 12px 0"></div></div><div class="card"><div class="ct">Projection revenus passifs</div><div class="cbs"><canvas id="cRevProj"></canvas></div></div></div><div class="card"><div class="ct">◎ Couverture de tes dépenses</div><div id="couvKpi"></div><div id="couvDetail" style="margin-top:16px"></div></div><div class="card"><div class="ct">Détail des sources</div><div id="revDetail"></div></div></div>
+<div class="page" id="page-revenus"><div class="kr" id="revKpi"></div><div class="g2"><div class="card"><div class="ct">Revenus passifs mensuels</div><div class="cbs" style="height:230px"><canvas id="cRevPie"></canvas></div><div id="revLeg" style="padding:8px 12px 0"></div></div><div class="card"><div class="ct">Projection revenus passifs</div><div class="cbs"><canvas id="cRevProj"></canvas></div></div></div><div class="card"><div class="ct">Couverture de tes dépenses</div><div id="couvKpi"></div><div id="couvDetail" style="margin-top:16px"></div></div><div class="card"><div class="ct">Détail des sources</div><div id="revDetail"></div></div></div>
 <div class="page" id="page-marches">
-<div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">◉ Revue de marchés</div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="marPs" style="display:flex;gap:4px"></span><span id="marchesMaj" style="font-size:11px;color:var(--muted)"></span><button class="pb" onclick="fetchMarches(true)">Actualiser</button></div></div><div style="font-size:11.5px;color:var(--muted)" id="marLegende"></div></div>
+<div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Revue de marchés</div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="marPs" style="display:flex;gap:4px"></span><span id="marchesMaj" style="font-size:11px;color:var(--muted)"></span><button class="pb" onclick="fetchMarches(true)">Actualiser</button></div></div><div style="font-size:11.5px;color:var(--muted)" id="marLegende"></div></div>
 <div class="g2"><div class="card"><div class="ct" data-radtitre="Indices mondiaux">Indices mondiaux</div><div class="cb" style="height:330px"><canvas id="cRadIdx"></canvas></div><div id="legIdx" style="margin-top:12px"></div></div>
 <div class="card"><div class="ct" data-radtitre="Secteurs américains">Secteurs américains</div><div class="cb" style="height:330px"><canvas id="cRadSec"></canvas></div><div id="legSec" style="margin-top:12px"></div></div></div>
 <div class="g2"><div class="card"><div class="ct" data-radtitre="Matières premières & crypto">Matières premières & crypto</div><div class="cb" style="height:330px"><canvas id="cRadCom"></canvas></div><div id="legCom" style="margin-top:12px"></div></div>
 <div class="card"><div class="ct" data-radtitre="Thématiques">Thématiques</div><div class="cb" style="height:330px"><canvas id="cRadThe"></canvas></div><div id="legThe" style="margin-top:12px"></div></div></div>
 </div>
-<div class="page" id="page-brokers"><div class="kr" id="brokersKpi"></div><div class="card"><div class="ct">⇄ Comparateur de brokers</div><div class="tw" id="brokersTable"></div></div><div class="card"><div class="ct">⇋ Impact devises EUR/USD</div><div id="devisesInfo"></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">◫ Benchmark personnalisé</div><div style="display:flex;gap:4px" id="benchBtns"></div></div><div class="cb"><canvas id="cBench"></canvas></div></div></div>
-<div class="page" id="page-analyse"><div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Évolution par poste</div><div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button class="pb" onclick="edHistPoste()">Historique</button><span id="envPs" style="display:flex;gap:4px"></span></div></div><div class="cto" id="envCases"></div><div class="cb" style="height:310px"><canvas id="cEnv"></canvas></div><div id="envLeg" style="margin-top:14px"></div></div><div class="card"><div class="ct">◫ Rendement par poche</div><div id="rdtPoches"></div></div></div>
-<div class="page" id="page-resume"><div class="kr" id="resumeKpi"></div><div class="card"><div class="ct">Heatmap portefeuille</div><div id="heatmap" class="tw" style="width:100%"></div></div><div class="card"><div class="ct">▤ Résumé du mois</div><div id="resumeDetail"></div></div></div>
-<div class="page" id="page-simulator"><div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">◷ Où j'en serai</div><div style="display:flex;gap:4px" id="projAgeBtns"></div></div><div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;line-height:1.6">Ton patrimoine d'aujourd'hui, prolongé avec ce que tu rembourses chaque mois, ce que tes biens rapportent et ce que tu épargnes.</div><div class="kr" id="projKpi" style="margin-bottom:14px"></div><div class="cb"><canvas id="cProjPat"></canvas></div><div id="projReglages" style="margin-top:16px"></div><div id="projNote" style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6"></div></div><div id="simContent"></div></div>
+<div class="page" id="page-brokers"><div class="kr" id="brokersKpi"></div><div class="card"><div class="ct">Comparateur de brokers</div><div class="tw" id="brokersTable"></div></div><div class="card"><div class="ct">⇋ Impact devises EUR/USD</div><div id="devisesInfo"></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Benchmark personnalisé</div><div style="display:flex;gap:4px" id="benchBtns"></div></div><div class="cb"><canvas id="cBench"></canvas></div></div></div>
+<div class="page" id="page-analyse"><div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Évolution par poste</div><div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button class="pb" onclick="edHistPoste()">Historique</button><span id="envPs" style="display:flex;gap:4px"></span></div></div><div class="cto" id="envCases"></div><div class="cb" style="height:310px"><canvas id="cEnv"></canvas></div><div id="envLeg" style="margin-top:14px"></div></div><div class="card"><div class="ct">Rendement par poche</div><div id="rdtPoches"></div></div></div>
+<div class="page" id="page-resume"><div class="kr" id="resumeKpi"></div><div class="card"><div class="ct">Heatmap portefeuille</div><div id="heatmap" class="tw" style="width:100%"></div></div><div class="card"><div class="ct">Résumé du mois</div><div id="resumeDetail"></div></div></div>
+<div class="page" id="page-simulator"><div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Où j'en serai</div><div style="display:flex;gap:4px" id="projAgeBtns"></div></div><div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;line-height:1.6">Ton patrimoine d'aujourd'hui, prolongé avec ce que tu rembourses chaque mois, ce que tes biens rapportent et ce que tu épargnes.</div><div class="kr" id="projKpi" style="margin-bottom:14px"></div><div class="cb"><canvas id="cProjPat"></canvas></div><div id="projReglages" style="margin-top:16px"></div><div id="projNote" style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6"></div></div><div id="simContent"></div></div>
 </main></div></div>
 <button class="dm-btn" onclick="toggleHide()" id="dmBtn" title="Masquer les montants">◉</button>
 <script>
@@ -460,8 +533,7 @@ const glowLine={id:'glowLine',beforeDatasetDraw(chart,args){
   if(!ds||ds.type==='bar'||['bar','pie','doughnut','radar'].includes(chart.config.type))return;
   if(document.body.classList.contains('light'))return;
   const c=chart.ctx;c.save();
-  c.shadowColor=typeof ds.borderColor==='string'?ds.borderColor:'rgba(255,255,255,.4)';
-  c.shadowBlur=14;c.shadowOffsetY=2;
+  /* pas de halo sous les courbes : la lisibilité vient du trait et du fond */
 }, afterDatasetDraw(chart){chart.ctx.restore()}};
 /* Le halo s'applique à tous les graphiques en courbes */
 if(window.Chart&&Chart.register)try{Chart.register(glowLine)}catch(e){}
@@ -612,7 +684,7 @@ function jaugePret(a,coul){
   return '<div style="margin:10px 0 2px">'+
     '<div style="display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:5px">'+
       '<span style="color:var(--muted)">Capital remboursé</span>'+
-      '<span style="font-weight:700;color:'+c+'">'+a.pct.toFixed(1)+' %</span></div>'+
+      '<span style="font-weight:500;color:'+c+'">'+a.pct.toFixed(1)+' %</span></div>'+
     '<div style="height:8px;border-radius:5px;background:var(--card2);overflow:hidden">'+
       '<div style="height:100%;width:'+a.pct.toFixed(1)+'%;background:'+c+';border-radius:5px;transition:width .4s"></div></div>'+
     '<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:5px">'+
@@ -621,9 +693,9 @@ function jaugePret(a,coul){
 }
 
 /* ====== PAGE IMMO : SOUS-ONGLETS ====== */
-const IVUES=[{k:'mensuel',l:'Mensuel',c:'Mois',i:'▤'},{k:'annuel',l:'Bilan annuel',c:'Année',i:'◫'},
-             {k:'prets',l:'Prêts',c:'Prêts',i:'◑'},{k:'fisca',l:'Fiscalité',c:'Impôts',i:'▣'},
-             {k:'biens',l:'Mes biens',c:'Biens',i:'⌂'}];
+const IVUES=[{k:'mensuel',l:'Mensuel',c:'Mois',i:''},{k:'annuel',l:'Bilan annuel',c:'Année',i:''},
+             {k:'prets',l:'Prêts',c:'Prêts',i:''},{k:'fisca',l:'Fiscalité',c:'Impôts',i:''},
+             {k:'biens',l:'Mes biens',c:'Biens',i:''}];
 let immoVue=(function(){try{return localStorage.getItem('immoVue')||'mensuel'}catch(e){return 'mensuel'}})();
 window.setImmoVue=function(k){
   immoVue=k;try{localStorage.setItem('immoVue',k)}catch(e){}
@@ -1746,7 +1818,7 @@ function barreOccup(oc){
   const c=oc.pct>=95?'var(--green)':(oc.pct>=85?'var(--accent)':'var(--red)');
   return '<div style="min-width:92px">'+
     '<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">'+
-      '<span style="font-weight:700;color:'+c+'">'+oc.pct+' %</span>'+
+      '<span style="font-weight:500;color:'+c+'">'+oc.pct+' %</span>'+
       (oc.joursVac>0?'<span style="color:var(--muted)">'+oc.joursVac+' j vides</span>':'')+'</div>'+
     '<div style="height:5px;border-radius:3px;background:var(--card2);overflow:hidden">'+
       '<div style="height:100%;width:'+oc.pct+'%;background:'+c+';border-radius:3px"></div></div>'+
@@ -1896,7 +1968,7 @@ function renderAlloc(t,dc){
     h+='<div style="font-size:11px;color:var(--muted);margin:3px 0">cible <span class="ed" onclick="edCible(this,\''+c.k+'\')" style="font-weight:600;color:var(--text)">'+cible+'</span> %</div>';
     h+='<div style="font-size:10.5px;color:'+(aligne?'var(--muted)':(ecart>0?'var(--red)':'var(--green)'))+'">'+(ecart>=0?'+':'')+ecart.toFixed(1)+' pt · '+(aligne?'aligné':(ecart>0?'alléger ':'renforcer ')+(aligne?'':F(Math.round(montant))))+'</div></td></tr>';
   });
-  h+='<tr class="total-row"><td class="l">Total</td><td style="font-weight:700">'+F(Math.round(tot))+'</td><td></td><td style="font-weight:700">100%</td></tr>';
+  h+='<tr class="total-row"><td class="l">Total</td><td style="font-weight:500">'+F(Math.round(tot))+'</td><td></td><td style="font-weight:500">100%</td></tr>';
   h+='</tbody></table>';
   el.innerHTML=h;
   const itA=cats.map((c,k)=>({n:c.n,v:c.v,c:PIE()[k%8],cible:S.allocCible[c.k]||0}));
@@ -2325,7 +2397,53 @@ S.dettes.forEach(d=>{
   else{d.restant=d.emprunte}
 });
 const t=Tot(),H=gH(),r4=Math.round(t.ne*.04);
-document.getElementById('hk').innerHTML='<div class="kpi"><div class="kl">Brut</div><div class="kv">'+F(t.br)+'</div></div><div class="kpi"><div class="kl">Net</div><div class="kv" style="color:var(--accent)">'+F(t.ne)+'</div></div><div class="kpi"><div class="kl">Dettes</div><div class="kv" style="color:var(--red)">'+F(t.de)+'</div></div><div class="kpi"><div class="kl">Liquidités</div><div class="kv" style="color:var(--green)">'+F(t.lq)+'</div></div>';
+/* ---- Accueil : le patrimoine net porte l'écran ---------------------- */
+(function(){
+  const te=document.getElementById('hTete');if(!te)return;
+  /* variation d'un mois sur l'autre, prise de l'historique réel */
+  const Hm=parMois(gH());
+  let dMois=null,dPct=null;
+  if(Hm.length>1){
+    const av=Hm[Hm.length-2],der=Hm[Hm.length-1];
+    const vA=nb(av.net!=null?av.net:nb(av.brut)-nb(av.dettes));
+    const vD=nb(der.net!=null?der.net:nb(der.brut)-nb(der.dettes));
+    if(vA){dMois=vD-vA;dPct=dMois/Math.abs(vA)*100}
+  }
+  const moisCourant=new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  const signe=v=>(v>=0?'+':'\u2212')+F(Math.abs(Math.round(v)));
+  const coul=v=>v>=0?'var(--green)':'var(--red)';
+  te.innerHTML=
+    '<div class="hSur">Patrimoine · '+moisCourant+'</div>'+
+    '<div class="hChiffre">'+(hiddenMode?'***':F(t.ne))+'</div>'+
+    (dMois!=null
+      ? '<div class="hVar" style="color:'+coul(dMois)+'">'+(hiddenMode?'***':signe(dMois))+
+        ' <span class="hVarPct">'+(dPct>=0?'+':'')+dPct.toFixed(1)+' %</span>'+
+        '<span class="hRef">sur le dernier mois relevé</span></div>'
+      : '<div class="hVar"><span class="hRef">pas encore de mois précédent pour comparer</span></div>')+
+    '<div class="hSous">'+
+      '<span><em>Brut</em>'+(hiddenMode?'***':F(t.br))+'</span>'+
+      '<span><em>Dettes</em>'+(hiddenMode?'***':F(t.de))+'</span>'+
+      '<span><em>Liquidités</em>'+(hiddenMode?'***':F(t.lq))+'</span>'+
+      '<span><em>Rente à 4 %</em>'+(hiddenMode?'***':F(Math.round(t.ne*.04/12))+' / mois')+'</span>'+
+    '</div>';
+
+  /* le registre de composition remplace le camembert : on lit des montants,
+     pas des angles, et la soustraction des dettes se voit */
+  const rg=document.getElementById('hRegistre');if(!rg)return;
+  const postes=[{n:'Immobilier',v:t.im},{n:'Épargne',v:t.ep},{n:'Bourse',v:t.bo},
+                {n:'Comptes',v:t.co},{n:'Crypto',v:t.cr}]
+               .filter(p=>p.v>0).sort((a,b)=>b.v-a.v);
+  const somme=postes.reduce((a,p)=>a+p.v,0)||1;
+  rg.innerHTML='<div class="ct">Ce qui compose le patrimoine</div>'+
+    (postes.length?postes.map((p,i)=>
+      '<div class="hL"><span class="hN">'+p.n+'</span>'+
+      '<span class="hB"><i style="width:'+(p.v/somme*100).toFixed(1)+'%;background:'+(i===0?'var(--accent)':'var(--muted)')+'"></i></span>'+
+      '<span class="hV">'+(hiddenMode?'***':F(p.v))+'</span>'+
+      '<span class="hP">'+(p.v/somme*100).toFixed(1)+' %</span></div>').join('')
+     :'<div style="font-size:13px;color:var(--muted);padding:8px 0">Rien à répartir pour l\'instant.</div>')+
+    (t.de>0?'<div class="hDette"><span>Moins les dettes</span><span>\u2212 '+(hiddenMode?'***':F(t.de))+'</span></div>':'')+
+    '<div class="hNet"><span>Patrimoine net</span><span>'+(hiddenMode?'***':F(t.ne))+'</span></div>';
+})();
 
 /* ====== ALERTES ACCUEIL ====== */
 const alertes=[];
@@ -2428,14 +2546,8 @@ if(netVue==='barres'){
       scales:axeOpts(v=>(v/1000).toFixed(0)+'k')}});
 }
 
-const pL=pieMode==='net'?["Immobilier net","Comptes","Épargne","Bourse","Crypto"]:["Immobilier","Comptes","Épargne","Bourse","Crypto"];
-const pV=pieMode==='net'?[Math.max(0,t.im-t.de),t.co,t.ep,t.bo,t.cr]:[t.im,t.co,t.ep,t.bo,t.cr];
-const pC=["#e8a33d","#0fba81","#0891b2","#7c3aed","#ec4899"];
-const pT=pV.reduce((a,b)=>a+b,0);
-document.getElementById('pieMode_brut').className='ctb'+(pieMode==='brut'?' active':'');
-document.getElementById('pieMode_net').className='ctb'+(pieMode==='net'?' active':'');
-const itP=pL.map((l,k)=>({n:l,v:pV[k],c:PIE()[k%8]}));
-drawPie('cP','_cP',itP);document.getElementById('pl').innerHTML=pieLeg(itP);
+/* Le camembert a laissé la place au registre de composition :
+   on lit des montants alignés plutôt que des angles à comparer. */
 
 
 /* Sector chart */
@@ -2496,7 +2608,7 @@ vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'ctoibkr\')">'+F(v.ctoibkr|
 vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'v_ctoibkr\')" style="color:'+CV('--c4')+'">'+F(v.v_ctoibkr||0)+'</span></td>';
 vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'avl\')">'+F(v.avl||0)+'</span></td>';
 vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'v_avl\')" style="color:'+CV('--p6')+'">'+F(v.v_avl||0)+'</span></td>';
-vmH+='<td style="color:'+(pm>=0?'var(--green)':'var(--red)')+';font-weight:700">'+(i===0?'<span style="color:var(--muted)">—</span>':(pm>=0?'+':'')+pm.toFixed(2)+'%')+'</td>';
+vmH+='<td style="color:'+(pm>=0?'var(--green)':'var(--red)')+';font-weight:500">'+(i===0?'<span style="color:var(--muted)">—</span>':(pm>=0?'+':'')+pm.toFixed(2)+'%')+'</td>';
 vmH+='<td style="color:'+(tw>=0?'var(--green)':'var(--red)')+';font-weight:600;opacity:.85">'+(tw>=0?'+':'')+tw.toFixed(2)+'%</td>';
 vmH+='<td><button class="sd" onclick="delVM('+i+')">✕</button></td></tr>'});
 vmH+='</tbody></table></div>';document.getElementById('vmList').innerHTML=vmH;
@@ -2595,7 +2707,7 @@ document.getElementById('sl').innerHTML=sH;
     /* Les achats à venir */
     const tous=S.projets||[];
     let aH='<div style="margin-top:16px"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px">'+
-      '<div style="font-weight:600;font-size:13px">⌂ Achats à venir</div>'+
+      '<div style="font-weight:600;font-size:13px">Achats à venir</div>'+
       '<button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addProjet()">+ Ajouter un achat</button></div>';
     if(!tous.length){
       aH+='<div style="font-size:11.5px;color:var(--muted);line-height:1.6">Tu peux ajouter un bien que tu comptes acheter plus tard : son apport, ses frais de notaire et son crédit entrent dans la courbe le mois venu. Les projets créés ici apparaissent aussi sur la page Immo, où tu règles le loyer, les charges et le crédit en détail.</div>';
@@ -2743,7 +2855,7 @@ if(document.getElementById('cIntra')){
 let ph='<table class="pt"><thead><tr><th></th><th>S&P</th><th>Portf.</th><th>+/- €</th></tr></thead><tbody>';
 const pan=cPan();let ytP=0,ytPV=0,ytSP=0;
 pan.forEach(r=>{ytP+=r.perf;ytPV+=r.pv;if(r.sp!=null)ytSP+=r.sp;ph+='<tr><td class="rl">'+r.l+'</td>'+PC(r.sp)+PC(r.perf)+'<td style="font-weight:600;color:'+(r.pv>=0?'var(--green)':'var(--red)')+'">'+F2(r.pv)+'</td></tr>'});
-ph+='<tr class="total-row"><td class="rl">YTD</td>'+PC(ytSP||null)+PC(ytP)+'<td style="font-weight:800;color:'+(ytPV>=0?'var(--green)':'var(--red)')+'">'+F2(ytPV)+'</td></tr></tbody></table>';
+ph+='<tr class="total-row"><td class="rl">YTD</td>'+PC(ytSP||null)+PC(ytP)+'<td style="font-weight:500;color:'+(ytPV>=0?'var(--green)':'var(--red)')+'">'+F2(ytPV)+'</td></tr></tbody></table>';
 document.getElementById('ptw').innerHTML=ph;renderSidePerf();renderTicker();document.getElementById('sps').textContent=spSt;
 
 const rc=rStat.startsWith('✓')?'rs ok':rStat.startsWith('⚠')?'rs err':'rs load';
@@ -2783,12 +2895,12 @@ S.bourseGoals.forEach((g,i)=>{
       const target=new Date(parseInt(parts[2]),parseInt(parts[1])-1,parseInt(parts[0]));
       const today=new Date();
       const diff=Math.ceil((target-today)/(1000*60*60*24));
-      if(diff<0)echeanceStr='<span style="color:var(--red);font-weight:600">◷ Échéance dépassée ('+g.echeance+')</span>';
+      if(diff<0)echeanceStr='<span style="color:var(--red);font-weight:600">Échéance dépassée ('+g.echeance+')</span>';
       else if(diff<30)echeanceStr='<span style="color:var(--orange);font-weight:600">◷ '+diff+'j restants ('+g.echeance+')</span>';
       else echeanceStr='<span style="color:var(--muted)">◷ '+g.echeance+' ('+diff+'j)</span>';
     }else echeanceStr='<span style="color:var(--muted)">◷ '+g.echeance+'</span>';
   }
-  bgH+='<div style="margin-bottom:16px"><div class="lr"><div><div class="ln">'+gt.label+' — '+pkNames[g.pk]+'</div><div class="ls">'+(g.nom?g.nom+'  ':'')+(echeanceStr||'')+'</div></div><div style="display:flex;gap:8px;align-items:center"><span style="color:'+color+';font-weight:700">'+gt.fmt(r.cur)+'</span><span style="color:var(--muted);font-size:11px">/ <span class="ed" onclick="edBourseGoal(this,'+i+')">'+gt.fmt(g.cible)+'</span></span><button class="db" onclick="delBourseGoal('+i+')">✕</button></div></div>';
+  bgH+='<div style="margin-bottom:16px"><div class="lr"><div><div class="ln">'+gt.label+' — '+pkNames[g.pk]+'</div><div class="ls">'+(g.nom?g.nom+'  ':'')+(echeanceStr||'')+'</div></div><div style="display:flex;gap:8px;align-items:center"><span style="color:'+color+';font-weight:500">'+gt.fmt(r.cur)+'</span><span style="color:var(--muted);font-size:11px">/ <span class="ed" onclick="edBourseGoal(this,'+i+')">'+gt.fmt(g.cible)+'</span></span><button class="db" onclick="delBourseGoal('+i+')">✕</button></div></div>';
   bgH+='<div class="obj-bar" style="margin-top:4px"><div class="obj-fill" style="width:'+pct+'%;background:'+color+'"></div></div>';
   bgH+='<div style="font-size:11px;color:var(--muted);margin-top:2px">'+(onTrack?'✓ Objectif atteint ('+pct.toFixed(0)+'%)':'⚠ '+pct.toFixed(0)+'% — reste '+(g.type==='etf_pct'?(g.cible-r.cur).toFixed(1)+'%':F(g.cible-r.cur)))+'</div></div>';
 });
@@ -2854,7 +2966,7 @@ let btH='<table><thead><tr><th class="l">Critère</th>';
 brokers.forEach(b=>{btH+='<th style="color:'+b.color+'">'+b.name+'</th>'});
 btH+='</tr></thead><tbody>';
 /* Lignes comparatives */
-btH+='<tr><td class="l" style="font-weight:600">Valeur totale</td>';brokers.forEach(b=>{btH+='<td style="font-weight:700">'+F(b.calc.v)+'</td>'});btH+='</tr>';
+btH+='<tr><td class="l" style="font-weight:600">Valeur totale</td>';brokers.forEach(b=>{btH+='<td style="font-weight:500">'+F(b.calc.v)+'</td>'});btH+='</tr>';
 btH+='<tr><td class="l">Versé</td>';brokers.forEach(b=>{btH+='<td>'+F(b.pf.ver)+'</td>'});btH+='</tr>';
 btH+='<tr><td class="l">+/- value</td>';brokers.forEach(b=>{btH+='<td style="color:'+(b.calc.pvVer>=0?'var(--green)':'var(--red)')+';font-weight:600">'+F2(b.calc.pvVer)+'</td>'});btH+='</tr>';
 btH+='<tr><td class="l">Perf %</td>';brokers.forEach(b=>{btH+='<td>'+FP(b.calc.ppVer)+'</td>'});btH+='</tr>';
@@ -2873,14 +2985,14 @@ const usVal=t.s.v;const usValUsd=S.pf.ctosb.l.reduce((a,l)=>a+(l.usd||l.co)*l.p,
 const eurUsdDisplay=eurUsd>0?eurUsd.toFixed(4):'—';
 const impactPct=eurUsd>0?((1/eurUsd-1.10)/1.10*100).toFixed(2):'—';/* vs taux de ref 1.10 */
 let dvH='<div class="g2"><div>';
-dvH+='<div class="lr"><span style="font-weight:600">Taux EUR/USD actuel</span><span style="font-weight:800;font-size:18px">'+eurUsdDisplay+'</span></div>';
+dvH+='<div class="lr"><span style="font-weight:600">Taux EUR/USD actuel</span><span style="font-weight:500;font-size:18px">'+eurUsdDisplay+'</span></div>';
 dvH+='<div class="lr"><span>1 EUR =</span><span style="font-weight:600">'+(eurUsd>0?(1/eurUsd).toFixed(4):' —')+' USD</span></div>';
-dvH+='<div class="lr"><span>Portefeuille US (€)</span><span style="font-weight:700;color:var(--bourse)">'+F(usVal)+'</span></div>';
-dvH+='<div class="lr"><span>Portefeuille US ($)</span><span style="font-weight:700">$'+Math.round(usValUsd).toLocaleString('fr-FR')+'</span></div>';
+dvH+='<div class="lr"><span>Portefeuille US (€)</span><span style="font-weight:500;color:var(--bourse)">'+F(usVal)+'</span></div>';
+dvH+='<div class="lr"><span>Portefeuille US ($)</span><span style="font-weight:500">$'+Math.round(usValUsd).toLocaleString('fr-FR')+'</span></div>';
 dvH+='</div><div>';
 dvH+='<div style="background:var(--bg);border-radius:10px;padding:16px;text-align:center">';
 dvH+='<div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase">Impact devise vs ref (1.10)</div>';
-dvH+='<div style="font-size:28px;font-weight:800;color:'+(parseFloat(impactPct)>=0?'var(--green)':'var(--red)')+';margin-top:4px">'+(parseFloat(impactPct)>=0?'+':'')+impactPct+'%</div>';
+dvH+='<div style="font-size:28px;font-weight:500;color:'+(parseFloat(impactPct)>=0?'var(--green)':'var(--red)')+';margin-top:4px">'+(parseFloat(impactPct)>=0?'+':'')+impactPct+'%</div>';
 dvH+='<div style="font-size:12px;color:var(--muted);margin-top:4px">'+(parseFloat(impactPct)>=0?'L\'euro fort réduit tes actifs US en €':'L\'euro faible booste tes actifs US en €')+'</div>';
 dvH+='</div></div></div>';
 document.getElementById('devisesInfo').innerHTML=dvH;
@@ -2915,7 +3027,7 @@ if(!S.journal)S.journal=[];
 let jlH='';
 if(S.journal.length>0){
   S.journal.slice().sort((a,b)=>b.ts-a.ts).forEach(j=>{
-    jlH+='<div style="padding:10px 0;border-bottom:1px solid #f0f2f5"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-weight:700;font-size:13px">'+j.action+'</div>';
+    jlH+='<div style="padding:10px 0;border-bottom:1px solid #f0f2f5"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-weight:500;font-size:13px">'+j.action+'</div>';
     if(j.raison)jlH+='<div style="font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4">'+j.raison+'</div>';
     jlH+='</div><div style="display:flex;gap:8px;align-items:center;flex-shrink:0"><span style="font-size:11px;color:var(--muted)">'+j.date+'</span><button class="db" onclick="delJournal(\''+j.id+'\')">✕</button></div></div></div>';
   });
@@ -2973,7 +3085,7 @@ anneesDiv.forEach((a,k)=>{
     dmH+='<td>'+(divType==='t'
       ?'<span'+(v===0?' style="color:var(--muted)"':'')+'>'+(hiddenMode?'***':v)+'</span>'
       :'<span class="ed" onclick="edDivMois(this,\''+a+'\',\''+m+'\',\''+divType+'\')"'+(v===0?' style="color:var(--muted)"':'')+'>'+(hiddenMode?'***':v)+'</span>')+'</td>'});
-  dmH+='<td style="font-weight:700;color:'+(encours?'var(--accent)':'var(--text2)')+'">'+F2(tA)+'</td>';
+  dmH+='<td style="font-weight:500;color:'+(encours?'var(--accent)':'var(--text2)')+'">'+F2(tA)+'</td>';
   dmH+='<td>'+(tP>0?'<span style="color:'+(tA>=tP?'var(--green)':'var(--red)')+';font-weight:600">'+(tA>=tP?'+':'')+((tA-tP)/tP*100).toFixed(0)+'%</span>':'<span style="color:var(--muted)">—</span>')+'</td>';
   dmH+='<td style="white-space:nowrap">'+
     (divType!=='t'?'<button class="db" title="Déplacer toute l\'année vers '+(divType==='a'?'les SCPI':'les actions')+'" onclick="divBascule(\''+a+'\',\''+(divType==='a'?'s':'a')+'\')">⇄</button>':'')+
@@ -3155,7 +3267,7 @@ document.getElementById('ik').innerHTML=
     loues.forEach(l=>{
       const ok=!!recu[l.cle];
       h+='<tr><td class="l"><div style="font-weight:600">'+l.nom+'</div><div style="font-size:10.5px;color:var(--muted)">'+l.bien+'</div></td>'+
-        '<td style="font-weight:700">'+F(l.loyer)+'</td>'+
+        '<td style="font-weight:500">'+F(l.loyer)+'</td>'+
         '<td><button class="pb '+(ok?'on':'')+'" style="'+(ok?'color:var(--green);border-color:var(--green)':'color:var(--orange);border-color:var(--orange)')+'" onclick="togLoyerRecu(\''+l.cle+'\')">'+(ok?'✓ Reçu':'En attente')+'</button></td></tr>';
     });
     h+='</tbody></table></div><div style="font-size:11px;color:var(--muted);margin-top:8px">Clique sur l\'état pour marquer un loyer comme reçu. Le suivi repart à zéro chaque mois.</div>';
@@ -3170,7 +3282,7 @@ document.getElementById('ik').innerHTML=
   const credits=loc.reduce((a,b)=>a+mensualiteBien(b),0);
   let h='<div class="tw"><table style="font-size:12px"><tbody>';
   const ligne=(nom,sous,val,coul,alerte)=>'<tr><td class="l"><div style="font-weight:600">'+nom+'</div><div style="font-size:10.5px;color:var(--muted)">'+sous+'</div></td>'+
-    '<td style="text-align:right;font-weight:700;color:'+coul+';white-space:nowrap">'+(val?'-'+F(Math.round(val)):'0 €')+
+    '<td style="text-align:right;font-weight:500;color:'+coul+';white-space:nowrap">'+(val?'-'+F(Math.round(val)):'0 €')+
     (alerte?'<div style="font-size:10.5px;color:var(--orange);font-weight:500">'+alerte+'</div>':'')+'</td></tr>';
   h+=ligne('Crédits immobiliers','Mensualités de prêt',credits,'var(--red)','');
   POSTES_IMMO.forEach(p=>{
@@ -3179,7 +3291,7 @@ document.getElementById('ik').innerHTML=
       m.vides.length?'à renseigner sur '+m.vides.length+' bien'+(m.vides.length>1?'s':''):'');
   });
   const totalDep=credits+mqI.postes.reduce((a,x)=>a+x.total,0);
-  h+='<tr><td class="l" style="font-weight:700;padding-top:12px">Total</td><td style="text-align:right;font-weight:800;color:'+(totalDep?'var(--red)':'var(--muted)')+';padding-top:12px">'+
+  h+='<tr><td class="l" style="font-weight:500;padding-top:12px">Total</td><td style="text-align:right;font-weight:500;color:'+(totalDep?'var(--red)':'var(--muted)')+';padding-top:12px">'+
     (totalDep?((cfIncomplet?'<span style="color:var(--orange)">≥ </span>':'')+'-'+F(Math.round(totalDep))):'0 €')+'</td></tr>';
   h+='</tbody></table></div>';
   el.innerHTML=h;
@@ -3230,7 +3342,7 @@ document.getElementById('ik').innerHTML=
       });
       g.innerHTML='<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:4px">'+
         '<div style="font-size:11.5px;color:var(--muted)">Fin du dernier prêt : '+(finMax?finMax.toLocaleDateString('fr-FR',{month:'long',year:'numeric'}):'—')+'</div>'+
-        '<div style="font-size:18px;font-weight:800;color:var(--accent)">'+pct.toFixed(1)+' %</div></div>'+
+        '<div style="font-size:18px;font-weight:500;color:var(--accent)">'+pct.toFixed(1)+' %</div></div>'+
         '<div style="height:9px;border-radius:6px;background:var(--card2);overflow:hidden"><div style="height:100%;width:'+pct.toFixed(1)+'%;background:var(--green);border-radius:6px;transition:width .4s"></div></div>'+
         '<div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-top:6px">'+
           '<span>'+F(Math.round(emprunte-restant))+' remboursé</span><span>'+F(Math.round(restant))+' restant</span></div>'+
@@ -3246,9 +3358,9 @@ document.getElementById('ik').innerHTML=
       const fin=new Date();fin.setMonth(fin.getMonth()+reste);
       return '<div style="padding:14px 0;border-bottom:1px solid var(--border)">'+
         '<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">'+
-          '<div><div style="font-weight:700">'+x.bien+(x.rp?' <span style="font-size:10.5px;color:var(--muted);font-weight:500">résidence principale</span>':'')+'</div>'+
+          '<div><div style="font-weight:500">'+x.bien+(x.rp?' <span style="font-size:10.5px;color:var(--muted);font-weight:500">résidence principale</span>':'')+'</div>'+
           '<div style="font-size:11px;color:var(--muted)">'+nb(d.taux)+' % sur '+Math.round(nb(d.dureeMois)/12)+' ans · '+Math.round(reste/12)+' an'+(reste>=24?'s':'')+' restant'+(reste>=24?'s':'')+'</div></div>'+
-          '<div style="text-align:right"><div style="font-weight:700">'+F2(a.capMois+a.intMois)+' <span style="font-size:11px;color:var(--muted)">/mois</span></div>'+
+          '<div style="text-align:right"><div style="font-weight:500">'+F2(a.capMois+a.intMois)+' <span style="font-size:11px;color:var(--muted)">/mois</span></div>'+
           '<div style="font-size:11px;color:var(--red)">reste '+F(Math.round(a.restant*x.pct))+'</div></div></div>'+
         jaugePret({pct:a.pct,rembourse:Math.round(a.rembourse*x.pct),emprunte:Math.round(a.emprunte*x.pct),restant:Math.round(a.restant*x.pct)})+
         '<div style="font-size:10.5px;color:var(--muted)">Fin : '+fin.toLocaleDateString('fr-FR',{month:'short',year:'numeric'})+'</div></div>';
@@ -3329,12 +3441,12 @@ document.getElementById('ik').innerHTML=
           '<td style="color:var(--green)">'+F(Math.round(x.f.loyerAn))+'</td>'+
           '<td style="color:'+(x.f.impot?'var(--red)':'var(--muted)')+'">'+(x.f.impot?F(Math.round(x.f.impot)):'0 €')+
             (x.f.impot?'<div style="font-size:10px;color:var(--muted)">base '+F(Math.round(x.f.base))+'</div>':'')+'</td>'+
-          '<td style="font-weight:700;color:'+(net>=0?'var(--green)':'var(--red)')+'">'+(net>=0?'+':'')+F(Math.round(net))+'</td>'+
+          '<td style="font-weight:500;color:'+(net>=0?'var(--green)':'var(--red)')+'">'+(net>=0?'+':'')+F(Math.round(net))+'</td>'+
           '<td style="color:'+(x.manque.length?'var(--orange)':(x.cfReel-x.f.impot>=0?'var(--green)':'var(--red)'))+'">'+
             (x.manque.length?'<span style="font-size:10.5px">'+x.manque.length+' charge'+(x.manque.length>1?'s':'')+' à renseigner</span>'
                             :((x.cfReel-x.f.impot>=0?'+':'')+F(Math.round(x.cfReel-x.f.impot))))+'</td></tr>';
       });
-      h+='<tr style="font-weight:800;border-top:2px solid var(--border)"><td class="l">Total</td><td></td><td></td>'+
+      h+='<tr style="font-weight:500;border-top:2px solid var(--border)"><td class="l">Total</td><td></td><td></td>'+
         '<td style="color:var(--green)">'+F(Math.round(revBruts))+'</td>'+
         '<td style="color:var(--red)">'+F(Math.round(impot))+'</td>'+
         '<td style="color:'+(netApres>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(netApres))+'</td>'+
@@ -3354,7 +3466,7 @@ document.getElementById('ik').innerHTML=
       const coul=taux<15?'var(--green)':taux<30?'var(--accent)':'var(--red)';
       pr.innerHTML='<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:8px">'+
           '<div style="font-size:12px;color:var(--text2)">Taux effectif sur tes loyers</div>'+
-          '<div style="font-size:20px;font-weight:800;color:'+coul+'">'+taux.toFixed(1)+' %</div></div>'+
+          '<div style="font-size:20px;font-weight:500;color:'+coul+'">'+taux.toFixed(1)+' %</div></div>'+
         '<div style="height:10px;border-radius:6px;background:var(--card2);overflow:hidden;display:flex">'+
           '<div style="width:'+(irTot/revBruts*100).toFixed(1)+'%;background:'+CV('--red')+'"></div>'+
           '<div style="width:'+(psTot/revBruts*100).toFixed(1)+'%;background:'+CV('--orange')+'"></div></div>'+
@@ -3440,9 +3552,9 @@ document.getElementById('ik').innerHTML=
         '<td style="color:'+(x.rev>0?'var(--green)':'var(--muted)')+'">'+F(Math.round(x.rev))+'</td>'+
         '<td><input class="ci" style="width:72px" placeholder="'+Math.round(estDep)+'" value="'+(x.reel?Math.round(x.dep):'')+'" onchange="setDepMois(\''+x.cle+'\',this.value)" title="Laisse vide pour utiliser l\'estimation">'+
           (x.reel?'':'<div style="font-size:10px;color:var(--muted)">estimé</div>')+'</td>'+
-        '<td style="font-weight:700;color:'+(x.cf>=0?'var(--green)':'var(--red)')+'">'+(x.cf>=0?'+':'')+F(Math.round(x.cf))+'</td></tr>';
+        '<td style="font-weight:500;color:'+(x.cf>=0?'var(--green)':'var(--red)')+'">'+(x.cf>=0?'+':'')+F(Math.round(x.cf))+'</td></tr>';
     });
-    h+='<tr style="font-weight:800;border-top:2px solid var(--border)"><td class="l">Total '+bilanAn+'</td>'+
+    h+='<tr style="font-weight:500;border-top:2px solid var(--border)"><td class="l">Total '+bilanAn+'</td>'+
       '<td style="color:var(--green)">'+F(Math.round(revYTD))+'</td>'+
       '<td style="color:var(--red)">'+F(Math.round(depYTD))+'</td>'+
       '<td style="color:'+(cfYTD>=0?'var(--green)':'var(--red)')+'">'+(cfYTD>=0?'+':'')+F(Math.round(cfYTD))+'</td></tr>';
@@ -3498,10 +3610,10 @@ immoLoc.forEach(b=>{
   const cf=loyM-chM-mensC;
   const rb=b.valeur>0?(loyM*12/b.valeur*100).toFixed(1):0;
   totLoy+=loyM;totCh+=chM;totCr+=mensC;totCf+=cf;totValLoc+=b.valeur*pct;
-  rcH+='<tr><td class="l" style="font-weight:600">'+b.nom+(pct<1?' <span style="font-size:10px;color:var(--muted)">('+b.partsPct+'%)</span>':'')+'</td><td style="color:var(--green);font-weight:600">'+F(Math.round(loyM))+'</td><td style="color:var(--red)">'+F(Math.round(chM))+'</td><td style="color:var(--red)">'+(cr?F(Math.round(mensC)):'<span style="color:var(--orange)" title="Aucun prêt rattaché à ce bien">⚠ aucun</span>')+'</td><td style="font-weight:700;color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(cf))+'</td><td>'+rb+'%</td></tr>';
+  rcH+='<tr><td class="l" style="font-weight:600">'+b.nom+(pct<1?' <span style="font-size:10px;color:var(--muted)">('+b.partsPct+'%)</span>':'')+'</td><td style="color:var(--green);font-weight:600">'+F(Math.round(loyM))+'</td><td style="color:var(--red)">'+F(Math.round(chM))+'</td><td style="color:var(--red)">'+(cr?F(Math.round(mensC)):'<span style="color:var(--orange)" title="Aucun prêt rattaché à ce bien">⚠ aucun</span>')+'</td><td style="font-weight:500;color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(cf))+'</td><td>'+rb+'%</td></tr>';
 });
 if(immoLoc.length===0)rcH+='<tr><td colspan="6" style="text-align:center;color:var(--muted)">Aucun bien locatif. Change le type de location d\'un bien.</td></tr>';
-rcH+='<tr style="background:rgba(122,162,247,.05);font-weight:800"><td class="l">Total</td><td style="color:var(--green)">'+F(Math.round(totLoy))+'</td><td style="color:var(--red)">'+F(Math.round(totCh))+'</td><td style="color:var(--red)">'+F(Math.round(totCr))+'</td><td style="color:'+(totCf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(totCf))+'</td><td>'+(totValLoc>0?(totLoy*12/totValLoc*100).toFixed(1):0)+'%</td></tr>';
+rcH+='<tr style="background:rgba(122,162,247,.05);font-weight:500"><td class="l">Total</td><td style="color:var(--green)">'+F(Math.round(totLoy))+'</td><td style="color:var(--red)">'+F(Math.round(totCh))+'</td><td style="color:var(--red)">'+F(Math.round(totCr))+'</td><td style="color:'+(totCf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(totCf))+'</td><td>'+(totValLoc>0?(totLoy*12/totValLoc*100).toFixed(1):0)+'%</td></tr>';
 rcH+='</tbody></table>';
 document.getElementById('immoRecap').innerHTML=rcH;
 
@@ -3578,13 +3690,13 @@ document.getElementById('immoRecap').innerHTML=rcH;
       '<td style="color:'+(x.e.cash>=0?'var(--green)':'var(--red)')+'">'+F2(x.e.cash)+'</td>'+
       '<td style="color:'+CV('--p1')+'">'+F2(x.e.capital)+'</td>'+
       '<td style="color:'+(x.e.valoSure?(x.e.valoForte?'var(--accent)':CV('--p2')):'var(--muted)')+'">'+(x.e.valoSure?F2(x.e.valo)+'<div class="tk">'+(x.e.tauxAn>=0?'+':'')+x.e.tauxAn+' %/an</div>':'—')+'</td>'+
-      '<td style="font-weight:700;color:'+(x.e.total>=0?'var(--green)':'var(--red)')+'">'+(x.e.total>=0?'+':'')+F2(x.e.total)+'</td>'+
+      '<td style="font-weight:500;color:'+(x.e.total>=0?'var(--green)':'var(--red)')+'">'+(x.e.total>=0?'+':'')+F2(x.e.total)+'</td>'+
       '<td style="color:var(--muted)">'+F(Math.round(x.e.total*12))+'</td></tr>';
   });
   h+='<tr style="border-top:2px solid var(--border)"><td class="l"><b>Total</b></td>'+
     '<td style="font-weight:600">'+F2(T.cash)+'</td><td style="font-weight:600;color:'+CV('--p1')+'">'+F2(T.capital)+'</td>'+
     '<td style="font-weight:600;color:'+CV('--p2')+'">'+F2(T.valo)+'</td>'+
-    '<td style="font-weight:800;color:'+(T.total>=0?'var(--green)':'var(--red)')+'">'+(T.total>=0?'+':'')+F2(T.total)+'</td>'+
+    '<td style="font-weight:500;color:'+(T.total>=0?'var(--green)':'var(--red)')+'">'+(T.total>=0?'+':'')+F2(T.total)+'</td>'+
     '<td style="font-weight:600">'+F(Math.round(T.total*12))+'</td></tr>';
   h+='</tbody></table></div>';
   h+='<div style="font-size:11.5px;color:var(--muted);margin-top:11px;line-height:1.6">'+
@@ -3628,7 +3740,7 @@ else{
     cpH+='<td style="color:var(--green)">'+F(Math.round(f.loyerAn))+'</td>';
     cpH+='<td style="color:var(--red)">'+F(Math.round(f.chargesAn))+'</td>';
     cpH+='<td style="color:var(--red)">'+F(Math.round(f.impot))+'</td>';
-    cpH+='<td style="font-weight:700;color:'+(f.effort>=0?'var(--green)':'var(--red)')+'">'+(f.effort>=0?'+':'')+F(Math.round(f.effort))+'</td>';
+    cpH+='<td style="font-weight:500;color:'+(f.effort>=0?'var(--green)':'var(--red)')+'">'+(f.effort>=0?'+':'')+F(Math.round(f.effort))+'</td>';
     cpH+='<td style="font-weight:600">'+f.rdtNet.toFixed(2)+'%</td>';
     cpH+='<td style="color:var(--muted);font-size:11.5px">'+r.anAuto+'</td></tr>';
   });
@@ -3725,7 +3837,7 @@ let imH='';S.immo.forEach(b=>{
     imH+='<div style="background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:12px 14px;margin-bottom:16px">';
     imH+='<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px">'+
       '<span style="font-size:11.5px;color:var(--muted)">Ce que ce bien vous rapporte par mois</span>'+
-      '<span style="font-size:18px;font-weight:800;color:'+(en.total>=0?'var(--green)':'var(--red)')+'">'+(en.total>=0?'+':'')+F2(en.total)+'</span></div>';
+      '<span style="font-size:18px;font-weight:500;color:'+(en.total>=0?'var(--green)':'var(--red)')+'">'+(en.total>=0?'+':'')+F2(en.total)+'</span></div>';
     imH+=barreEnrichi(en);
     imH+='<div style="display:flex;flex-wrap:wrap;gap:4px 16px;font-size:11.5px;margin-top:9px">'+
       '<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--green);margin-right:5px"></span>Cashflow '+F2(en.cash)+'</span>'+
@@ -3743,27 +3855,27 @@ let imH='';S.immo.forEach(b=>{
   /* 3. Le détail, rangé par thème */
   imH+='<div class="g2"><div>';
   imH+='<div class="sect">Le bien</div>';
-  imH+='<div class="lr"><span>Valeur</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'valeur\')" style="font-weight:700;color:#e8a33d">'+F(b.valeur)+'</span></div>';
+  imH+='<div class="lr"><span>Valeur</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'valeur\')" style="font-weight:500;color:#e8a33d">'+F(b.valeur)+'</span></div>';
   imH+='<div class="lr"><span>Prix achat</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'prixAchat\')">'+F(b.prixAchat)+'</span></div>';
   imH+='<div class="lr"><span>Surface m²</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'surface\')">'+(b.surface||'—')+'</span></div>';
   imH+='<div class="lr"><span>Adresse</span><span class="ed" onclick="edTxt(this,\'immo\',\''+b.id+'\',\'adresse\')">'+(b.adresse||'—')+'</span></div>';
   imH+='<div class="lr"><span>Type location</span><span class="ed" onclick="edImmoType(\''+b.id+'\')">'+(b.typeLocation||'—')+'</span></div>';
   imH+='<div class="lr"><span>SCI</span><span class="ed" onclick="togSCI(\''+b.id+'\')">'+(b.sci?'Oui':'Non')+'</span></div>';
-  imH+='<div class="lr"><span>% détention (ta part)</span><span class="ed" onclick="edPct(this,\''+b.id+'\')" style="font-weight:700;color:var(--accent)">'+(b.partsPct||100)+'%</span></div>';
-  imH+='<div class="lr"><span>Ta part (valeur)</span><span style="font-weight:700;color:var(--orange)">'+F(Math.round(b.valeur*((b.partsPct||100)/100)))+'</span></div>';
+  imH+='<div class="lr"><span>% détention (ta part)</span><span class="ed" onclick="edPct(this,\''+b.id+'\')" style="font-weight:500;color:var(--accent)">'+(b.partsPct||100)+'%</span></div>';
+  imH+='<div class="lr"><span>Ta part (valeur)</span><span style="font-weight:500;color:var(--orange)">'+F(Math.round(b.valeur*((b.partsPct||100)/100)))+'</span></div>';
   imH+='</div><div>';
   const aLots=b.lots&&b.lots.length;
   imH+='<div class="sect">'+(rp?'Charges':'Revenus et charges')+'</div>';
   if(!rp)imH+='<div class="lr"><span>Loyer/mois'+(aLots?' <span style="color:var(--muted);font-size:11px">('+b.lots.length+' logements)</span>':'')+'</span>'
-    +(aLots?'<span style="color:var(--green);font-weight:700">'+F(loyerBien(b))+'</span>'
-           :'<span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'loyer\')" style="color:var(--green);font-weight:700">'+F(b.loyer||0)+'</span>')+'</div>';
+    +(aLots?'<span style="color:var(--green);font-weight:500">'+F(loyerBien(b))+'</span>'
+           :'<span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'loyer\')" style="color:var(--green);font-weight:500">'+F(b.loyer||0)+'</span>')+'</div>';
   imH+='<div class="lr"><span>Charges/mois</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'charges\')" style="color:var(--red)">'+F(b.charges||0)+'</span></div>';
   imH+='<div class="lr"><span>Taxe foncière/an</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'taxeFonciere\')">'+F(b.taxeFonciere||0)+'</span></div>';
   imH+='<div class="lr"><span>Assurance/an</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'assurance\')">'+F(b.assurance||0)+'</span></div>';
   imH+='<div class="lr"><span>Gestion/mois</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'gestion\')">'+F(b.gestion||0)+'</span></div>';
   if(mensC)imH+='<div class="lr"><span>Mensualité du prêt</span><span style="color:var(--red)">'+F(Math.round(mensC))+'</span></div>';
-  if(!rp)imH+='<div class="lr"><span style="font-weight:700">Cashflow net</span><span style="font-weight:800;color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(cf))+'/mois</span></div>';
-  else imH+='<div class="lr"><span style="font-weight:700">Coût mensuel du logement</span><span style="font-weight:800;color:var(--red)">'+F(Math.round(chM+mensC))+'/mois</span></div>';
+  if(!rp)imH+='<div class="lr"><span style="font-weight:500">Cashflow net</span><span style="font-weight:500;color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(cf))+'/mois</span></div>';
+  else imH+='<div class="lr"><span style="font-weight:500">Coût mensuel du logement</span><span style="font-weight:500;color:var(--red)">'+F(Math.round(chM+mensC))+'/mois</span></div>';
   imH+='</div></div>';
 
   /* 4. Le crédit, regroupé */
@@ -3771,7 +3883,7 @@ let imH='';S.immo.forEach(b=>{
   imH+='<div class="lr"><span>Prêt rattaché</span><span class="ed" onclick="edImmoCredit(\''+b.id+'\')">'+(cr?cr.nom:'— cliquer pour rattacher')+'</span></div>';
   if(av){
     imH+='<div class="g2" style="gap:0 18px"><div>';
-    imH+='<div class="lr"><span>Capital remboursé ce mois</span><span style="font-weight:700;color:var(--green)">'+F2(av.capMois)+'</span></div>';
+    imH+='<div class="lr"><span>Capital remboursé ce mois</span><span style="font-weight:500;color:var(--green)">'+F2(av.capMois)+'</span></div>';
     imH+='<div class="lr"><span>Intérêts ce mois</span><span style="color:var(--red)">'+F2(av.intMois)+'</span></div>';
     imH+='</div><div>';
     imH+='<div class="lr"><span>Capital sur 12 mois</span><span style="font-weight:600;color:var(--green)">'+F(av.cap12)+'</span></div>';
@@ -3791,8 +3903,8 @@ let imH='';S.immo.forEach(b=>{
   if(fb.reg.charges)imH+='<div class="lr"><span>Intérêts d\'emprunt</span><span style="color:var(--red)">'+F(Math.round(fb.interetsAn))+'/an</span></div>';
   if(fb.amortAn>0)imH+='<div class="lr"><span>Amortissement</span><span style="color:var(--red)">'+F(Math.round(fb.amortAn))+'/an</span></div>';
   imH+='<div class="lr"><span>Base imposable</span><span style="font-weight:600">'+F(Math.round(fb.base))+'</span></div>';
-  imH+='<div class="lr"><span>Impôts estimés</span><span style="font-weight:700;color:var(--red)">'+F(Math.round(fb.impot))+'/an</span></div>';
-  imH+='<div class="lr"><span style="font-weight:700">Effort d\'épargne réel</span><span style="font-weight:800;color:'+(fb.effort>=0?'var(--green)':'var(--red)')+'">'+(fb.effort>=0?'+':'')+F(Math.round(fb.effort))+'/mois</span></div>';
+  imH+='<div class="lr"><span>Impôts estimés</span><span style="font-weight:500;color:var(--red)">'+F(Math.round(fb.impot))+'/an</span></div>';
+  imH+='<div class="lr"><span style="font-weight:500">Effort d\'épargne réel</span><span style="font-weight:500;color:'+(fb.effort>=0?'var(--green)':'var(--red)')+'">'+(fb.effort>=0?'+':'')+F(Math.round(fb.effort))+'/mois</span></div>';
   imH+='<div class="lr"><span>Rendement net d\'impôts</span><span style="font-weight:600">'+fb.rdtNet.toFixed(2)+'%</span></div>';
   imH+='<div style="font-size:10.5px;color:var(--muted);margin-top:8px">Estimation indicative, à confirmer avec ton comptable.</div>';
   imH+='</div></details>';
@@ -3800,7 +3912,7 @@ let imH='';S.immo.forEach(b=>{
 
   /* Logements du bien */
   if(!rp){
-  imH+='<details style="margin-top:12px"'+(aLots?' open':'')+'><summary style="font-size:12px;font-weight:600;cursor:pointer">⌂ Logements loués ('+(aLots?b.lots.length:0)+')</summary><div style="margin-top:8px">';
+  imH+='<details style="margin-top:12px"'+(aLots?' open':'')+'><summary style="font-size:12px;font-weight:600;cursor:pointer">Logements loués ('+(aLots?b.lots.length:0)+')</summary><div style="margin-top:8px">';
   if(aLots){
     imH+='<table style="font-size:12px"><thead><tr><th class="l">Logement</th><th>Loyer</th><th>État</th><th>Occupation 12 mois</th><th>Manque à gagner</th><th></th></tr></thead><tbody>';
     b.lots.forEach((l,li)=>{
@@ -3816,8 +3928,8 @@ let imH='';S.immo.forEach(b=>{
     const loue=b.lots.filter(l=>l.occupe!==false).reduce((a,l)=>a+(l.loyer||0),0);
     const ocB=occupationBien(b);
     imH+='<tr class="total-row"><td class="l">Total</td><td style="color:var(--green)">'+F(loyerBien(b))+'</td><td>'+b.lots.filter(l=>l.occupe!==false).length+'/'+b.lots.length+' loués</td>'+
-      '<td style="font-weight:700;color:'+(ocB.pct>=95?'var(--green)':ocB.pct>=85?'var(--accent)':'var(--red)')+'">'+(ocB.pct!=null?ocB.pct+' %':'—')+'</td>'+
-      '<td style="font-weight:700;color:'+(ocB.perte>0?'var(--red)':'var(--muted)')+'">'+(ocB.perte>0?F(ocB.perte):'—')+'</td><td></td></tr>';
+      '<td style="font-weight:500;color:'+(ocB.pct>=95?'var(--green)':ocB.pct>=85?'var(--accent)':'var(--red)')+'">'+(ocB.pct!=null?ocB.pct+' %':'—')+'</td>'+
+      '<td style="font-weight:500;color:'+(ocB.perte>0?'var(--red)':'var(--muted)')+'">'+(ocB.perte>0?F(ocB.perte):'—')+'</td><td></td></tr>';
     imH+='</tbody></table>';
     if(loue<loyerBien(b))imH+='<div style="font-size:11px;color:var(--accent);margin-top:8px">Loyers effectivement perçus : '+F(loue)+' — écart de '+F(loyerBien(b)-loue)+' dû aux logements vacants.</div>';
   }else imH+='<div style="font-size:11.5px;color:var(--muted)">Ce bien est traité comme un logement unique. Ajoute des logements s\'il en compte plusieurs : le loyer total sera alors calculé automatiquement.</div>';
@@ -3837,12 +3949,12 @@ let imH='';S.immo.forEach(b=>{
   if(!b.revenusMois[anStr])b.revenusMois[anStr]={};
   const totRevAn=moisRev.reduce((a,m)=>a+(b.revenusMois[anStr][m]||0),0);
   if(!rp){
-  imH+='<details style="margin-top:12px"><summary style="font-size:12px;font-weight:600;cursor:pointer">◈ Revenus perçus '+annee+' — '+F(totRevAn)+'</summary><div style="margin-top:8px">';
+  imH+='<details style="margin-top:12px"><summary style="font-size:12px;font-weight:600;cursor:pointer">Revenus perçus '+annee+' — '+F(totRevAn)+'</summary><div style="margin-top:8px">';
   imH+='<table style="font-size:11px"><thead><tr><th></th>';
   moisRev.forEach(m=>{imH+='<th>'+m+'</th>'});
   imH+='<th>Total</th></tr></thead><tbody><tr><td class="l" style="font-weight:600">Loyer</td>';
   moisRev.forEach(m=>{const v=b.revenusMois[anStr][m]||0;imH+='<td><span class="ed" onclick="edRevMois(this,\''+b.id+'\',\''+anStr+'\',\''+m+'\')">'+v+'</span></td>'});
-  imH+='<td style="font-weight:800;color:var(--green)">'+F(totRevAn)+'</td></tr></tbody></table>';
+  imH+='<td style="font-weight:500;color:var(--green)">'+F(totRevAn)+'</td></tr></tbody></table>';
   /* Année précédente en lecture */
   const anPrec=String(annee-1);
   if(b.revenusMois[anPrec]){const totPrev=moisRev.reduce((a,m)=>a+(b.revenusMois[anPrec][m]||0),0);
@@ -3865,8 +3977,8 @@ if(cdBiens.length>0){
     if(!b.cdNuits)b.cdNuits=new Array(12).fill(0);
     const totRev=b.cdRevenus.reduce((a,v)=>a+v,0);
     const totNuits=b.cdNuits.reduce((a,v)=>a+v,0);
-    cdH+='<div style="font-weight:700;margin-bottom:8px">'+b.nom+'</div>';
-    cdH+='<div class="lr" style="margin-bottom:8px"><span>Revenus annuels</span><span style="font-weight:700;color:var(--green)">'+F(totRev)+'</span></div>';
+    cdH+='<div style="font-weight:500;margin-bottom:8px">'+b.nom+'</div>';
+    cdH+='<div class="lr" style="margin-bottom:8px"><span>Revenus annuels</span><span style="font-weight:500;color:var(--green)">'+F(totRev)+'</span></div>';
     cdH+='<div class="lr" style="margin-bottom:12px"><span>Nuitées annuelles</span><span style="font-weight:600">'+totNuits+' nuits</span></div>';
     cdH+='<table style="font-size:11px"><thead><tr><th></th>';
     moisCD.forEach(m=>{cdH+='<th>'+m+'</th>'});
@@ -3888,7 +4000,7 @@ S.crypto.forEach(c=>{const v=c.prix>0?c.prix*c.qte:(c.montant||0);
 const crJourP=tCr>0?crJour/(tCr-crJour)*100:0;
 document.getElementById('ck').innerHTML='<div class="kpi"><div class="kl">Crypto</div><div class="kv" style="color:var(--crypto)">'+F2(tCr)+'</div></div><div class="kpi"><div class="kl">24 heures</div><div class="kv" style="color:'+(crJour>=0?'var(--green)':'var(--red)')+'">'+(crJour>=0?'+':'')+F2(crJour)+'</div><div class="ks">'+(crJourP>=0?'+':'')+crJourP.toFixed(2)+'%</div></div><div class="kpi"><div class="kl">Investi</div><div class="kv">'+F2(crI)+'</div></div><div class="kpi"><div class="kl">+/-</div><div class="kv" style="color:'+(crPV>=0?'var(--green)':'var(--red)')+'">'+F2(crPV)+'</div><div class="ks">'+(crI>0?FP(crPV/crI*100):'—')+'</div></div>';
 let crH='<table><thead><tr><th class="l">Crypto</th><th>Qté</th><th>PRU</th><th>Prix</th><th>Valeur</th><th>+/-</th><th>Var</th><th></th></tr></thead><tbody>';
-[...S.crypto].sort((a,b)=>(b.montant||0)-(a.montant||0)).forEach(c=>{const mt=c.prix>0?c.prix*c.qte:(c.montant||0),pt=c.pru*c.qte,g=mt-pt;crH+='<tr><td class="l"><b>'+c.nom+'</b><div class="tk">'+c.symbol+'</div></td><td><span class="ed" onclick="eI(this,\'crypto\',\''+c.id+'\',\'qte\')">'+c.qte+'</span></td><td><span class="ed" onclick="eI(this,\'crypto\',\''+c.id+'\',\'pru\')">'+(c.pru?F2(c.pru):'—')+'</span></td><td>'+(c.prix?F2(c.prix):'—')+'</td><td style="font-weight:700">'+F2(mt)+'</td><td style="color:'+(g>=0?'var(--green)':'var(--red)')+'">'+(pt>0?(g>=0?'+':'')+F2(g):'—')+'</td><td>'+VC(c.var)+'</td><td><button class="db" onclick="dI(\'crypto\',\''+c.id+'\')">✕</button></td></tr>'});
+[...S.crypto].sort((a,b)=>(b.montant||0)-(a.montant||0)).forEach(c=>{const mt=c.prix>0?c.prix*c.qte:(c.montant||0),pt=c.pru*c.qte,g=mt-pt;crH+='<tr><td class="l"><b>'+c.nom+'</b><div class="tk">'+c.symbol+'</div></td><td><span class="ed" onclick="eI(this,\'crypto\',\''+c.id+'\',\'qte\')">'+c.qte+'</span></td><td><span class="ed" onclick="eI(this,\'crypto\',\''+c.id+'\',\'pru\')">'+(c.pru?F2(c.pru):'—')+'</span></td><td>'+(c.prix?F2(c.prix):'—')+'</td><td style="font-weight:500">'+F2(mt)+'</td><td style="color:'+(g>=0?'var(--green)':'var(--red)')+'">'+(pt>0?(g>=0?'+':'')+F2(g):'—')+'</td><td>'+VC(c.var)+'</td><td><button class="db" onclick="dI(\'crypto\',\''+c.id+'\')">✕</button></td></tr>'});
 crH+='</tbody></table>';document.getElementById('crt').innerHTML=crH;
 
 /* Valeur vs montant investi */
@@ -3942,7 +4054,7 @@ let dH='';S.dettes.forEach(d=>{
   const am=cAm(d.emprunte,d.taux||0,d.dureeMois||0,d.differe||0,d.debloque);
   const me=moisEcoules(d.dateDebut);
   const p=d.emprunte>0?((d.emprunte-d.restant)/d.emprunte*100).toFixed(1):'0';
-  dH+='<div class="card"><div style="display:flex;justify-content:space-between"><div style="font-weight:700">'+d.nom+'</div><button class="db" onclick="dI(\'dettes\',\''+d.id+'\')">✕</button></div>';
+  dH+='<div class="card"><div style="display:flex;justify-content:space-between"><div style="font-weight:500">'+d.nom+'</div><button class="db" onclick="dI(\'dettes\',\''+d.id+'\')">✕</button></div>';
   dH+='<div class="lr"><span>Emprunté</span><span class="ed" onclick="eI(this,\'dettes\',\''+d.id+'\',\'emprunte\')" style="font-weight:600">'+F(d.emprunte)+'</span></div>';
   dH+='<div class="lr"><span>Date début (AAAA-MM)</span><span class="ed" onclick="edTxt(this,\'dettes\',\''+d.id+'\',\'dateDebut\')">'+(d.dateDebut||'—')+'</span></div>';
   dH+='<div class="lr"><span>Taux annuel</span><span class="ed" onclick="eI(this,\'dettes\',\''+d.id+'\',\'taux\')">'+(d.taux||0).toFixed(2)+'%</span></div>';
@@ -3957,18 +4069,18 @@ let dH='';S.dettes.forEach(d=>{
     if(amD.t.length)dH+='<div class="lr"><span>Intérêts pendant le différé</span><span style="color:var(--red);font-weight:600">'+F2(amD.t[0].i)+'/mois</span></div>';
   }
   const enDiffere=me>0&&me<=(d.differe||0);
-  dH+='<div class="lr"><span>Mensualité'+(enDiffere?' <span style="color:var(--orange);font-size:10px">(différé)</span>':'')+'</span><span style="font-weight:700">'+(enDiffere?F2(am.mDiff||0):F2(am.m))+'</span></div>';
-  dH+='<div class="lr"><span>Restant dû (total)</span><span style="font-weight:700;color:var(--red)">'+F(d.restant)+'</span></div>';
+  dH+='<div class="lr"><span>Mensualité'+(enDiffere?' <span style="color:var(--orange);font-size:10px">(différé)</span>':'')+'</span><span style="font-weight:500">'+(enDiffere?F2(am.mDiff||0):F2(am.m))+'</span></div>';
+  dH+='<div class="lr"><span>Restant dû (total)</span><span style="font-weight:500;color:var(--red)">'+F(d.restant)+'</span></div>';
   const bienLieD=S.immo.find(b=>b.creditId===d.id);
   const pctD=d.partsPct!=null?d.partsPct:(bienLieD?(bienLieD.partsPct||100):100);
-  dH+='<div class="lr"><span>Ta part du prêt</span><span class="ed" onclick="edDettePct(this,\''+d.id+'\')" style="font-weight:700;color:var(--accent)">'+pctD+'%</span></div>';
-  if(pctD<100)dH+='<div class="lr"><span>Restant dû (ta part)</span><span style="font-weight:800;color:var(--red)">'+F(Math.round(d.restant*pctD/100))+'</span></div>';
+  dH+='<div class="lr"><span>Ta part du prêt</span><span class="ed" onclick="edDettePct(this,\''+d.id+'\')" style="font-weight:500;color:var(--accent)">'+pctD+'%</span></div>';
+  if(pctD<100)dH+='<div class="lr"><span>Restant dû (ta part)</span><span style="font-weight:500;color:var(--red)">'+F(Math.round(d.restant*pctD/100))+'</span></div>';
   if(me>0)dH+='<div class="lr"><span>Échéances payées</span><span>'+me+' / '+(d.dureeMois||0)+'</span></div>';
   else if(d.dateDebut)dH+='<div class="lr"><span>Statut</span><span style="color:var(--orange);font-weight:600">⏳ Pas encore commencé</span></div>';
   dH+='<div class="pg"><div class="pf" style="width:'+p+'%"></div></div>';
   dH+='<div style="font-size:10px;color:var(--muted);margin-top:3px">'+p+'% remboursé — Fin: '+(d.fin||'—')+'</div>';
   /* Mini tableau amortissement */
-  if(am.t.length>0){const sl=am.t.slice(Math.max(0,me-2),Math.max(0,me-2)+6);dH+='<details style="margin-top:8px"><summary style="font-size:11px;color:var(--muted);cursor:pointer">▤ Amortissement</summary><div class="amor-table"><table><thead><tr><th>N°</th><th>Mens.</th><th>Capital</th><th>Int.</th><th>Restant</th></tr></thead><tbody>';sl.forEach(r=>{dH+='<tr'+(r.n>=me&&r.n<=me+1?' style="background:rgba(62,207,142,.12);font-weight:600"':'')+'><td>'+r.n+'</td><td>'+F2(r.m)+'</td><td>'+F2(r.c)+'</td><td>'+F2(r.i)+'</td><td>'+F2(r.r)+'</td></tr>'});dH+='</tbody></table></div></details>'}
+  if(am.t.length>0){const sl=am.t.slice(Math.max(0,me-2),Math.max(0,me-2)+6);dH+='<details style="margin-top:8px"><summary style="font-size:11px;color:var(--muted);cursor:pointer">Amortissement</summary><div class="amor-table"><table><thead><tr><th>N°</th><th>Mens.</th><th>Capital</th><th>Int.</th><th>Restant</th></tr></thead><tbody>';sl.forEach(r=>{dH+='<tr'+(r.n>=me&&r.n<=me+1?' style="background:rgba(62,207,142,.12);font-weight:600"':'')+'><td>'+r.n+'</td><td>'+F2(r.m)+'</td><td>'+F2(r.c)+'</td><td>'+F2(r.i)+'</td><td>'+F2(r.r)+'</td></tr>'});dH+='</tbody></table></div></details>'}
   dH+='</div>'});
 dH+='<div id="da"></div>';document.getElementById('dl2').innerHTML=dH;
 document.getElementById('da').innerHTML=addB('da',[{k:'nom',label:'Nom',w:2},{k:'emprunte',label:'Emprunté',num:true},{k:'taux',label:'Taux%',num:true},{k:'dureeMois',label:'Mois',num:true},{k:'differe',label:'Différé mois',num:true},{k:'dateDebut',label:'Début (2025-03)'},{k:'fin',label:'Fin'}],'dettes',{restant:0,type:'',banque:'',dateDebut:'',differe:0});
@@ -4034,12 +4146,12 @@ svg.append('g').selectAll('text').data(graph.nodes).join('text')
 }catch(e){document.getElementById('sankeyDiv').innerHTML='<div style="color:var(--muted);font-size:12px">Erreur Sankey: '+e.message+'</div>'}
 
 /* Budget detail */
-let bH='<div style="font-weight:700;margin-bottom:8px">Revenus</div>';
-B.revenus.forEach(r=>{bH+='<div class="lr"><span>'+r.nom+'</span><div style="display:flex;gap:8px;align-items:center"><span class="ed" onclick="edBgt(this,\'rev\',\''+r.id+'\')" style="color:var(--green);font-weight:700">'+F(r.montant)+'</span><button class="db" onclick="delBgt(\'rev\',\''+r.id+'\')">✕</button></div></div>'});
+let bH='<div style="font-weight:500;margin-bottom:8px">Revenus</div>';
+B.revenus.forEach(r=>{bH+='<div class="lr"><span>'+r.nom+'</span><div style="display:flex;gap:8px;align-items:center"><span class="ed" onclick="edBgt(this,\'rev\',\''+r.id+'\')" style="color:var(--green);font-weight:500">'+F(r.montant)+'</span><button class="db" onclick="delBgt(\'rev\',\''+r.id+'\')">✕</button></div></div>'});
 bH+='<button class="ab" onclick="addBgtRev()">+ Revenu</button>';
 B.categories.forEach(c=>{
   const ct=c.postes.reduce((a,p)=>a+p.montant,0);
-  bH+='<div style="font-weight:700;margin:16px 0 8px;display:flex;justify-content:space-between"><span class="ed" onclick="edBgt(this,\'catnom\',\''+c.id+'\')">'+c.nom+'</span><div style="display:flex;gap:8px;align-items:center"><span style="color:var(--muted)">'+F(ct)+'</span><button class="db" onclick="delBgt(\'cat\',\''+c.id+'\')">✕</button></div></div>';
+  bH+='<div style="font-weight:500;margin:16px 0 8px;display:flex;justify-content:space-between"><span class="ed" onclick="edBgt(this,\'catnom\',\''+c.id+'\')">'+c.nom+'</span><div style="display:flex;gap:8px;align-items:center"><span style="color:var(--muted)">'+F(ct)+'</span><button class="db" onclick="delBgt(\'cat\',\''+c.id+'\')">✕</button></div></div>';
   c.postes.forEach(p=>{bH+='<div class="lr" style="padding-left:12px"><span>'+p.nom+'</span><div style="display:flex;gap:8px;align-items:center"><span class="ed" onclick="edBgt(this,\'poste\',\''+c.id+'\',\''+p.id+'\')">'+F(p.montant)+'</span><button class="db" onclick="delBgt(\'poste\',\''+c.id+'\',\''+p.id+'\')">✕</button></div></div>'});
   bH+='<button class="ab" style="margin-left:12px;width:calc(100% - 12px)" onclick="addBgtP(\''+c.id+'\')">+ Poste</button>';
 });
@@ -4048,9 +4160,9 @@ document.getElementById('budgetDetail').innerHTML=bH;
 }
 
 /* ====== OBJECTIFS ====== */
-let oH='<div class="fire-card"><div style="font-size:18px;font-weight:800;color:var(--orange);margin-bottom:12px">◆ FIRE Number</div>';
+let oH='<div class="fire-card"><div style="font-size:18px;font-weight:500;color:var(--orange);margin-bottom:12px">FIRE Number</div>';
 const fo=S.objectifs.find(o=>o.type==='net');
-if(fo){const cur=t.ne,pct=fo.cible>0?Math.min(100,cur/fo.cible*100):0;oH+='<div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:24px;font-weight:800;color:var(--accent)">'+F(cur)+'</span><span style="color:var(--muted)">/ <span class="ed" onclick="edObj(this,\''+fo.id+'\',\'cible\')" style="font-weight:700">'+F(fo.cible)+'</span></span></div><div class="obj-bar"><div class="obj-fill" style="width:'+pct+'%;background:'+CV('--accent')+'"></div></div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>'+pct.toFixed(1)+'%</span><span>Reste '+F(fo.cible-cur)+'</span></div>'}
+if(fo){const cur=t.ne,pct=fo.cible>0?Math.min(100,cur/fo.cible*100):0;oH+='<div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:24px;font-weight:500;color:var(--accent)">'+F(cur)+'</span><span style="color:var(--muted)">/ <span class="ed" onclick="edObj(this,\''+fo.id+'\',\'cible\')" style="font-weight:500">'+F(fo.cible)+'</span></span></div><div class="obj-bar"><div class="obj-fill" style="width:'+pct+'%;background:'+CV('--accent')+'"></div></div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>'+pct.toFixed(1)+'%</span><span>Reste '+F(fo.cible-cur)+'</span></div>'}
 oH+='</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div class="ct" style="margin:0">Objectifs</div><button class="ab" style="width:auto;margin:0;padding:6px 14px;font-size:12px" onclick="addObj()">+ Objectif</button></div>';
 const tl={epargne:"Épargne",bourse:"Bourse",crypto:"Crypto",brut:"Brut",net:"Net",liq:"Liquidités",custom:"Libre"};
 const oc=[CV('--p1'),CV('--p5'),CV('--p2'),CV('--p6'),CV('--p7')];
@@ -4060,7 +4172,7 @@ const oc=[CV('--p1'),CV('--p5'),CV('--p2'),CV('--p6'),CV('--p7')];
   const pct=o.cible>0?Math.min(100,cur/o.cible*100):0;
   const color=oc[Math.abs(o.id.charCodeAt(1))%oc.length];
   const curDisp=o.type==='custom'?'<span class="ed" onclick="edObj(this,\''+o.id+'\',\'actuel\')">'+F(cur)+'</span>':F(cur);
-  oH+='<div class="card"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><b><span class="ed" onclick="edObj(this,\''+o.id+'\',\'nom\')">'+o.nom+'</span></b><button class="db" onclick="delObj(\''+o.id+'\')">✕</button></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:18px;font-weight:800;color:'+color+'">'+curDisp+'</span><span style="color:var(--muted)">/ <span class="ed" onclick="edObj(this,\''+o.id+'\',\'cible\')" style="font-weight:700">'+F(o.cible)+'</span></span></div><div class="obj-bar"><div class="obj-fill" style="width:'+pct+'%;background:'+color+'"></div></div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>'+pct.toFixed(1)+'%</span><span>'+(tl[o.type]||o.type)+'</span></div></div>';
+  oH+='<div class="card"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><b><span class="ed" onclick="edObj(this,\''+o.id+'\',\'nom\')">'+o.nom+'</span></b><button class="db" onclick="delObj(\''+o.id+'\')">✕</button></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:18px;font-weight:500;color:'+color+'">'+curDisp+'</span><span style="color:var(--muted)">/ <span class="ed" onclick="edObj(this,\''+o.id+'\',\'cible\')" style="font-weight:500">'+F(o.cible)+'</span></span></div><div class="obj-bar"><div class="obj-fill" style="width:'+pct+'%;background:'+color+'"></div></div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>'+pct.toFixed(1)+'%</span><span>'+(tl[o.type]||o.type)+'</span></div></div>';
 });
 document.getElementById('objContent').innerHTML=oH;
 
@@ -4081,7 +4193,7 @@ if(document.getElementById('relEpargne')){
   let he='<table><thead><tr><th class="l">Poste</th><th class="l">Établissement</th><th>Montant</th></tr></thead><tbody>';
   grp.forEach(g=>{
     const tot=S[g.k].reduce((a,x)=>a+x.montant,0);
-    he+='<tr><td class="l" colspan="2" style="font-weight:600;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding-top:14px">'+g.t+'</td><td style="font-weight:600;padding-top:14px">'+F(tot)+'</td></tr>';
+    he+='<tr><td class="l" colspan="2" style="font-weight:600;color:var(--muted);font-size:11px;padding-top:14px">'+g.t+'</td><td style="font-weight:600;padding-top:14px">'+F(tot)+'</td></tr>';
     S[g.k].forEach(x=>{
       he+='<tr><td class="l">'+x.nom+'</td><td class="l" style="color:var(--muted)">'+(x.banque||'—')+'</td>';
       he+='<td><span class="ed" onclick="eI(this,\''+g.k+'\',\''+x.id+'\',\'montant\')" style="font-weight:600">'+F(x.montant)+'</span></td></tr>';
@@ -4309,7 +4421,7 @@ const simPessi=runSim(4,false);
 const simInfla=runSim(sp.rend,true);
 const pctFire=Math.min(100,t.ne/fireTarget*100);
 
-let simC='<div class="card"><div class="ct">◔ Simulateur FIRE avancé</div><div class="g2"><div>';
+let simC='<div class="card"><div class="ct">Simulateur FIRE avancé</div><div class="g2"><div>';
 simC+='<div class="lr"><span>Âge actuel</span><span class="ed" onclick="edSim(this,\'age\')">'+sp.age+' ans</span></div>';
 simC+='<div class="lr"><span>Dépenses annuelles</span><span class="ed" onclick="edSim(this,\'dep\')">'+F(sp.dep)+'</span></div>';
 simC+='<div class="lr"><span>Rendement annuel</span><span class="ed" onclick="edSim(this,\'rend\')">'+sp.rend+'%</span></div>';
@@ -4318,16 +4430,16 @@ simC+='<div class="lr"><span>DCA mensuel initial</span><span class="ed" onclick=
 simC+='<div class="lr"><span>Horizon</span><span class="ed" onclick="edSim(this,\'horizon\')">'+sp.horizon+' ans</span></div>';
 simC+='</div><div>';
 simC+='<div class="fire-card" style="margin:0"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px">';
-simC+='<div><div style="font-size:12px;color:var(--muted)">◆ FIRE Number</div><div style="font-size:26px;font-weight:800;color:var(--orange)">'+F(fireTarget)+'</div></div>';
-simC+='<div style="text-align:right"><div style="font-size:12px;color:var(--muted)">Âge FIRE (réaliste)</div><div style="font-size:26px;font-weight:800;color:var(--accent)">'+simReal.ageFire+' ans</div></div>';
+simC+='<div><div style="font-size:12px;color:var(--muted)">FIRE Number</div><div style="font-size:26px;font-weight:500;color:var(--orange)">'+F(fireTarget)+'</div></div>';
+simC+='<div style="text-align:right"><div style="font-size:12px;color:var(--muted)">Âge FIRE (réaliste)</div><div style="font-size:26px;font-weight:500;color:var(--accent)">'+simReal.ageFire+' ans</div></div>';
 simC+='</div><div class="obj-bar" style="margin-top:12px"><div class="obj-fill" style="width:'+pctFire+'%;background:'+CV('--accent')+'"></div></div>';
 simC+='<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px"><span>'+pctFire.toFixed(1)+'% atteint</span><span>Opti: '+simOpti.ageFire+' ans | Pessi: '+simPessi.ageFire+' ans</span></div></div>';
 simC+='</div></div></div>';
 
 /* DCA progressif */
-simC+='<div class="card"><div class="fb"><div class="ct" style="margin:0">↗ DCA progressif</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addDCA()">+ Palier</button></div>';
+simC+='<div class="card"><div class="fb"><div class="ct" style="margin:0">DCA progressif</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addDCA()">+ Palier</button></div>';
 simC+='<div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Définis des paliers pour augmenter ton DCA au fil du temps</div>';
-simC+='<div style="margin-bottom:4px"><div class="lr"><span style="color:var(--muted)">Années 0 → '+(sp.dcaSteps.length>0?sp.dcaSteps[0].annee-1:sp.horizon)+'</span><span style="font-weight:700">'+F(sp.ep)+'/mois</span></div></div>';
+simC+='<div style="margin-bottom:4px"><div class="lr"><span style="color:var(--muted)">Années 0 → '+(sp.dcaSteps.length>0?sp.dcaSteps[0].annee-1:sp.horizon)+'</span><span style="font-weight:500">'+F(sp.ep)+'/mois</span></div></div>';
 sp.dcaSteps.sort((a,b)=>a.annee-b.annee).forEach((s,i)=>{
   const nextY=sp.dcaSteps[i+1]?sp.dcaSteps[i+1].annee-1:sp.horizon;
   simC+='<div class="lr"><span>Année '+s.annee+' → '+nextY+'</span><div style="display:flex;gap:8px;align-items:center"><span class="ed" onclick="edDCA(this,'+i+')">'+F(s.montant)+'/mois</span><button class="db" onclick="delDCA('+i+')">✕</button></div></div>';
@@ -4402,15 +4514,15 @@ if(rProjEl){
 let rvH='';
 S.revSources.forEach(rs=>{
   rvH+='<div class="lr"><div><div class="ln">'+rs.nom+'</div>'+(rs.auto?'<div class="ls">Auto-calculé</div>':'')+'</div><div style="display:flex;gap:8px;align-items:center">';
-  if(rs.auto){rvH+='<span style="color:'+(rs.color||'var(--accent)')+';font-weight:700">'+F2(rs.mensuel||0)+'/mois</span>'}
-  else{rvH+='<span class="ed" onclick="edRev(this,\''+rs.id+'\')" style="color:'+(rs.color||'var(--accent)')+';font-weight:700">'+F2(rs.mensuel||0)+'/mois</span>'}
+  if(rs.auto){rvH+='<span style="color:'+(rs.color||'var(--accent)')+';font-weight:500">'+F2(rs.mensuel||0)+'/mois</span>'}
+  else{rvH+='<span class="ed" onclick="edRev(this,\''+rs.id+'\')" style="color:'+(rs.color||'var(--accent)')+';font-weight:500">'+F2(rs.mensuel||0)+'/mois</span>'}
   rvH+='<button class="db" onclick="delRev(\''+rs.id+'\')">✕</button></div></div>';
 });
 rvH+='<button class="ab" onclick="addRev()">+ Source de revenu</button>';
 /* Top dividendes */
-rvH+='<div style="font-weight:700;margin-top:16px;margin-bottom:8px">Top dividendes par action</div>';
+rvH+='<div style="font-weight:500;margin-top:16px;margin-bottom:8px">Top dividendes par action</div>';
 const allStocks=[];['pea','ctosb','ctoibkr','avl'].forEach(pk=>{S.pf[pk].l.forEach(l=>{if(l.div>0)allStocks.push({n:l.n,div:l.div,p:l.p,total:l.div*l.p,co:l.co,yield:l.co>0?(l.div/l.co*100).toFixed(2):0})})});
-allStocks.sort((a,b)=>b.total-a.total).forEach(s=>{rvH+='<div class="lr"><div><div class="ln">'+s.n+'</div><div class="ls">'+s.yield+'% yield</div></div><span style="font-weight:700;color:var(--orange)">'+F2(s.total)+'/an</span></div>'});
+allStocks.sort((a,b)=>b.total-a.total).forEach(s=>{rvH+='<div class="lr"><div><div class="ln">'+s.n+'</div><div class="ls">'+s.yield+'% yield</div></div><span style="font-weight:500;color:var(--orange)">'+F2(s.total)+'/an</span></div>'});
 document.getElementById('revDetail').innerHTML=rvH;
 /* Couverture des dépenses par les revenus passifs */
 (function(){
@@ -4460,8 +4572,8 @@ document.getElementById('revDetail').innerHTML=rvH;
   }
   d+='<div class="lr"><span>Dépenses mensuelles (hors investissement)</span><span style="font-weight:600;color:var(--red)">'+F(Math.round(vraiesDep))+'</span></div>';
   if(manque>0){
-    d+='<div class="lr"><span>Capital à constituer pour combler l\'écart</span><span style="font-weight:700">'+F(Math.round(capNec))+'</span></div>';
-    d+='<div class="lr"><span>Au rythme actuel ('+rend+' %/an, '+F(dca)+'/mois)</span><span style="font-weight:700;color:var(--accent)">'+(annees>=60?'au-delà de 60 ans':'environ '+annees+' an'+(annees>1?'s':''))+'</span></div>';
+    d+='<div class="lr"><span>Capital à constituer pour combler l\'écart</span><span style="font-weight:500">'+F(Math.round(capNec))+'</span></div>';
+    d+='<div class="lr"><span>Au rythme actuel ('+rend+' %/an, '+F(dca)+'/mois)</span><span style="font-weight:500;color:var(--accent)">'+(annees>=60?'au-delà de 60 ans':'environ '+annees+' an'+(annees>1?'s':''))+'</span></div>';
   }
   d+='<div style="font-size:10.5px;color:var(--muted);margin-top:12px">Le capital nécessaire suit la règle des 4 % : 25 fois les dépenses annuelles restant à couvrir.</div>';
   document.getElementById('couvDetail').innerHTML=d;
@@ -4506,16 +4618,16 @@ const dayT=t.p.dayPnl+t.s.dayPnl+t.i.dayPnl+t.a.dayPnl;
 const avgGp=allPos.length>0?(allPos.reduce((a,p)=>a+p.gp,0)/allPos.length).toFixed(1):0;
 document.getElementById('resumeKpi').innerHTML='<div class="kpi"><div class="kl">Patrimoine Net</div><div class="kv" style="color:var(--accent)">'+F(t.ne)+'</div></div><div class="kpi"><div class="kl">Perf jour bourse</div><div class="kv" style="color:'+(dayT>=0?'var(--green)':'var(--red)')+'">'+(dayT>=0?'+':'')+F2(dayT)+'</div></div><div class="kpi"><div class="kl">Positions</div><div class="kv">'+allPos.length+'</div></div><div class="kpi"><div class="kl">Perf moy. vs PRU</div><div class="kv" style="color:'+(avgGp>=0?'var(--green)':'var(--red)')+'">'+(avgGp>=0?'+':'')+avgGp+'%</div></div>';
 
-let rmH='<div class="g2"><div><div style="font-weight:700;color:var(--green);margin-bottom:8px">▲ Top performers (jour)</div>';
-best3.forEach(p=>{rmH+='<div class="lr"><span class="ln">'+p.n+'</span><span style="color:var(--green);font-weight:700">+'+(p.var).toFixed(2)+'%</span></div>'});
+let rmH='<div class="g2"><div><div style="font-weight:500;color:var(--green);margin-bottom:8px">▲ Top performers (jour)</div>';
+best3.forEach(p=>{rmH+='<div class="lr"><span class="ln">'+p.n+'</span><span style="color:var(--green);font-weight:500">+'+(p.var).toFixed(2)+'%</span></div>'});
 if(best3.length===0)rmH+='<div style="color:var(--muted);font-size:12px">Clique ↻ Cours pour voir</div>';
-rmH+='</div><div><div style="font-weight:700;color:var(--red);margin-bottom:8px">▼ Worst performers (jour)</div>';
-worst3.forEach(p=>{rmH+='<div class="lr"><span class="ln">'+p.n+'</span><span style="color:var(--red);font-weight:700">'+(p.var).toFixed(2)+'%</span></div>'});
+rmH+='</div><div><div style="font-weight:500;color:var(--red);margin-bottom:8px">▼ Worst performers (jour)</div>';
+worst3.forEach(p=>{rmH+='<div class="lr"><span class="ln">'+p.n+'</span><span style="color:var(--red);font-weight:500">'+(p.var).toFixed(2)+'%</span></div>'});
 if(worst3.length===0)rmH+='<div style="color:var(--muted);font-size:12px">Clique ↻ Cours pour voir</div>';
 rmH+='</div></div>';
 
 /* Tableau perf de la semaine */
-rmH+='<div style="font-weight:700;margin-top:20px;margin-bottom:8px">◷ Perf de la semaine — Portf. vs S&P 500</div>';
+rmH+='<div style="font-weight:500;margin-top:20px;margin-bottom:8px">Perf de la semaine — Portf. vs S&P 500</div>';
 const hj=S.histJour||[];
 if(hj.length>0){
   const last7=hj.slice(-7);
@@ -4527,13 +4639,13 @@ if(hj.length>0){
     const ecart=h.sp!=null?Math.round((h.portf-(h.sp||0))*100)/100:null;
     cumP+=h.portf||0;cumS+=h.sp||0;cumPnl+=h.pnl||0;
     rmH+='<tr><td class="l" style="font-weight:600">'+jn+'</td>';
-    rmH+='<td style="color:'+(h.portf>=0?'var(--green)':'var(--red)')+';font-weight:700">'+(h.portf>=0?'+':'')+h.portf+'%</td>';
+    rmH+='<td style="color:'+(h.portf>=0?'var(--green)':'var(--red)')+';font-weight:500">'+(h.portf>=0?'+':'')+h.portf+'%</td>';
     rmH+='<td style="color:'+(h.sp!=null?(h.sp>=0?'var(--green)':'var(--red)'):'var(--muted)')+'">'+(h.sp!=null?(h.sp>=0?'+':'')+h.sp+'%':'—')+'</td>';
     rmH+='<td style="font-weight:600;color:'+(ecart!=null?(ecart>=0?'var(--green)':'var(--red)'):'var(--muted)')+'">'+(ecart!=null?(ecart>=0?'+':'')+ecart+'%':'—')+'</td>';
     rmH+='<td style="color:'+(h.pnl>=0?'var(--green)':'var(--red)')+'">'+(h.pnl>=0?'+':'')+F2(h.pnl)+'</td></tr>';
   });
   const cumEcart=Math.round((cumP-cumS)*100)/100;
-  rmH+='<tr style="background:#1b2745;font-weight:800"><td class="l">Semaine</td>';
+  rmH+='<tr style="background:#1b2745;font-weight:500"><td class="l">Semaine</td>';
   rmH+='<td style="color:'+(cumP>=0?'var(--green)':'var(--red)')+'">'+(cumP>=0?'+':'')+cumP.toFixed(2)+'%</td>';
   rmH+='<td style="color:'+(cumS>=0?'var(--green)':'var(--red)')+'">'+(cumS>=0?'+':'')+cumS.toFixed(2)+'%</td>';
   rmH+='<td style="color:'+(cumEcart>=0?'var(--green)':'var(--red)')+'">'+(cumEcart>=0?'+':'')+cumEcart+'%</td>';
@@ -4542,10 +4654,10 @@ if(hj.length>0){
 }else{rmH+='<div style="color:var(--muted);font-size:12px">Clique ↻ chaque jour pour remplir l\'historique</div>'}
 
 /* Répartition par broker */
-rmH+='<div style="font-weight:700;margin-top:20px;margin-bottom:8px">Répartition par broker</div>';
+rmH+='<div style="font-weight:500;margin-top:20px;margin-bottom:8px">Répartition par broker</div>';
 [{n:'PEA Fortuneo',v:t.p.v,c:CV('--c1')},{n:'CTO Saxo',v:t.s.v,c:CV('--c1')},{n:'CTO IBKR',v:t.i.v,c:CV('--c5')},{n:'AV Linxea',v:t.a.v,c:CV('--green')}].forEach(b=>{
   const pct=t.bo>0?(b.v/t.bo*100).toFixed(1):0;
-  rmH+='<div class="lr"><span>'+b.n+'</span><div style="display:flex;gap:12px;align-items:center"><span style="font-weight:700">'+F(b.v)+'</span><span style="color:var(--muted)">'+pct+'%</span></div></div>';
+  rmH+='<div class="lr"><span>'+b.n+'</span><div style="display:flex;gap:12px;align-items:center"><span style="font-weight:500">'+F(b.v)+'</span><span style="color:var(--muted)">'+pct+'%</span></div></div>';
 });
 
 document.getElementById('resumeDetail').innerHTML=rmH;
@@ -4595,15 +4707,15 @@ const divAnBilan=t.p.divTot+t.s.divTot+t.i.divTot+t.a.divTot;
 document.getElementById('bilanKpi').innerHTML='<div class="kpi"><div class="kl">Patrimoine net actuel</div><div class="kv" style="color:var(--accent)">'+F(netMaintenant)+'</div></div><div class="kpi"><div class="kl">Progression '+anneeBilan+'</div><div class="kv" style="color:'+(progression>=0?'var(--green)':'var(--red)')+'">'+(progression>=0?'+':'')+F(Math.round(progression))+'</div><div class="ks">'+(progPct>=0?'+':'')+progPct.toFixed(1)+'%</div></div><div class="kpi"><div class="kl">Versé en bourse cette année</div><div class="kv" style="color:var(--bourse)">'+F(Math.round(versAnnee))+'</div></div><div class="kpi"><div class="kl">Perf bourse YTD</div><div class="kv" style="color:'+(twrYtd>=0?'var(--green)':'var(--red)')+'">'+(twrYtd>=0?'+':'')+twrYtd.toFixed(1)+'%</div></div>';
 
 let biH='';
-biH+='<div class="lr"><span>Patrimoine net au 1er janvier '+anneeBilan+'</span><span style="font-weight:700">'+F(Math.round(netDebut||0))+'</span></div>';
-biH+='<div class="lr"><span>Patrimoine net aujourd\'hui</span><span style="font-weight:700;color:var(--accent)">'+F(netMaintenant)+'</span></div>';
-biH+='<div class="lr"><span>Évolution</span><span style="font-weight:800;color:'+(progression>=0?'var(--green)':'var(--red)')+'">'+(progression>=0?'+':'')+F(Math.round(progression))+' ('+(progPct>=0?'+':'')+progPct.toFixed(1)+'%)</span></div>';
-if(bestAction)biH+='<div class="lr"><span>▲ Meilleure action (vs prix d\'achat)</span><span style="font-weight:700;color:var(--green)">'+bestAction.n+' +'+bestAction.gp.toFixed(1)+'%</span></div>';
-if(worstAction)biH+='<div class="lr"><span>▼ Pire action (vs prix d\'achat)</span><span style="font-weight:700;color:var(--red)">'+worstAction.n+' '+worstAction.gp.toFixed(1)+'%</span></div>';
-biH+='<div class="lr"><span>◈ Dividendes annuels (rythme actuel)</span><span style="font-weight:700;color:var(--orange)">'+F2(divAnBilan)+'</span></div>';
+biH+='<div class="lr"><span>Patrimoine net au 1er janvier '+anneeBilan+'</span><span style="font-weight:500">'+F(Math.round(netDebut||0))+'</span></div>';
+biH+='<div class="lr"><span>Patrimoine net aujourd\'hui</span><span style="font-weight:500;color:var(--accent)">'+F(netMaintenant)+'</span></div>';
+biH+='<div class="lr"><span>Évolution</span><span style="font-weight:500;color:'+(progression>=0?'var(--green)':'var(--red)')+'">'+(progression>=0?'+':'')+F(Math.round(progression))+' ('+(progPct>=0?'+':'')+progPct.toFixed(1)+'%)</span></div>';
+if(bestAction)biH+='<div class="lr"><span>▲ Meilleure action (vs prix d\'achat)</span><span style="font-weight:500;color:var(--green)">'+bestAction.n+' +'+bestAction.gp.toFixed(1)+'%</span></div>';
+if(worstAction)biH+='<div class="lr"><span>▼ Pire action (vs prix d\'achat)</span><span style="font-weight:500;color:var(--red)">'+worstAction.n+' '+worstAction.gp.toFixed(1)+'%</span></div>';
+biH+='<div class="lr"><span>Dividendes annuels (rythme actuel)</span><span style="font-weight:500;color:var(--orange)">'+F2(divAnBilan)+'</span></div>';
 if(loyersAn>0||loyersAnPrec>0){
-biH+='<div class="lr"><span>⌂ Loyers encaissés en '+anneeBilan+'</span><span style="font-weight:700;color:var(--green)">'+F(Math.round(loyersAn))+'</span></div>';
-if(loyersAnPrec>0)biH+='<div class="lr"><span>⌂ Loyers encaissés en '+(anneeBilan-1)+'</span><span style="color:var(--muted)">'+F(Math.round(loyersAnPrec))+(loyersAn>0?' ('+((loyersAn-loyersAnPrec)/loyersAnPrec*100>=0?'+':'')+((loyersAn-loyersAnPrec)/loyersAnPrec*100).toFixed(0)+'% cette année)':'')+'</span></div>';
+biH+='<div class="lr"><span>Loyers encaissés en '+anneeBilan+'</span><span style="font-weight:500;color:var(--green)">'+F(Math.round(loyersAn))+'</span></div>';
+if(loyersAnPrec>0)biH+='<div class="lr"><span>Loyers encaissés en '+(anneeBilan-1)+'</span><span style="color:var(--muted)">'+F(Math.round(loyersAnPrec))+(loyersAn>0?' ('+((loyersAn-loyersAnPrec)/loyersAnPrec*100>=0?'+':'')+((loyersAn-loyersAnPrec)/loyersAnPrec*100).toFixed(0)+'% cette année)':'')+'</span></div>';
 }
 biH+='<div style="font-size:11px;color:var(--muted);margin-top:12px">◆ Ce bilan se met à jour automatiquement. Pense à faire un snapshot ◉ chaque fin de mois pour un historique précis.</div>';
 document.getElementById('bilanDetail').innerHTML=biH;
@@ -4620,25 +4732,25 @@ S.projets.forEach(p=>{
   const cashflow=(p.loyer||0)-chargesM-amP.m;
   const rdt=coutTotal>0?((p.loyer||0)*12/coutTotal*100).toFixed(1):0;
   pjH+='<div style="border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:14px;background:var(--card2)">';
-  pjH+='<div class="fb"><div style="font-weight:700;font-size:14px">△ '+p.nom+'</div><div style="display:flex;gap:6px"><button class="pb" onclick="convertProjet(\''+p.id+'\')" style="color:var(--green);border-color:var(--green)">✓ Acheté !</button><button class="db" onclick="delProjet(\''+p.id+'\')">✕</button></div></div>';
+  pjH+='<div class="fb"><div style="font-weight:500;font-size:14px">△ '+p.nom+'</div><div style="display:flex;gap:6px"><button class="pb" onclick="convertProjet(\''+p.id+'\')" style="color:var(--green);border-color:var(--green)">✓ Acheté !</button><button class="db" onclick="delProjet(\''+p.id+'\')">✕</button></div></div>';
   pjH+='<div class="g2" style="margin-top:8px"><div>';
-  pjH+='<div class="lr"><span>Prix visé</span><span class="ed" onclick="edProjet(this,\''+p.id+'\',\'prix\')" style="font-weight:700">'+F(p.prix||0)+'</span></div>';
+  pjH+='<div class="lr"><span>Prix visé</span><span class="ed" onclick="edProjet(this,\''+p.id+'\',\'prix\')" style="font-weight:500">'+F(p.prix||0)+'</span></div>';
   pjH+='<div class="lr"><span>Frais de notaire (~8%)</span><span class="ed" onclick="edProjet(this,\''+p.id+'\',\'fraisNotaire\')">'+F(fraisNotaire)+'</span></div>';
   pjH+='<div class="lr"><span>Travaux prévus</span><span class="ed" onclick="edProjet(this,\''+p.id+'\',\'travaux\')">'+F(p.travaux||0)+'</span></div>';
   pjH+='<div class="lr"><span>Apport</span><span class="ed" onclick="edProjet(this,\''+p.id+'\',\'apport\')">'+F(p.apport||0)+'</span></div>';
-  pjH+='<div class="lr"><span style="font-weight:700">Coût total</span><span style="font-weight:800">'+F(coutTotal)+'</span></div>';
+  pjH+='<div class="lr"><span style="font-weight:500">Coût total</span><span style="font-weight:500">'+F(coutTotal)+'</span></div>';
   pjH+='</div><div>';
-  pjH+='<div class="lr"><span>À emprunter</span><span style="font-weight:700;color:var(--red)">'+F(emprunt)+'</span></div>';
+  pjH+='<div class="lr"><span>À emprunter</span><span style="font-weight:500;color:var(--red)">'+F(emprunt)+'</span></div>';
   pjH+='<div class="lr"><span>Taux</span><span class="ed" onclick="edProjet(this,\''+p.id+'\',\'taux\')">'+(p.taux||0)+'%</span></div>';
   pjH+='<div class="lr"><span>Durée (mois)</span><span class="ed" onclick="edProjet(this,\''+p.id+'\',\'dureeMois\')">'+(p.dureeMois||240)+'</span></div>';
-  pjH+='<div class="lr"><span>Mensualité estimée</span><span style="font-weight:700;color:var(--red)">'+F2(amP.m)+'</span></div>';
-  pjH+='<div class="lr"><span>Loyer espéré/mois</span><span class="ed" onclick="edProjet(this,\''+p.id+'\',\'loyer\')" style="color:var(--green);font-weight:700">'+F(p.loyer||0)+'</span></div>';
+  pjH+='<div class="lr"><span>Mensualité estimée</span><span style="font-weight:500;color:var(--red)">'+F2(amP.m)+'</span></div>';
+  pjH+='<div class="lr"><span>Loyer espéré/mois</span><span class="ed" onclick="edProjet(this,\''+p.id+'\',\'loyer\')" style="color:var(--green);font-weight:500">'+F(p.loyer||0)+'</span></div>';
   pjH+='<div class="lr"><span>Charges/mois</span><span class="ed" onclick="edProjet(this,\''+p.id+'\',\'charges\')">'+F(p.charges||0)+'</span></div>';
   pjH+='<div class="lr"><span>Taxe foncière/an</span><span class="ed" onclick="edProjet(this,\''+p.id+'\',\'taxeFonciere\')">'+F(p.taxeFonciere||0)+'</span></div>';
   pjH+='</div></div>';
   pjH+='<div style="display:flex;gap:16px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap">';
-  pjH+='<div><span style="font-size:11px;color:var(--muted)">CASHFLOW ESTIMÉ</span><div style="font-size:18px;font-weight:800;color:'+(cashflow>=0?'var(--green)':'var(--red)')+'">'+(cashflow>=0?'+':'')+F(Math.round(cashflow))+'/mois</div></div>';
-  pjH+='<div><span style="font-size:11px;color:var(--muted)">RENDEMENT BRUT</span><div style="font-size:18px;font-weight:800">'+rdt+'%</div></div>';
+  pjH+='<div><span style="font-size:11px;color:var(--muted)">CASHFLOW ESTIMÉ</span><div style="font-size:18px;font-weight:500;color:'+(cashflow>=0?'var(--green)':'var(--red)')+'">'+(cashflow>=0?'+':'')+F(Math.round(cashflow))+'/mois</div></div>';
+  pjH+='<div><span style="font-size:11px;color:var(--muted)">RENDEMENT BRUT</span><div style="font-size:18px;font-weight:500">'+rdt+'%</div></div>';
   pjH+='</div></div>';
 });
 if(S.projets.length===0)pjH='<div style="color:var(--muted);font-size:12px">Aucun projet. Clique + Projet pour simuler un futur achat.</div>';
@@ -4739,13 +4851,13 @@ if(l.spark&&l.spark.length>=2){
    +'<polyline points="'+coords.join(' ')+'" fill="none" stroke="'+col+'" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>'
    +'<circle cx="'+w+'" cy="'+y(pts[pts.length-1])+'" r="1.8" fill="'+col+'"/></svg>';
 }
-h+='<tr><td class="l"><b style="font-size:12px">'+l.n+'</b><div class="tk">'+l.c+' · <a href="'+lienNews(YM[l.c]||l.c)+'" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--border)">actus</a></div></td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'p\')">'+l.p+'</span></td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'pr\')">'+(u?'$'+l.pr.toFixed(2):F2(l.pr))+'</span></td><td>'+F2(l.co)+(u&&l.usd?'<div class="tk">$'+l.usd.toFixed(2)+'</div>':'')+'</td><td>'+VC(l.var)+'</td><td style="font-weight:700">'+F2(l.vaEur)+'</td><td style="color:'+(l.g>=0?'var(--green)':'var(--red)')+';font-weight:600">'+(l.g>=0?'+':'')+(u?'$'+l.g.toFixed(2):F2(l.g))+'</td><td>'+BG(l.gp)+'</td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'div\')" style="color:var(--orange)">'+(l.div||0).toFixed(2)+'€</span></td><td style="color:var(--muted);font-size:11px">'+l.w.toFixed(1)+'%</td><td>'+sparkSvg+'</td><td class="l"><span class="ed" onclick="edSecteur(\''+pk+'\','+l.id+')" style="font-size:11px;color:'+(SC[secteurDe(l,pk)]||CV('--muted'))+'">'+secteurDe(l,pk)+'</span></td><td><button class="db" onclick="dPf(\''+pk+'\','+l.id+')">✕</button></td></tr>'});
+h+='<tr><td class="l"><b style="font-size:12px">'+l.n+'</b><div class="tk">'+l.c+' · <a href="'+lienNews(YM[l.c]||l.c)+'" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--border)">actus</a></div></td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'p\')">'+l.p+'</span></td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'pr\')">'+(u?'$'+l.pr.toFixed(2):F2(l.pr))+'</span></td><td>'+F2(l.co)+(u&&l.usd?'<div class="tk">$'+l.usd.toFixed(2)+'</div>':'')+'</td><td>'+VC(l.var)+'</td><td style="font-weight:500">'+F2(l.vaEur)+'</td><td style="color:'+(l.g>=0?'var(--green)':'var(--red)')+';font-weight:600">'+(l.g>=0?'+':'')+(u?'$'+l.g.toFixed(2):F2(l.g))+'</td><td>'+BG(l.gp)+'</td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'div\')" style="color:var(--orange)">'+(l.div||0).toFixed(2)+'€</span></td><td style="color:var(--muted);font-size:11px">'+l.w.toFixed(1)+'%</td><td>'+sparkSvg+'</td><td class="l"><span class="ed" onclick="edSecteur(\''+pk+'\','+l.id+')" style="font-size:11px;color:'+(SC[secteurDe(l,pk)]||CV('--muted'))+'">'+secteurDe(l,pk)+'</span></td><td><button class="db" onclick="dPf(\''+pk+'\','+l.id+')">✕</button></td></tr>'});
 h+='</tbody></table><div id="add-'+pk+'"><button class="ab" onclick="sA(\''+pk+'\')">+ Ajouter</button></div>';document.getElementById(cid).innerHTML=h}
 
 window.ePf=function(el,pk,id,f){const c=el.textContent.replace(/[^\d.,-]/g,'').replace(',','.');el.outerHTML='<input class="ci" value="'+c+'" onkeydown="if(event.key===\'Enter\')cPf2(this,\''+pk+'\','+id+',\''+f+'\');if(event.key===\'Escape\')R()" onblur="cPf2(this,\''+pk+'\','+id+',\''+f+'\')" autofocus>'};
 window.cPf2=function(i,pk,id,f){const v=parseFloat(i.value.replace(',','.'));const l=S.pf[pk].l.find(x=>x.id===id);if(l&&!isNaN(v))l[f]=v;autoSave();R()};
 window.dPf=function(pk,id){S.pf[pk].l=S.pf[pk].l.filter(l=>l.id!==id);autoSave();R()};
-window.sA=function(pk){document.getElementById('add-'+pk).innerHTML='<div class="ar"><input class="ai" placeholder="Ticker Yahoo (AI.PA, GOOGL...)" id="ac-'+pk+'" style="flex:1.5"><input class="ai" style="flex:2" placeholder="Nom *" id="an-'+pk+'"><input class="ai" placeholder="Cours €" id="ao-'+pk+'"><input class="ai" placeholder="Qté" id="ap-'+pk+'"><input class="ai" placeholder="PRU" id="ar-'+pk+'"><input class="ai" placeholder="Div" id="ad-'+pk+'"><button class="ac" onclick="cA(\''+pk+'\')">✓</button><button class="ax" onclick="R()">✕</button></div><div style="font-size:10px;color:var(--muted);margin-top:4px">◆ Laisse cours vide + ticker Yahoo → prix auto</div>'};
+window.sA=function(pk){document.getElementById('add-'+pk).innerHTML='<div class="ar"><input class="ai" placeholder="Ticker Yahoo (AI.PA, GOOGL...)" id="ac-'+pk+'" style="flex:1.5"><input class="ai" style="flex:2" placeholder="Nom *" id="an-'+pk+'"><input class="ai" placeholder="Cours €" id="ao-'+pk+'"><input class="ai" placeholder="Qté" id="ap-'+pk+'"><input class="ai" placeholder="PRU" id="ar-'+pk+'"><input class="ai" placeholder="Div" id="ad-'+pk+'"><button class="ac" onclick="cA(\''+pk+'\')">✓</button><button class="ax" onclick="R()">✕</button></div><div style="font-size:10px;color:var(--muted);margin-top:4px">Laisse cours vide + ticker Yahoo → prix auto</div>'};
 window.cA=async function(pk){const n=document.getElementById('an-'+pk).value.trim();if(!n)return;const ticker=document.getElementById('ac-'+pk).value.trim()||'—';let co=parseFloat(document.getElementById('ao-'+pk).value.replace(',','.'))||0;const nl={id:nid(),c:ticker,n:n,co:co,p:parseFloat(document.getElementById('ap-'+pk).value.replace(',','.'))||0,pr:parseFloat(document.getElementById('ar-'+pk).value.replace(',','.'))||0,div:parseFloat(document.getElementById('ad-'+pk).value.replace(',','.'))||0,var:0};if(ticker!=='—')YM[ticker]=ticker;if(co===0&&ticker!=='—'){const q=await yQ(ticker);if(q){nl.co=Math.round(q.price*100)/100;if(q.cur==='USD'){nl.usd=nl.co;nl.co=Math.round(q.price*eurUsd*100)/100}}}S.pf[pk].l.push(nl);autoSave();R()};
 
 window.edSim=function(el,f){if(!S.simParams)S.simParams={age:30,dep:25000,rend:7,ep:500,inflation:2,dcaSteps:[],horizon:30};const v=S.simParams[f];el.outerHTML='<input class="ci" style="width:100px" value="'+v+'" onkeydown="if(event.key===\'Enter\')cmSim(this,\''+f+'\');if(event.key===\'Escape\')R(true)" onblur="cmSim(this,\''+f+'\')" autofocus>'};
@@ -4762,7 +4874,7 @@ window.delRev=function(id){S.revSources=S.revSources.filter(x=>x.id!==id);autoSa
 window.addRev=function(){const nom=prompt("Nom de la source","Loyer");if(!nom)return;const colors=[CV('--accent'),CV('--c4'),CV('--c1'),'#14b8a6','#f97316','#8b5cf6'];S.revSources.push({id:'rs'+nid(),nom:nom,mensuel:0,auto:false,color:colors[S.revSources.length%colors.length]});autoSave();R(true)};
 
 /* Notes libres */
-window.edNote=function(section){if(!S||!S.notes)return;const cur=S.notes[section]||'';const n=prompt('✎ Note pour '+section+'\n(laisse vide pour supprimer)',cur);if(n===null)return;S.notes[section]=n;autoSave();R(true)};
+window.edNote=function(section){if(!S||!S.notes)return;const cur=S.notes[section]||'';const n=prompt('Note pour '+section+'\n(laisse vide pour supprimer)',cur);if(n===null)return;S.notes[section]=n;autoSave();R(true)};
 function noteBtn(section){const has=S&&S.notes&&S.notes[section];return ' <button style="font-size:10px;background:none;border:1px solid '+(has?'var(--accent)':'var(--border)')+';border-radius:4px;padding:2px 6px;cursor:pointer;color:'+(has?'var(--accent)':'var(--muted)')+'" onclick="edNote(\''+section+'\')">✎'+(has?' ✓':'')+'</button>'}
 function noteDisp(section){if(!S||!S.notes)return '';const n=S.notes[section];return n?'<div style="background:rgba(62,207,142,.05);border:1px solid rgba(62,207,142,.15);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--text);margin-bottom:12px">✎ '+n+'</div>':''}
 
