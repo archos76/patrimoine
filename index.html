@@ -287,7 +287,7 @@ details summary{color:var(--text2)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 11h35</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 12h00</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -603,6 +603,16 @@ function cashflowLocatif(k){
     const mens=cr.m;
     const l=loyersBien(b), attente=delaiLoyer(b);
     const loyer=m>=attente?l.apres:l.avant;
+    /* Un cashflow saisi à la main l'emporte sur tout le calcul */
+    if(b.cfManuel!=null){
+      const v=nb(b.cfManuel);
+      const lots0=(b.lots&&b.lots.length)?b.lots:[];
+      const dte0=b.creditId?(S.dettes.find(x=>x.id===b.creditId)||{}).dateDebut:null;
+      return{id:b.id,nom:b.nom||'Bien',loyer,charges,mens,net:v,manuel:true,netAuto:loyer-charges-mens,
+             attente,loyerAvant:l.avant,loyerApres:l.apres,reglé:b.loyerDansMois!=null,
+             etatCredit:cr.etat,mensPleine:cr.pleine,dateCredit:dte0,
+             vides:lots0.filter(x=>x.occupe===false).length,nbLots:lots0.length};
+    }
     const lots=(b.lots&&b.lots.length)?b.lots:[];
     const dte=b.creditId?(S.dettes.find(x=>x.id===b.creditId)||{}).dateDebut:null;
     return{id:b.id,nom:b.nom||'Bien',loyer,charges,mens,net:loyer-charges-mens,
@@ -613,8 +623,24 @@ function cashflowLocatif(k){
   const loyers=detail.reduce((a,x)=>a+x.loyer,0);
   const charges=detail.reduce((a,x)=>a+x.charges,0);
   const mens=detail.reduce((a,x)=>a+x.mens,0);
-  return{loyers,charges,mens,net:loyers-charges-mens,detail};
+  /* le total suit chaque bien, y compris ceux dont le cashflow est saisi à la main */
+  return{loyers,charges,mens,net:detail.reduce((a,x)=>a+x.net,0),detail};
 }
+/* Cashflow saisi à la main : une case vide rend la main au calcul automatique */
+window.setCfManuel=function(id,val){
+  const b=S.immo.find(x=>x.id===id);if(!b)return;
+  const s=String(val==null?'':val).trim();
+  if(s===''){delete b.cfManuel}
+  else{const v=parseFloat(s.replace(',','.').replace(/\s|€/g,''));if(isNaN(v))return;b.cfManuel=v}
+  autoSave();R(true);
+};
+window.setCfProjet=function(id,val){
+  const p=(S.projets||[]).find(x=>x.id===id);if(!p)return;
+  const s=String(val==null?'':val).trim();
+  if(s===''){delete p.cfManuel}
+  else{const v=parseFloat(s.replace(',','.').replace(/\s|€/g,''));if(isNaN(v))return;p.cfManuel=v}
+  autoSave();R(true);
+};
 window.setLoyerDelai=function(id,ans){
   const b=S.immo.find(x=>x.id===id);if(!b)return;
   const v=parseFloat(String(ans).replace(',','.'));
@@ -666,8 +692,10 @@ function projection(){
   const cf=cashflowLocatif(0);
   /* Les charges et les mensualités ne bougent pas d'un mois sur l'autre : on ne
      refait pas les tableaux d'amortissement à chaque pas, seul le loyer change. */
-  const plan=cf.detail.map(d=>({attente:d.attente,avant:d.loyerAvant,apres:d.loyerApres,fixe:d.charges+d.mens}));
-  const cfAuMois=k=>plan.reduce((s,d)=>s+((k>=d.attente?d.apres:d.avant)-d.fixe),0);
+  const plan=cf.detail.map(d=>d.manuel
+    ?{manuel:true,net:d.net}
+    :{attente:d.attente,avant:d.loyerAvant,apres:d.loyerApres,fixe:d.charges+d.mens});
+  const cfAuMois=k=>plan.reduce((s,d)=>s+(d.manuel?d.net:((k>=d.attente?d.apres:d.avant)-d.fixe)),0);
   /* Les achats à venir : chacun arrive à sa date, avec son apport, ses frais
      de notaire, son crédit et ce qu'il rapporte ensuite. */
   const achats=(S.projets||[]).filter(x=>x.enProj!==false).map(x=>{
@@ -678,13 +706,15 @@ function projection(){
     const mens=Math.abs(nb(am.m));
     const mensDiff=Math.abs(nb(am.mDiff));/* pendant le différé, on ne paie que les intérêts */
     const recettes=nb(x.loyer)-nb(x.charges)-nb(x.taxeFonciere)/12;
-    return{nom:x.nom||'Projet',mois:Math.max(0,Math.round(nb(x.dansMois))),
-           prix,frais,trav,apport,emprunte,t:am.t,mens,mensDiff,differe,recettes,
-           cfMois:recettes-mens,valeur:prix+trav};
+    const manuel=x.cfManuel!=null?nb(x.cfManuel):null;
+    return{id:x.id,nom:x.nom||'Projet',mois:Math.max(0,Math.round(nb(x.dansMois))),
+           prix,frais,trav,apport,emprunte,t:am.t,mens,mensDiff,differe,recettes,manuel,
+           cfMois:manuel!=null?manuel:recettes-mens,valeur:prix+trav};
   });
   /* Ce qu'un futur bien laisse le mois k, différé compris */
   const cfAchat=(a,k)=>{
     if(k<a.mois)return 0;
+    if(a.manuel!=null)return a.manuel;
     const i=k-a.mois+1;
     return a.recettes-((a.differe>0&&i<=a.differe)?a.mensDiff:a.mens);
   };
@@ -2342,10 +2372,11 @@ document.getElementById('sl').innerHTML=sH;
     const det=pr.cf.detail||[];
     if(det.length){
       let bH='<div style="margin-top:16px"><div style="font-weight:600;font-size:13px;margin-bottom:8px">⌂ Ce que rapportent tes biens actuels</div>';
-      bH+='<div class="tw"><table style="font-size:11.5px"><thead><tr><th class="l">Bien</th><th>Loyer</th><th>Charges</th><th>Crédit</th><th>Cashflow</th><th>Loué dans</th></tr></thead><tbody>';
-      let alerteCredit=false;
+      bH+='<div class="tw"><table style="font-size:11.5px"><thead><tr><th class="l">Bien</th><th>Loyer</th><th>Charges</th><th>Crédit</th><th>Cashflow calculé</th><th>Cashflow réel</th><th>Loué dans</th></tr></thead><tbody>';
+      let alerteCredit=false,manuelUtilise=false;
       det.forEach(d=>{
         const futur=d.loyerApres-d.charges-d.mens;
+        if(d.manuel)manuelUtilise=true;
         const pasEncore=d.attente>0;
         /* Dire pourquoi la mensualité vaut zéro plutôt que de laisser croire que le bien est payé */
         let cel,manque=false;
@@ -2366,13 +2397,18 @@ document.getElementById('sl').innerHTML=sH;
                   :F(d.loyerApres))+'</td>'+
           '<td style="color:var(--red)">'+F2(d.charges)+'</td>'+
           '<td>'+cel+'</td>'+
-          '<td style="color:'+(d.net>=0?'var(--green)':'var(--red)')+'">'+(d.net>=0?'+':'')+F2(d.net)+
-            (pasEncore?'<div style="font-size:10px;color:var(--muted)">puis '+(futur>=0?'+':'')+F2(futur)+' une fois loué</div>':'')+'</td>'+
-          '<td><input class="ci" style="width:42px" value="'+d.attente+'" onchange="setLoyerDelai(\''+d.id+'\',this.value)"> mois</td></tr>';
+          '<td style="color:'+(d.manuel?'var(--muted)':(d.net>=0?'var(--green)':'var(--red)'))+'">'+
+            (d.manuel?F2(d.netAuto)+'<div style="font-size:10px;color:var(--muted)">ignoré</div>'
+                     :((d.net>=0?'+':'')+F2(d.net)+(pasEncore?'<div style="font-size:10px;color:var(--muted)">puis '+(futur>=0?'+':'')+F2(futur)+' une fois loué</div>':'')))+'</td>'+
+          '<td><input class="ci" style="width:66px" placeholder="auto" value="'+(d.manuel?nb(d.net):'')+'" onchange="setCfManuel(\''+d.id+'\',this.value)" title="Laisse vide pour le calcul automatique">'+
+            (d.manuel?'<div style="font-size:10px;color:var(--accent)">saisi par toi</div>':'')+'</td>'+
+          '<td>'+(d.manuel?'<span style="color:var(--muted);font-size:10.5px">sans objet</span>'
+                 :'<input class="ci" style="width:42px" value="'+d.attente+'" onchange="setLoyerDelai(\''+d.id+'\',this.value)"> mois')+'</td></tr>';
       });
       bH+='</tbody></table></div>';
       if(alerteCredit)bH+='<div style="font-size:11.5px;color:var(--orange);background:var(--card2);border-radius:10px;padding:10px 12px;margin-top:10px;line-height:1.6">Pour un ou plusieurs biens, la mensualité n\'est pas déduite : leur cashflow est donc trop optimiste. Soit le prêt n\'est pas rattaché au bien — page Immo, fiche du bien, « Prêt rattaché » — soit sa date de début est postérieure à aujourd\'hui : vérifie-la sur la page Dettes.</div>';
-      bH+='<div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6">Un bien pas encore loué ne rapporte rien, mais son crédit et ses charges se paient quand même. Mets 0 s\'il est déjà loué, ou le nombre de mois qu\'il te reste avant d\'encaisser le premier loyer (travaux, recherche de locataire). Un logement marqué vide sur la page Immo se voit attribuer trois mois par défaut.</div></div>';
+      bH+='<div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6"><strong style="color:var(--text2)">Cashflow réel :</strong> écris ici ce que le bien te laisse vraiment chaque mois, en positif ou en négatif. Cette valeur remplace le calcul et sert à toute la projection. Laisse la case vide pour revenir au calcul automatique.'+
+        (manuelUtilise?'':' <br><strong style="color:var(--text2)">Loué dans :</strong> le nombre de mois avant d\'encaisser le premier loyer. 0 si le bien est déjà loué. Un logement marqué vide sur la page Immo se voit attribuer trois mois par défaut.')+'</div></div>';
       rg.innerHTML+=bH;
     }
 
@@ -2384,20 +2420,24 @@ document.getElementById('sl').innerHTML=sH;
     if(!tous.length){
       aH+='<div style="font-size:11.5px;color:var(--muted);line-height:1.6">Tu peux ajouter un bien que tu comptes acheter plus tard : son apport, ses frais de notaire et son crédit entrent dans la courbe le mois venu. Les projets créés ici apparaissent aussi sur la page Immo, où tu règles le loyer, les charges et le crédit en détail.</div>';
     }else{
-      aH+='<div class="tw"><table style="font-size:11.5px"><thead><tr><th class="l">Projet</th><th>Prix</th><th>Apport</th><th>Dans</th><th>Cashflow</th><th>Compté</th></tr></thead><tbody>';
+      aH+='<div class="tw"><table style="font-size:11.5px"><thead><tr><th class="l">Projet</th><th>Prix</th><th>Apport</th><th>Dans</th><th>Cashflow calculé</th><th>Cashflow réel</th><th>Compté</th></tr></thead><tbody>';
       tous.forEach(x=>{
         const inclus=x.enProj!==false;
-        const a=pr.achats.find(y=>y.nom===(x.nom||'Projet'));
-        const cfp=a?a.cfMois:null;
+        const a=pr.achats.find(y=>y.id===x.id);
+        const manuelP=x.cfManuel!=null;
+        const cfp=a?(manuelP?a.recettes-a.mens:a.cfMois):null;
         const ans=Math.round(nb(x.dansMois)/12*10)/10;
         aH+='<tr'+(inclus?'':' style="opacity:.45"')+'>'+
           '<td class="l" style="font-weight:600">'+String(x.nom||'Projet').slice(0,28)+'</td>'+
           '<td>'+F(nb(x.prix))+'</td>'+
           '<td>'+F(nb(x.apport))+'</td>'+
           '<td><input class="ci" style="width:48px" value="'+ans+'" onchange="setProjetDelai(\''+x.id+'\',this.value)"> an'+(ans>1?'s':'')+'</td>'+
-          '<td style="color:'+(cfp==null||!nb(x.loyer)?'var(--muted)':(cfp>=0?'var(--green)':'var(--red)'))+'">'+
+          '<td style="color:'+(manuelP||cfp==null||!nb(x.loyer)?'var(--muted)':(cfp>=0?'var(--green)':'var(--red)'))+'">'+
             (cfp==null?'—':!nb(x.loyer)?'<span title="Renseigne le loyer sur la page Immo">loyer à saisir</span>':(cfp>=0?'+':'')+F2(cfp))+
-            (a&&a.differe>0&&nb(x.loyer)?'<div style="font-size:10px;color:var(--muted)">après '+a.differe+' mois de différé</div>':'')+'</td>'+
+            (manuelP?'<div style="font-size:10px;color:var(--muted)">ignoré</div>'
+                    :(a&&a.differe>0&&nb(x.loyer)?'<div style="font-size:10px;color:var(--muted)">après '+a.differe+' mois de différé</div>':''))+'</td>'+
+          '<td><input class="ci" style="width:66px" placeholder="auto" value="'+(manuelP?nb(x.cfManuel):'')+'" onchange="setCfProjet(\''+x.id+'\',this.value)" title="Laisse vide pour le calcul automatique">'+
+            (manuelP?'<div style="font-size:10px;color:var(--accent)">saisi par toi</div>':'')+'</td>'+
           '<td><button class="pb '+(inclus?'on':'')+'" onclick="toggleProjetProj(\''+x.id+'\')">'+(inclus?'Oui':'Non')+'</button></td></tr>';
       });
       aH+='</tbody></table></div>';
