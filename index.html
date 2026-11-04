@@ -183,7 +183,8 @@ tr:hover{background:var(--card2)}
 .wb{display:flex;height:6px;border-radius:4px;overflow:hidden;background:var(--card2);margin-bottom:16px}.wb div{height:100%}
 .pg{height:5px;border-radius:4px;background:var(--card2);overflow:hidden;margin-top:6px}
 .pf{height:100%;border-radius:4px;background:var(--accent)}
-.ed{cursor:pointer;padding:2px 7px;border-radius:6px;border:1px dashed transparent;transition:background-color .15s,color .15s,border-color .15s}
+.ed{cursor:pointer;padding:2px 7px;border-radius:6px;border:1px dashed var(--border);
+     transition:background-color .15s,color .15s,border-color .15s}
 .ed:hover{border-color:var(--accent);background:var(--abg);color:var(--accent)}
 .ci{width:90px;padding:5px 9px;border-radius:8px;background:var(--card2);border:1px solid var(--accent);color:var(--text);font-size:12px;font-weight:500;outline:0;text-align:right;font-family:var(--font)}
 .db{width:24px;height:24px;border-radius:6px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background-color .15s,color .15s,border-color .15s}
@@ -217,7 +218,7 @@ tr:hover{background:var(--card2)}
 .manq .mlien{color:var(--accent);cursor:pointer;text-decoration:underline;font-weight:600}
 .pb{padding:5px 12px;border-radius:8px;border:1px solid var(--border);font-size:12px;font-weight:450;cursor:pointer;background:transparent;color:var(--muted);font-family:var(--font);transition:background-color .15s,color .15s,border-color .15s}
 .pb:hover{color:var(--text);border-color:var(--muted)}
-.pb.on{background:var(--card2);color:var(--text);border-color:var(--muted);font-weight:550}
+.pb.on{background:var(--abg);color:var(--accent);border-color:var(--accent);font-weight:500}
 .cb{position:relative;height:280px}.cbs{position:relative;height:210px}
 .cl{display:flex;gap:20px;justify-content:center;margin-top:10px;font-size:12px;color:var(--muted)}
 .hc{background:none;border:none;border-top:1px solid var(--border);border-radius:0;padding:16px 0 20px;margin-bottom:30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
@@ -382,7 +383,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 15h30</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 16h05</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -398,7 +399,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 </div>
 </header>
 <main>
-<div class="page active" id="page-home"><div id="homeAlerts"></div><div class="hTete" id="hTete"></div><div class="kr" id="hk" style="display:none"></div><div id="widgetResume" style="display:none"></div><div class="hc"><div><span style="font-size:12px;color:var(--muted)">Règle des 4%</span><div style="font-size:20px;font-weight:800;color:var(--accent);margin-top:2px" id="k4"></div></div><div style="font-size:13px;color:var(--muted)" id="k4m"></div></div><div class="g21 gSeul"><div class="card"><div class="fb" style="margin-bottom:10px"><div class="ct" style="margin:0" id="netTitre">Évolution du patrimoine</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div style="display:flex;gap:4px"><button class="ctb" id="netMode_brut" onclick="setNetMode('brut')">Brut</button><button class="ctb active" id="netMode_net" onclick="setNetMode('net')">Net</button></div><div style="display:flex;gap:4px"><button class="ctb active" id="netVue_courbe" onclick="setNetVue('courbe')">Courbes</button><button class="ctb" id="netVue_barres" onclick="setNetVue('barres')">Barres</button></div><div style="display:flex;gap:4px" id="netPs"></div></div></div><div class="cto" id="netCases"></div><div class="cb"><canvas id="cN"></canvas></div></div><div class="card hRegistre" id="hRegistre"></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Historique</div><button class="reset-btn" onclick="if(confirm('Reset?'))doReset()">Réinitialiser</button></div><div id="sl" style="margin-top:12px"></div></div></div>
+<div class="page active" id="page-home"><div id="homeAlerts"></div><div class="hTete" id="hTete"></div><div class="kr" id="hk" style="display:none"></div><div id="widgetResume" style="display:none"></div><div class="g21 gSeul"><div class="card"><div class="fb" style="margin-bottom:10px"><div class="ct" style="margin:0" id="netTitre">Évolution du patrimoine</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div style="display:flex;gap:4px"><button class="ctb" id="netMode_brut" onclick="setNetMode('brut')">Brut</button><button class="ctb active" id="netMode_net" onclick="setNetMode('net')">Net</button></div><div style="display:flex;gap:4px"><button class="ctb active" id="netVue_courbe" onclick="setNetVue('courbe')">Courbes</button><button class="ctb" id="netVue_barres" onclick="setNetVue('barres')">Barres</button></div><div style="display:flex;gap:4px" id="netPs"></div></div></div><div class="cto" id="netCases"></div><div class="cb"><canvas id="cN"></canvas></div></div><div class="card hRegistre" id="hRegistre"></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Historique</div><button class="reset-btn" onclick="if(confirm('Reset?'))doReset()">Réinitialiser</button></div><div id="sl" style="margin-top:12px"></div></div></div>
 <div class="page" id="page-bourse"><div class="kr" id="bk"></div>
 <div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div id="rstat" class="rs" style="margin:12px 0"></div><div class="card"><div class="fb"><div class="ct" style="margin:0">PEA — Fortuneo</div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — Saxo <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — IBKR</div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">AV — Linxea</div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:#7c3aed">● Portf.</span><span style="color:#e8a33d">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Objectifs Bourse</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addBourseGoal()">+ Objectif</button></div><div id="bourseGoals" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch()">+ Suivre</button></div><div id="watchlist" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Journal d'investissement</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addJournal()">+ Entrée</button></div><div id="journal" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div></div>
 <div class="page" id="page-epargne"><div class="kr" id="ek"></div><div class="g2"><div class="card"><div class="ct" id="ct1"></div><div id="cl1"></div><div id="af1"></div></div><div class="card"><div class="ct" id="ct2"></div><div id="cl2"></div><div id="af2"></div></div><div class="card sf"><div class="ct" id="ct3"></div><div id="cl3"></div><div id="af3"></div></div></div></div>
@@ -2399,7 +2400,7 @@ S.dettes.forEach(d=>{
   if(me>0&&am.t.length>0){const idx=Math.min(me,am.t.length)-1;d.restant=am.t[idx].r}
   else{d.restant=d.emprunte}
 });
-const t=Tot(),H=gH(),r4=Math.round(t.ne*.04);
+const t=Tot(),H=gH();
 /* ---- Accueil : le patrimoine net porte l'écran ---------------------- */
 (function(){
   const te=document.getElementById('hTete');if(!te)return;
@@ -2427,7 +2428,6 @@ const t=Tot(),H=gH(),r4=Math.round(t.ne*.04);
       '<span><em>Brut</em>'+(hiddenMode?'***':F(t.br))+'</span>'+
       '<span><em>Dettes</em>'+(hiddenMode?'***':F(t.de))+'</span>'+
       '<span><em>Liquidités</em>'+(hiddenMode?'***':F(t.lq))+'</span>'+
-      '<span><em>Rente à 4 %</em>'+(hiddenMode?'***':F(Math.round(t.ne*.04/12))+' / mois')+'</span>'+
     '</div>';
 
   /* le registre de composition remplace le camembert : on lit des montants,
@@ -2488,7 +2488,7 @@ if(alertes.length>0){
   alH+='</div>';
 }
 document.getElementById('homeAlerts').innerHTML=alH;
-document.getElementById('k4').textContent=F(r4)+' / an';document.getElementById('k4m').textContent='soit '+F(Math.round(r4/12))+' / mois';
+
 
 if(dc){
 document.getElementById('netPs').innerHTML=[{l:'6M',m:6},{l:'1A',m:12},{l:'Année',m:-1},{l:'Tout',m:999}].map(x=>'<button class="pb '+(netPr===x.m?'on':'')+'" onclick="sNP('+x.m+')">'+x.l+'</button>').join('');
@@ -3066,8 +3066,8 @@ const perfAnEuros=cPan().reduce((s,r)=>s+r.pv,0);
 let bestM='',bestV=0;moisDivL.forEach(m=>{const v=divPart(anDivS,m,divType);if(v>bestV){bestV=v;bestM=m}});
 
 let dmH='<div class="kr" style="margin-bottom:14px">';
-dmH+='<div class="kpi sm"><div class="kl">Dividendes actions '+anDiv+'</div><div class="kv" style="color:var(--accent)">'+F2(divActAn)+'</div>'+(divScpiAn>0?'<div class="ks">hors SCPI</div>':'')+'</div>';
-dmH+='<div class="kpi sm"><div class="kl">Revenus SCPI '+anDiv+'</div><div class="kv" style="color:var(--c1)">'+F2(divScpiAn)+'</div><div class="ks">comptés en revenus, pas en bourse</div></div>';
+dmH+='<div class="kpi sm"'+(divType==='a'?' style="border-color:var(--accent)"':'')+'><div class="kl">Dividendes actions '+anDiv+'</div><div class="kv" style="color:var(--accent)">'+F2(divActAn)+'</div>'+(divScpiAn>0?'<div class="ks">hors SCPI</div>':'')+'</div>';
+dmH+='<div class="kpi sm"'+(divType==='s'?' style="border-color:var(--accent)"':'')+'><div class="kl">Revenus SCPI '+anDiv+'</div><div class="kv" style="color:var(--c1)">'+F2(divScpiAn)+'</div><div class="ks">comptés en revenus, pas en bourse</div></div>';
 dmH+='<div class="kpi sm"><div class="kl">Total encaissé '+anDiv+'</div><div class="kv">'+F2(totDivAn)+'</div>'+(totDivPrec>0?'<div class="ks" style="color:'+(totDivAn>=totDivPrec?'var(--green)':'var(--red)')+'">'+(totDivAn>=totDivPrec?'+':'')+((totDivAn-totDivPrec)/totDivPrec*100).toFixed(0)+'% vs '+(anDiv-1)+'</div>':'')+'</div>';
 dmH+='<div class="kpi sm"><div class="kl">Part de la perf '+anDiv+'</div><div class="kv" style="color:'+(divActAn>0?'var(--green)':'var(--muted)')+'">'+(Math.abs(perfAnEuros)>1&&divActAn>0?(divActAn/Math.abs(perfAnEuros)*100).toFixed(0)+' %':'—')+'</div><div class="ks">'+(Math.abs(perfAnEuros)>1&&divActAn>0?'des '+F2(perfAnEuros)+' gagnés':'perf de l\'année non calculable')+'</div></div>';
 dmH+='</div>';
@@ -3075,7 +3075,12 @@ dmH+='</div>';
 /* Choix de ce qu'on saisit et qu'on lit */
 dmH+='<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">'+
   [{k:'a',l:'Actions'},{k:'s',l:'SCPI'},{k:'t',l:'Les deux'}].map(x=>'<button class="pb '+(divType===x.k?'on':'')+'" onclick="setDivType(\''+x.k+'\')">'+x.l+'</button>').join('')+'</div>';
-dmH+='<div style="font-size:11.5px;color:var(--muted);margin-bottom:10px;line-height:1.6">'+
+/* le titre dit ce qu'on saisit : sans lui, les deux vues se ressemblent */
+dmH+='<div style="font-size:14px;color:var(--text);font-weight:500;margin-bottom:6px">'+
+  (divType==='t'?'Tout ce que tu encaisses, mois par mois'
+   :divType==='a'?'Dividendes d\'actions, mois par mois'
+   :'Loyers de SCPI, mois par mois')+'</div>';
+dmH+='<div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.6">'+
   (divType==='t'?'Vue cumulée : pour modifier un montant, choisis d\'abord « Actions » ou « SCPI ».':
    divType==='a'?'Dividendes versés par tes actions et tes ETF. Ce sont eux qui comptent dans la performance de ton portefeuille.':
    'Loyers versés par tes SCPI. Ils n\'entrent pas dans la performance boursière : ils sont comptés dans tes revenus passifs.')+'</div>';
@@ -3111,24 +3116,81 @@ const cDivEl=document.getElementById('cDivMois');
 if(cDivEl){
   if(window._cDivM)window._cDivM.destroy();
   const ordre=[...anneesDiv].sort();
+  /* Axes et grille sourds, communs aux trois vues */
+  const axesDiv={
+    x:{stacked:true,grid:{display:false},ticks:{color:CV('--muted'),font:{size:11}}},
+    y:{stacked:true,grid:{color:CV('--grid')},border:{display:false},
+       ticks:{color:CV('--muted'),font:{size:11},callback:v=>F(v)}}};
+  const legDiv=aff=>({display:aff,position:'bottom',labels:{font:{size:11},usePointStyle:true,
+    pointStyle:'circle',boxWidth:7,boxHeight:7,padding:14,color:CV('--muted')}});
+  /* La moyenne donne un repère : on voit tout de suite les mois au-dessus */
+  const ligneMoy=(vals,nom)=>{
+    const nz=vals.filter(v=>v>0);
+    if(nz.length<2)return null;
+    const moy=nz.reduce((a,b)=>a+b,0)/nz.length;
+    return{type:'line',label:nom+' : '+F2(moy),data:vals.map(()=>moy),
+      borderColor:CV('--muted'),borderWidth:1,borderDash:[4,4],pointRadius:0,
+      fill:false,order:0,tension:0};
+  };
+
   if(divVue==='annee'){
-    /* Deux barres empilées par année : actions puis SCPI */
-    window._cDivM=new Chart(cDivEl,{type:'bar',data:{labels:ordre,datasets:[
-      {label:'Actions',data:ordre.map(a=>totAn(a,'a')),backgroundColor:CV('--accent'),borderRadius:coinHaut,borderSkipped:false,barPercentage:.55,categoryPercentage:.8,borderWidth:0,stack:'d'},
-      {label:'SCPI',data:ordre.map(a=>totAn(a,'s')),backgroundColor:CV('--c1'),borderRadius:coinHaut,borderSkipped:false,barPercentage:.55,categoryPercentage:.8,borderWidth:0,stack:'d'}]},
-      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7,padding:14,color:CV('--muted')}},tooltip:tipOpts(c=>c.dataset.label+' : '+F2(c.raw))},scales:{x:{stacked:true,grid:{display:false},ticks:{color:CV('--muted'),font:{size:11}}},y:{stacked:true,grid:{color:hexA(CV('--border'),.5)},ticks:{color:CV('--muted'),font:{size:11},callback:v=>v+'€'}}}}});
+    /* Comparaison d'années : actions et SCPI empilées, l'année en cours ressort */
+    const act=ordre.map(a=>totAn(a,'a')), scp=ordre.map(a=>totAn(a,'s'));
+    const enCours=a=>a===anDivS;
+    window._cDivM=new Chart(cDivEl,{data:{labels:ordre,datasets:[
+      {type:'bar',label:'Actions',data:act,stack:'d',order:2,
+       backgroundColor:ordre.map(a=>enCours(a)?CV('--accent'):hexA(CV('--accent'),.45)),
+       borderRadius:coinHaut,borderSkipped:false,barPercentage:.6,categoryPercentage:.8,
+       maxBarThickness:72,borderWidth:0},
+      {type:'bar',label:'SCPI',data:scp,stack:'d',order:2,
+       backgroundColor:ordre.map(a=>enCours(a)?CV('--c2'):hexA(CV('--c2'),.45)),
+       borderRadius:coinHaut,borderSkipped:false,barPercentage:.6,categoryPercentage:.8,
+       maxBarThickness:72,borderWidth:0}]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+        animation:animConf,plugins:{legend:legDiv(true),
+          tooltip:tipOpts(c=>c.dataset.label+' : '+F2(c.raw))},scales:axesDiv}});
+
   }else if(divType==='t'){
-    /* Mois par mois, actions et SCPI empilées sur l'année en cours */
-    window._cDivM=new Chart(cDivEl,{type:'bar',data:{labels:moisDivL,datasets:[
-      {label:'Actions',data:moisDivL.map(m=>divPart(anDivS,m,'a')),backgroundColor:CV('--accent'),borderRadius:coinHaut,borderSkipped:false,barPercentage:.7,categoryPercentage:.75,borderWidth:0,stack:'d'},
-      {label:'SCPI',data:moisDivL.map(m=>divPart(anDivS,m,'s')),backgroundColor:CV('--c1'),borderRadius:coinHaut,borderSkipped:false,barPercentage:.7,categoryPercentage:.75,borderWidth:0,stack:'d'}]},
-      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7,padding:14,color:CV('--muted')}},tooltip:tipOpts(c=>c.dataset.label+' : '+F2(c.raw))},scales:{x:{stacked:true,grid:{display:false},ticks:{color:CV('--muted'),font:{size:11}}},y:{stacked:true,grid:{color:hexA(CV('--border'),.5)},ticks:{color:CV('--muted'),font:{size:11},callback:v=>v+'€'}}}}});
+    /* Les deux sources empilées sur l'année en cours : chaque couleur dit laquelle */
+    const act=moisDivL.map(m=>divPart(anDivS,m,'a'));
+    const scp=moisDivL.map(m=>divPart(anDivS,m,'s'));
+    const tot=act.map((v,i)=>v+scp[i]);
+    const ds=[
+      {type:'bar',label:'Actions',data:act,stack:'d',order:2,backgroundColor:CV('--accent'),
+       borderRadius:coinHaut,borderSkipped:false,barPercentage:.68,categoryPercentage:.8,borderWidth:0},
+      {type:'bar',label:'SCPI',data:scp,stack:'d',order:2,backgroundColor:CV('--c2'),
+       borderRadius:coinHaut,borderSkipped:false,barPercentage:.68,categoryPercentage:.8,borderWidth:0}];
+    const mo=ligneMoy(tot,'Moyenne');if(mo)ds.push(mo);
+    window._cDivM=new Chart(cDivEl,{data:{labels:moisDivL,datasets:ds},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+        animation:animConf,plugins:{legend:legDiv(true),
+          tooltip:tipOpts(c=>c.dataset.label+' : '+F2(c.raw))},scales:axesDiv}});
+
   }else{
-    const pal=[CV('--accent'),CV('--c1'),CV('--c2'),CV('--c4'),CV('--c5')];
-    const ds=ordre.slice(-4).map((a,k,arr)=>({label:a,data:moisDivL.map(m=>divPart(a,m,divType)),
-      backgroundColor:k===arr.length-1?CV('--accent'):hexA(pal[(arr.length-1-k)%pal.length],.5),borderRadius:5,borderSkipped:false,barPercentage:.7,categoryPercentage:.75,borderWidth:0}));
-    window._cDivM=new Chart(cDivEl,{type:'bar',data:{labels:moisDivL,datasets:ds},
-      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:ds.length>1,position:'bottom',labels:{font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7,padding:14,color:CV('--muted')}},tooltip:tipOpts(c=>c.dataset.label+' : '+F2(c.raw))},scales:axeOpts(v=>v+'€')}});
+    /* Une seule source : les barres restent neutres, le mois en cours porte l'accent,
+       et l'année précédente se lit en retrait derrière, pour comparer. */
+    const cette=moisDivL.map(m=>divPart(anDivS,m,divType));
+    /* l'accent va au dernier mois encaissé : c'est le chiffre qu'on vient lire */
+    let dernier=-1;cette.forEach((v,i)=>{if(v>0)dernier=i});
+    const prec=String(anDiv-1);
+    const avant=anneesDiv.indexOf(prec)>=0?moisDivL.map(m=>divPart(prec,m,divType)):null;
+    const aDeuxAns=!!(avant&&avant.some(v=>v>0));
+    const ds=[];
+    /* l'année passée se lit en retrait, derrière, pour comparer sans distraire */
+    if(aDeuxAns)ds.push({type:'bar',label:prec,data:avant,order:3,
+      backgroundColor:hexA(CV('--muted'),.22),borderRadius:4,borderSkipped:false,
+      barPercentage:.82,categoryPercentage:.8,borderWidth:0});
+    ds.push({type:'bar',label:aDeuxAns?anDivS:'Encaissé',data:cette,order:2,
+      backgroundColor:cette.map((v,i)=>i===dernier?CV('--accent'):hexA(CV('--text'),.62)),
+      borderRadius:5,borderSkipped:false,barPercentage:.82,categoryPercentage:.8,borderWidth:0});
+    const mo=ligneMoy(cette,'Moyenne');if(mo)ds.push(mo);
+    window._cDivM=new Chart(cDivEl,{data:{labels:moisDivL,datasets:ds},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+        animation:animConf,plugins:{legend:legDiv(ds.length>1),
+          tooltip:tipOpts(c=>c.dataset.label+' : '+F2(c.raw))},
+        scales:{x:{stacked:false,grid:{display:false},ticks:{color:CV('--muted'),font:{size:11}}},
+          y:{stacked:false,grid:{color:CV('--grid')},border:{display:false},
+             ticks:{color:CV('--muted'),font:{size:11},callback:v=>F(v)}}}}});
   }
 }}
 document.getElementById('divVueBtns').innerHTML=[{k:'annee',l:'Par année'},{k:'mois',l:'Par mois'}].map(x=>'<button class="pb '+(divVue===x.k?'on':'')+'" onclick="setDivVue(\''+x.k+'\')">'+x.l+'</button>').join('');
