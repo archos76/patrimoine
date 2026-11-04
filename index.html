@@ -18,19 +18,22 @@
 --bg:#0f1012;--card:#17181b;--card2:#202226;--border:rgba(237,237,237,.09);--line:rgba(237,237,237,.07);
 --text:#ededed;--text2:#a1a1a6;--muted:#85858b;
 --accent:#d99a3c;--abg:rgba(217,154,60,.10);
---green:#4cc38a;--red:#e5484d;--orange:#d99a3c;--bourse:#8c8f96;--crypto:#6f727a;
---c1:#d99a3c;--c2:#9ba0a8;--c3:#75797f;--c4:#595d63;--c5:#43464b;--c6:#8c8f96;
+--green:#4cc38a;--red:#e5484d;--orange:#d99a3c;--bourse:#4e9cc4;--crypto:#9183cf;
+/* Séries de données : chaque teinte désigne une chose. L'ambre mène,
+   les autres sont espacées en teinte et proches en clarté, pour se
+   distinguer sans crier sur un fond gris. */
+--c1:#d99a3c;--c2:#4e9cc4;--c3:#52b08a;--c4:#cc7a9e;--c5:#9183cf;--c6:#45aaa8;
 --grid:rgba(237,237,237,.05);--shadow:none;
---p1:#d99a3c;--p2:#9ba0a8;--p3:#75797f;--p4:#595d63;--p5:#43464b;--p6:#8c8f96;--p7:#4cc38a;--p8:#e5484d;
+--p1:#d99a3c;--p2:#4e9cc4;--p3:#52b08a;--p4:#cc7a9e;--p5:#9183cf;--p6:#45aaa8;--p7:#7d8fa8;--p8:#b8705f;
 --font:'Onest',system-ui,sans-serif}
 body.light{
 --bg:#fafafa;--card:#ffffff;--card2:#f4f4f5;--border:rgba(23,23,23,.10);--line:rgba(23,23,23,.07);
 --text:#171717;--text2:#525252;--muted:#737373;
 --accent:#9a6a16;--abg:rgba(154,106,22,.08);
---green:#16a34a;--red:#dc2626;--orange:#9a6a16;--bourse:#6b6f76;--crypto:#575b61;
---c1:#9a6a16;--c2:#6b6f76;--c3:#8a8e95;--c4:#a4a8ae;--c5:#c0c3c8;--c6:#6b6f76;
+--green:#16a34a;--red:#dc2626;--orange:#9a6a16;--bourse:#2b7ba8;--crypto:#6a5cb0;
+--c1:#9a6a16;--c2:#2b7ba8;--c3:#2f8f6a;--c4:#a84d75;--c5:#6a5cb0;--c6:#1f8a88;
 --grid:rgba(23,23,23,.06);--shadow:0 1px 2px rgba(0,0,0,.05);
---p1:#9a6a16;--p2:#6b6f76;--p3:#8a8e95;--p4:#a4a8ae;--p5:#c0c3c8;--p6:#6b6f76;--p7:#16a34a;--p8:#dc2626}
+--p1:#9a6a16;--p2:#2b7ba8;--p3:#2f8f6a;--p4:#a84d75;--p5:#6a5cb0;--p6:#1f8a88;--p7:#5c6b82;--p8:#9c4f3f}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.5;transition:background .25s,color .25s}
 
@@ -379,7 +382,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 15h10</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 15h30</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -2437,7 +2440,7 @@ const t=Tot(),H=gH(),r4=Math.round(t.ne*.04);
   rg.innerHTML='<div class="ct">Ce qui compose le patrimoine</div>'+
     (postes.length?postes.map((p,i)=>
       '<div class="hL"><span class="hN">'+p.n+'</span>'+
-      '<span class="hB"><i style="width:'+(p.v/somme*100).toFixed(1)+'%;background:'+(i===0?'var(--accent)':'var(--muted)')+'"></i></span>'+
+      '<span class="hB"><i style="width:'+(p.v/somme*100).toFixed(1)+'%;background:'+((window.COUL_CLASSE||{})[p.n]||'var(--muted)')+'"></i></span>'+
       '<span class="hV">'+(hiddenMode?'***':F(p.v))+'</span>'+
       '<span class="hP">'+(p.v/somme*100).toFixed(1)+' %</span></div>').join('')
      :'<div style="font-size:13px;color:var(--muted);padding:8px 0">Rien à répartir pour l\'instant.</div>')+
@@ -2497,14 +2500,19 @@ document.getElementById('netMode_net').className='ctb'+(nmB?'':' active');
 document.getElementById('netVue_courbe').className='ctb'+(netVue==='courbe'?' active':'');
 document.getElementById('netVue_barres').className='ctb'+(netVue==='barres'?' active':'');
 document.getElementById('netTitre').textContent='Évolution du patrimoine '+(nmB?'brut':'net');
-const nmC=nmB?CV('--accent'):CV('--green');
-/* Les classes d'actifs, mêmes couleurs que le camembert d'à côté */
+/* Le total est la série qui mène : elle garde l'accent, et aucune classe
+   d'actif ne le reprend, pour qu'on ne confonde jamais deux courbes. */
+const nmC=CV('--accent');
 const CLS=[
-  {k:'immobilier',n:nmB?'Immobilier':'Immobilier net',c:PIE()[0]},
-  {k:'comptes',n:'Comptes',c:PIE()[1]},
-  {k:'epargne',n:'Épargne',c:PIE()[2]},
-  {k:'bourse',n:'Bourse',c:PIE()[3]},
-  {k:'crypto',n:'Crypto',c:PIE()[4]}];
+  {k:'immobilier',n:nmB?'Immobilier':'Immobilier net',c:PIE()[1]},
+  {k:'comptes',n:'Comptes',c:PIE()[2]},
+  {k:'epargne',n:'Épargne',c:PIE()[3]},
+  {k:'bourse',n:'Bourse',c:PIE()[4]},
+  {k:'crypto',n:'Crypto',c:PIE()[5]}];
+/* la même table sert au registre de l'accueil, pour que les couleurs
+   veuillent dire la même chose d'un bloc à l'autre */
+window.COUL_CLASSE={Immobilier:PIE()[1],Comptes:PIE()[2],'Épargne':PIE()[3],
+                    Bourse:PIE()[4],Crypto:PIE()[5]};
 if(!S.netSel)S.netSel={total:true,immobilier:true,comptes:true,epargne:true,bourse:true,crypto:true};
 if(S.netSel.total===undefined)S.netSel.total=true;
 CLS.forEach(c=>{if(S.netSel[c.k]===undefined)S.netSel[c.k]=true});
