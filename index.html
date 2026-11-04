@@ -191,6 +191,25 @@ tr:hover{background:var(--card2)}
 .ai::placeholder{color:var(--muted)}
 .ac{width:32px;height:32px;border-radius:8px;background:var(--accent);border:0;color:var(--bg);font-size:14px;font-weight:600;cursor:pointer}
 .ax{width:32px;height:32px;border-radius:8px;background:var(--card2);border:1px solid var(--border);color:var(--muted);cursor:pointer}
+/* Sous-onglets d'une page, façon barre segmentée */
+.stabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:18px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.stab{flex:1 1 0;min-width:104px;white-space:nowrap;padding:9px 12px;border-radius:9px;border:0;background:transparent;color:var(--muted);font-size:12.5px;font-weight:500;font-family:var(--font);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.stab:hover{color:var(--text)}
+.stab.on{background:var(--accent);color:#1a1205;font-weight:650}
+.stab .sbadge{background:rgba(0,0,0,.18);border-radius:20px;padding:1px 7px;font-size:10.5px;font-weight:700}
+.stab .scourt{display:none}
+@media(max-width:620px){
+  .stabs{padding:3px;gap:2px}
+  .stab{min-width:0;padding:9px 4px;font-size:11.5px;gap:4px}
+  .stab .slong{display:none}
+  .stab .scourt{display:inline}
+  .stab .sico{display:none}
+}
+.stab:not(.on) .sbadge{background:var(--card2);color:var(--muted)}
+/* Bandeau « il manque des données » */
+.manq{background:var(--card);border:1px solid var(--orange);border-left-width:3px;border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:12px;line-height:1.65;color:var(--text2)}
+.manq b{color:var(--orange)}
+.manq .mlien{color:var(--accent);cursor:pointer;text-decoration:underline;font-weight:600}
 .pb{padding:5px 12px;border-radius:7px;border:1px solid var(--border);font-size:11.5px;font-weight:450;cursor:pointer;background:transparent;color:var(--muted);font-family:var(--font);transition:all .15s}
 .pb:hover{color:var(--text);border-color:var(--muted)}
 .pb.on{background:var(--card2);color:var(--text);border-color:var(--muted);font-weight:550}
@@ -287,7 +306,7 @@ details summary{color:var(--text2)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 12h00</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 13h05</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -307,10 +326,48 @@ details summary{color:var(--text2)}
 <div class="page" id="page-bourse"><div class="kr" id="bk"></div>
 <div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div id="rstat" class="rs" style="margin:12px 0"></div><div class="card"><div class="fb"><div class="ct" style="margin:0">PEA — Fortuneo</div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — Saxo <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — IBKR</div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">AV — Linxea</div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">◫ Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:#7c3aed">● Portf.</span><span style="color:#e8a33d">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">↕ Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">◎ Objectifs Bourse</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addBourseGoal()">+ Objectif</button></div><div id="bourseGoals" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">◌ Watchlist</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch()">+ Suivre</button></div><div id="watchlist" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">✎ Journal d'investissement</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addJournal()">+ Entrée</button></div><div id="journal" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">◈ Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div></div>
 <div class="page" id="page-epargne"><div class="kr" id="ek"></div><div class="g2"><div class="card"><div class="ct" id="ct1"></div><div id="cl1"></div><div id="af1"></div></div><div class="card"><div class="ct" id="ct2"></div><div id="cl2"></div><div id="af2"></div></div><div class="card sf"><div class="ct" id="ct3"></div><div id="cl3"></div><div id="af3"></div></div></div></div>
-<div class="page" id="page-immo"><div class="kr kr4" id="ik"></div><div class="g2" style="margin-bottom:16px"><div class="g2" style="margin-bottom:16px"><div class="card"><div class="ct">Répartition par régime fiscal</div><div class="cbs" style="height:230px"><canvas id="cImmoReg"></canvas></div><div id="immoRegimes" style="margin-top:10px"></div></div><div class="card"><div class="ct">Répartition des loyers</div><div class="cbs" style="height:230px"><canvas id="cImmoLoy"></canvas></div><div id="immoLoyers" style="margin-top:10px"></div></div></div>
-<div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Patrimoine Immo Net</div><div style="display:flex;gap:4px" id="immoPs"></div></div><div class="cb"><canvas id="cImmoNet"></canvas></div></div><div class="card"><div class="ct">Tableau récapitulatif mensuel</div><div class="tw" id="immoRecap"></div></div></div><div class="card" id="immoOccup" style="display:none"><div class="ct">◷ Occupation et vacance</div><div id="occupCorps"></div></div><div class="card" id="immoEnrichi" style="display:none"><div class="ct">◈ Enrichissement mensuel</div><div id="enrichiCorps"></div></div><div class="card" id="immoSCI" style="display:none"><div class="ct">⬡ Tableau de bord SCI</div><div id="sciDash"></div></div><div id="ic"></div>
+<div class="page" id="page-immo">
+<div class="stabs" id="immoTabs"></div>
+
+<div class="svue" id="ivue-mensuel">
+<div class="kr kr4" id="ik"></div>
+<div id="immoManques"></div>
+<div class="g2" style="margin-bottom:16px">
+<div class="card"><div class="ct">◷ Loyers du mois</div><div id="loyersMois"></div></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">▤ Dépenses mensuelles</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px">Charges fixes récurrentes</div><div id="depMois"></div></div>
+</div>
+<div class="card"><div class="ct">Tableau récapitulatif mensuel</div><div class="tw" id="immoRecap"></div></div>
+<div class="card" id="immoOccup" style="display:none"><div class="ct">◷ Occupation et vacance</div><div id="occupCorps"></div></div>
+</div>
+
+<div class="svue" id="ivue-annuel" style="display:none">
+<div class="kr kr4" id="ikAn"></div>
+<div class="card"><div class="ct">Revenus et dépenses par mois</div><div style="font-size:11px;color:var(--muted);margin:-6px 0 10px">Année en cours</div><div class="cb"><canvas id="cImmoAn"></canvas></div></div>
+<div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Patrimoine Immo Net</div><div style="display:flex;gap:4px" id="immoPs"></div></div><div class="cb"><canvas id="cImmoNet"></canvas></div></div>
+<div class="card" id="immoEnrichi" style="display:none"><div class="ct">◈ Enrichissement mensuel</div><div id="enrichiCorps"></div></div>
+</div>
+
+<div class="svue" id="ivue-prets" style="display:none">
+<div class="kr kr4" id="ikPret"></div>
+<div class="card"><div class="ct">◑ Progression globale</div><div id="pretGlobal"></div></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">▤ Prêts par bien</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px">Chaque crédit rattaché à un bien, et où il en est</div><div id="pretsParBien"></div></div>
+</div>
+
+<div class="svue" id="ivue-fisca" style="display:none">
+<div class="g2" style="margin-bottom:16px">
+<div class="card"><div class="ct">Répartition par régime fiscal</div><div class="cbs" style="height:230px"><canvas id="cImmoReg"></canvas></div><div id="immoRegimes" style="margin-top:10px"></div></div>
+<div class="card"><div class="ct">Répartition des loyers</div><div class="cbs" style="height:230px"><canvas id="cImmoLoy"></canvas></div><div id="immoLoyers" style="margin-top:10px"></div></div>
+</div>
 <div class="card"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">⇄ Comparatif des biens</div><div style="font-size:11.5px;color:var(--muted)">TMI : <span class="ed" onclick="edTMI()" id="tmiVal"></span></div></div><div class="tw" id="immoCompare"></div><div style="font-size:11px;color:var(--muted);margin-top:12px">Effort d'épargne : ce que le bien te coûte (négatif) ou te rapporte (positif) chaque mois, impôts déduits.</div></div>
-<div class="card"><div class="fb"><div class="ct" style="margin:0">△ Projets d'achat</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addProjet()">+ Projet</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Prépare tes futurs achats : simule le cashflow avant de te lancer, puis transforme le projet en vrai bien le jour de l'achat.</div><div id="projetsList"></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">◫ Suivi courte durée</div></div><div id="immoCD"></div></div></div>
+<div class="card" id="immoSCI" style="display:none"><div class="ct">⬡ Tableau de bord SCI</div><div id="sciDash"></div></div>
+</div>
+
+<div class="svue" id="ivue-biens" style="display:none">
+<div id="ic"></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">△ Projets d'achat</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addProjet()">+ Projet</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Prépare tes futurs achats : simule le cashflow avant de te lancer, puis transforme le projet en vrai bien le jour de l'achat.</div><div id="projetsList"></div></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">◫ Suivi courte durée</div></div><div id="immoCD"></div></div>
+</div>
+</div>
 <div class="page" id="page-reglages">
 <div class="card"><div class="ct">⤓ Sauvegarde de secours</div>
 <div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:16px">Tes données sont stockées sur ton compte Google. Ce fichier de sauvegarde te permet de tout récupérer en cas de problème, ou de repartir d'une version antérieure. Pense à en faire une de temps en temps.</div>
@@ -552,6 +609,53 @@ function jaugePret(a,coul){
       '<span>reste '+F(a.restant)+'</span></div></div>';
 }
 
+/* ====== PAGE IMMO : SOUS-ONGLETS ====== */
+const IVUES=[{k:'mensuel',l:'Mensuel',c:'Mois',i:'▤'},{k:'annuel',l:'Bilan annuel',c:'Année',i:'◫'},
+             {k:'prets',l:'Prêts',c:'Prêts',i:'◑'},{k:'fisca',l:'Fiscalité',c:'Impôts',i:'▣'},
+             {k:'biens',l:'Mes biens',c:'Biens',i:'⌂'}];
+let immoVue=(function(){try{return localStorage.getItem('immoVue')||'mensuel'}catch(e){return 'mensuel'}})();
+window.setImmoVue=function(k){
+  immoVue=k;try{localStorage.setItem('immoVue',k)}catch(e){}
+  IVUES.forEach(v=>{const el=document.getElementById('ivue-'+v.k);if(el)el.style.display=v.k===k?'':'none'});
+  document.querySelectorAll('#immoTabs .stab').forEach(b=>b.classList.toggle('on',b.dataset.v===k));
+  R(true);
+  try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){}
+};
+
+/* Les biens en location, hors résidence principale */
+function biensLocatifs(){
+  return S.immo.filter(b=>!estRP(b)&&(nb(b.loyer)>0||loyerBien(b)>0||b.typeLocation));
+}
+/* Postes de charges laissés à zéro : tant qu'ils manquent, le cashflow affiché
+   est un plafond, pas un vrai chiffre. On préfère le dire que de se taire. */
+const POSTES_IMMO=[
+  {k:'charges',       l:'Charges de copropriété', c:'#f59e0b'},
+  {k:'taxeFonciere',  l:'Taxe foncière',          c:'#fbbf24', annuel:true},
+  {k:'assurance',     l:'Assurance PNO',          c:'#60a5fa', annuel:true},
+  {k:'gestion',       l:'Frais de gestion',       c:'#a78bfa'}
+];
+function manquesImmo(){
+  const loc=biensLocatifs();
+  /* un bien dont tu as saisi le cashflow à la main n'a plus rien à compléter */
+  const aVerifier=loc.filter(b=>b.cfManuel==null);
+  const postes=POSTES_IMMO.map(p=>{
+    const vides=aVerifier.filter(b=>!(nb(b[p.k])>0));
+    return{...p,vides:vides.map(b=>b.nom||'Bien'),
+           total:loc.reduce((a,b)=>a+nb(b[p.k])/(p.annuel?12:1),0)};
+  });
+  const manquants=postes.filter(x=>x.vides.length);
+  return{postes,manquants,nbBiens:loc.length,
+         /* les biens à compléter, sans doublon */
+         biens:[...new Set(manquants.flatMap(x=>x.vides))]};
+}
+/* Phrase courte listant ce qui manque */
+function phraseManques(mq){
+  if(!mq.manquants.length)return '';
+  const noms=mq.manquants.map(x=>x.l);
+  const liste=noms.length===1?noms[0]:noms.slice(0,-1).join(', ')+' et '+noms[noms.length-1];
+  return liste+(noms.length>1?' manquent':' manque')+' : le montant réel est plus bas';
+}
+
 /* ====== PROJECTION DU PATRIMOINE ====== */
 /* Ce que les biens en location laissent chaque mois, une fois les charges
    et les mensualités payées. Recalculé ici pour être utilisable partout. */
@@ -639,6 +743,18 @@ window.setCfProjet=function(id,val){
   const s=String(val==null?'':val).trim();
   if(s===''){delete p.cfManuel}
   else{const v=parseFloat(s.replace(',','.').replace(/\s|€/g,''));if(isNaN(v))return;p.cfManuel=v}
+  autoSave();R(true);
+};
+/* Loyer encaissé ou non, pour le mois en cours */
+window.togLoyerRecu=function(cle){
+  const d=new Date(), mois=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  if(!S.loyersRecus)S.loyersRecus={};
+  if(!S.loyersRecus[mois])S.loyersRecus[mois]={};
+  if(S.loyersRecus[mois][cle])delete S.loyersRecus[mois][cle];
+  else S.loyersRecus[mois][cle]=true;
+  /* on ne garde que les 24 derniers mois, inutile d'empiler indéfiniment */
+  const cles=Object.keys(S.loyersRecus).filter(k=>/^\d{4}-\d{2}$/.test(k)).sort();
+  while(cles.length>24)delete S.loyersRecus[cles.shift()];
   autoSave();R(true);
 };
 window.setLoyerDelai=function(id,ans){
@@ -2865,7 +2981,8 @@ const mensDette=d=>{
 /* Biens locatifs (hors résidence principale) */
 const isRP=estRP;
 const immoLoc=S.immo.filter(b=>!isRP(b)&&(b.loyer>0||b.typeLocation));
-const loyerTotal=immoLoc.reduce((a,x)=>a+(x.loyer||0),0);
+/* loyerBien() additionne les logements d'un même bien, pas seulement le champ loyer */
+const loyerTotal=immoLoc.reduce((a,x)=>a+loyerBien(x),0);
 const chargesTotal=immoLoc.reduce((a,x)=>a+(x.charges||0)+(x.taxeFonciere||0)/12+(x.assurance||0)/12+(x.gestion||0),0);
 const mensCredImmo=immoLoc.reduce((a,b)=>a+mensDette(b.creditId?S.dettes.find(d=>d.id===b.creditId):null),0);
 const cashflowTotal=loyerTotal-chargesTotal-mensCredImmo;
@@ -2913,16 +3030,211 @@ const capTot=(function(){
     pctG:emprunte>0?Math.min(100,rembourse/emprunte*100):0};
 })();
 
+/* Ce qui manque pour que le cashflow soit un vrai chiffre et non un plafond */
+const mqI=manquesImmo();
+const cfIncomplet=mqI.manquants.length>0;
 document.getElementById('ik').innerHTML=
  '<div class="kpi"><div class="kl">Biens en location</div><div class="kv" style="color:'+CV('--p5')+'">'+nbBiens+'</div><div class="ks">'+nbLots+' logement'+(nbLots>1?'s':'')+' · hors RP</div></div>'
 +'<div class="kpi"><div class="kl">Loyers mensuels</div><div class="kv" style="color:var(--green)">'+F(Math.round(loyerTotal))+'</div></div>'
-+'<div class="kpi"><div class="kl">Cashflow mensuel</div><div class="kv" style="color:'+(cashflowTotal>=0?'var(--green)':'var(--red)')+'">'+(cashflowTotal>=0?'+':'')+F(Math.round(cashflowTotal))+'</div><div class="ks">après charges et crédit</div></div>'
++'<div class="kpi"><div class="kl">Cashflow mensuel</div><div class="kv" style="color:'+(cashflowTotal>=0?'var(--green)':'var(--red)')+'">'+(cfIncomplet?'<span style="color:var(--orange)" title="Des charges manquent : le vrai montant est plus bas">≤ </span>':'')+(cashflowTotal>=0?'+':'')+F(Math.round(cashflowTotal))+'</div><div class="ks">'+(cfIncomplet?'<span style="color:var(--orange)">au plus ce montant</span>':'après charges et crédit')+'</div></div>'
 +'<div class="kpi"><div class="kl">Rendement brut moyen</div><div class="kv" style="color:var(--accent)">'+rdtBrutMoy.toFixed(1)+' %</div></div>'
 +'<div class="kpi"><div class="kl">Rendement net moyen</div><div class="kv" style="color:var(--accent)">'+rdtNetMoy.toFixed(1)+' %</div><div class="ks">net d\'impôts</div></div>'
 +'<div class="kpi"><div class="kl">Plus-value latente</div><div class="kv" style="color:'+(pvLatente>=0?'var(--green)':'var(--red)')+'">'+(pvLatente>=0?'+':'')+F(Math.round(pvLatente))+'</div><div class="ks">valeur moins investi</div></div>'
 +'<div class="kpi"><div class="kl">Capital restant dû</div><div class="kv" style="color:var(--red)">'+F(Math.round(dettesLoc))+'</div>'+(capTot.emprunte>0?'<div class="ks">'+capTot.pctG.toFixed(1)+' % déjà remboursé</div>':'')+'</div>'
 +(capTot.emprunte>0?'<div class="kpi"><div class="kl">Capital remboursé / mois</div><div class="kv" style="color:'+(capTot.capMois>0?'var(--green)':'var(--muted)')+'">'+F2(capTot.capMois)+'</div><div class="ks">'+
    (capTot.capMois>0?F2(capTot.intMois)+' d\'intérêts à côté':(capTot.enDiffere?'prêts en différé : '+F2(capTot.intMois)+' d\'intérêts seuls':F2(capTot.intMois)+' d\'intérêts'))+'</div></div>':'');
+
+/* Les sous-onglets de la page Immo */
+(function(){
+  const tb=document.getElementById('immoTabs');if(!tb)return;
+  const nPrets=S.immo.filter(b=>b.creditId&&S.dettes.some(d=>d.id===b.creditId)).length;
+  tb.innerHTML=IVUES.map(v=>'<button class="stab '+(immoVue===v.k?'on':'')+'" data-v="'+v.k+'" title="'+v.l+'" onclick="setImmoVue(\''+v.k+'\')">'+
+    '<span class="sico">'+v.i+'</span><span class="slong">'+v.l+'</span><span class="scourt">'+v.c+'</span>'+
+    (v.k==='prets'&&nPrets?'<span class="sbadge">'+nPrets+'</span>':'')+
+    (v.k==='biens'&&nbBiens?'<span class="sbadge">'+nbBiens+'</span>':'')+'</button>').join('');
+  IVUES.forEach(v=>{const el=document.getElementById('ivue-'+v.k);if(el)el.style.display=v.k===immoVue?'':'none'});
+})();
+
+/* Bandeau des données manquantes */
+(function(){
+  const el=document.getElementById('immoManques');if(!el)return;
+  if(!mqI.manquants.length){el.innerHTML='';return}
+  const lignes=mqI.manquants.map(x=>'<b>'+x.l+'</b> sur '+x.vides.length+' bien'+(x.vides.length>1?'s':'')+' ('+x.vides.join(', ')+')').join(' · ');
+  el.innerHTML='<div class="manq">Ton cashflow est affiché avec un <b>≤</b> : il manque des charges, donc le vrai montant est plus bas.<br>'+lignes+
+    '<br><span class="mlien" onclick="setImmoVue(\'biens\')">Compléter mes biens →</span>'+
+    '<div style="font-size:11px;color:var(--muted);margin-top:6px">Un poste laissé à 0 est considéré comme non renseigné. Si le montant est réellement nul pour un bien, saisis son cashflow réel dans la projection pour faire taire l\'alerte.</div></div>';
+})();
+
+/* Loyers du mois : ce que tu as encaissé et ce qui reste à venir */
+(function(){
+  const el=document.getElementById('loyersMois');if(!el)return;
+  const moisCle=(function(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')})();
+  if(!S.loyersRecus)S.loyersRecus={};
+  const recu=S.loyersRecus[moisCle]||{};
+  const logs=[];
+  biensLocatifs().forEach(b=>{
+    const lots=(b.lots&&b.lots.length)?b.lots:[{id:'_',nom:b.nom||'Logement',loyer:nb(b.loyer),occupe:b.occupe!==false}];
+    lots.forEach(l=>logs.push({cle:b.id+'|'+(l.id||'_'),bien:b.nom||'Bien',nom:l.nom||'Logement',
+      loyer:nb(l.loyer),occupe:l.occupe!==false}));
+  });
+  const loues=logs.filter(l=>l.occupe&&l.loyer>0);
+  const encaisse=loues.filter(l=>recu[l.cle]).reduce((a,l)=>a+l.loyer,0);
+  const attendu=loues.reduce((a,l)=>a+l.loyer,0);
+  let h='<div class="kr" style="margin-bottom:12px">'+
+    '<div class="kpi sm"><div class="kl">Encaissé</div><div class="kv" style="color:var(--green)">'+F(encaisse)+'</div><div class="ks">'+loues.filter(l=>recu[l.cle]).length+' sur '+loues.length+'</div></div>'+
+    '<div class="kpi sm"><div class="kl">En attente</div><div class="kv" style="color:'+(attendu-encaisse>0?'var(--orange)':'var(--muted)')+'">'+F(attendu-encaisse)+'</div></div>'+
+    '<div class="kpi sm"><div class="kl">Total attendu</div><div class="kv">'+F(attendu)+'</div></div></div>';
+  if(!loues.length){
+    h+='<div style="font-size:12px;color:var(--muted)">Aucun logement loué ce mois-ci.'+(logs.length?' Marque un logement comme loué sur la page Mes biens.':'')+'</div>';
+  }else{
+    h+='<div class="tw"><table style="font-size:12px"><tbody>';
+    loues.forEach(l=>{
+      const ok=!!recu[l.cle];
+      h+='<tr><td class="l"><div style="font-weight:600">'+l.nom+'</div><div style="font-size:10.5px;color:var(--muted)">'+l.bien+'</div></td>'+
+        '<td style="font-weight:700">'+F(l.loyer)+'</td>'+
+        '<td><button class="pb '+(ok?'on':'')+'" style="'+(ok?'color:var(--green);border-color:var(--green)':'color:var(--orange);border-color:var(--orange)')+'" onclick="togLoyerRecu(\''+l.cle+'\')">'+(ok?'✓ Reçu':'En attente')+'</button></td></tr>';
+    });
+    h+='</tbody></table></div><div style="font-size:11px;color:var(--muted);margin-top:8px">Clique sur l\'état pour marquer un loyer comme reçu. Le suivi repart à zéro chaque mois.</div>';
+  }
+  el.innerHTML=h;
+})();
+
+/* Dépenses mensuelles par poste */
+(function(){
+  const el=document.getElementById('depMois');if(!el)return;
+  const loc=biensLocatifs();
+  const credits=loc.reduce((a,b)=>a+mensualiteBien(b),0);
+  let h='<div class="tw"><table style="font-size:12px"><tbody>';
+  const ligne=(nom,sous,val,coul,alerte)=>'<tr><td class="l"><div style="font-weight:600">'+nom+'</div><div style="font-size:10.5px;color:var(--muted)">'+sous+'</div></td>'+
+    '<td style="text-align:right;font-weight:700;color:'+coul+';white-space:nowrap">'+(val?'-'+F(Math.round(val)):'0 €')+
+    (alerte?'<div style="font-size:10.5px;color:var(--orange);font-weight:500">'+alerte+'</div>':'')+'</td></tr>';
+  h+=ligne('Crédits immobiliers','Mensualités de prêt',credits,'var(--red)','');
+  POSTES_IMMO.forEach(p=>{
+    const m=mqI.postes.find(x=>x.k===p.k);
+    h+=ligne(p.l,p.annuel?'Provision mensuelle':'Charge mensuelle',m.total,m.total?'var(--red)':'var(--muted)',
+      m.vides.length?'à renseigner sur '+m.vides.length+' bien'+(m.vides.length>1?'s':''):'');
+  });
+  const totalDep=credits+mqI.postes.reduce((a,x)=>a+x.total,0);
+  h+='<tr><td class="l" style="font-weight:700;padding-top:12px">Total</td><td style="text-align:right;font-weight:800;color:'+(totalDep?'var(--red)':'var(--muted)')+';padding-top:12px">'+
+    (totalDep?((cfIncomplet?'<span style="color:var(--orange)">≥ </span>':'')+'-'+F(Math.round(totalDep))):'0 €')+'</td></tr>';
+  h+='</tbody></table></div>';
+  el.innerHTML=h;
+})();
+
+/* Onglet Prêts */
+(function(){
+  const k=document.getElementById('ikPret');if(!k)return;
+  const liste=S.immo.map(b=>{
+    const d=b.creditId?S.dettes.find(x=>x.id===b.creditId):null;
+    if(!d||!nb(d.emprunte))return null;
+    const a=avancePret(d);if(!a)return null;
+    const pct=(d.partsPct!=null?d.partsPct:(b.partsPct||100))/100;
+    return{bien:b.nom||'Bien',dette:d,a,pct,rp:estRP(b)};
+  }).filter(Boolean);
+  const emprunte=liste.reduce((s,x)=>s+x.a.emprunte*x.pct,0);
+  const restant=liste.reduce((s,x)=>s+x.a.restant*x.pct,0);
+  const capMois=liste.reduce((s,x)=>s+x.a.capMois*x.pct,0);
+  const intMois=liste.reduce((s,x)=>s+x.a.intMois*x.pct,0);
+  /* Coût total du crédit : tous les intérêts du tableau d'amortissement */
+  const coutTotal=liste.reduce((s,x)=>{
+    const am=cAm(nb(x.dette.emprunte),nb(x.dette.taux),nb(x.dette.dureeMois),nb(x.dette.differe),x.dette.debloque);
+    return s+am.t.reduce((a,l)=>a+nb(l.i),0)*x.pct;
+  },0);
+  /* Intérêts des douze prochains mois, déductibles sur les biens locatifs */
+  const int12=liste.filter(x=>!x.rp).reduce((s,x)=>{
+    const am=cAm(nb(x.dette.emprunte),nb(x.dette.taux),nb(x.dette.dureeMois),nb(x.dette.differe),x.dette.debloque);
+    const me=moisEcoules(x.dette.dateDebut);
+    return s+am.t.slice(me,me+12).reduce((a,l)=>a+nb(l.i),0)*x.pct;
+  },0);
+  const pct=emprunte>0?Math.min(100,(emprunte-restant)/emprunte*100):0;
+  k.innerHTML=
+    '<div class="kpi"><div class="kl">Capital emprunté</div><div class="kv" style="color:var(--accent)">'+F(Math.round(emprunte))+'</div><div class="ks">'+liste.length+' prêt'+(liste.length>1?'s':'')+' actif'+(liste.length>1?'s':'')+'</div></div>'+
+    '<div class="kpi"><div class="kl">Capital restant dû</div><div class="kv" style="color:var(--red)">'+F(Math.round(restant))+'</div><div class="ks">'+pct.toFixed(1)+' % remboursé</div></div>'+
+    '<div class="kpi"><div class="kl">Coût total du crédit</div><div class="kv" style="color:var(--orange)">'+F(Math.round(coutTotal))+'</div><div class="ks">intérêts sur toute la durée</div></div>'+
+    '<div class="kpi"><div class="kl">Intérêts déductibles</div><div class="kv" style="color:var(--green)">'+F(Math.round(int12))+'</div><div class="ks">sur 12 mois · locatif seulement</div></div>';
+
+  const g=document.getElementById('pretGlobal');
+  if(g){
+    if(!liste.length)g.innerHTML='<div style="font-size:12px;color:var(--muted)">Aucun prêt rattaché à un bien. Ouvre la fiche d\'un bien sur l\'onglet Mes biens et clique sur « Prêt rattaché ».</div>';
+    else{
+      /* le dernier prêt à s'éteindre */
+      let finMax=null;
+      liste.forEach(x=>{
+        const reste=x.a.reste||0;
+        const d=new Date();d.setMonth(d.getMonth()+reste);
+        if(!finMax||d>finMax)finMax=d;
+      });
+      g.innerHTML='<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:4px">'+
+        '<div style="font-size:11.5px;color:var(--muted)">Fin du dernier prêt : '+(finMax?finMax.toLocaleDateString('fr-FR',{month:'long',year:'numeric'}):'—')+'</div>'+
+        '<div style="font-size:18px;font-weight:800;color:var(--accent)">'+pct.toFixed(1)+' %</div></div>'+
+        '<div style="height:9px;border-radius:6px;background:var(--card2);overflow:hidden"><div style="height:100%;width:'+pct.toFixed(1)+'%;background:var(--green);border-radius:6px;transition:width .4s"></div></div>'+
+        '<div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-top:6px">'+
+          '<span>'+F(Math.round(emprunte-restant))+' remboursé</span><span>'+F(Math.round(restant))+' restant</span></div>'+
+        '<div style="font-size:11.5px;color:var(--text2);margin-top:10px;line-height:1.6">Chaque mois, <strong style="color:var(--green)">'+F2(capMois)+'</strong> de capital te reviennent et <strong style="color:var(--red)">'+F2(intMois)+'</strong> partent en intérêts.</div>';
+    }
+  }
+  const pb=document.getElementById('pretsParBien');
+  if(pb){
+    if(!liste.length)pb.innerHTML='<div style="font-size:12px;color:var(--muted)">Rien à afficher pour l\'instant.</div>';
+    else pb.innerHTML=liste.map(x=>{
+      const a=x.a,d=x.dette;
+      const reste=a.reste||0;
+      const fin=new Date();fin.setMonth(fin.getMonth()+reste);
+      return '<div style="padding:14px 0;border-bottom:1px solid var(--border)">'+
+        '<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">'+
+          '<div><div style="font-weight:700">'+x.bien+(x.rp?' <span style="font-size:10.5px;color:var(--muted);font-weight:500">résidence principale</span>':'')+'</div>'+
+          '<div style="font-size:11px;color:var(--muted)">'+nb(d.taux)+' % sur '+Math.round(nb(d.dureeMois)/12)+' ans · '+Math.round(reste/12)+' an'+(reste>=24?'s':'')+' restant'+(reste>=24?'s':'')+'</div></div>'+
+          '<div style="text-align:right"><div style="font-weight:700">'+F2(a.capMois+a.intMois)+' <span style="font-size:11px;color:var(--muted)">/mois</span></div>'+
+          '<div style="font-size:11px;color:var(--red)">reste '+F(Math.round(a.restant*x.pct))+'</div></div></div>'+
+        jaugePret({pct:a.pct,rembourse:Math.round(a.rembourse*x.pct),emprunte:Math.round(a.emprunte*x.pct),restant:Math.round(a.restant*x.pct)})+
+        '<div style="font-size:10.5px;color:var(--muted)">Fin : '+fin.toLocaleDateString('fr-FR',{month:'short',year:'numeric'})+'</div></div>';
+    }).join('');
+  }
+})();
+
+/* Onglet Bilan annuel : indicateurs et courbe des douze mois */
+(function(){
+  const k=document.getElementById('ikAn');if(!k)return;
+  const an=new Date().getFullYear();
+  const cfAn=cashflowLocatif(0);
+  const loyersAn=cfAn.loyers*12;
+  const depAn=(cfAn.charges+cfAn.mens)*12;
+  k.innerHTML=
+    '<div class="kpi"><div class="kl">Revenus '+an+'</div><div class="kv" style="color:var(--green)">'+F(Math.round(loyersAn))+'</div><div class="ks">loyers sur douze mois</div></div>'+
+    '<div class="kpi"><div class="kl">Dépenses '+an+'</div><div class="kv" style="color:var(--red)">'+(cfIncomplet?'<span style="color:var(--orange)">≥ </span>':'')+F(Math.round(depAn))+'</div><div class="ks">charges et crédits</div></div>'+
+    '<div class="kpi"><div class="kl">Cashflow annuel</div><div class="kv" style="color:'+(cfAn.net>=0?'var(--green)':'var(--red)')+'">'+(cfIncomplet?'<span style="color:var(--orange)">≤ </span>':'')+(cfAn.net>=0?'+':'')+F(Math.round(cfAn.net*12))+'</div></div>'+
+    '<div class="kpi"><div class="kl">Capital remboursé</div><div class="kv" style="color:var(--green)">'+F(Math.round(capTot.capMois*12))+'</div><div class="ks">sur douze mois</div></div>';
+
+  if(dc){
+    const el=document.getElementById('cImmoAn');
+    if(el){
+      if(window._cImAn)window._cImAn.destroy();
+      const ml=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
+      const moisAct=new Date().getMonth();
+      /* loyers réellement encaissés, mois par mois */
+      const rec=S.loyersRecus||{};
+      const encaisse=ml.map((_,i)=>{
+        const cle=an+'-'+String(i+1).padStart(2,'0');
+        const m=rec[cle]||{};
+        let t=0;
+        biensLocatifs().forEach(b=>{
+          const lots=(b.lots&&b.lots.length)?b.lots:[{id:'_',loyer:nb(b.loyer)}];
+          lots.forEach(l=>{if(m[b.id+'|'+(l.id||'_')])t+=nb(l.loyer)});
+        });
+        return i>moisAct?null:t;
+      });
+      const dep=ml.map((_,i)=>i>moisAct?null:-Math.round(cfAn.charges+cfAn.mens));
+      window._cImAn=new Chart(el,{type:'bar',data:{labels:ml,datasets:[
+        {label:'Loyers encaissés',data:encaisse,backgroundColor:CV('--green'),borderRadius:5,borderSkipped:false,barPercentage:.7,categoryPercentage:.8,borderWidth:0},
+        {label:'Dépenses',data:dep,backgroundColor:hexA(CV('--red'),.75),borderRadius:5,borderSkipped:false,barPercentage:.7,categoryPercentage:.8,borderWidth:0}]},
+        options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,
+          plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7,padding:14,color:CV('--muted')}},
+            tooltip:tipOpts(c=>c.dataset.label+' : '+F(Math.abs(c.raw)))},
+          scales:{x:{grid:{display:false},ticks:{color:CV('--muted'),font:{size:11}}},
+            y:{grid:{color:hexA(CV('--border'),.5)},ticks:{color:CV('--muted'),font:{size:11},callback:v=>Math.round(Math.abs(v))+'€'}}}}});
+    }
+  }
+})();
 
 /* Graphique immo net */
 document.getElementById('immoPs').innerHTML=[{l:'6M',m:6},{l:'1A',m:12},{l:'Année',m:-1},{l:'Tout',m:999}].map(x=>'<button class="pb '+(immoPr===x.m?'on':'')+'" onclick="sIP('+x.m+')">'+x.l+'</button>').join('');
@@ -2943,9 +3255,9 @@ immoLoc.forEach(b=>{
   const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
   const mensC=mensDette(cr);
   const chM=(b.charges||0)+(b.taxeFonciere||0)/12+(b.assurance||0)/12+(b.gestion||0);
-  const loyM=(b.loyer||0);
+  const loyM=loyerBien(b);
   const cf=loyM-chM-mensC;
-  const rb=b.valeur>0?((b.loyer||0)*12/b.valeur*100).toFixed(1):0;
+  const rb=b.valeur>0?(loyM*12/b.valeur*100).toFixed(1):0;
   totLoy+=loyM;totCh+=chM;totCr+=mensC;totCf+=cf;totValLoc+=b.valeur*pct;
   rcH+='<tr><td class="l" style="font-weight:600">'+b.nom+(pct<1?' <span style="font-size:10px;color:var(--muted)">('+b.partsPct+'%)</span>':'')+'</td><td style="color:var(--green);font-weight:600">'+F(Math.round(loyM))+'</td><td style="color:var(--red)">'+F(Math.round(chM))+'</td><td style="color:var(--red)">'+(cr?F(Math.round(mensC)):'<span style="color:var(--orange)" title="Aucun prêt rattaché à ce bien">⚠ aucun</span>')+'</td><td style="font-weight:700;color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(cf))+'</td><td>'+rb+'%</td></tr>';
 });
@@ -2960,7 +3272,7 @@ document.getElementById('immoRecap').innerHTML=rcH;
   const biens=S.immo.filter(b=>!estRP(b));
   if(!biens.length){carte.style.display='none';return}
   carte.style.display='';
-  let perteTot=0,sommePct=0,poids=0,nbLogts=0,nbVides=0,aHisto=false;
+  let perteTot=0,sommePct=0,poids=0,nbLogts=0,nbVides=0,aHisto=false,nbMesures=0;
   const lignes=[];
   biens.forEach(b=>{
     const ob=occupationBien(b);
@@ -2969,14 +3281,17 @@ document.getElementById('immoRecap').innerHTML=rcH;
     ob.detail.forEach(d=>{
       nbLogts++;
       if(d.o.loue===false)nbVides++;
-      if(d.o.pct!=null){sommePct+=d.o.pct*(d.loyer||1);poids+=(d.loyer||1)}
+      if(d.o.pct!=null){sommePct+=d.o.pct*(d.loyer||1);poids+=(d.loyer||1);nbMesures++}
       lignes.push({bien:b.nom,nom:d.nom,loyer:d.loyer,o:d.o});
     });
   });
   const pctG=poids>0?Math.round(sommePct/poids*10)/10:100;
   const loyerTh=biens.reduce((a,b)=>a+loyerBien(b),0)*12;
   let h='<div class="mkpi" style="margin-top:14px">';
-  h+='<div><div class="ml">Taux d\'occupation</div><div class="mv" style="color:'+(pctG>=95?'var(--green)':pctG>=85?'var(--accent)':'var(--red)')+'">'+pctG+' %</div><div class="ms">sur douze mois</div></div>';
+  /* Un logement vide sans historique n'a pas de taux : le dire plutôt que de gonfler la moyenne */
+  const horsMesure=nbLogts-nbMesures;
+  h+='<div><div class="ml">Taux d\'occupation</div><div class="mv" style="color:'+(horsMesure&&!nbMesures?'var(--muted)':(pctG>=95?'var(--green)':pctG>=85?'var(--accent)':'var(--red)'))+'">'+(nbMesures?pctG+' %':'—')+'</div><div class="ms">'+
+    (horsMesure?'<span style="color:var(--orange)">sur '+nbMesures+' logement'+(nbMesures>1?'s':'')+' sur '+nbLogts+'</span>':'sur douze mois')+'</div></div>';
   h+='<div><div class="ml">Manque à gagner</div><div class="mv" style="color:'+(perteTot>0?'var(--red)':'var(--green)')+'">'+F(perteTot)+'</div><div class="ms">'+(loyerTh>0?'soit '+(perteTot/loyerTh*100).toFixed(1)+' % des loyers':'sur douze mois')+'</div></div>';
   h+='<div><div class="ml">Logements vides</div><div class="mv" style="color:'+(nbVides?'var(--red)':'var(--green)')+'">'+nbVides+' / '+nbLogts+'</div><div class="ms">aujourd\'hui</div></div>';
   h+='</div>';
