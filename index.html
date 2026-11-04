@@ -306,7 +306,7 @@ details summary{color:var(--text2)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 13h45</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 14h30</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -357,6 +357,14 @@ details summary{color:var(--text2)}
 </div>
 
 <div class="svue" id="ivue-fisca" style="display:none">
+<div class="g2" style="margin-bottom:16px">
+<div class="card"><div class="ct">◱ Détention</div><div style="font-size:11px;color:var(--muted);margin:-6px 0 10px">Quels biens veux-tu regarder ?</div><div id="fiscProfil"></div></div>
+<div class="card"><div class="ct">▣ Ta tranche d'imposition</div><div style="font-size:11px;color:var(--muted);margin:-6px 0 10px">La TMI change l'impôt sur tes loyers</div><div id="fiscTmi"></div></div>
+</div>
+<div class="kr kr4" id="ikFisc"></div>
+<div id="fiscNote"></div>
+<div class="card"><div class="fb"><div class="ct" style="margin:0">▤ Détail fiscal par bien</div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 10px" id="fiscSousTitre"></div><div class="tw" id="fiscTable"></div></div>
+<div class="card"><div class="ct">◉ Pression fiscale</div><div style="font-size:11px;color:var(--muted);margin:-6px 0 12px">Ce que l'impôt prélève sur tes loyers</div><div id="fiscPression"></div></div>
 <div class="g2" style="margin-bottom:16px">
 <div class="card"><div class="ct">Répartition par régime fiscal</div><div class="cbs" style="height:230px"><canvas id="cImmoReg"></canvas></div><div id="immoRegimes" style="margin-top:10px"></div></div>
 <div class="card"><div class="ct">Répartition des loyers</div><div class="cbs" style="height:230px"><canvas id="cImmoLoy"></canvas></div><div id="immoLoyers" style="margin-top:10px"></div></div>
@@ -704,11 +712,15 @@ function cashflowLocatif(k){
   const m=Math.max(0,Math.round(nb(k)));
   const loc=S.immo.filter(b=>!estRP(b)&&(nb(b.loyer)>0||loyerBien(b)>0||b.typeLocation));
   const detail=loc.map(b=>{
+    /* Convention de l'app : les montants sont saisis à 100 %, et la quote-part
+       s'applique ensuite — comme pour la valeur du bien et sa dette. */
+    const part=(b.partsPct!=null?nb(b.partsPct):100)/100;
     /* taxe foncière, assurance et charges courent même quand le bien est vide */
-    const charges=nb(b.charges)+nb(b.taxeFonciere)/12+nb(b.assurance)/12+nb(b.gestion);
+    const charges=(nb(b.charges)+nb(b.taxeFonciere)/12+nb(b.assurance)/12+nb(b.gestion))*part;
     const cr=mensualiteBien(b,true);
-    const mens=cr.m;
-    const l=loyersBien(b), attente=delaiLoyer(b);
+    const mens=cr.m*part;
+    const l0=loyersBien(b), attente=delaiLoyer(b);
+    const l={avant:l0.avant*part,apres:l0.apres*part};
     const loyer=m>=attente?l.apres:l.avant;
     /* Un cashflow saisi à la main l'emporte sur tout le calcul */
     if(b.cfManuel!=null){
@@ -748,6 +760,15 @@ window.setCfProjet=function(id,val){
   else{const v=parseFloat(s.replace(',','.').replace(/\s|€/g,''));if(isNaN(v))return;p.cfManuel=v}
   autoSave();R(true);
 };
+/* ====== FISCALITÉ IMMOBILIÈRE ====== */
+let fiscProfil='tous';  /* tous | propre | sci */
+window.setFiscProfil=function(p){fiscProfil=p;R(true)};
+window.setTMI=function(t){
+  if(!S.fiscParams)S.fiscParams={};
+  S.fiscParams.tmi=parseFloat(t)||0;autoSave();R(true);
+};
+const TMIS=[0,11,30,41,45];
+
 /* ====== BILAN ANNUEL IMMOBILIER ====== */
 let bilanAn=new Date().getFullYear();
 window.setBilanAn=function(a){bilanAn=parseInt(a)||new Date().getFullYear();R(true)};
@@ -1734,8 +1755,11 @@ function barreOccup(oc){
 function fiscBien(b,mensCred){
   const tmi=(S.fiscParams&&S.fiscParams.tmi)||30;
   const reg=REGIMES[b.regime||'micro_foncier']||REGIMES.micro_foncier;
-  const loyerAn=(b.loyer||0)*12;
-  const chargesAn=((b.charges||0)+(b.gestion||0))*12+(b.taxeFonciere||0)+(b.assurance||0);
+  /* On n'est imposé que sur ce qu'on encaisse : un logement vide ne rapporte rien.
+     Et sur sa seule quote-part, quand le bien est détenu à plusieurs. */
+  const part=(b.partsPct!=null?nb(b.partsPct):100)/100;
+  const loyerAn=loyersBien(b).avant*12*part;
+  const chargesAn=((nb(b.charges)+nb(b.gestion))*12+nb(b.taxeFonciere)+nb(b.assurance))*part;
   /* Intérêts d'emprunt de l'année en cours */
   let interetsAn=0;
   const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
@@ -1743,19 +1767,21 @@ function fiscBien(b,mensCred){
     const am=cAm(cr.emprunte,cr.taux||0,cr.dureeMois||0,cr.differe||0,cr.debloque);
     const me=moisEcoules(cr.dateDebut);
     if(me>0&&am.t.length)for(let k=Math.max(0,me-12);k<Math.min(me,am.t.length);k++)interetsAn+=am.t[k].i;
+    interetsAn*=part;
   }
   /* Amortissement : 2,5 %/an sur 85 % de la valeur (hors terrain) */
-  const amortAn=reg.amort?(b.prixAchat||b.valeur||0)*.85*.025:0;
-  let base,impot;
+  const amortAn=reg.amort?(nb(b.prixAchat)||nb(b.valeur))*.85*.025*part:0;
+  let base,impot,ir,ps;
   if(reg.is){
     base=Math.max(0,loyerAn-chargesAn-interetsAn-amortAn);
-    impot=base<=42500?base*.15:42500*.15+(base-42500)*.25;
+    ir=base<=42500?base*.15:42500*.15+(base-42500)*.25;
+    ps=0;impot=ir;
   }else{
     base=reg.charges?Math.max(0,loyerAn-chargesAn-interetsAn-amortAn):loyerAn*(1-reg.ab);
-    impot=base*(tmi/100)+base*reg.soc;
+    ir=base*(tmi/100);ps=base*reg.soc;impot=ir+ps;
   }
   const cashAvant=loyerAn-chargesAn-mensCred*12;
-  return{reg,loyerAn,chargesAn,interetsAn,amortAn,base,impot,
+  return{reg,loyerAn,chargesAn,interetsAn,amortAn,base,impot,ir,ps,tmi,
          cashAvant,cashApres:cashAvant-impot,
          effort:(cashAvant-impot)/12,
          rdtNet:(b.valeur>0)?((loyerAn-chargesAn-impot)/b.valeur*100):0};
@@ -3230,6 +3256,120 @@ document.getElementById('ik').innerHTML=
   }
 })();
 
+/* ====== ONGLET FISCALITÉ ====== */
+(function(){
+  const k=document.getElementById('ikFisc');if(!k)return;
+  const tmi=(S.fiscParams&&S.fiscParams.tmi)||30;
+  const tous=biensLocatifs();
+  const filtre=b=>fiscProfil==='sci'?!!b.sci:fiscProfil==='propre'?!b.sci:true;
+  const biens=tous.filter(filtre);
+  const nSci=tous.filter(b=>b.sci).length, nPropre=tous.length-nSci;
+
+  /* Choix de détention */
+  const fp=document.getElementById('fiscProfil');
+  if(fp){
+    const opts=[{k:'tous',l:'Tous les biens',n:tous.length},
+                {k:'propre',l:'En nom propre',n:nPropre},
+                {k:'sci',l:'En SCI',n:nSci}];
+    fp.innerHTML='<div style="display:flex;gap:6px;flex-wrap:wrap">'+
+      opts.map(o=>'<button class="pb '+(fiscProfil===o.k?'on':'')+'" onclick="setFiscProfil(\''+o.k+'\')"'+(o.n?'':' disabled style="opacity:.4"')+'>'+o.l+' <span style="opacity:.7">('+o.n+')</span></button>').join('')+'</div>'+
+      (nSci===0?'<div style="font-size:11px;color:var(--muted);margin-top:8px">Aucun bien en SCI. Tu peux le déclarer dans la fiche d\'un bien, onglet Mes biens.</div>':'');
+  }
+  /* Tranche marginale */
+  const ft=document.getElementById('fiscTmi');
+  if(ft)ft.innerHTML='<div style="display:flex;gap:6px;flex-wrap:wrap">'+
+    TMIS.map(t=>'<button class="pb '+(tmi===t?'on':'')+'" onclick="setTMI('+t+')">'+t+' %</button>').join('')+'</div>'+
+    '<div style="font-size:11px;color:var(--muted);margin-top:8px">S\'ajoutent 17,2 % de prélèvements sociaux, sauf en SCI à l\'IS.</div>';
+
+  /* Calcul bien par bien */
+  const lignes=biens.map(b=>{
+    const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
+    const f=fiscBien(b,mensualiteBien(b));
+    return{b,f,cfReel:cfDuBien(b)*12,
+           manque:POSTES_IMMO.filter(p=>b.cfManuel==null&&!(nb(b[p.k])>0)).map(p=>p.l)};
+  });
+  const revBruts=lignes.reduce((a,x)=>a+x.f.loyerAn,0);
+  const impot=lignes.reduce((a,x)=>a+x.f.impot,0);
+  const irTot=lignes.reduce((a,x)=>a+x.f.ir,0);
+  const psTot=lignes.reduce((a,x)=>a+x.f.ps,0);
+  const netApres=lignes.reduce((a,x)=>a+(x.f.loyerAn-x.f.chargesAn-x.f.impot),0);
+  const cfNetNet=lignes.reduce((a,x)=>a+x.cfReel-x.f.impot,0);
+  const incomplet=lignes.some(x=>x.manque.length);
+
+  k.innerHTML=
+    '<div class="kpi"><div class="kl">Revenus bruts</div><div class="kv" style="color:var(--green)">'+F(Math.round(revBruts))+'</div><div class="ks">'+biens.length+' bien'+(biens.length>1?'s':'')+' · par an</div></div>'+
+    '<div class="kpi"><div class="kl">Impôt estimé</div><div class="kv" style="color:var(--red)">'+(impot?'-'+F(Math.round(impot)):'0 €')+'</div><div class="ks">'+F(Math.round(impot/12))+' / mois · TMI '+tmi+' %'+(psTot?' + PS':'')+'</div></div>'+
+    '<div class="kpi"><div class="kl">Net après impôt</div><div class="kv" style="color:'+(netApres>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(netApres))+'</div><div class="ks">charges et impôt déduits, hors crédit</div></div>'+
+    '<div class="kpi"><div class="kl">Cashflow net-net</div><div class="kv" style="color:'+(cfNetNet>=0?'var(--green)':'var(--red)')+'">'+(incomplet?'<span style="color:var(--orange)">≤ </span>':'')+(cfNetNet>=0?'+':'')+F(Math.round(cfNetNet))+'</div><div class="ks">crédit et impôt déduits</div></div>';
+
+  /* Avertissement sur les charges manquantes */
+  const nt=document.getElementById('fiscNote');
+  if(nt){
+    const quiManque=[...new Set(lignes.flatMap(x=>x.manque))];
+    nt.innerHTML=quiManque.length
+      ? '<div class="manq">Tes charges ne sont pas toutes renseignées ('+quiManque.join(', ')+') : l\'impôt estimé est donc <b>trop élevé</b> au réel, et le cashflow net-net trop optimiste.<br><span class="mlien" onclick="setImmoVue(\'biens\')">Compléter mes biens →</span></div>'
+      : '';
+  }
+
+  /* Détail par bien */
+  const st=document.getElementById('fiscSousTitre');
+  if(st)st.innerHTML='TMI '+tmi+' %'+(psTot?' + prélèvements sociaux 17,2 %':'')+' · le régime se change dans la fiche du bien';
+  const tb=document.getElementById('fiscTable');
+  if(tb){
+    if(!lignes.length){
+      tb.innerHTML='<div style="font-size:12px;color:var(--muted);padding:6px 2px">Aucun bien dans cette catégorie.</div>';
+    }else{
+      let h='<table style="font-size:11.5px"><thead><tr><th class="l">Bien</th><th>Détention</th><th>Régime</th><th>Revenus</th><th>Impôt</th><th>Net / an<div style="font-size:9.5px;font-weight:400;color:var(--muted)">charges et impôt</div></th><th>Cashflow réel<div style="font-size:9.5px;font-weight:400;color:var(--muted)">crédit compris</div></th></tr></thead><tbody>';
+      lignes.forEach(x=>{
+        const net=x.f.loyerAn-x.f.chargesAn-x.f.impot;
+        h+='<tr><td class="l"><div style="font-weight:600">'+String(x.b.nom||'Bien').slice(0,24)+'</div>'+
+            (x.b.partsPct&&x.b.partsPct<100?'<div style="font-size:10px;color:var(--muted)">'+x.b.partsPct+' % à toi</div>':'')+'</td>'+
+          '<td><span class="badge '+(x.b.sci?'pos':'')+'" style="'+(x.b.sci?'':'background:var(--card2);color:var(--muted)')+'">'+(x.b.sci?'SCI':'Nom propre')+'</span></td>'+
+          '<td><span class="ed" onclick="edRegime(\''+x.b.id+'\')" title="'+x.f.reg.info+'">'+x.f.reg.n+'</span></td>'+
+          '<td style="color:var(--green)">'+F(Math.round(x.f.loyerAn))+'</td>'+
+          '<td style="color:'+(x.f.impot?'var(--red)':'var(--muted)')+'">'+(x.f.impot?F(Math.round(x.f.impot)):'0 €')+
+            (x.f.impot?'<div style="font-size:10px;color:var(--muted)">base '+F(Math.round(x.f.base))+'</div>':'')+'</td>'+
+          '<td style="font-weight:700;color:'+(net>=0?'var(--green)':'var(--red)')+'">'+(net>=0?'+':'')+F(Math.round(net))+'</td>'+
+          '<td style="color:'+(x.manque.length?'var(--orange)':(x.cfReel-x.f.impot>=0?'var(--green)':'var(--red)'))+'">'+
+            (x.manque.length?'<span style="font-size:10.5px">'+x.manque.length+' charge'+(x.manque.length>1?'s':'')+' à renseigner</span>'
+                            :((x.cfReel-x.f.impot>=0?'+':'')+F(Math.round(x.cfReel-x.f.impot))))+'</td></tr>';
+      });
+      h+='<tr style="font-weight:800;border-top:2px solid var(--border)"><td class="l">Total</td><td></td><td></td>'+
+        '<td style="color:var(--green)">'+F(Math.round(revBruts))+'</td>'+
+        '<td style="color:var(--red)">'+F(Math.round(impot))+'</td>'+
+        '<td style="color:'+(netApres>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(netApres))+'</td>'+
+        '<td style="color:'+(incomplet?'var(--orange)':(cfNetNet>=0?'var(--green)':'var(--red)'))+'">'+(incomplet?'incomplet':((cfNetNet>=0?'+':'')+F(Math.round(cfNetNet))))+'</td></tr>';
+      h+='</tbody></table>';
+      tb.innerHTML=h;
+    }
+  }
+
+  /* Pression fiscale */
+  const pr=document.getElementById('fiscPression');
+  if(pr){
+    if(revBruts<=0){
+      pr.innerHTML='<div style="font-size:12px;color:var(--muted)">Pas encore de loyers à imposer.</div>';
+    }else{
+      const taux=impot/revBruts*100;
+      const coul=taux<15?'var(--green)':taux<30?'var(--accent)':'var(--red)';
+      pr.innerHTML='<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:8px">'+
+          '<div style="font-size:12px;color:var(--text2)">Taux effectif sur tes loyers</div>'+
+          '<div style="font-size:20px;font-weight:800;color:'+coul+'">'+taux.toFixed(1)+' %</div></div>'+
+        '<div style="height:10px;border-radius:6px;background:var(--card2);overflow:hidden;display:flex">'+
+          '<div style="width:'+(irTot/revBruts*100).toFixed(1)+'%;background:'+CV('--red')+'"></div>'+
+          '<div style="width:'+(psTot/revBruts*100).toFixed(1)+'%;background:'+CV('--orange')+'"></div></div>'+
+        '<div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:10px">'+
+          '<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+CV('--red')+';margin-right:5px"></span>Impôt sur le revenu : <strong style="color:var(--text2)">'+F(Math.round(irTot))+'</strong></span>'+
+          '<span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+CV('--orange')+';margin-right:5px"></span>Prélèvements sociaux : <strong style="color:var(--text2)">'+F(Math.round(psTot))+'</strong></span>'+
+          '<span>Total : <strong style="color:var(--text2)">'+F(Math.round(impot))+'</strong></span></div>'+
+        '<div style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6">Sur 100 € de loyer encaissé, l\'impôt en prend '+taux.toFixed(1).replace('.',',')+' €. '+
+          'Changer de régime fiscal peut faire bouger ce chiffre : clique sur le régime d\'un bien dans le tableau pour en essayer un autre.</div>'+
+        '<div style="font-size:11px;color:var(--orange);background:var(--card2);border-radius:10px;padding:10px 12px;margin-top:14px;line-height:1.6">'+
+          'Estimations indicatives. Elles ne remplacent pas un conseil fiscal. Les déficits fonciers reportables et le détail de l\'amortissement LMNP ne sont pas pris en compte.</div>';
+    }
+  }
+})();
+
 /* ====== ONGLET BILAN ANNUEL ====== */
 (function(){
   const k=document.getElementById('ikAn');if(!k)return;
@@ -3529,8 +3669,9 @@ const sciBiens=S.immo.filter(b=>b.sci);
 if(sciBiens.length>0){
   document.getElementById('immoSCI').style.display='block';
   const sciVal=sciBiens.reduce((a,b)=>a+b.valeur*(b.partsPct/100),0);
-  const sciLoyer=sciBiens.reduce((a,b)=>a+(b.loyer||0),0);
-  const sciCharges=sciBiens.reduce((a,b)=>a+(b.charges||0)+(b.taxeFonciere||0)/12+(b.assurance||0)/12+(b.gestion||0),0);
+  /* comme pour la valeur, on ne compte que ta part — et pas les logements vides */
+  const sciLoyer=sciBiens.reduce((a,b)=>a+loyersBien(b).avant*((b.partsPct!=null?nb(b.partsPct):100)/100),0);
+  const sciCharges=sciBiens.reduce((a,b)=>a+(nb(b.charges)+nb(b.taxeFonciere)/12+nb(b.assurance)/12+nb(b.gestion))*((b.partsPct!=null?nb(b.partsPct):100)/100),0);
   let sciH='<div class="kr"><div class="kpi sm"><div class="kl">Valeur SCI (tes parts)</div><div class="kv" style="color:#e8a33d">'+F(sciVal)+'</div></div><div class="kpi sm"><div class="kl">Loyers SCI</div><div class="kv" style="color:var(--accent)">'+F(sciLoyer)+'</div><div class="ks">/mois</div></div><div class="kpi sm"><div class="kl">Charges SCI</div><div class="kv" style="color:var(--red)">'+F(Math.round(sciCharges))+'</div><div class="ks">/mois</div></div><div class="kpi sm"><div class="kl">Résultat SCI</div><div class="kv" style="color:'+(sciLoyer-sciCharges>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(sciLoyer-sciCharges))+'</div><div class="ks">/mois</div></div></div>';
   sciBiens.forEach(b=>{sciH+='<div class="lr"><span>'+b.nom+' ('+b.partsPct+'% parts)</span><span style="font-weight:600">'+F(b.valeur)+'</span></div>'});
   document.getElementById('sciDash').innerHTML=sciH;
