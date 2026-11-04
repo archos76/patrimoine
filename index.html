@@ -287,7 +287,7 @@ details summary{color:var(--text2)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 10h45</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 11h10</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -549,14 +549,20 @@ function loyerAuMois(b,k){
   const l=loyersBien(b);
   return k>=delaiLoyer(b)?l.apres:l.avant;
 }
-function mensualiteBien(b){
+/* Mensualité payée aujourd'hui pour un bien, et pourquoi elle vaut zéro le cas échéant */
+function mensualiteBien(b,detail){
   const d=b.creditId?S.dettes.find(x=>x.id===b.creditId):null;
-  if(!d||!d.emprunte)return 0;
+  const info=(m,etat,pleine)=>detail?{m,etat,pleine:pleine!=null?pleine:m}:m;
+  if(!b.creditId)return info(0,'sansCredit');
+  if(!d)return info(0,'creditIntrouvable');
+  if(!nb(d.emprunte))return info(0,'sansMontant');
   const am=cAm(nb(d.emprunte),nb(d.taux),nb(d.dureeMois),nb(d.differe),d.debloque);
-  if(!d.dateDebut)return Math.abs(nb(am.m));
+  const pleine=Math.abs(nb(am.m));
+  if(!d.dateDebut)return info(pleine,'ok');
   const me=moisEcoules(d.dateDebut);
-  if(me<=0)return 0;
-  return Math.abs(me<=(nb(d.differe))?nb(am.mDiff):nb(am.m));
+  if(me<=0)return info(0,'pasCommence',pleine);
+  if(me<=nb(d.differe))return info(Math.abs(nb(am.mDiff)),'differe',pleine);
+  return info(pleine,'ok');
 }
 /* k : dans combien de mois. 0 = aujourd'hui. */
 function cashflowLocatif(k){
@@ -565,11 +571,15 @@ function cashflowLocatif(k){
   const detail=loc.map(b=>{
     /* taxe foncière, assurance et charges courent même quand le bien est vide */
     const charges=nb(b.charges)+nb(b.taxeFonciere)/12+nb(b.assurance)/12+nb(b.gestion);
-    const mens=mensualiteBien(b);
+    const cr=mensualiteBien(b,true);
+    const mens=cr.m;
     const l=loyersBien(b), attente=delaiLoyer(b);
     const loyer=m>=attente?l.apres:l.avant;
+    const lots=(b.lots&&b.lots.length)?b.lots:[];
     return{id:b.id,nom:b.nom||'Bien',loyer,charges,mens,net:loyer-charges-mens,
-           attente,loyerAvant:l.avant,loyerApres:l.apres,reglé:b.loyerDansMois!=null};
+           attente,loyerAvant:l.avant,loyerApres:l.apres,reglé:b.loyerDansMois!=null,
+           etatCredit:cr.etat,mensPleine:cr.pleine,
+           vides:lots.filter(x=>x.occupe===false).length,nbLots:lots.length};
   });
   const loyers=detail.reduce((a,x)=>a+x.loyer,0);
   const charges=detail.reduce((a,x)=>a+x.charges,0);
@@ -2303,18 +2313,34 @@ document.getElementById('sl').innerHTML=sH;
     const det=pr.cf.detail||[];
     if(det.length){
       let bH='<div style="margin-top:16px"><div style="font-weight:600;font-size:13px;margin-bottom:8px">⌂ Ce que rapportent tes biens actuels</div>';
-      bH+='<div class="tw"><table style="font-size:11.5px"><thead><tr><th class="l">Bien</th><th>Loyer</th><th>Charges + crédit</th><th>Cashflow</th><th>Loué dans</th></tr></thead><tbody>';
+      bH+='<div class="tw"><table style="font-size:11.5px"><thead><tr><th class="l">Bien</th><th>Loyer</th><th>Charges</th><th>Crédit</th><th>Cashflow</th><th>Loué dans</th></tr></thead><tbody>';
+      let alerteCredit=false;
       det.forEach(d=>{
         const futur=d.loyerApres-d.charges-d.mens;
         const pasEncore=d.attente>0;
-        bH+='<tr><td class="l" style="font-weight:600">'+String(d.nom).slice(0,26)+'</td>'+
-          '<td>'+(pasEncore?'<span style="color:var(--muted)">'+F(d.loyerAvant)+'</span>':F(d.loyerApres))+'</td>'+
-          '<td style="color:var(--red)">'+F2(d.charges+d.mens)+'</td>'+
+        /* Dire pourquoi la mensualité vaut zéro plutôt que de laisser croire que le bien est payé */
+        let cel,manque=false;
+        if(d.etatCredit==='sansCredit'||d.etatCredit==='creditIntrouvable'||d.etatCredit==='sansMontant'){
+          cel='<span style="color:var(--orange)">aucun crédit<br>rattaché</span>';manque=true;
+        }else if(d.etatCredit==='pasCommence'){
+          cel='<span style="color:var(--orange)">pas encore<br>commencé</span>';manque=true;
+        }else if(d.etatCredit==='differe'){
+          cel='<span style="color:var(--red)">'+F2(d.mens)+'</span><div style="font-size:10px;color:var(--muted)">différé · puis '+F2(d.mensPleine)+'</div>';
+        }else cel='<span style="color:var(--red)">'+F2(d.mens)+'</span>';
+        if(manque)alerteCredit=true;
+        bH+='<tr><td class="l" style="font-weight:600">'+String(d.nom).slice(0,26)+
+            (d.vides>0?'<div style="font-size:10px;color:var(--muted)">'+d.vides+' logement'+(d.vides>1?'s':'')+' vide'+(d.vides>1?'s':'')+' sur '+d.nbLots+'</div>':'')+'</td>'+
+          '<td>'+(pasEncore&&d.loyerAvant!==d.loyerApres
+                  ?'<span style="color:var(--muted)">'+F(d.loyerAvant)+'</span><div style="font-size:10px;color:var(--muted)">sur '+F(d.loyerApres)+' au total</div>'
+                  :F(d.loyerApres))+'</td>'+
+          '<td style="color:var(--red)">'+F2(d.charges)+'</td>'+
+          '<td>'+cel+'</td>'+
           '<td style="color:'+(d.net>=0?'var(--green)':'var(--red)')+'">'+(d.net>=0?'+':'')+F2(d.net)+
             (pasEncore?'<div style="font-size:10px;color:var(--muted)">puis '+(futur>=0?'+':'')+F2(futur)+' une fois loué</div>':'')+'</td>'+
           '<td><input class="ci" style="width:42px" value="'+d.attente+'" onchange="setLoyerDelai(\''+d.id+'\',this.value)"> mois</td></tr>';
       });
       bH+='</tbody></table></div>';
+      if(alerteCredit)bH+='<div style="font-size:11.5px;color:var(--orange);background:var(--card2);border-radius:10px;padding:10px 12px;margin-top:10px;line-height:1.6">Un ou plusieurs biens n\'ont pas de crédit rattaché : leur cashflow est donc trop optimiste, la mensualité n\'est pas déduite. Va sur la page Immo, ouvre la fiche du bien et clique sur « Prêt rattaché » pour le relier à sa dette.</div>';
       bH+='<div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6">Un bien pas encore loué ne rapporte rien, mais son crédit et ses charges se paient quand même. Mets 0 s\'il est déjà loué, ou le nombre de mois qu\'il te reste avant d\'encaisser le premier loyer (travaux, recherche de locataire). Un logement marqué vide sur la page Immo se voit attribuer trois mois par défaut.</div></div>';
       rg.innerHTML+=bH;
     }
