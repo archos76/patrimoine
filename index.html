@@ -254,6 +254,9 @@ body:not(.light) .badge.neg{box-shadow:none}
 .ss{font-size:12px;color:var(--muted);margin-top:6px}
 /* Bandeau de panne : quand une partie de l affichage n a pas pu se mettre a
    jour, on le dit au lieu de laisser l ecran figé sans explication. */
+#annul{margin:10px 16px 0;padding:9px 14px;border-radius:10px;background:var(--card2);
+  border:1px solid var(--border);font-size:12.5px;display:flex;align-items:center;
+  justify-content:space-between;gap:12px;flex-wrap:wrap}
 #panne{margin:10px 16px 0;padding:11px 14px;border-radius:10px;
   background:var(--card);border:1px solid var(--red);font-size:12.5px;line-height:1.6}
 #panne b{color:var(--red)}
@@ -426,7 +429,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 05/11 18h40</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 05/11 20h15</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -442,6 +445,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 </div>
 </header>
 <div id="panne" style="display:none"></div>
+<div id="annul" style="display:none"></div>
 <main>
 <div class="page active" id="page-home"><div id="homeAlerts"></div><div class="hBande"><div class="hTete" id="hTete"></div><div class="hCote" id="hCote"></div></div><div class="kr" id="hk" style="display:none"></div><div id="widgetResume" style="display:none"></div><div class="g21 gSeul"><div class="card"><div class="fb" style="margin-bottom:10px"><div class="ct" style="margin:0" id="netTitre">Évolution du patrimoine</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div style="display:flex;gap:4px"><button class="ctb" id="netMode_brut" onclick="setNetMode('brut')">Brut</button><button class="ctb active" id="netMode_net" onclick="setNetMode('net')">Net</button></div><div style="display:flex;gap:4px"><button class="ctb active" id="netVue_courbe" onclick="setNetVue('courbe')">Courbes</button><button class="ctb" id="netVue_barres" onclick="setNetVue('barres')">Barres</button></div><div style="display:flex;gap:4px" id="netPs"></div></div></div><div class="cto" id="netCases"></div><div class="cb"><canvas id="cN"></canvas></div></div><div class="g21"><div class="card hRegistre" id="hRegistre"></div><div class="card hAttention" id="hAttention"></div></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Historique</div><button class="reset-btn" onclick="if(confirm('Reset?'))doReset()">Réinitialiser</button></div><div id="sl" style="margin-top:12px"></div></div></div>
 <div class="page" id="page-bourse">
@@ -523,6 +527,26 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-g" onclick="expSauvegarde()">Télécharger une sauvegarde</button><button class="btn btn-o" onclick="document.getElementById('impFile').click()">⤒ Restaurer un fichier</button></div>
 <input type="file" id="impFile" accept=".json,application/json" style="display:none" onchange="impSauvegarde(this)">
 <div id="sauveInfo" style="font-size:12px;margin-top:14px"></div></div>
+<div class="card"><div class="ct">Sécurité et clés</div>
+<div style="font-size:12.5px;color:var(--text2);line-height:1.65;margin-bottom:14px">Cette application est une page publique : n'importe qui peut en lire le code source. Rien de ce qui est écrit dans le fichier n'est secret. Tes données, elles, sont dans ta base Google et protégées par les règles de sécurité de celle-ci — pas par le code de la page.</div>
+<div class="lr"><span>Clé Alpha Vantage <span style="color:var(--muted);font-size:11px">(comparaison au S&amp;P 500)</span></span><span class="ed" onclick="edCleAV()" id="cleAVaff">—</span></div>
+<div style="font-size:11.5px;color:var(--muted);line-height:1.65;margin-top:12px">Elle est enregistrée dans tes données, pas dans le fichier. Sans clé, tout fonctionne : seule la colonne S&amp;P du Panorama reste vide.</div>
+<div id="alerteCle" style="margin-top:12px"></div>
+<details style="margin-top:14px"><summary style="font-size:12.5px;font-weight:600;cursor:pointer">Vérifier que mes données sont bien protégées</summary>
+<div style="font-size:12px;color:var(--text2);line-height:1.7;margin-top:10px">
+Va sur <b>console.firebase.google.com</b>, choisis ton projet, puis <b>Firestore Database</b> et l'onglet <b>Règles</b>. Tu dois y lire quelque chose qui limite l'accès à ton propre compte. Si tu vois <b>allow read, write: if true</b>, ou une date d'expiration passée, tes données sont ouvertes à qui connaît l'adresse de ta base. Les règles qui conviennent à cette app :
+<pre style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:10px;font-size:11.5px;overflow-x:auto;white-space:pre">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read, write: if request.auth != null
+                         &amp;&amp; request.auth.uid == uid;
+    }
+  }
+}</pre>
+Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écrire tes données.
+</div></details>
+</div>
 <div class="card"><div class="ct">Export tableur</div>
 <div style="font-size:12.5px;color:var(--text2);margin-bottom:14px">Un fichier lisible dans Excel ou LibreOffice. Pratique pour consulter ou imprimer, mais il ne permet pas de restaurer l'application.</div>
 <button class="btn btn-o" onclick="exportCSV()">Télécharger en CSV</button></div>
@@ -654,7 +678,10 @@ if(clean.histJour&&clean.histJour.length>30)clean.histJour=clean.histJour.slice(
 if(clean.journal&&clean.journal.length>100)clean.journal=clean.journal.slice(-100);
 await db.collection('users').doc(uid).set({patrimoine:clean,snapshots:snaps,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true})}catch(e){}}
 
-const AV="P3CLMM04M63LQ42M";let nxId=Date.now();const nid=()=>++nxId;
+/* Cette page est publique : tout ce qui est écrit ici est lisible par
+   n'importe qui. La clé Alpha Vantage vit donc dans tes réglages, c'est-à-dire
+   dans ta base privée, et plus dans le code. */
+function cleAV(){return (S&&S.cles&&S.cles.av)||''}let nxId=Date.now();const nid=()=>++nxId;
 const INDICES=[{t:'^GSPC',n:'S&P 500'},{t:'^IXIC',n:'Nasdaq'},{t:'^DJI',n:'Dow Jones'},{t:'^FCHI',n:'CAC 40'},{t:'^GDAXI',n:'DAX'},{t:'^STOXX50E',n:'Euro Stoxx 50'},{t:'^FTSE',n:'FTSE 100'},{t:'^N225',n:'Nikkei'},{t:'^HSI',n:'Hang Seng'},{t:'BTC-EUR',n:'Bitcoin'}];
 let idxData={};
 const GAS="https://script.google.com/macros/s/AKfycbw8behnjUJ8SPqStAVi4BFT2AHGAZxLQ--TtUn8rQIe4xkUuSylgA__Z9QWXKyINIs7jQ/exec";
@@ -1130,8 +1157,25 @@ function totalTravaux(b){
    le canevas est pris. Tous les rendus suivants se heurtent alors à « Canvas
    is already in use » — l app entière se fige jusqu au rechargement. On libère
    donc toujours le canevas avant d y redessiner, quoi qu il s y soit passé. */
+/* Un canevas qu on ne voit pas n a pas besoin d etre dessine. L app redessine
+   tout a chaque clic : sans ce filtre, dix-sept pages masquees reconstruisaient
+   leurs graphiques pour rien, et l une d elles pouvait tout faire tomber.
+   Chaque changement de page relance un rendu, donc rien n est perdu. */
+function canevasVisible(el){
+  if(!el||!el.closest)return true;
+  const vue=el.closest('.svue');
+  if(vue&&vue.style&&vue.style.display==='none')return false;
+  const page=el.closest('.page');
+  if(page&&!page.classList.contains('active'))return false;
+  return true;
+}
 function neufGraphe(el,conf){
   if(!el||!window.Chart)return null;
+  if(!canevasVisible(el)){
+    /* on libere quand meme le canevas : il sera redessine en arrivant dessus */
+    try{const v=Chart.getChart?Chart.getChart(el):null;if(v)v.destroy()}catch(e){}
+    return null;
+  }
   try{const vieux=Chart.getChart?Chart.getChart(el):null;if(vieux)vieux.destroy()}catch(e){}
   return new Chart(el,conf);
 }
@@ -1296,7 +1340,9 @@ let benchData={};/* {SPY:{mois:perf_cum}, QQQ:{...}, ...} */
 
 async function fSP(){
   try{
-    const r=await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=SPY&apikey='+AV);
+    const cle=cleAV();
+    if(!cle){spSt="clé absente";fetchBenchmarks();return}
+    const r=await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=SPY&apikey='+encodeURIComponent(cle));
     const j=await r.json();
     if(j["Monthly Time Series"]){spD=j["Monthly Time Series"];cSPx();spSt="✓"}else spSt="⚠"
   }catch(e){spSt="⚠"}
@@ -1394,6 +1440,53 @@ function barreFine(pct,coul){
   return '<div style="flex:1;height:5px;border-radius:3px;background:var(--card2);overflow:hidden;min-width:40px">'+
     '<div style="height:100%;width:'+Math.max(2,Math.min(100,pct)).toFixed(1)+'%;background:'+coul+';border-radius:3px"></div></div>';
 }
+/* ===== RELEVE MENSUEL PAR COMPTE =====
+   L app ne gardait qu une valeur de portefeuille par mois, tous comptes
+   confondus : impossible de tracer la moindre courbe par compte. On note
+   donc, pour le mois en cours, la valeur de chacun. Le mois se termine sur
+   sa derniere valeur connue, et la courbe se construit d elle-meme. */
+function moisCle(d){const x=d||new Date();return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')}
+function releveComptes(t){
+  if(!t||!t.p)return false;
+  if(!S.histComptes)S.histComptes={};
+  const k=moisCle();
+  const v={pea:Math.round(nb(t.p.v)),ctosb:Math.round(nb(t.s.v)),
+           ctoibkr:Math.round(nb(t.i.v)),avl:Math.round(nb(t.a.v))};
+  if(v.pea+v.ctosb+v.ctoibkr+v.avl<=0)return false;   /* rien a noter */
+  const av=S.histComptes[k];
+  const change=!av||['pea','ctosb','ctoibkr','avl'].some(x=>Math.abs(nb(av[x])-v[x])>1);
+  if(!change)return false;
+  v.maj=new Date().toISOString().slice(0,10);
+  S.histComptes[k]=v;
+  return true;
+}
+/* Les mois releves pour un compte, du plus ancien au plus recent */
+function histCompte(pk){
+  const h=S.histComptes||{};
+  return Object.keys(h).sort().map(k=>({k,v:nb(h[k][pk])}))
+          .filter(x=>isFinite(x.v)&&x.v>0);
+}
+function moisLisible(k){
+  const mn=["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
+  const p=String(k).split('-');
+  return (mn[(+p[1]||1)-1]||'')+' '+String(p[0]).slice(2);
+}
+function dessineHistCompte(pk){
+  const el=document.getElementById('cHist-'+pk);if(!el||!window.Chart)return;
+  const h=histCompte(pk);if(h.length<2)return;
+  neufGraphe(el,{type:'line',
+    data:{labels:h.map(x=>moisLisible(x.k)),
+      datasets:[{label:'Valeur du compte',data:h.map(x=>x.v),
+        borderColor:CV('--accent'),backgroundColor:hexA(CV('--accent'),.10),
+        fill:true,tension:.3,borderWidth:2.5,pointRadius:h.length<13?3:0,
+        pointBackgroundColor:CV('--accent')}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:animConf,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:tipOpts(c=>F(c.raw))},
+      scales:{x:{grid:{display:false},ticks:{color:CV('--muted'),font:{size:10},maxTicksLimit:7}},
+        y:{grid:{color:hexA(CV('--border'),.5)},
+           ticks:{color:CV('--muted'),font:{size:11},callback:v=>Math.round(v/1000)+'k'}}}}});
+}
 function blocCompte(pk,c){
   const l=c.l||[];
   if(!l.length)return '<div class="tk" style="margin-top:14px">Ce compte est vide. Ajoute une première ligne ci-dessus pour voir ce qu\'il raconte.</div>';
@@ -1448,8 +1541,24 @@ function blocCompte(pk,c){
   conc+='. ';
   if(top3>60)conc+='C\'est concentré : une mauvaise nouvelle sur une seule ligne se verrait tout de suite. ';
   if(c.divTot>0)conc+='Ce compte verse '+F2(c.divTot)+' de dividendes par an, soit '+(c.v>0?(c.divTot/c.v*100).toFixed(1):'0')+' % de sa valeur. ';
-  conc+='<br>Pas de courbe de performance ici : l\'app n\'enregistre qu\'une valeur de portefeuille par mois, pour l\'ensemble des comptes. Je peux lui faire relever chaque compte séparément, et la courbe se construira mois après mois.';
   conc+='</div>';
+  /* La courbe du compte, des qu on a deux mois releves */
+  const h=histCompte(pk);
+  let courbe='';
+  if(h.length>=2){
+    const prem=h[0], dern=h[h.length-1];
+    const ev=dern.v-prem.v;
+    courbe='<div style="margin-top:20px"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:8px">'+
+      '<span style="font-size:13px;font-weight:600">Valeur du compte, mois après mois</span>'+
+      '<span style="font-size:11.5px;color:'+(ev>=0?'var(--green)':'var(--red)')+'">'+(ev>=0?'+':'')+F(Math.round(ev))+' depuis '+moisLisible(prem.k)+'</span></div>'+
+      '<div class="cbs" style="height:190px"><canvas id="cHist-'+pk+'"></canvas></div>'+
+      '<div class="tk" style="margin-top:6px">Relevé automatiquement, une valeur par mois. Les versements ne sont pas déduits : c\'est la valeur du compte, pas sa performance.</div></div>';
+  }else{
+    courbe='<div class="tk" style="margin-top:16px;line-height:1.6">L\'app relève maintenant la valeur de ce compte chaque mois. '+
+      (h.length===1?'Un mois est déjà noté ('+moisLisible(h[0].k)+') : la courbe apparaîtra au mois suivant.'
+                   :'La courbe apparaîtra dès qu il y aura deux mois.')+'</div>';
+  }
+  conc+=courbe;
 
   return '<div class="g2" style="margin-top:18px;gap:24px">'+
          '<div>'+(gagne||'<div class="tk">Pas encore de prix de revient saisi : les plus-values ne peuvent pas être calculées.</div>')+'</div>'+
@@ -1569,26 +1678,23 @@ window.edCryptoInvest=function(){
   S.cryptoInvest[p[0].trim()]=v;autoSave();R(true);
 };window.setDivVue=v=>{divVue=v;R(true)};window.setDivType=v=>{divType=v;R(true)};
 window.addBourseGoal=function(){
-  const types=['etf_pct','valeur','dividendes','nb_positions'];
-  const labels=['% ETF dans le portefeuille','Valeur du portefeuille (€)','Dividendes annuels (€)','Nombre de positions'];
-  let menu='';labels.forEach((l,i)=>menu+=(i+1)+'. '+l+'\n');
-  const choice=parseInt(prompt('Quel type d\'objectif ?\n'+menu,'1'));
-  if(isNaN(choice)||choice<1||choice>4)return;
-  const type=types[choice-1];
-  const pks=['pea','ctosb','ctoibkr','avl','all'];
-  const pkLabels=['PEA','CTO Saxo','CTO IBKR','AV Linxea','Global (tous)'];
-  let pkMenu='';pkLabels.forEach((l,i)=>pkMenu+=(i+1)+'. '+l+'\n');
-  const pkChoice=parseInt(prompt('Pour quel portefeuille ?\n'+pkMenu,'1'));
-  if(isNaN(pkChoice)||pkChoice<1||pkChoice>5)return;
-  const pk=pks[pkChoice-1];
-  const cible=parseFloat(prompt('Objectif cible ?',type==='etf_pct'?'60':type==='dividendes'?'500':type==='nb_positions'?'20':'30000'));
-  if(isNaN(cible))return;
-  const echeance=prompt('Échéance (ex: 31/12/2026, laisser vide si pas d\'échéance)','');
-  const nom=prompt('Note (optionnel)','');
-  if(!S.bourseGoals)S.bourseGoals=[];
-  S.bourseGoals.push({type,pk,cible,nom:nom||'',echeance:echeance||''});
-  autoSave();R(true);
-};
+  ouvreForm('bourseGoals','Nouvel objectif',[
+    {k:'type',lib:'Type d objectif',type:'choix',val:'etf_pct',options:[
+      ['etf_pct','% ETF dans le portefeuille'],['valeur','Valeur du portefeuille (€)'],
+      ['dividendes','Dividendes annuels (€)'],['nb_positions','Nombre de positions']]},
+    {k:'pk',lib:'Sur quel compte',type:'choix',val:'all',options:[
+      ['all','Tous les comptes'],['pea','PEA'],['ctosb','CTO Saxo'],
+      ['ctoibkr','CTO IBKR'],['avl','AV Linxea']]},
+    {k:'cible',lib:'Cible à atteindre',type:'nombre'},
+    {k:'nom',lib:'Intitulé',opt:true,ph:'pour t y retrouver'},
+    {k:'echeance',lib:'Échéance',opt:true,ph:'Déc 27'}
+  ],v=>{
+    if(!S.bourseGoals)S.bourseGoals=[];
+    S.bourseGoals.push({id:'bg'+nid(),type:v.type,pk:v.pk,cible:v.cible,
+      nom:v.nom||'',echeance:v.echeance||''});
+    autoSave();R(true);
+  });
+};;
 window.edBourseGoal=function(el,i){const g=S.bourseGoals[i];if(!g)return;const v=parseFloat(prompt('Nouvelle cible ?',g.cible));if(isNaN(v))return;g.cible=v;autoSave();R(true)};
 window.delBourseGoal=function(i){S.bourseGoals.splice(i,1);autoSave();R(true)};
 
@@ -1597,7 +1703,20 @@ window.delBourseGoal=function(i){S.bourseGoals.splice(i,1);autoSave();R(true)};
 const PK_NOMS={pea:'PEA',ctosb:'CTO Saxo',ctoibkr:'CTO IBKR',avl:'AV Linxea'};
 const PK_LISTE=['pea','ctosb','avl','ctoibkr'];
 function nomCompte(pk){return PK_NOMS[pk]||'non rattachée'}
-window.addWatch=function(pk){const ticker=prompt('Ticker Yahoo (ex: AAPL, MSFT, LVMH.PA)','');if(!ticker)return;const nom=prompt('Nom','');const zoneMin=parseFloat(prompt('Zone d\'achat — Prix MIN (laisser vide = pas de zone)',''))||0;const zoneMax=parseFloat(prompt('Zone d\'achat — Prix MAX',''))||0;if(!S.watchlist)S.watchlist=[];S.watchlist.push({id:'w'+nid(),ticker:ticker.trim(),nom:nom||ticker.trim(),prix:0,prev:0,var:0,cur:'',zoneMin,zoneMax,pk:PK_NOMS[pk]?pk:'pea'});autoSave();R(true)};
+window.addWatch=function(pk){
+  const cible=PK_NOMS[pk]?pk:'pea';
+  ouvreForm('watch-'+cible,'Suivre un titre dans le '+PK_NOMS[cible],[
+    {k:'ticker',lib:'Ticker Yahoo',ph:'AAPL, LVMH.PA…'},
+    {k:'nom',lib:'Nom',opt:true,ph:'laisse vide pour reprendre le ticker'},
+    {k:'zoneMin',lib:'Prix d achat min',type:'nombre',opt:true},
+    {k:'zoneMax',lib:'Prix d achat max',type:'nombre',opt:true}
+  ],v=>{
+    if(!S.watchlist)S.watchlist=[];
+    S.watchlist.push({id:'w'+nid(),ticker:v.ticker,nom:v.nom||v.ticker,
+      prix:0,prev:0,var:0,cur:'',zoneMin:v.zoneMin,zoneMax:v.zoneMax,pk:cible});
+    autoSave();R(true);
+  });
+};;
 /* Faire tourner une ligne d un compte au suivant, sans boîte de dialogue */
 window.passeWatch=function(id){
   const w=S.watchlist.find(x=>x.id===id);if(!w)return;
@@ -1610,7 +1729,17 @@ window.delWatch=function(id){S.watchlist=S.watchlist.filter(x=>x.id!==id);autoSa
 window.edWatchZone=function(el,id,type){const w=S.watchlist.find(x=>x.id===id);if(!w)return;const v=parseFloat(prompt(type==='min'?'Prix MIN de la zone d\'achat':'Prix MAX de la zone d\'achat',type==='min'?w.zoneMin:w.zoneMax));if(isNaN(v))return;if(type==='min')w.zoneMin=v;else w.zoneMax=v;autoSave();R(true)};
 
 /* Journal d'investissement */
-window.addJournal=function(){const date=new Date().toLocaleDateString('fr-FR');const action=prompt('Action (ex: Achat GOOGL, Vente Air Liquide, Renforcement ETF...)','');if(!action)return;const raison=prompt('Pourquoi ? (ta réflexion, ton analyse)','');if(!S.journal)S.journal=[];S.journal.push({id:'j'+nid(),date,action,raison:raison||'',ts:Date.now()});autoSave();R(true)};
+window.addJournal=function(){
+  ouvreForm('journal','Noter une décision',[
+    {k:'action',lib:'Action',ph:'Achat GOOGL, renforcement ETF…'},
+    {k:'raison',lib:'Pourquoi',opt:true,ph:'ta réflexion'}
+  ],v=>{
+    if(!S.journal)S.journal=[];
+    S.journal.push({id:'j'+nid(),date:new Date().toLocaleDateString('fr-FR'),
+      action:v.action,raison:v.raison||'',ts:Date.now()});
+    autoSave();R(true);
+  });
+};;
 window.delJournal=function(id){S.journal=S.journal.filter(x=>x.id!==id);autoSave();R(true)};
 
 /* Edit helpers */
@@ -1651,7 +1780,125 @@ window.eI=function(el,sk,id,fk){const it=S[sk].find(x=>x.id===id);if(!it)return;
 window.edTxt=function(el,sk,id,fk){const it=S[sk].find(x=>x.id===id);if(!it)return;el.outerHTML='<input class="ci" style="width:120px;text-align:left" value="'+(it[fk]||'')+'" onkeydown="if(event.key===\'Enter\')cTxt(this,\''+sk+'\',\''+id+'\',\''+fk+'\');if(event.key===\'Escape\')R()" onblur="cTxt(this,\''+sk+'\',\''+id+'\',\''+fk+'\')" autofocus>'};
 window.cTxt=function(i,sk,id,fk){const it=S[sk].find(x=>x.id===id);if(it)it[fk]=i.value.trim();autoSave();R(true)};
 window.cI=function(i,sk,id,fk){const v=parseFloat(i.value.replace(',','.'));const it=S[sk].find(x=>x.id===id);if(it&&!isNaN(v))it[fk]=v;autoSave();R()};
-window.dI=function(sk,id){S[sk]=S[sk].filter(x=>x.id!==id);autoSave();R()};
+/* ===== SUPPRIMER SANS PERDRE =====
+   Un ✕ mal visé effaçait un bien avec ses logements, ses travaux et son
+   historique de loyers, sans rien demander. On nomme donc ce qu on va
+   perdre, et on garde de quoi revenir en arriere. */
+let _annulable=null,_annulTimer=null;
+function decritBien(b){
+  const bouts=[];
+  if(b.lots&&b.lots.length)bouts.push(b.lots.length+' logement'+(b.lots.length>1?'s':''));
+  if(b.travaux&&b.travaux.length)bouts.push(b.travaux.length+' dépense'+(b.travaux.length>1?'s':''));
+  if(b.travauxPrevus&&b.travauxPrevus.length)bouts.push(b.travauxPrevus.length+' travaux prévus');
+  const mois=b.revenusMois?Object.keys(b.revenusMois).reduce((a,an)=>a+Object.keys(b.revenusMois[an]||{}).filter(m=>nb(b.revenusMois[an][m])>0).length,0):0;
+  if(mois)bouts.push(mois+' mois de loyers notés');
+  if(b.creditId&&S.dettes.some(d=>d.id===b.creditId))bouts.push('un prêt rattaché (il restera dans Dettes)');
+  return bouts;
+}
+function proposeAnnuler(libelle,retour){
+  _annulable=retour;
+  if(_annulTimer)clearTimeout(_annulTimer);
+  const z=document.getElementById('annul');if(!z)return;
+  z.style.display='';
+  z.innerHTML='<span>'+libelle+' supprimé.</span>'+
+    '<button class="btn btn-o" onclick="annuleSuppression()">Annuler</button>';
+  _annulTimer=setTimeout(()=>{_annulable=null;const y=document.getElementById('annul');if(y)y.style.display='none'},20000);
+}
+/* ===== PETITS FORMULAIRES =====
+   Une suite de boîtes de dialogue fait perdre tout ce qu on a déjà tapé
+   dès qu on annule la troisième, et se manipule mal au doigt. On remplit
+   donc les champs dans la page, et on valide une fois. */
+let _formOuvert=null;
+function fermeForm(){
+  const d=document.getElementById('_formZone');
+  if(d&&d.parentNode)d.parentNode.removeChild(d);
+  _formOuvert=null;
+}
+window.annuleForm=function(){fermeForm()};
+/* champs : [{k,lib,type:'texte'|'nombre'|'choix',val,ph,opt,options:[[valeur,libelle]]}] */
+function ouvreForm(ancreId,titre,champs,surValider){
+  const a=document.getElementById(ancreId);if(!a||!a.parentNode)return;
+  fermeForm();
+  const d=document.createElement('div');d.id='_formZone';
+  a.parentNode.insertBefore(d,a);
+  _formOuvert=true;window._formChamps=champs;window._formCb=surValider;
+  let h='<div style="background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:14px 16px;margin:10px 0">';
+  h+='<div style="font-size:12.5px;font-weight:600;margin-bottom:10px">'+titre+'</div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px">';
+  champs.forEach((c,i)=>{
+    h+='<label style="display:block;font-size:11px;color:var(--muted)">'+c.lib+
+       (c.opt?' <span style="opacity:.7">(facultatif)</span>':'');
+    if(c.type==='choix'){
+      h+='<select class="ai" id="fch'+i+'" style="width:100%;margin-top:4px">'+
+         (c.options||[]).map(o=>'<option value="'+o[0]+'"'+(String(o[0])===String(c.val)?' selected':'')+'>'+o[1]+'</option>').join('')+
+         '</select>';
+    }else{
+      h+='<input class="ai" id="fch'+i+'" style="width:100%;margin-top:4px" type="text" '+
+         (c.type==='nombre'?'inputmode="decimal" ':'')+
+         'value="'+(c.val!=null?String(c.val).replace(/"/g,'&quot;'):'')+'" '+
+         'placeholder="'+(c.ph||'')+'" '+
+         'onkeydown="if(event.key===\'Enter\')valideForm();if(event.key===\'Escape\')annuleForm()">';
+    }
+    h+='</label>';
+  });
+  h+='</div>';
+  h+='<div style="display:flex;gap:8px;margin-top:12px">'+
+     '<button class="btn btn-g" onclick="valideForm()">Valider</button>'+
+     '<button class="btn btn-o" onclick="annuleForm()">Annuler</button></div>';
+  h+='<div id="formErr" style="font-size:11.5px;color:var(--red);margin-top:8px"></div></div>';
+  d.innerHTML=h;
+  const prem=document.getElementById('fch0');if(prem&&prem.focus)try{prem.focus()}catch(e){}
+}
+window.valideForm=function(){
+  const champs=window._formChamps||[],cb=window._formCb,v={};
+  const err=document.getElementById('formErr');
+  for(let i=0;i<champs.length;i++){
+    const el=document.getElementById('fch'+i);
+    const brut=el?String(el.value).trim():'';
+    if(!brut&&!champs[i].opt){
+      if(err)err.textContent='Il manque : '+champs[i].lib.toLowerCase()+'.';
+      if(el){el.style.borderColor='var(--red)';try{el.focus()}catch(e){}}
+      return;
+    }
+    v[champs[i].k]=champs[i].type==='nombre'?(brut===''?0:nb(brut)):brut;
+  }
+  fermeForm();
+  if(cb)try{cb(v)}catch(e){signalePanne('ajout',e)}
+};
+window.edCleAV=function(){
+  if(!S.cles)S.cles={};
+  const v=prompt('Clé Alpha Vantage\n\nElle sert uniquement à la comparaison au S&P 500.\nLaisse vide pour ne pas en utiliser.',S.cles.av||'');
+  if(v===null)return;
+  S.cles.av=v.trim();autoSave();R(true);
+};
+window.annuleSuppression=function(){
+  if(!_annulable)return;
+  try{_annulable()}catch(e){signalePanne('annulation',e)}
+  _annulable=null;
+  const z=document.getElementById('annul');if(z)z.style.display='none';
+  autoSave();R(true);
+};
+window.dI=function(sk,id){
+  const i=S[sk].findIndex(x=>x.id===id);if(i<0)return;
+  const o=S[sk][i];
+  const nom=o.nom||'cet élément';
+  const quoi={immo:'le bien',dettes:'la dette',crypto:'la ligne'}[sk]||'l\'élément';
+  let msg='Supprimer '+quoi+' « '+nom+' » ?';
+  if(sk==='immo'){
+    const b=decritBien(o);
+    if(b.length)msg+='\n\nTu perds aussi : '+b.join(', ')+'.';
+  }
+  if(sk==='dettes'){
+    const lies=S.immo.filter(x=>x.creditId===id).map(x=>x.nom||'un bien');
+    if(lies.length)msg+='\n\nCe prêt est rattaché à '+lies.join(', ')+' : leur cashflow et leur fiscalité vont changer.';
+  }
+  msg+='\n\nTu pourras annuler juste après.';
+  if(!confirm(msg))return;
+  const copie=JSON.parse(JSON.stringify(o));
+  S[sk]=S[sk].filter(x=>x.id!==id);
+  proposeAnnuler(nom,()=>{S[sk].splice(Math.min(i,S[sk].length),0,copie)});
+  autoSave();R();
+};
 
 function addB(cid,fields,sk,defs){return '<button class="ab" onclick="sAF(\''+cid+'\',\''+sk+'\','+JSON.stringify(fields).replace(/"/g,'&quot;')+',\''+btoa(JSON.stringify(defs))+'\')">+ Ajouter</button>'}
 window.sAF=function(cid,sk,fields,b64){const fs=typeof fields==='string'?JSON.parse(fields):fields;let h='<div class="ar">';fs.forEach(f=>{h+='<input class="ai" '+(f.w?'style="flex:'+f.w+'"':'')+'placeholder="'+f.label+'" id="nf_'+cid+'_'+f.k+'">'});h+='<button class="ac" onclick="cAF(\''+cid+'\',\''+sk+'\','+JSON.stringify(fs).replace(/"/g,'&quot;')+',\''+b64+'\')">✓</button><button class="ax" onclick="R()">✕</button></div>';document.getElementById(cid).innerHTML=h};
@@ -1797,12 +2044,36 @@ window.edImmoType=function(id){const b=S.immo.find(x=>x.id===id);if(!b)return;co
 window.togSCI=function(id){const b=S.immo.find(x=>x.id===id);if(!b)return;b.sci=!b.sci;autoSave();R(true)};
 window.edPct=function(el,id){const b=S.immo.find(x=>x.id===id);if(!b)return;const v=parseInt(prompt('% de détention (ta part)\nExemple: 50 si tu détiens la moitié',b.partsPct||100));if(isNaN(v)||v<1||v>100)return;b.partsPct=v;autoSave();R(true)};
 window.edImmoCredit=function(id){const b=S.immo.find(x=>x.id===id);if(!b)return;const dettes=S.dettes;if(dettes.length===0){alert('Aucune dette. Ajoute un crédit dans l\'onglet Dettes.');return}let menu='0. Aucun\n';dettes.forEach((d,i)=>{menu+=(i+1)+'. '+d.nom+' ('+F(d.restant)+')\n'});const c=parseInt(prompt('Lier un crédit :\n'+menu,'0'));if(c===0)b.creditId='';else if(c>0&&c<=dettes.length)b.creditId=dettes[c-1].id;autoSave();R(true)};
-window.addTravaux=function(id){const b=S.immo.find(x=>x.id===id);if(!b)return;const desc=prompt('Description','');if(!desc)return;const montant=parseFloat(prompt('Montant €','0'));if(isNaN(montant))return;const date=new Date().toLocaleDateString('fr-FR');if(!b.travaux)b.travaux=[];b.travaux.push({desc,montant,date});autoSave();R(true)};
+window.addTravaux=function(id){
+  const b=S.immo.find(x=>x.id===id);if(!b)return;
+  ouvreForm('ic','Dépense passée sur '+(b.nom||'ce bien'),[
+    {k:'desc',lib:'Description',ph:'Changement de chaudière'},
+    {k:'montant',lib:'Montant (€)',type:'nombre'}
+  ],v=>{
+    if(!b.travaux)b.travaux=[];
+    b.travaux.push({desc:v.desc,montant:v.montant,date:new Date().toLocaleDateString('fr-FR')});
+    autoSave();R(true);
+  });
+};;
 window.delTravaux=function(id,i){const b=S.immo.find(x=>x.id===id);if(b&&b.travaux)b.travaux.splice(i,1);autoSave();R(true)};
 window.edDettePct=function(el,id){const d=S.dettes.find(x=>x.id===id);if(!d)return;const bienLie=S.immo.find(b=>b.creditId===id);const actuel=d.partsPct!=null?d.partsPct:(bienLie?(bienLie.partsPct||100):100);const v=parseInt(prompt('Quelle part de ce prêt est à ta charge ?\n\n100 = tu paies tout\n50 = moitié (achat à deux)',actuel));if(isNaN(v)||v<1||v>100)return;d.partsPct=v;autoSave();R(true)};
 
 /* Projets d'achat */
-window.addProjet=function(){const nom=prompt('Nom du projet (ex: Lot 3 maisons Rouen)','');if(!nom)return;const prix=parseFloat(prompt('Prix visé (€)','200000'))||0;const ans=parseFloat(String(prompt('Dans combien d\'années comptes-tu acheter ?','2')||'2').replace(',','.'));const loyer=parseFloat(String(prompt('Loyer mensuel attendu (€)\n\nLaisse 0 si tu ne sais pas encore : le projet apparaîtra sans cashflow plutôt qu\'avec un cashflow faux.','0')||'0').replace(',','.'))||0;if(!S.projets)S.projets=[];S.projets.push({id:'pj'+nid(),nom,prix,fraisNotaire:Math.round(prix*0.08),travaux:0,apport:0,taux:3.5,dureeMois:240,differe:0,loyer,charges:0,taxeFonciere:0,dansMois:isNaN(ans)?24:Math.max(0,Math.round(ans*12)),enProj:true});autoSave();R(true)};
+window.addProjet=function(){
+  ouvreForm('projetsList','Nouveau projet d achat',[
+    {k:'nom',lib:'Nom du projet',ph:'Lot 3 maisons Rouen'},
+    {k:'prix',lib:'Prix visé (€)',type:'nombre',val:200000},
+    {k:'ans',lib:'Dans combien d années',type:'nombre',val:2},
+    {k:'loyer',lib:'Loyer mensuel attendu (€)',type:'nombre',opt:true,ph:'0 si tu ne sais pas encore'}
+  ],v=>{
+    if(!S.projets)S.projets=[];
+    S.projets.push({id:'pj'+nid(),nom:v.nom,prix:v.prix,
+      fraisNotaire:Math.round(v.prix*0.08),travaux:0,apport:0,taux:3.5,
+      dureeMois:240,differe:0,loyer:v.loyer,charges:0,taxeFonciere:0,
+      dansMois:Math.max(0,Math.round(v.ans*12)),enProj:true});
+    autoSave();R(true);
+  });
+};;
 /* Quand l'achat est prévu, et faut-il le compter dans la projection */
 window.setProjetDelai=function(id,ans){const p=(S.projets||[]).find(x=>x.id===id);if(!p)return;const v=parseFloat(String(ans).replace(',','.'));if(isNaN(v))return;p.dansMois=Math.max(0,Math.round(v*12));autoSave();R(true)};
 window.toggleProjetProj=function(id){const p=(S.projets||[]).find(x=>x.id===id);if(!p)return;p.enProj=!(p.enProj!==false);autoSave();R(true)};
@@ -2199,15 +2470,17 @@ window.edAnneeAchat=function(id){
 };
 window.addTravauxPrevu=function(id){
   const b=S.immo.find(x=>x.id===id);if(!b)return;
-  const desc=prompt('Quels travaux ?','Ravalement');if(!desc)return;
-  const montant=parseFloat(String(prompt('Combien, en euros ?','5000')||'').replace(',','.'));
-  if(isNaN(montant))return;
-  const ans=parseInt(prompt('Dans combien d\'années ?','3'),10);
-  if(isNaN(ans)||ans<1||ans>SIMU_HORIZON)return;
-  if(!b.travauxPrevus)b.travauxPrevus=[];
-  b.travauxPrevus.push({desc,montant,ans,ded:true});
-  autoSave();R(true);
-};
+  ouvreForm('simuTrav','Travaux à venir sur '+(b.nom||'ce bien'),[
+    {k:'desc',lib:'Quels travaux',ph:'Ravalement, toiture…'},
+    {k:'montant',lib:'Combien (€)',type:'nombre'},
+    {k:'ans',lib:'Dans combien d années',type:'nombre',val:3}
+  ],v=>{
+    const ans=Math.max(1,Math.min(SIMU_HORIZON,Math.round(v.ans)));
+    if(!b.travauxPrevus)b.travauxPrevus=[];
+    b.travauxPrevus.push({desc:v.desc,montant:v.montant,ans,ded:true});
+    autoSave();R(true);
+  });
+};;
 window.delTravauxPrevu=function(id,i){
   const b=S.immo.find(x=>x.id===id);if(!b||!b.travauxPrevus)return;
   b.travauxPrevus.splice(i,1);autoSave();R(true);
@@ -2368,7 +2641,8 @@ function renderSimu(){
   h+='<div style="margin-top:20px">';
   h+='<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">'+
      '<span style="font-size:13px;font-weight:600">Travaux à venir</span>'+
-     '<button class="pb" onclick="addTravauxPrevu(\''+b.id+'\')">+ Travaux</button></div>';
+     '<button class="pb" onclick="addTravauxPrevu(\''+b.id+'\')">+ Travaux</button></div>'+
+     '<div id="simuTrav"></div>';
   const tp=b.travauxPrevus||[];
   if(!tp.length)
     h+='<div style="font-size:11.5px;color:var(--muted);line-height:1.6">Rien de prévu. Ajoute une toiture, un ravalement ou une cuisine : la dépense tombera sur son année et creusera le cashflow de cette année-là.</div>';
@@ -3584,6 +3858,19 @@ function etfRatio(pf,pk){let etfVal=0,actVal=0;pf.l.forEach(l=>{if(estETF(l,pk))
 const mk=(c,pf,pk)=>{const er=etfRatio(c,pk);let h='<div class="kpi sm"><div class="kl">Valeur</div><div class="kv" style="color:var(--bourse)">'+F2(c.v)+'</div></div><div class="kpi sm"><div class="kl">Jour</div><div class="kv" style="color:'+(c.dayPnl>=0?'var(--green)':'var(--red)')+'">'+((c.dayPnl>=0?'+':'')+F2(c.dayPnl))+'</div><div class="ks">'+(c.dayPct>=0?'+':'')+c.dayPct.toFixed(2)+'%</div></div><div class="kpi sm"><div class="kl">Versé</div><div class="kv"><span class="ed" onclick="edVer(this,\''+pk+'\')">'+F(pf.ver)+'</span></div></div><div class="kpi sm"><div class="kl">Perf</div><div class="kv" style="color:'+(c.pvVer>=0?'var(--green)':'var(--red)')+'">'+FP(c.ppVer)+'</div></div><div class="kpi sm"><div class="kl">Espèces</div><div class="kv"><span class="ed" onclick="edEsp(this,\''+pk+'\')">'+F(pf.esp)+'</span></div></div><div class="kpi sm"><div class="kl">Div/an</div><div class="kv" style="color:var(--orange)">'+F2(c.divTot)+'</div></div>';
 h+='<div style="grid-column:1/-1;margin-top:4px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--c6);font-weight:600">ETF '+er.pctEtf+'%</span><span style="color:var(--c5);font-weight:600">Actions '+(100-er.pctEtf)+'%</span></div><div style="display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--card2)"><div style="width:'+er.pctEtf+'%;background:var(--c6)"></div><div style="width:'+(100-er.pctEtf)+'%;background:var(--c5)"></div></div></div>';
 return h};
+/* Réglages : la clé et l avertissement qui va avec */
+(function(){
+  const aff=document.getElementById('cleAVaff');if(!aff)return;
+  const c=(S.cles&&S.cles.av)||'';
+  aff.textContent=c?(c.slice(0,4)+'••••'+c.slice(-2)):'aucune';
+  aff.style.color=c?'var(--text2)':'var(--muted)';
+  const z=document.getElementById('alerteCle');if(!z)return;
+  z.innerHTML=c?'':
+    '<div style="font-size:12px;color:var(--accent);line-height:1.6">'+
+    'Aucune clé enregistrée. Si tu en utilisais une avant, elle était écrite dans le fichier, '+
+    'donc lisible publiquement : prends-en une neuve sur alphavantage.co et colle-la ici. '+
+    'L\'ancienne ne sert plus à rien.</div>';
+})();
 /* La barre d onglets de la page Bourse */
 (function(){
   const tb=document.getElementById('bourseTabs');if(!tb)return;
@@ -3599,10 +3886,18 @@ return h};
   BVUES.forEach(v=>{const el=document.getElementById('bvue-'+v.k);
     if(el)el.style.display=(v.k===bourseVue&&vis.some(x=>x.k===v.k))?'':'none'});
 })();
+/* On note la valeur de chaque compte pour le mois en cours */
+try{if(releveComptes(t))autoSave()}catch(e){console.error('relevé des comptes :',e&&e.message)}
 ['pb1','pb2','pb3','pb4'].forEach((id,i)=>{
   const el=document.getElementById(id);if(!el)return;
   const c=[t.p,t.s,t.i,t.a][i], pk=['pea','ctosb','ctoibkr','avl'][i];
-  try{el.innerHTML=blocCompte(pk,c)}catch(e){el.innerHTML='';console.error('bloc compte '+pk+' :',e&&e.message)}
+  /* Le texte d abord, le graphique ensuite : si le graphique échoue,
+     il ne doit pas emporter le bloc déjà écrit. */
+  try{el.innerHTML=blocCompte(pk,c)}
+  catch(e){el.innerHTML='<div class="tk">Ce bloc n a pas pu être calculé.</div>';
+           console.error('bloc compte '+pk+' :',e&&e.message)}
+  try{dessineHistCompte(pk)}
+  catch(e){console.error('courbe du compte '+pk+' :',e&&e.message)}
 });
 document.getElementById('pk1').innerHTML=mk(t.p,S.pf.pea,'pea');document.getElementById('pk2').innerHTML=mk(t.s,S.pf.ctosb,'ctosb');document.getElementById('pk3').innerHTML=mk(t.i,S.pf.ctoibkr,'ctoibkr');document.getElementById('pk4').innerHTML=mk(t.a,S.pf.avl||{esp:0,ver:0,cur:'EUR',l:[]},'avl');
 rPT('pt1',t.p,'pea');rPT('pt2',t.s,'ctosb');rPT('pt3',t.i,'ctoibkr');rPT('pt4',t.a,'avl');
@@ -5686,13 +5981,32 @@ h+='</tbody></table><div id="add-'+pk+'"><button class="ab" onclick="sA(\''+pk+'
 
 window.ePf=function(el,pk,id,f){const c=el.textContent.replace(/[^\d.,-]/g,'').replace(',','.');el.outerHTML='<input class="ci" value="'+c+'" onkeydown="if(event.key===\'Enter\')cPf2(this,\''+pk+'\','+id+',\''+f+'\');if(event.key===\'Escape\')R()" onblur="cPf2(this,\''+pk+'\','+id+',\''+f+'\')" autofocus>'};
 window.cPf2=function(i,pk,id,f){const v=parseFloat(i.value.replace(',','.'));const l=S.pf[pk].l.find(x=>x.id===id);if(l&&!isNaN(v))l[f]=v;autoSave();R()};
-window.dPf=function(pk,id){S.pf[pk].l=S.pf[pk].l.filter(l=>l.id!==id);autoSave();R()};
+window.dPf=function(pk,id){
+  const i=S.pf[pk].l.findIndex(l=>l.id===id);if(i<0)return;
+  const l=S.pf[pk].l[i];
+  if(!confirm('Supprimer « '+(l.n||l.c||'cette ligne')+' » du '+(PK_NOMS[pk]||pk)+' ?'+
+    (nb(l.p)>0?'\n\n'+nb(l.p)+' titre'+(nb(l.p)>1?'s':'')+' au prix de revient de '+F2(nb(l.pr))+'.':'')+
+    '\n\nTu pourras annuler juste après.'))return;
+  const copie=JSON.parse(JSON.stringify(l));
+  S.pf[pk].l=S.pf[pk].l.filter(x=>x.id!==id);
+  proposeAnnuler(l.n||l.c||'La ligne',()=>{S.pf[pk].l.splice(Math.min(i,S.pf[pk].l.length),0,copie)});
+  autoSave();R();
+};
 window.sA=function(pk){document.getElementById('add-'+pk).innerHTML='<div class="ar"><input class="ai" placeholder="Ticker Yahoo (AI.PA, GOOGL...)" id="ac-'+pk+'" style="flex:1.5"><input class="ai" style="flex:2" placeholder="Nom *" id="an-'+pk+'"><input class="ai" placeholder="Cours €" id="ao-'+pk+'"><input class="ai" placeholder="Qté" id="ap-'+pk+'"><input class="ai" placeholder="PRU" id="ar-'+pk+'"><input class="ai" placeholder="Div" id="ad-'+pk+'"><button class="ac" onclick="cA(\''+pk+'\')">✓</button><button class="ax" onclick="R()">✕</button></div><div style="font-size:10px;color:var(--muted);margin-top:4px">Laisse cours vide + ticker Yahoo → prix auto</div>'};
 window.cA=async function(pk){const n=document.getElementById('an-'+pk).value.trim();if(!n)return;const ticker=document.getElementById('ac-'+pk).value.trim()||'—';let co=parseFloat(document.getElementById('ao-'+pk).value.replace(',','.'))||0;const nl={id:nid(),c:ticker,n:n,co:co,p:parseFloat(document.getElementById('ap-'+pk).value.replace(',','.'))||0,pr:parseFloat(document.getElementById('ar-'+pk).value.replace(',','.'))||0,div:parseFloat(document.getElementById('ad-'+pk).value.replace(',','.'))||0,var:0};if(ticker!=='—')YM[ticker]=ticker;if(co===0&&ticker!=='—'){const q=await yQ(ticker);if(q){nl.co=Math.round(q.price*100)/100;if(q.cur==='USD'){nl.usd=nl.co;nl.co=Math.round(q.price*eurUsd*100)/100}}}S.pf[pk].l.push(nl);autoSave();R()};
 
 window.edSim=function(el,f){if(!S.simParams)S.simParams={age:30,dep:25000,rend:7,ep:500,inflation:2,dcaSteps:[],horizon:30};const v=S.simParams[f];el.outerHTML='<input class="ci" style="width:100px" value="'+v+'" onkeydown="if(event.key===\'Enter\')cmSim(this,\''+f+'\');if(event.key===\'Escape\')R(true)" onblur="cmSim(this,\''+f+'\')" autofocus>'};
 window.cmSim=function(i,f){const v=parseFloat(i.value.replace(/[^\d.,-]/g,'').replace(',','.'));if(!isNaN(v)){S.simParams[f]=v;autoSave()}R(true)};
-window.addDCA=function(){const annee=parseInt(prompt("À partir de quelle année ? (ex: 5)","5"));if(isNaN(annee))return;const montant=parseInt(prompt("Nouveau DCA mensuel ?","600"));if(isNaN(montant))return;if(!S.simParams.dcaSteps)S.simParams.dcaSteps=[];S.simParams.dcaSteps.push({annee,montant});autoSave();R(true)};
+window.addDCA=function(){
+  ouvreForm('simContent','Changer le versement mensuel à partir d une année',[
+    {k:'annee',lib:'À partir de l année',type:'nombre',val:5},
+    {k:'montant',lib:'Nouveau versement (€/mois)',type:'nombre',val:600}
+  ],v=>{
+    if(!S.simParams.dcaSteps)S.simParams.dcaSteps=[];
+    S.simParams.dcaSteps.push({annee:Math.round(v.annee),montant:Math.round(v.montant)});
+    autoSave();R(true);
+  });
+};;
 window.edDCA=function(el,i){const s=S.simParams.dcaSteps[i];el.outerHTML='<input class="ci" style="width:80px" value="'+s.montant+'" onkeydown="if(event.key===\'Enter\')cmDCA(this,'+i+');if(event.key===\'Escape\')R(true)" onblur="cmDCA(this,'+i+')" autofocus>'};
 window.cmDCA=function(inp,i){const v=parseFloat(inp.value.replace(',','.'));if(!isNaN(v))S.simParams.dcaSteps[i].montant=v;autoSave();R(true)};
 window.delDCA=function(i){S.simParams.dcaSteps.splice(i,1);autoSave();R(true)};
