@@ -95,10 +95,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .sous{display:none;flex-direction:column;gap:1px;padding-left:9px;margin-left:11px;border-left:1px solid var(--border)}
 .sous.ouvert{display:flex}
 .sous .tab{font-size:13px;padding:7px 10px}
-.side-perf{flex:none;margin-top:12px;border:1px solid var(--border);border-radius:10px;padding:9px 11px;font-size:11.5px;background:var(--card2)}
-.side-perf .sp-t{font-size:11px;color:var(--muted);letter-spacing:0;font-weight:600;margin-bottom:6px}
-.side-perf .sp-r{display:flex;justify-content:space-between;gap:8px;padding:1.5px 0;color:var(--text2)}
-.side-perf .sp-tot{border-top:1px solid var(--border);margin-top:6px;padding-top:6px;font-weight:600}
 .side-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:39}
 .side-ov.on{display:block}
 .shell{margin-left:224px;min-height:100vh}
@@ -423,8 +419,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 05/11 15h10</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 05/11 16h05</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -447,10 +442,10 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <div class="svue" id="bvue-ensemble">
 <div class="kr" id="bk"></div>
 <div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:#e8a33d">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Objectifs Bourse</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addBourseGoal()">+ Objectif</button></div><div id="bourseGoals" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch()">+ Suivre</button></div><div id="watchlist" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Journal d'investissement</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addJournal()">+ Entrée</button></div><div id="journal" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div></div>
-<div class="svue" id="bvue-pea" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">PEA — Fortuneo</div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div></div></div>
-<div class="svue" id="bvue-ctosb" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">CTO — Saxo <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div></div></div>
-<div class="svue" id="bvue-ctoibkr" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">CTO — IBKR</div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div></div></div>
-<div class="svue" id="bvue-avl" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">AV — Linxea</div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div></div></div>
+<div class="svue" id="bvue-pea" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">PEA — Fortuneo</div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div><div id="pb1"></div></div></div>
+<div class="svue" id="bvue-ctosb" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">CTO — Saxo <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div><div id="pb2"></div></div></div>
+<div class="svue" id="bvue-ctoibkr" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">CTO — IBKR</div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div><div id="pb3"></div></div></div>
+<div class="svue" id="bvue-avl" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">AV — Linxea</div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div><div id="pb4"></div></div></div>
 </div>
 <div class="page" id="page-epargne"><div class="kr" id="ek"></div><div class="g2"><div class="card"><div class="ct" id="ct1"></div><div id="cl1"></div><div id="af1"></div></div><div class="card"><div class="ct" id="ct2"></div><div id="cl2"></div><div id="af2"></div></div><div class="card sf"><div class="ct" id="ct3"></div><div id="cl3"></div><div id="af3"></div></div></div></div>
 <div class="page" id="page-immo">
@@ -771,8 +766,8 @@ let immoVue=(function(){try{return localStorage.getItem('immoVue')||'mensuel'}ca
 const BVUES=[{k:'ensemble',l:'Ensemble',c:'Tout'},
              {k:'pea',l:'PEA',c:'PEA',pf:'pea'},
              {k:'ctosb',l:'CTO Saxo',c:'Saxo',pf:'ctosb'},
-             {k:'ctoibkr',l:'CTO IBKR',c:'IBKR',pf:'ctoibkr'},
-             {k:'avl',l:'AV Linxea',c:'AV',pf:'avl'}];
+             {k:'avl',l:'AV Linxea',c:'AV',pf:'avl'},
+             {k:'ctoibkr',l:'CTO IBKR',c:'IBKR',pf:'ctoibkr'}];
 /* Tous les comptes ont leur onglet, meme vides : c est dans l onglet du
    compte que vit le bouton pour y ajouter une premiere ligne. En cacher un
    le rendrait inatteignable. Le compteur dit lequel est vide. */
@@ -1364,6 +1359,77 @@ c+="\nDETTES\nNom;Emprunté;Restant;Taux;Durée\n";S.dettes.forEach(x=>{c+=x.nom
 c+="\nBUDGET\n";if(S.budget){c+="Revenus\n";S.budget.revenus.forEach(r=>{c+=r.nom+";"+r.montant+"\n"});S.budget.categories.forEach(cat=>{c+="\n"+cat.nom+"\n";cat.postes.forEach(p=>{c+=p.nom+";"+p.montant+"\n"})})}
 const blob=new Blob(["\uFEFF"+c],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download="patrimoine_"+now+".csv";a.click();URL.revokeObjectURL(url)};
 
+/* ===== CE QU ON PEUT DIRE D UN COMPTE, SOUS SON TABLEAU =====
+   L app ne garde qu une valeur de portefeuille par mois, pour l ensemble :
+   il n y a donc pas d historique par compte, et pas de courbe honnete a
+   tracer ici. On montre ce que les lignes du jour permettent de dire
+   vraiment : qui porte le compte, comment il est reparti, a quel point
+   il est concentre. */
+function barreFine(pct,coul){
+  return '<div style="flex:1;height:5px;border-radius:3px;background:var(--card2);overflow:hidden;min-width:40px">'+
+    '<div style="height:100%;width:'+Math.max(2,Math.min(100,pct)).toFixed(1)+'%;background:'+coul+';border-radius:3px"></div></div>';
+}
+function blocCompte(pk,c){
+  const l=c.l||[];
+  if(!l.length)return '<div class="tk" style="margin-top:14px">Ce compte est vide. Ajoute une première ligne ci-dessus pour voir ce qu\'il raconte.</div>';
+  const u=c.isUSD;
+  const mt=v=>u?('$'+v.toFixed(2)):F2(v);
+
+  /* Qui porte le compte : les trois meilleures et les trois moins bonnes */
+  const chiffrees=l.filter(x=>isFinite(x.g)&&x.g!==0);
+  let gagne='';
+  if(chiffrees.length){
+    const tri=chiffrees.slice().sort((a,b)=>b.g-a.g);
+    const max=Math.max.apply(null,chiffrees.map(x=>Math.abs(x.g)))||1;
+    const ligne=x=>'<div style="display:flex;align-items:center;gap:10px;padding:5px 0">'+
+      '<span style="flex:0 0 38%;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+x.n+'</span>'+
+      barreFine(Math.abs(x.g)/max*100,x.g>=0?'var(--green)':'var(--red)')+
+      '<span style="flex:0 0 76px;text-align:right;font-size:12px;font-weight:500;color:'+(x.g>=0?'var(--green)':'var(--red)')+'">'+(x.g>=0?'+':'')+mt(x.g)+'</span></div>';
+    gagne='<div class="sect">Ce qui porte le compte</div>';
+    if(tri.length<=6){
+      /* Assez peu de lignes pour les montrer toutes, de la meilleure a la pire */
+      gagne+=tri.map(ligne).join('');
+    }else{
+      /* Au-dela, les trois meilleures et les pertes, sans melanger les deux :
+         une ligne en gain n a rien a faire parmi « ce qui pese ». */
+      const gains=tri.filter(x=>x.g>0).slice(0,3);
+      const pertes=tri.filter(x=>x.g<0).slice(-3).reverse();
+      if(gains.length)gagne+='<div class="tk" style="margin:2px 0 2px">Les plus gros gains</div>'+gains.map(ligne).join('');
+      if(pertes.length)gagne+='<div class="tk" style="margin:10px 0 2px">Ce qui pèse</div>'+pertes.map(ligne).join('');
+      else gagne+='<div class="tk" style="margin-top:8px">Aucune ligne en moins-value.</div>';
+    }
+    gagne+='<div class="tk" style="margin-top:8px">Plus et moins-values latentes, depuis ton prix de revient.</div>';
+  }
+
+  /* Repartition par secteur, pour ce compte seulement */
+  const parSec={};
+  l.forEach(x=>{const k=secteurDe(x,pk);parSec[k]=(parSec[k]||0)+nb(x.vaEur)});
+  const secs=Object.keys(parSec).map(k=>({k,v:parSec[k]})).sort((a,b)=>b.v-a.v);
+  const totSec=secs.reduce((a,x)=>a+x.v,0)||1;
+  const secH='<div class="sect">Par secteur</div>'+secs.slice(0,6).map(x=>
+    '<div style="display:flex;align-items:center;gap:10px;padding:5px 0">'+
+    '<span style="flex:0 0 38%;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+x.k+'</span>'+
+    barreFine(x.v/totSec*100,SC[x.k]||CV('--muted'))+
+    '<span style="flex:0 0 76px;text-align:right;font-size:12px;color:var(--text2)">'+(x.v/totSec*100).toFixed(0)+' %</span></div>').join('')+
+    (secs.length>6?'<div class="tk" style="margin-top:4px">et '+(secs.length-6)+' autre'+(secs.length>7?'s':'')+'</div>':'');
+
+  /* Concentration : les trois plus grosses lignes */
+  const poids=l.map(x=>nb(x.w)).sort((a,b)=>b-a);
+  const top3=poids.slice(0,3).reduce((a,x)=>a+x,0);
+  const plusGrosse=l.slice().sort((a,b)=>nb(b.w)-nb(a.w))[0];
+  let conc='<div style="font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.65">';
+  conc+='Les '+Math.min(3,l.length)+' plus grosses lignes font <b style="color:var(--text2)">'+top3.toFixed(0)+' %</b> du compte';
+  if(plusGrosse)conc+=', dont '+plusGrosse.n+' à '+nb(plusGrosse.w).toFixed(0)+' %';
+  conc+='. ';
+  if(top3>60)conc+='C\'est concentré : une mauvaise nouvelle sur une seule ligne se verrait tout de suite. ';
+  if(c.divTot>0)conc+='Ce compte verse '+F2(c.divTot)+' de dividendes par an, soit '+(c.v>0?(c.divTot/c.v*100).toFixed(1):'0')+' % de sa valeur. ';
+  conc+='<br>Pas de courbe de performance ici : l\'app n\'enregistre qu\'une valeur de portefeuille par mois, pour l\'ensemble des comptes. Je peux lui faire relever chaque compte séparément, et la courbe se construira mois après mois.';
+  conc+='</div>';
+
+  return '<div class="g2" style="margin-top:18px;gap:24px">'+
+         '<div>'+(gagne||'<div class="tk">Pas encore de prix de revient saisi : les plus-values ne peuvent pas être calculées.</div>')+'</div>'+
+         '<div>'+secH+'</div></div>'+conc;
+}
 function cPf(pf){const isUSD=pf.cur==='USD';let tv=0,tp=0,dT=0,dayPnl=0;const e=pf.l.map(x=>{const va=x.co*x.p;let cp=isUSD?(x.usd||x.co):x.co;const vp=x.pr*x.p,vap=cp*x.p,g=vap-vp,gp=vp>0?(g/vp)*100:0,da=(x.div||0)*x.p;dT+=da;tv+=va;tp+=x.pr*x.p*(isUSD?eurUsd:1);if(x.var&&x.co){const prevCo=x.co/(1+x.var/100);dayPnl+=(x.co-prevCo)*x.p}return{...x,vaEur:va,g,gp,divAn:da}});const tot=tv+(pf.esp||0);e.forEach(x=>x.w=tot>0?(x.vaEur/tot)*100:0);const pv=tot-pf.ver;const dayPct=tv>0?(dayPnl/tv*100):0;return{l:e,v:tot,pv:tv-tp,pp:tp>0?((tv-tp)/tp)*100:0,pvVer:pv,ppVer:pf.ver>0?(pv/pf.ver)*100:0,divTot:dT,isUSD,dayPnl:Math.round(dayPnl*100)/100,dayPct:Math.round(dayPct*100)/100}}
 function Tot(){const p=cPf(S.pf.pea),s=cPf(S.pf.ctosb),i=cPf(S.pf.ctoibkr),a=cPf(S.pf.avl||{esp:0,ver:0,cur:'EUR',l:[]});const co=S.comptes.reduce((a,c)=>a+c.montant,0),eL=S.epLibre.reduce((a,c)=>a+c.montant,0),eB=S.epBloq.reduce((a,c)=>a+c.montant,0),ep=eL+eB,bo=p.v+s.v+i.v+a.v;S.crypto.forEach(c=>{if(c.prix>0)c.montant=Math.round(c.prix*c.qte*100)/100;else if(!c.montant&&c.pru>0)c.montant=Math.round(c.pru*c.qte*100)/100});const cr=S.crypto.reduce((a,c)=>a+(c.montant||0),0),crI=S.crypto.reduce((a,c)=>a+c.pru*c.qte,0),im=S.immo.reduce((a,x)=>a+x.valeur*((x.partsPct||100)/100),0);
 /* Dettes: appliquer le % de détention du bien associé */
@@ -1782,32 +1848,6 @@ function renderTicker(){
   el.innerHTML=bloc+bloc;/* dupliqué pour un défilement continu */
 }
 
-/* Encart performance dans la barre latérale */
-function renderSidePerf(){
-  const el=document.getElementById('sidePerf');if(!el)return;
-  const pan=cPan();const an=new Date().getFullYear();
-  if(!pan||pan.length===0){el.innerHTML='<div class="sp-t">Performance '+an+'</div><div style="color:var(--muted)">Pas encore de données</div>';return}
-  let h='<div class="sp-t">Performance '+an+'</div>';let cum=0,cumE=0;
-  /* Le cumul porte toute l annee ; seuls les trois derniers mois sont detailles,
-     pour que l encart ne grandisse pas de janvier a decembre. */
-  pan.forEach(r=>{cum+=r.perf;cumE+=r.pv});
-  const der=pan.slice(-3);
-  der.forEach(r=>{const c=r.perf>=0?'var(--green)':'var(--red)';
-    h+='<div class="sp-r"><span>'+r.l.slice(0,4).toLowerCase()+'.</span><span style="color:'+c+'">'+(r.perf>=0?'+':'')+r.perf.toFixed(1)+'%</span><span style="color:'+c+';min-width:52px;text-align:right">'+(hiddenMode?'***':(r.pv>=0?'+':'')+Math.round(r.pv)+' €')+'</span></div>'});
-  if(pan.length>der.length)
-    h+='<div style="color:var(--muted);font-size:10.5px;padding:3px 0 0;line-height:1.35">+ '+(pan.length-der.length)+' mois plus tôt, compris dans le cumul</div>';
-  const cc=cum>=0?'var(--green)':'var(--red)';
-  h+='<div class="sp-r sp-tot"><span>Cumul</span><span style="color:'+cc+'">'+(cum>=0?'+':'')+cum.toFixed(1)+'%</span><span style="color:'+cc+';min-width:52px;text-align:right">'+(hiddenMode?'***':(cumE>=0?'+':'')+Math.round(cumE)+' €')+'</span></div>';
-  /* Part de ce gain qui vient des dividendes réellement encaissés (ils dorment sur le
-     compte titres, donc ils sont déjà compris dans la valeur de fin de mois) */
-  const ml=["Jan","Fév","Mar","Avr","Mai","Juin","Juil","Août","Sep","Oct","Nov","Déc"];
-  const divA=ml.reduce((s,m)=>s+divPart(String(an),m,'a'),0);
-  if(divA>0){
-    const pct=Math.abs(cumE)>1?Math.round(divA/Math.abs(cumE)*100):null;
-    h+='<div class="sp-r" style="color:var(--muted);font-size:10.5px"><span>dont dividendes</span><span>'+(pct!=null?pct+'%':'—')+'</span><span style="min-width:52px;text-align:right">'+(hiddenMode?'***':'+'+Math.round(divA)+' €')+'</span></div>';
-  }
-  el.innerHTML=h;
-}
 
 
 
@@ -2245,10 +2285,9 @@ function simuMaj(){
   put('simuTable',tableauSimu(r,an));
   /* Le repère sur la courbe se déplace sans redessiner le graphique */
   const c=window._cSimu;
-  if(c&&c.data&&c.data.datasets.length>=2){
+  if(c&&c.data&&c.data.datasets.length){
     const pts=r.lignes.map(x=>x.an===an?4:0);
-    c.data.datasets[0].pointRadius=pts;
-    c.data.datasets[1].pointRadius=pts.slice();
+    c.data.datasets.forEach(d=>{d.pointRadius=pts.slice()});
     try{c.update('none')}catch(err){}
   }
 }
@@ -2341,7 +2380,13 @@ function renderSimu(){
       {label:'Cashflow cumulé après impôt',data:r.lignes.map(x=>Math.round(x.cumCash)),
        borderColor:CV('--c2'),backgroundColor:'transparent',fill:false,
        tension:.3,borderWidth:2,pointRadius:r.lignes.map(x=>x.an===an?4:0),
-       pointBackgroundColor:CV('--c2')}
+       pointBackgroundColor:CV('--c2')},
+      /* Le crédit qui s efface : c est lui qui fait monter le capital net
+         et qui pèse sur le cashflow jusqu au dernier mois. */
+      {label:'Ce qu\'il reste à rembourser',data:r.lignes.map(x=>Math.round(x.restant)),
+       borderColor:CV('--red'),backgroundColor:'transparent',fill:false,
+       tension:.3,borderWidth:1.8,borderDash:[5,4],
+       pointRadius:r.lignes.map(x=>x.an===an?4:0),pointBackgroundColor:CV('--red')}
     ]},options:{responsive:true,maintainAspectRatio:false,
       interaction:{mode:'index',intersect:false},animation:animConf,
       plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,
@@ -3447,7 +3492,22 @@ let ph='<table class="pt"><thead><tr><th></th><th>S&P</th><th>Portf.</th><th>+/-
 const pan=cPan();let ytP=0,ytPV=0,ytSP=0;
 pan.forEach(r=>{ytP+=r.perf;ytPV+=r.pv;if(r.sp!=null)ytSP+=r.sp;ph+='<tr><td class="rl">'+r.l+'</td>'+PC(r.sp)+PC(r.perf)+'<td style="font-weight:600;color:'+(r.pv>=0?'var(--green)':'var(--red)')+'">'+F2(r.pv)+'</td></tr>'});
 ph+='<tr class="total-row"><td class="rl">YTD</td>'+PC(ytSP||null)+PC(ytP)+'<td style="font-weight:500;color:'+(ytPV>=0?'var(--green)':'var(--red)')+'">'+F2(ytPV)+'</td></tr></tbody></table>';
-document.getElementById('ptw').innerHTML=ph;renderSidePerf();renderTicker();document.getElementById('sps').textContent=spSt;
+/* La part du gain qui vient des dividendes reellement encaisses. Ils dorment
+   sur le compte titres, donc ils sont deja compris dans la valeur de fin de
+   mois : c est une decomposition du gain, pas un ajout. Les loyers de SCPI
+   sont exclus, ils ne viennent pas du portefeuille boursier. */
+(function(){
+  const anP=String(new Date().getFullYear());
+  const mlP=["Jan","Fév","Mar","Avr","Mai","Juin","Juil","Août","Sep","Oct","Nov","Déc"];
+  const divA=mlP.reduce((a,m)=>a+divPart(anP,m,'a'),0);
+  if(divA>0){
+    const pct=Math.abs(ytPV)>1?Math.round(divA/Math.abs(ytPV)*100):null;
+    ph+='<div style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.6">'+
+      'Dont <b style="color:var(--text2)">'+F2(divA)+'</b> de dividendes encaissés cette année'+
+      (pct!=null?', soit '+pct+' % du gain':'')+'. Les loyers de SCPI ne sont pas comptés ici.</div>';
+  }
+})();
+document.getElementById('ptw').innerHTML=ph;renderTicker();document.getElementById('sps').textContent=spSt;
 
 const rc=rStat.startsWith('✓')?'rs ok':rStat.startsWith('⚠')?'rs err':'rs load';
 document.getElementById('rstat').innerHTML=rStat?'<span class="'+rc+'">'+rStat+'</span>':'';
@@ -3473,6 +3533,11 @@ return h};
   BVUES.forEach(v=>{const el=document.getElementById('bvue-'+v.k);
     if(el)el.style.display=(v.k===bourseVue&&vis.some(x=>x.k===v.k))?'':'none'});
 })();
+['pb1','pb2','pb3','pb4'].forEach((id,i)=>{
+  const el=document.getElementById(id);if(!el)return;
+  const c=[t.p,t.s,t.i,t.a][i], pk=['pea','ctosb','ctoibkr','avl'][i];
+  try{el.innerHTML=blocCompte(pk,c)}catch(e){el.innerHTML='';console.error('bloc compte '+pk+' :',e&&e.message)}
+});
 document.getElementById('pk1').innerHTML=mk(t.p,S.pf.pea,'pea');document.getElementById('pk2').innerHTML=mk(t.s,S.pf.ctosb,'ctosb');document.getElementById('pk3').innerHTML=mk(t.i,S.pf.ctoibkr,'ctoibkr');document.getElementById('pk4').innerHTML=mk(t.a,S.pf.avl||{esp:0,ver:0,cur:'EUR',l:[]},'avl');
 rPT('pt1',t.p,'pea');rPT('pt2',t.s,'ctosb');rPT('pt3',t.i,'ctoibkr');rPT('pt4',t.a,'avl');
 
