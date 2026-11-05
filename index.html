@@ -27,13 +27,14 @@
 --p1:#d99a3c;--p2:#4e9cc4;--p3:#52b08a;--p4:#cc7a9e;--p5:#9183cf;--p6:#45aaa8;--p7:#7d8fa8;--p8:#b8705f;
 --font:'Onest',system-ui,sans-serif}
 body.light{
---bg:#fafafa;--card:#ffffff;--card2:#f4f4f5;--border:rgba(23,23,23,.10);--line:rgba(23,23,23,.07);
---text:#171717;--text2:#525252;--muted:#737373;
---accent:#9a6a16;--abg:rgba(154,106,22,.08);
---green:#16a34a;--red:#dc2626;--orange:#9a6a16;--bourse:#2b7ba8;--crypto:#6a5cb0;
---c1:#9a6a16;--c2:#2b7ba8;--c3:#2f8f6a;--c4:#a84d75;--c5:#6a5cb0;--c6:#1f8a88;
---grid:rgba(23,23,23,.06);--shadow:0 1px 2px rgba(0,0,0,.05);
---p1:#9a6a16;--p2:#2b7ba8;--p3:#2f8f6a;--p4:#a84d75;--p5:#6a5cb0;--p6:#1f8a88;--p7:#5c6b82;--p8:#9c4f3f}
+/* Papier : fond creme, encre brun-noir, un seul ambre pour l accent. */
+--bg:#f7f4ee;--card:#fffdf8;--card2:#efe9df;--border:rgba(31,27,22,.11);--line:rgba(31,27,22,.07);
+--text:#1f1b16;--text2:#5e554a;--muted:#7b7266;
+--accent:#a2621c;--abg:rgba(162,98,28,.09);
+--green:#2f7d4f;--red:#c0362f;--orange:#a2621c;--bourse:#2d6e8f;--crypto:#6a5a9c;
+--c1:#a2621c;--c2:#2d6e8f;--c3:#3f7f5c;--c4:#9c4a6a;--c5:#6a5a9c;--c6:#1f7f7c;
+--grid:rgba(31,27,22,.07);--shadow:0 1px 2px rgba(74,56,30,.06);
+--p1:#a2621c;--p2:#2d6e8f;--p3:#3f7f5c;--p4:#9c4a6a;--p5:#6a5a9c;--p6:#1f7f7c;--p7:#5c6b82;--p8:#9c4f3f}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.5;transition:background .25s,color .25s}
 
@@ -41,7 +42,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .li{width:32px;height:32px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg)}
 .lt{font-size:16px;font-weight:500;letter-spacing:0;color:var(--text)}
 .nr{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.tabs{display:flex;flex-direction:column;gap:1px;overflow-y:auto}
+.tabs{display:flex;flex-direction:column;gap:1px;flex:1 1 auto;min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.tabs::-webkit-scrollbar{width:6px}
+.tabs::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+/* Un bouton de menu garde sa hauteur, quoi qu il arrive au-dessus de lui. */
+.tab,.sous{flex:none}
 .tab{display:flex;align-items:center;gap:10px;padding:8px 11px;border-radius:8px;border:none;background:0;color:var(--muted);font-size:13px;font-weight:450;cursor:pointer;font-family:var(--font);transition:background-color .15s,color .15s,border-color .15s;text-align:left;width:100%}
 .tab .ti{width:15px;text-align:center;font-size:13px;opacity:.75}
 .tab:hover{color:var(--text);background:var(--card2)}
@@ -90,10 +95,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .sous{display:none;flex-direction:column;gap:1px;padding-left:9px;margin-left:11px;border-left:1px solid var(--border)}
 .sous.ouvert{display:flex}
 .sous .tab{font-size:13px;padding:7px 10px}
-.side-perf{margin-top:auto;border:1px solid var(--border);border-radius:10px;padding:12px 13px;font-size:12px;background:var(--card2)}
-.side-perf .sp-t{font-size:12px;color:var(--muted);letter-spacing:0;font-weight:600;margin-bottom:9px}
-.side-perf .sp-r{display:flex;justify-content:space-between;gap:8px;padding:2.5px 0;color:var(--text2)}
-.side-perf .sp-tot{border-top:1px solid var(--border);margin-top:9px;padding-top:9px;font-weight:600}
+.side-perf{flex:none;margin-top:12px;border:1px solid var(--border);border-radius:10px;padding:9px 11px;font-size:11.5px;background:var(--card2)}
+.side-perf .sp-t{font-size:11px;color:var(--muted);letter-spacing:0;font-weight:600;margin-bottom:6px}
+.side-perf .sp-r{display:flex;justify-content:space-between;gap:8px;padding:1.5px 0;color:var(--text2)}
+.side-perf .sp-tot{border-top:1px solid var(--border);margin-top:6px;padding-top:6px;font-weight:600}
 .side-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:39}
 .side-ov.on{display:block}
 .shell{margin-left:224px;min-height:100vh}
@@ -201,7 +206,7 @@ tr:hover{background:var(--card2)}
 .stabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:18px;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .stab{flex:1 1 0;min-width:104px;white-space:nowrap;padding:9px 12px;border-radius:8px;border:0;background:transparent;color:var(--muted);font-size:13px;font-weight:500;font-family:var(--font);cursor:pointer;transition:background-color .15s,color .15s,border-color .15s;display:flex;align-items:center;justify-content:center;gap:6px}
 .stab:hover{color:var(--text)}
-.stab.on{background:var(--accent);color:#1a1205;font-weight:650}
+.stab.on{background:var(--accent);color:var(--bg);font-weight:650}
 .stab .sbadge{background:rgba(0,0,0,.18);border-radius:16px;padding:1px 7px;font-size:12px;font-weight:500}
 .stab .scourt{display:none}
 @media(max-width:620px){
@@ -216,6 +221,15 @@ tr:hover{background:var(--card2)}
 .manq{background:var(--card);border:1px solid var(--orange);border-left-width:3px;border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:12px;line-height:1.65;color:var(--text2)}
 .manq b{color:var(--orange)}
 .manq .mlien{color:var(--accent);cursor:pointer;text-decoration:underline;font-weight:600}
+/* Curseur de temps du simulateur */
+.rg{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;
+    background:var(--card2);outline:none;margin:0}
+.rg::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+    background:var(--accent);border:2px solid var(--card);cursor:pointer;box-shadow:var(--shadow)}
+.rg::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);
+    border:2px solid var(--card);cursor:pointer}
+.rg:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.simu-h{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--text2);margin-bottom:18px}
 .pb{padding:5px 12px;border-radius:8px;border:1px solid var(--border);font-size:12px;font-weight:450;cursor:pointer;background:transparent;color:var(--muted);font-family:var(--font);transition:background-color .15s,color .15s,border-color .15s}
 .pb:hover{color:var(--text);border-color:var(--muted)}
 .pb.on{background:var(--abg);color:var(--accent);border-color:var(--accent);font-weight:500}
@@ -410,7 +424,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 04/11 16h35</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 05/11 13h05</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -428,7 +442,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <main>
 <div class="page active" id="page-home"><div id="homeAlerts"></div><div class="hBande"><div class="hTete" id="hTete"></div><div class="hCote" id="hCote"></div></div><div class="kr" id="hk" style="display:none"></div><div id="widgetResume" style="display:none"></div><div class="g21 gSeul"><div class="card"><div class="fb" style="margin-bottom:10px"><div class="ct" style="margin:0" id="netTitre">Évolution du patrimoine</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div style="display:flex;gap:4px"><button class="ctb" id="netMode_brut" onclick="setNetMode('brut')">Brut</button><button class="ctb active" id="netMode_net" onclick="setNetMode('net')">Net</button></div><div style="display:flex;gap:4px"><button class="ctb active" id="netVue_courbe" onclick="setNetVue('courbe')">Courbes</button><button class="ctb" id="netVue_barres" onclick="setNetVue('barres')">Barres</button></div><div style="display:flex;gap:4px" id="netPs"></div></div></div><div class="cto" id="netCases"></div><div class="cb"><canvas id="cN"></canvas></div></div><div class="g21"><div class="card hRegistre" id="hRegistre"></div><div class="card hAttention" id="hAttention"></div></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Historique</div><button class="reset-btn" onclick="if(confirm('Reset?'))doReset()">Réinitialiser</button></div><div id="sl" style="margin-top:12px"></div></div></div>
 <div class="page" id="page-bourse"><div class="kr" id="bk"></div>
-<div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div id="rstat" class="rs" style="margin:12px 0"></div><div class="card"><div class="fb"><div class="ct" style="margin:0">PEA — Fortuneo</div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — Saxo <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — IBKR</div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">AV — Linxea</div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:#7c3aed">● Portf.</span><span style="color:#e8a33d">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Objectifs Bourse</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addBourseGoal()">+ Objectif</button></div><div id="bourseGoals" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch()">+ Suivre</button></div><div id="watchlist" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Journal d'investissement</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addJournal()">+ Entrée</button></div><div id="journal" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div></div>
+<div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div id="rstat" class="rs" style="margin:12px 0"></div><div class="card"><div class="fb"><div class="ct" style="margin:0">PEA — Fortuneo</div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — Saxo <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">CTO — IBKR</div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">AV — Linxea</div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:#e8a33d">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Objectifs Bourse</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addBourseGoal()">+ Objectif</button></div><div id="bourseGoals" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch()">+ Suivre</button></div><div id="watchlist" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Journal d'investissement</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addJournal()">+ Entrée</button></div><div id="journal" style="margin-top:12px"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div></div>
 <div class="page" id="page-epargne"><div class="kr" id="ek"></div><div class="g2"><div class="card"><div class="ct" id="ct1"></div><div id="cl1"></div><div id="af1"></div></div><div class="card"><div class="ct" id="ct2"></div><div id="cl2"></div><div id="af2"></div></div><div class="card sf"><div class="ct" id="ct3"></div><div id="cl3"></div><div id="af3"></div></div></div></div>
 <div class="page" id="page-immo">
 <div class="stabs" id="immoTabs"></div>
@@ -482,6 +496,14 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <div class="card"><div class="fb"><div class="ct" style="margin:0">Projets d'achat</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addProjet()">+ Projet</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Prépare tes futurs achats : simule le cashflow avant de te lancer, puis transforme le projet en vrai bien le jour de l'achat.</div><div id="projetsList"></div></div>
 <div class="card"><div class="fb"><div class="ct" style="margin:0">Suivi courte durée</div></div><div id="immoCD"></div></div>
 </div>
+<div class="svue" id="ivue-simu" style="display:none">
+<div class="card">
+  <div class="ct" style="margin-bottom:4px">Simuler un bien dans le temps</div>
+  <div style="font-size:11.5px;color:var(--muted);margin-bottom:14px;line-height:1.6">Choisis un bien, puis fais glisser le curseur pour voir où tu en seras. Les mensualités suivent le vrai tableau d'amortissement du prêt ; le reste repose sur trois hypothèses que tu règles toi-même.</div>
+  <div id="simuBiens" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px"></div>
+  <div id="simuCorps"></div>
+</div>
+</div>
 </div>
 <div class="page" id="page-reglages">
 <div class="card"><div class="ct">Sauvegarde de secours</div>
@@ -527,7 +549,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <button class="dm-btn" onclick="toggleHide()" id="dmBtn" title="Masquer les montants">◉</button>
 <script>
 /* Thème clair / sombre */
-let themeMode=localStorage.getItem('theme')||'dark';
+let themeMode=localStorage.getItem('theme')||'light';
 function applyTheme(){document.body.classList.toggle('light',themeMode==='light');const b=document.getElementById('themeBtn');if(b)b.textContent=themeMode==='light'?'☀':'☾'}
 function toggleOutils(force){
   const b=document.getElementById('btnOutils'),s=document.getElementById('sousOutils');
@@ -586,7 +608,9 @@ window.doLogin=async()=>{try{await auth.signInWithPopup(new firebase.auth.Google
 auth.onAuthStateChanged(async u=>{if(u){uid=u.uid;document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';document.getElementById('userBar').innerHTML=(u.photoURL?'<img src="'+u.photoURL+'">':'')+'<span>'+(u.displayName||'')+'</span><span class="logout" onclick="auth.signOut()">Déco</span>';await loadData();initApp()}else{uid=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none'}});
 
 const SECTORS={"EPA:AI":"Chimie","EPA:DCAM":"ETF","EPA:PUST":"ETF","EPA:GTT":"Énergie","EPA:DG":"Industrie","EPA:EL":"Santé","EPA:SU":"Industrie","EPA:ALMIB":"Biotech","GOOGL":"Tech","AMBA":"Tech","NET":"Tech","DXCM":"Santé","ON":"Tech","NU":"Finance","RKLB":"Aérospatial","TOST":"Tech","AMZN":"Tech","SNOW":"Tech","SOFI":"Finance","SYM":"Tech","TER":"Tech","TTD":"Tech","TMDX":"Santé","CELH":"Conso","PATH":"Tech","VRT":"Industrie","ZS":"Tech","EPA:BNKE":"Finance","LON:HNSC":"ETF","XDGU":"Obligations","CS.PA":"Finance","SAN.PA":"Santé","TTE.PA":"Énergie","HO.PA":"Aérospatial","EPA:CS":"Finance","EPA:SAN":"Santé","EPA:TTE":"Énergie","EPA:HO":"Aérospatial"};
-const SC={"Tech":"#7aa2f7","ETF":"#e8a33d","Santé":"#c792ea","Finance":"#f0c674","Industrie":"#9db4ff","Énergie":"#f2646a","Chimie":"#3ecf8e","Biotech":"#b08ee0","Aérospatial":"#5fd3e0","Conso":"#f09a7a","Obligations":"#8b98b8","Immobilier":"#d4a373","Luxe":"#e0a3c8","Télécom":"#7fc8d6","Matériaux":"#a3b18a","Services":"#b8a9d9","Autre":"#6c7a9c"};
+/* Secteurs : dix-sept teintes espacees mais de meme intensite, assez
+   foncees pour tenir sur le papier creme et assez claires pour le fond sombre. */
+const SC={"Tech":"#4e7fc4","ETF":"#b5781f","Santé":"#8c6bbf","Finance":"#a8862a","Industrie":"#5d7fa8","Énergie":"#c2544e","Chimie":"#2f9b6e","Biotech":"#9a63ab","Aérospatial":"#3f9fb0","Conso":"#c2714a","Obligations":"#7a8597","Immobilier":"#a8703f","Luxe":"#b05a85","Télécom":"#4a9aa8","Matériaux":"#7d914f","Services":"#8878ad","Autre":"#6b7585"};
 const BDEF={revenus:[{id:'r1',nom:'Salaire',montant:2500}],categories:[{id:'cat1',nom:'Investissements',postes:[{id:'p1',nom:'Actions',montant:200},{id:'p2',nom:'Assurance vie',montant:200}]},{id:'cat2',nom:'Logement',postes:[{id:'p3',nom:'Loyer',montant:1498},{id:'p4',nom:'Charges',montant:120}]},{id:'cat3',nom:'Vie quotidienne',postes:[{id:'p5',nom:'Courses',montant:300},{id:'p6',nom:'Restaurants',montant:100}]},{id:'cat4',nom:'Abonnements',postes:[{id:'p7',nom:'Internet',montant:50},{id:'p8',nom:'Sport',montant:32}]}]};
 
 const D={comptes:[{id:'c1',nom:"Compte courant",banque:"BP",montant:0},{id:'c2',nom:"Compte commun",banque:"BP",montant:44},{id:'c3',nom:"Compte courant",banque:"Fortuneo",montant:3360}],epLibre:[{id:'el1',nom:"LDDS",banque:"BP",montant:30},{id:'el2',nom:"Livret A",banque:"Fortuneo",montant:14260}],epBloq:[{id:'eb1',nom:"PEE Veolia",banque:"Natixis",montant:10142},{id:'eb2',nom:"AV Linxea",banque:"Linxea",montant:19637}],immo:[{id:'i1',nom:"La Houssaye",type:"RP",prixAchat:109500,valeur:125000,sci:false,partsPct:100}],dettes:[{id:'d1',nom:"PTZ PAC",type:"Immo",banque:"BP",emprunte:12691,restant:9650,taux:0,dureeMois:84,fin:"Mars 2032"},{id:'d2',nom:"Prêt RP",type:"Immo",banque:"BP",emprunte:124000,restant:121265,taux:1.5,dureeMois:300,fin:"Sep 2050"}],crypto:[{id:'cr1',nom:"Bitcoin",symbol:"BTC",qte:.01086,prix:0,pru:0,var:0,montant:662},{id:'cr2',nom:"Ethereum",symbol:"ETH",qte:.17304,prix:0,pru:0,var:0,montant:311},{id:'cr3',nom:"Near",symbol:"NEAR",qte:118,prix:0,pru:0,var:0,montant:119},{id:'cr4',nom:"Solana",symbol:"SOL",qte:3.778,prix:0,pru:0,var:0,montant:269},{id:'cr5',nom:"Aster",symbol:"ASTER",qte:59.94,prix:0,pru:0,var:0,montant:36},{id:'cr6',nom:"USDC",symbol:"USDC",qte:.86,prix:1,pru:1,var:0,montant:1}],pf:{pea:{esp:557,ver:16174,cur:'EUR',l:[{id:1,c:"EPA:AI",n:"Air Liquide",co:168,p:10,pr:167.67,div:3.7,var:0},{id:2,c:"EPA:DCAM",n:"Amundi World",co:5.46,p:1450,pr:5.285,div:0,var:0},{id:3,c:"EPA:PUST",n:"Amundi Nasdaq",co:86,p:25,pr:85.2,div:0,var:0},{id:4,c:"EPA:GTT",n:"GTT",co:200,p:8,pr:154.53,div:8.94,var:0},{id:5,c:"EPA:DG",n:"Vinci",co:130,p:9,pr:120.09,div:4.75,var:0},{id:6,c:"EPA:EL",n:"EssilorLuxottica",co:209,p:5,pr:266.94,div:3.95,var:0},{id:7,c:"EPA:SU",n:"Schneider",co:255,p:5,pr:244.45,div:3.9,var:0},{id:8,c:"EPA:ALMIB",n:"Amoeba",co:1,p:100,pr:1.1,div:0,var:0}]},ctosb:{esp:150,ver:11014,cur:'USD',l:[{id:101,c:"GOOGL",n:"Alphabet",co:267,usd:309,p:6,pr:218.28,div:0,var:0},{id:102,c:"AMBA",n:"Ambarella",co:47,usd:54,p:9,pr:64.95,div:0,var:0},{id:103,c:"NET",n:"Cloudflare",co:184,usd:213,p:3,pr:188,div:0,var:0},{id:104,c:"DXCM",n:"DexCom",co:57,usd:66,p:8,pr:70.47,div:0,var:0},{id:105,c:"ON",n:"ON Semi",co:51,usd:59,p:8,pr:62.96,div:0,var:0},{id:106,c:"NU",n:"Nu Holdings",co:13,usd:14,p:35,pr:16.54,div:0,var:0},{id:107,c:"RKLB",n:"Rocket Lab",co:62,usd:72,p:6,pr:86.58,div:0,var:0},{id:108,c:"TOST",n:"Toast",co:25,usd:29,p:20,pr:26.57,div:0,var:0},{id:109,c:"AMZN",n:"Amazon",co:184,usd:213,p:6,pr:220.86,div:0,var:0},{id:110,c:"SNOW",n:"Snowflake",co:155,usd:179,p:3,pr:207,div:0,var:0},{id:111,c:"SOFI",n:"SoFi",co:16,usd:19,p:21,pr:26.34,div:0,var:0},{id:112,c:"SYM",n:"Symbotic",co:44,usd:51,p:8,pr:68.01,div:0,var:0},{id:113,c:"TER",n:"Teradyne",co:261,usd:302,p:3,pr:229,div:0,var:0},{id:114,c:"TTD",n:"Trade Desk",co:24,usd:27,p:16,pr:36.57,div:0,var:0},{id:115,c:"TMDX",n:"TransMedics",co:112,usd:129,p:4,pr:138,div:0,var:0},{id:116,c:"CELH",n:"Celsius",co:40,usd:46,p:11,pr:49.43,div:0,var:0},{id:117,c:"PATH",n:"UiPath",co:11,usd:12,p:36,pr:15.57,div:0,var:0},{id:118,c:"VRT",n:"Vertiv",co:232,usd:268,p:3,pr:173,div:0,var:0},{id:119,c:"ZS",n:"Zscaler",co:133,usd:154,p:3,pr:217,div:0,var:0}]},ctoibkr:{esp:40,ver:1500,cur:'EUR',l:[{id:201,c:"EPA:BNKE",n:"Banks ETF",co:303,p:1.42,pr:323,div:0,var:0},{id:202,c:"LON:HNSC",n:"Nasdaq Semi",co:24,p:25,pr:24.19,div:0,var:0},{id:203,c:"XDGU",n:"USD Bond",co:57,p:8,pr:57.51,div:0,var:0}]},avl:{esp:0,ver:0,cur:'EUR',l:[]}},versMensuels:[{mois:"Jan 26",bourse:27112,versement:0},{mois:"Fév 26",bourse:29223,versement:0},{mois:"Mar 26",bourse:29564,versement:0}],perfData:[{date:"Juin 25",portf:0,sp:0},{date:"Juil 25",portf:19.4,sp:null},{date:"Août 25",portf:105.3,sp:null},{date:"Sep 25",portf:113.1,sp:null},{date:"Oct 25",portf:424.7,sp:null},{date:"Nov 25",portf:500.7,sp:null},{date:"Déc 25",portf:532.6,sp:null},{date:"Jan 26",portf:530.5,sp:null},{date:"Fév 26",portf:579.6,sp:null},{date:"Mar 26",portf:587.5,sp:null}],objectifs:[{id:'o1',nom:"Épargne de précaution",cible:15000,type:"epargne",actuel:0},{id:'o2',nom:"FIRE Number",cible:625000,type:"net",actuel:0},{id:'o3',nom:"Revenus passifs",cible:1000,type:"custom",actuel:0}],budget:null};
@@ -726,7 +750,8 @@ function jaugePret(a,coul){
 /* ====== PAGE IMMO : SOUS-ONGLETS ====== */
 const IVUES=[{k:'mensuel',l:'Mensuel',c:'Mois',i:''},{k:'annuel',l:'Bilan annuel',c:'Année',i:''},
              {k:'prets',l:'Prêts',c:'Prêts',i:''},{k:'fisca',l:'Fiscalité',c:'Impôts',i:''},
-             {k:'biens',l:'Mes biens',c:'Biens',i:''}];
+             {k:'biens',l:'Mes biens',c:'Biens',i:''},
+             {k:'simu',l:'Simulateur',c:'Simu',i:''}];
 let immoVue=(function(){try{return localStorage.getItem('immoVue')||'mensuel'}catch(e){return 'mensuel'}})();
 window.setImmoVue=function(k){
   immoVue=k;try{localStorage.setItem('immoVue',k)}catch(e){}
@@ -743,10 +768,10 @@ function biensLocatifs(){
 /* Postes de charges laissés à zéro : tant qu'ils manquent, le cashflow affiché
    est un plafond, pas un vrai chiffre. On préfère le dire que de se taire. */
 const POSTES_IMMO=[
-  {k:'charges',       l:'Charges de copropriété', c:'#f59e0b'},
-  {k:'taxeFonciere',  l:'Taxe foncière',          c:'#fbbf24', annuel:true},
-  {k:'assurance',     l:'Assurance PNO',          c:'#60a5fa', annuel:true},
-  {k:'gestion',       l:'Frais de gestion',       c:'#a78bfa'}
+  {k:'charges',       l:'Charges de copropriété', c:'var(--c1)'},
+  {k:'taxeFonciere',  l:'Taxe foncière',          c:'var(--c4)', annuel:true},
+  {k:'assurance',     l:'Assurance PNO',          c:'var(--c2)', annuel:true},
+  {k:'gestion',       l:'Frais de gestion',       c:'var(--c5)'}
 ];
 function manquesImmo(){
   const loc=biensLocatifs();
@@ -1731,8 +1756,14 @@ function renderSidePerf(){
   const pan=cPan();const an=new Date().getFullYear();
   if(!pan||pan.length===0){el.innerHTML='<div class="sp-t">Performance '+an+'</div><div style="color:var(--muted)">Pas encore de données</div>';return}
   let h='<div class="sp-t">Performance '+an+'</div>';let cum=0,cumE=0;
-  pan.forEach(r=>{cum+=r.perf;cumE+=r.pv;const c=r.perf>=0?'var(--green)':'var(--red)';
+  /* Le cumul porte toute l annee ; seuls les trois derniers mois sont detailles,
+     pour que l encart ne grandisse pas de janvier a decembre. */
+  pan.forEach(r=>{cum+=r.perf;cumE+=r.pv});
+  const der=pan.slice(-3);
+  der.forEach(r=>{const c=r.perf>=0?'var(--green)':'var(--red)';
     h+='<div class="sp-r"><span>'+r.l.slice(0,4).toLowerCase()+'.</span><span style="color:'+c+'">'+(r.perf>=0?'+':'')+r.perf.toFixed(1)+'%</span><span style="color:'+c+';min-width:52px;text-align:right">'+(hiddenMode?'***':(r.pv>=0?'+':'')+Math.round(r.pv)+' €')+'</span></div>'});
+  if(pan.length>der.length)
+    h+='<div style="color:var(--muted);font-size:10.5px;padding:3px 0 0;line-height:1.35">+ '+(pan.length-der.length)+' mois plus tôt, compris dans le cumul</div>';
   const cc=cum>=0?'var(--green)':'var(--red)';
   h+='<div class="sp-r sp-tot"><span>Cumul</span><span style="color:'+cc+'">'+(cum>=0?'+':'')+cum.toFixed(1)+'%</span><span style="color:'+cc+';min-width:52px;text-align:right">'+(hiddenMode?'***':(cumE>=0?'+':'')+Math.round(cumE)+' €')+'</span></div>';
   /* Part de ce gain qui vient des dividendes réellement encaissés (ils dorment sur le
@@ -1861,6 +1892,402 @@ function barreOccup(oc){
       '<div style="height:100%;width:'+oc.pct+'%;background:'+c+';border-radius:3px"></div></div>'+
     (oc.connu?'':'<div class="tk" style="margin-top:2px">supposé loué</div>')+'</div>';
 }
+/* L impot d une annee de location. Une seule formule, utilisee par la fiche du
+   bien et par le simulateur : les deux ne peuvent donc pas se contredire. */
+function impotAnnuel(reg,loyerAn,chargesAn,interetsAn,amortAn,tmi){
+  let base,ir,ps;
+  if(reg.is){
+    base=Math.max(0,loyerAn-chargesAn-interetsAn-amortAn);
+    ir=base<=42500?base*.15:42500*.15+(base-42500)*.25;
+    ps=0;
+  }else{
+    base=reg.charges?Math.max(0,loyerAn-chargesAn-interetsAn-amortAn):loyerAn*(1-reg.ab);
+    ir=base*(tmi/100);ps=base*reg.soc;
+  }
+  return{base,ir,ps,impot:ir+ps};
+}
+/* ===== LA REVENTE =====
+   Plus-value des particuliers : 19 % d impot sur le revenu et 17,2 % de
+   prelevements sociaux, chacun avec son propre abattement pour duree de
+   detention. L impot sur le revenu s efface au bout de 22 ans, les
+   prelevements sociaux au bout de 30. */
+function abattIR(n){
+  if(n<=5)return 0;
+  if(n>=22)return 100;
+  return (n-5)*6;
+}
+function abattPS(n){
+  if(n<=5)return 0;
+  if(n>=30)return 100;
+  if(n<=21)return (n-5)*1.65;
+  if(n===22)return 16*1.65+1.60;
+  return 16*1.65+1.60+(n-22)*9;
+}
+/* L annee d achat : saisie, sinon celle du debut du pret, sinon cette annee */
+function anneeAchat(b){
+  if(b&&b.anneeAchat)return Math.round(nb(b.anneeAchat));
+  const cr=b&&b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
+  const d=cr?anneeMois(cr.dateDebut):null;
+  return d&&d.y?d.y:new Date().getFullYear();
+}
+/* Ce que la vente laisserait vraiment en poche, l annee choisie */
+function revente(b,L,r,p){
+  if(!b||!L)return null;
+  const part=r.part;
+  const prix=L.valeur;                              /* deja ramene a la part */
+  const pctAg=p.fraisAgence!=null?nb(p.fraisAgence):5;
+  const fraisAg=prix*pctAg/100;
+  const net=prix-fraisAg;
+  const anVente=L.annee, detention=Math.max(0,anVente-anneeAchat(b));
+  if(r.rp)return{prix,fraisAg,net,detention,exonere:'rp',impot:0,
+                 restant:L.restant,poche:net-L.restant,brute:0};
+  const achat=nb(b.prixAchat)*part;
+  if(achat<=0)return{prix,fraisAg,net,detention,exonere:'achat',impot:0,
+                     restant:L.restant,poche:net-L.restant,brute:0};
+  /* Amortissements deja passes : ils reviennent dans la plus-value */
+  const cumAmort=r.reg.amort?(L.cumAmort||0):0;
+  if(r.reg.is){
+    /* A l IS, la plus-value est professionnelle : pas d abattement, et la
+       valeur comptable a fondu au rythme des amortissements. */
+    const brute=Math.max(0,net-(achat-cumAmort));
+    const impot=brute<=42500?brute*.15:42500*.15+(brute-42500)*.25;
+    return{prix,fraisAg,net,detention,brute,impot,ir:impot,ps:0,
+           aIR:0,aPS:0,cumAmort,majore:achat-cumAmort,
+           restant:L.restant,poche:net-L.restant-impot,is:true};
+  }
+  /* Forfaits admis : 7,5 % de frais d acquisition, et 15 % de travaux
+     apres cinq ans de detention, sans justificatif. */
+  const majore=achat*1.075+(detention>5?achat*.15:0)-cumAmort;
+  const brute=Math.max(0,net-majore);
+  const aIR=abattIR(detention), aPS=abattPS(detention);
+  const ir=brute*(1-aIR/100)*.19;
+  const ps=brute*(1-aPS/100)*.172;
+  return{prix,fraisAg,net,detention,brute,majore,cumAmort,aIR,aPS,ir,ps,
+         impot:ir+ps,restant:L.restant,poche:net-L.restant-ir-ps};
+}
+/* ===== SIMULATEUR D UN BIEN, ANNEE PAR ANNEE =====
+   On suit un seul bien dans le temps. Les mensualites viennent du vrai tableau
+   d amortissement du pret : c est la partie certaine. Le reste repose sur trois
+   hypotheses que l on choisit soi-meme, et qui sont affichees en clair. */
+function simuParams(){
+  if(!S.simuBien)S.simuBien={};
+  const p=S.simuBien;
+  if(p.annees==null)p.annees=10;      /* l annee lue par le curseur */
+  if(p.revalo==null)p.revalo=1;       /* le bien prend 1 % par an */
+  if(p.indexLoyer==null)p.indexLoyer=1;/* loyers et charges suivent de 1 % par an */
+  return p;
+}
+const SIMU_HORIZON=30;
+function simuBien(b,par){
+  if(!b)return null;
+  const p=par||simuParams();
+  const part=(b.partsPct!=null?nb(b.partsPct):100)/100;
+  const tmi=(S.fiscParams&&S.fiscParams.tmi)||30;
+  const reg=REGIMES[b.regime||'micro_foncier']||REGIMES.micro_foncier;
+  const rp=estRP(b);
+
+  /* Le pret, tel qu il se rembourse vraiment */
+  const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
+  const am=cr?cAm(nb(cr.emprunte),nb(cr.taux),nb(cr.dureeMois),nb(cr.differe),cr.debloque):{t:[]};
+  const deja=cr?moisEcoules(cr.dateDebut):0;   /* mois deja payes */
+  const dateConnue=cr?dateLisible(cr.dateDebut)&&moisEcoules(cr.dateDebut)>0:false;
+  const ligne=k=>{ /* k = rang du mois depuis le debut du pret */
+    if(!am.t.length||k<1||k>am.t.length)return null;
+    return am.t[k-1];
+  };
+  const restantA=k=>{
+    if(!am.t.length)return cr?nb(cr.restant):0;
+    if(k<1)return nb(cr.emprunte);
+    if(k>=am.t.length)return 0;
+    return am.t[k-1].r;
+  };
+
+  /* Les loyers : les logements encore vides entrent au bout de leur delai */
+  const l0=loyersBien(b), attente=delaiLoyer(b);
+  const chargesMois=(nb(b.charges)+nb(b.gestion))*12+nb(b.taxeFonciere)+nb(b.assurance);
+  const manuel=b.cfManuel!=null?nb(b.cfManuel):null;
+  /* L amortissement s arrete au bout de trente ans de detention */
+  const anneesDeja=Math.floor(deja/12);
+  const baseAmort=(nb(b.prixAchat)||nb(b.valeur))*.85*.025*part;
+
+  /* Travaux prevus : chacun tombe sur son annee. Sous un regime au reel,
+     ils se deduisent aussi du revenu imposable de cette annee-la. */
+  const trav=(b.travauxPrevus||[]).map(t=>({
+    desc:t.desc||'Travaux',ans:Math.max(1,Math.round(nb(t.ans)||1)),
+    montant:nb(t.montant)*part,
+    ded:t.ded!==false&&!!reg.charges}));
+
+  const lignes=[];
+  let cumCash=0,cumImpot=0,cumCapital=0,cumAmort=0;
+  for(let y=1;y<=SIMU_HORIZON;y++){
+    let interets=0,capital=0,mens=0,loyer=0;
+    for(let m=1;m<=12;m++){
+      const k=deja+(y-1)*12+m;        /* rang du mois dans le pret */
+      const r=ligne(k);
+      if(r){interets+=r.i;capital+=r.c;mens+=r.m}
+      const depuisAuj=(y-1)*12+m;     /* rang du mois a partir d aujourd hui */
+      loyer+=(depuisAuj>attente?l0.apres:l0.avant);
+    }
+    const idx=Math.pow(1+nb(p.indexLoyer)/100,y-1);
+    interets*=part;capital*=part;mens*=part;
+    const loyerAn=rp?0:loyer*part*idx;
+    const chargesAn=chargesMois*part*idx;
+    const amortAn=(reg.amort&&(anneesDeja+y)<=30)?baseAmort:0;
+    cumAmort+=amortAn;
+    const travAn=trav.filter(t=>t.ans===y).reduce((a,t)=>a+t.montant,0);
+    const travDed=trav.filter(t=>t.ans===y&&t.ded).reduce((a,t)=>a+t.montant,0);
+    const im=rp?{base:0,ir:0,ps:0,impot:0}
+               :impotAnnuel(reg,loyerAn,chargesAn+travDed,interets,amortAn,tmi);
+    /* Un cashflow saisi a la main reste la verite de l utilisateur */
+    const cashAvant=(manuel!=null?manuel*12*idx:(loyerAn-chargesAn-mens))-travAn;
+    const cashApres=cashAvant-im.impot;
+    cumCash+=cashApres;cumImpot+=im.impot;cumCapital+=capital;
+    const restant=restantA(deja+y*12)*part;
+    const valeur=nb(b.valeur)*part*Math.pow(1+nb(p.revalo)/100,y);
+    lignes.push({an:y,annee:new Date().getFullYear()+y,
+      loyerAn,chargesAn,interets,amortAn,cumAmort,mens,capital,travAn,travDed,
+      base:im.base,impot:im.impot,
+      cashAvant,cashApres,cumCash,cumImpot,cumCapital,
+      restant,valeur,capitalNet:valeur-restant});
+  }
+  const finPret=am.t.length?Math.max(0,Math.ceil((am.t.length-deja)/12)):0;
+  return{lignes,reg,part,tmi,rp,manuel,attente,finPret,dateConnue,travaux:trav,
+         aCredit:!!(cr&&nb(cr.emprunte)>0),
+         capitalNet0:nb(b.valeur)*part-restantA(deja)*part};
+}
+/* Affichage du simulateur : les pastilles de biens, le curseur, trois chiffres,
+   une courbe et le detail annee par annee. */
+window.setSimuBien=function(id){simuParams();S.simuBien.id=id;autoSave();R(true)};
+window.setSimuAn=function(v){
+  const p=simuParams();p.annees=Math.max(1,Math.min(SIMU_HORIZON,Math.round(nb(v))));
+  autoSave();renderSimu();
+};
+window.setSimuHyp=function(k,v){
+  const p=simuParams();const x=parseFloat(String(v).replace(',','.'));
+  if(isNaN(x))return;
+  p[k]=Math.max(-5,Math.min(15,x));autoSave();renderSimu();
+};
+window.edSimuHyp=function(k,lib){
+  const p=simuParams();
+  const v=prompt(lib+' (en % par an)',String(p[k]));
+  if(v==null)return;setSimuHyp(k,v);
+};
+window.edSimuFrais=function(){
+  const p=simuParams();
+  const v=prompt('Frais d\'agence à la revente, en % du prix',String(p.fraisAgence!=null?p.fraisAgence:5));
+  if(v==null)return;const x=parseFloat(String(v).replace(',','.'));
+  if(isNaN(x))return;p.fraisAgence=Math.max(0,Math.min(12,x));autoSave();renderSimu();
+};
+window.edAnneeAchat=function(id){
+  const b=S.immo.find(x=>x.id===id);if(!b)return;
+  const v=prompt('En quelle année as-tu acheté ce bien ?\n(elle sert à calculer les abattements sur la plus-value)',String(anneeAchat(b)));
+  if(v==null)return;const x=parseInt(v,10);
+  if(isNaN(x)||x<1900||x>2100)return;
+  b.anneeAchat=x;autoSave();R(true);
+};
+window.addTravauxPrevu=function(id){
+  const b=S.immo.find(x=>x.id===id);if(!b)return;
+  const desc=prompt('Quels travaux ?','Ravalement');if(!desc)return;
+  const montant=parseFloat(String(prompt('Combien, en euros ?','5000')||'').replace(',','.'));
+  if(isNaN(montant))return;
+  const ans=parseInt(prompt('Dans combien d\'années ?','3'),10);
+  if(isNaN(ans)||ans<1||ans>SIMU_HORIZON)return;
+  if(!b.travauxPrevus)b.travauxPrevus=[];
+  b.travauxPrevus.push({desc,montant,ans,ded:true});
+  autoSave();R(true);
+};
+window.delTravauxPrevu=function(id,i){
+  const b=S.immo.find(x=>x.id===id);if(!b||!b.travauxPrevus)return;
+  b.travauxPrevus.splice(i,1);autoSave();R(true);
+};
+window.togTravauxDed=function(id,i){
+  const b=S.immo.find(x=>x.id===id);if(!b||!b.travauxPrevus||!b.travauxPrevus[i])return;
+  b.travauxPrevus[i].ded=b.travauxPrevus[i].ded===false;autoSave();R(true);
+};
+window.edSimuTmi=function(){
+  const v=prompt('Ta tranche d imposition, en %',String((S.fiscParams&&S.fiscParams.tmi)||30));
+  if(v==null)return;const x=parseFloat(String(v).replace(',','.'));
+  if(isNaN(x))return;
+  if(!S.fiscParams)S.fiscParams={};
+  S.fiscParams.tmi=Math.max(0,Math.min(60,x));autoSave();renderSimu();
+};
+/* Depuis la fiche d un bien : on ouvre le simulateur deja pointe sur lui */
+window.simulerBien=function(id){
+  simuParams();S.simuBien.id=id;
+  setImmoVue('simu');
+};
+function renderSimu(){
+  const zB=document.getElementById('simuBiens'),z=document.getElementById('simuCorps');
+  if(!zB||!z)return;
+  if(!S.immo.length){
+    zB.innerHTML='';
+    z.innerHTML='<div style="color:var(--muted);font-size:12.5px">Aucun bien enregistré. Ajoute un bien dans « Mes biens » pour le simuler.</div>';
+    return;
+  }
+  const p=simuParams();
+  if(!S.immo.some(x=>x.id===p.id))p.id=S.immo[0].id;
+  const b=S.immo.find(x=>x.id===p.id);
+  zB.innerHTML=S.immo.map(x=>'<button class="pb'+(x.id===p.id?' on':'')+'" onclick="setSimuBien(\''+x.id+'\')">'+(x.nom||'Bien')+'</button>').join('');
+
+  const r=simuBien(b,p);
+  const an=Math.max(1,Math.min(SIMU_HORIZON,Math.round(nb(p.annees))));
+  const L=r.lignes[an-1];
+  const fin=new Date().getFullYear()+an;
+
+  let h='';
+  /* Les trois hypotheses, dites en clair et modifiables */
+  h+='<div class="simu-h">'+
+     '<span>Le bien prend <span class="ed" onclick="edSimuHyp(\'revalo\',\'De combien le bien prend de la valeur chaque année\')">'+p.revalo+' %</span> par an</span>'+
+     '<span>Loyers et charges suivent <span class="ed" onclick="edSimuHyp(\'indexLoyer\',\'De combien loyers et charges augmentent chaque année\')">'+p.indexLoyer+' %</span> par an</span>'+
+     '<span>Tranche d\'imposition <span class="ed" onclick="edSimuTmi()">'+r.tmi+' %</span></span>'+
+     '</div>';
+
+  /* Le curseur de temps */
+  h+='<div style="margin-bottom:18px">'+
+     '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px">'+
+       '<span style="font-size:12px;color:var(--muted)">Dans</span>'+
+       '<span style="font-size:20px;font-weight:500">'+an+' an'+(an>1?'s':'')+' <span style="font-size:13px;color:var(--muted);font-weight:400">· '+fin+'</span></span>'+
+     '</div>'+
+     '<input type="range" class="rg" min="1" max="'+SIMU_HORIZON+'" value="'+an+'" oninput="setSimuAn(this.value)" aria-label="Nombre d\'années">'+
+     '<div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:5px"><span>1 an</span><span>'+SIMU_HORIZON+' ans</span></div>'+
+     '</div>';
+
+  /* Les trois chiffres demandes */
+  const cN=L.capitalNet>=0?'var(--green)':'var(--red)';
+  const cC=L.cumCash>=0?'var(--green)':'var(--red)';
+  h+='<div class="kr" style="margin-bottom:18px">'+
+     '<div class="kpi"><div class="kl">Capital net</div><div class="kv" style="color:'+cN+'">'+F(Math.round(L.capitalNet))+'</div>'+
+       '<div class="ks">'+F(Math.round(L.valeur))+' de valeur moins '+F(Math.round(L.restant))+' de dette</div></div>'+
+     '<div class="kpi"><div class="kl">Cashflow cumulé</div><div class="kv" style="color:'+cC+'">'+(L.cumCash>=0?'+':'')+F(Math.round(L.cumCash))+'</div>'+
+       '<div class="ks">après impôt, sur '+an+' an'+(an>1?'s':'')+'</div></div>'+
+     '<div class="kpi"><div class="kl">Impôt de l\'année</div><div class="kv">'+F(Math.round(L.impot))+'</div>'+
+       '<div class="ks">'+r.reg.n+' · '+F2(L.impot/12)+' par mois</div></div>'+
+     '</div>';
+
+  h+='<div class="cb" style="height:260px"><canvas id="cSimu"></canvas></div>';
+
+  /* Si je revends cette annee-la */
+  const rv=revente(b,L,r,p);
+  if(rv){
+    const cP=rv.poche>=0?'var(--green)':'var(--red)';
+    h+='<div style="background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:16px 18px;margin-top:20px">';
+    h+='<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:12px">'+
+       '<span style="font-size:13px;font-weight:600">Si je revends en '+L.annee+'</span>'+
+       '<span style="font-size:11.5px;color:var(--muted)">acheté en <span class="ed" onclick="edAnneeAchat(\''+b.id+'\')">'+anneeAchat(b)+'</span> · '+rv.detention+' an'+(rv.detention>1?'s':'')+' de détention</span></div>';
+    const li=(lib,val,fort,coul)=>'<div class="lr"><span'+(fort?' style="font-weight:600"':'')+'>'+lib+'</span>'+
+      '<span style="font-weight:'+(fort?'600':'500')+(coul?';color:'+coul:'')+'">'+val+'</span></div>';
+    h+=li('Prix de vente estimé',F(Math.round(rv.prix)));
+    h+='<div class="lr"><span>Frais d\'agence <span class="ed" onclick="edSimuFrais()">'+(p.fraisAgence!=null?p.fraisAgence:5)+' %</span></span>'+
+       '<span style="color:var(--red)">− '+F(Math.round(rv.fraisAg))+'</span></div>';
+    h+='<div class="lr"><span>Solde du prêt à rembourser</span><span style="color:var(--red)">− '+F(Math.round(rv.restant))+'</span></div>';
+    if(rv.exonere==='rp')
+      h+='<div class="lr"><span>Impôt sur la plus-value</span><span style="color:var(--green)">exonéré (résidence principale)</span></div>';
+    else if(rv.exonere==='achat')
+      h+='<div class="lr"><span>Impôt sur la plus-value</span><span style="color:var(--muted)">prix d\'achat à renseigner</span></div>';
+    else{
+      h+='<div class="lr"><span>Impôt sur la plus-value</span><span style="color:'+(rv.impot>0?'var(--red)':'var(--green)')+'">'+(rv.impot>0?'− '+F(Math.round(rv.impot)):'néant')+'</span></div>';
+      h+='<div style="font-size:11px;color:var(--muted);padding:2px 0 6px;line-height:1.55">'+
+        (rv.brute<=0
+          ? 'À ce prix, la vente ne dégage aucune plus-value imposable : le prix d\'achat majoré des forfaits ('+F(Math.round(rv.majore))+') dépasse le prix de vente net de frais.'
+          : rv.is
+          ? 'À l\'IS : plus-value de '+F(Math.round(rv.brute))+' sur une valeur comptable de '+F(Math.round(rv.majore))+', sans abattement de durée.'
+          : 'Plus-value de '+F(Math.round(rv.brute))+' · abattement de '+Math.round(rv.aIR)+' % sur l\'impôt (19 %) et de '+rv.aPS.toFixed(1).replace('.',',')+' % sur les prélèvements sociaux (17,2 %)')+
+        '</div>';
+    }
+    h+='<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:10px">'+
+       li('Ce qu\'il te reste en poche',(rv.poche>=0?'':'')+F(Math.round(rv.poche)),true,cP)+'</div>';
+    if(!rv.exonere&&!rv.is&&rv.detention<30&&rv.impot>0)
+      h+='<div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.55">'+
+        (rv.detention<22?'En attendant '+(22-rv.detention)+' an'+(22-rv.detention>1?'s':'')+' de plus, l\'impôt sur le revenu tombe à zéro ; il faut ':'Il faut ')+
+        (30-rv.detention)+' an'+(30-rv.detention>1?'s':'')+' de plus pour effacer aussi les prélèvements sociaux.</div>';
+    if(rv.cumAmort>0)
+      h+='<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.55">Les '+F(Math.round(rv.cumAmort))+' d\'amortissements déduits depuis aujourd\'hui sont réintégrés dans la plus-value.</div>';
+    h+='</div>';
+  }
+
+  /* Travaux a venir */
+  h+='<div style="margin-top:20px">';
+  h+='<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">'+
+     '<span style="font-size:13px;font-weight:600">Travaux à venir</span>'+
+     '<button class="pb" onclick="addTravauxPrevu(\''+b.id+'\')">+ Travaux</button></div>';
+  const tp=b.travauxPrevus||[];
+  if(!tp.length)
+    h+='<div style="font-size:11.5px;color:var(--muted);line-height:1.6">Rien de prévu. Ajoute une toiture, un ravalement ou une cuisine : la dépense tombera sur son année et creusera le cashflow de cette année-là.</div>';
+  else{
+    tp.forEach((t,i)=>{
+      const an=new Date().getFullYear()+Math.max(1,Math.round(nb(t.ans)));
+      const ded=t.ded!==false&&!!r.reg.charges;
+      h+='<div class="lr"><span>'+(t.desc||'Travaux')+' <span style="color:var(--muted);font-size:11px">· '+an+'</span></span>'+
+        '<span style="display:flex;align-items:center;gap:10px">'+
+        '<span class="ed" onclick="togTravauxDed(\''+b.id+'\','+i+')" style="font-size:11px;color:'+(ded?'var(--green)':'var(--muted)')+'">'+(ded?'déductible':'non déductible')+'</span>'+
+        '<span style="font-weight:500;color:var(--red)">'+F(Math.round(nb(t.montant)))+'</span>'+
+        '<button class="db" onclick="delTravauxPrevu(\''+b.id+'\','+i+')">✕</button></span></div>';
+    });
+    if(!r.reg.charges)
+      h+='<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.55">Sous ce régime ('+r.reg.n+'), les travaux ne se déduisent pas des loyers : ils pèsent sur le cashflow mais pas sur l\'impôt.</div>';
+  }
+  h+='</div>';
+
+  /* Le detail, tous les cinq ans plus l annee choisie */
+  const vus={};const sel=[];
+  r.lignes.forEach(x=>{
+    if(x.an===1||x.an%5===0||x.an===an||x.travAn>0){if(!vus[x.an]){vus[x.an]=1;sel.push(x)}}});
+  sel.sort((a,b2)=>a.an-b2.an);
+  h+='<div style="overflow-x:auto;margin-top:18px"><table style="font-size:12px"><thead><tr>'+
+     '<th class="l">Année</th><th>Loyers</th><th>Impôt</th>'+(r.travaux.length?'<th>Travaux</th>':'')+'<th>Cashflow après impôt</th><th>Reste dû</th><th>Capital net</th></tr></thead><tbody>';
+  sel.forEach(x=>{
+    const ici=x.an===an;
+    h+='<tr'+(ici?' style="background:var(--abg)"':'')+'>'+
+      '<td class="l"'+(ici?' style="font-weight:600;color:var(--accent)"':'')+'>'+x.annee+' <span style="color:var(--muted);font-size:11px">· '+x.an+' an'+(x.an>1?'s':'')+'</span></td>'+
+      '<td>'+F(Math.round(x.loyerAn))+'</td>'+
+      '<td>'+F(Math.round(x.impot))+'</td>'+
+      (r.travaux.length?'<td style="color:'+(x.travAn>0?'var(--red)':'var(--muted)')+'">'+(x.travAn>0?'− '+F(Math.round(x.travAn)):'—')+'</td>':'')+
+      '<td style="color:'+(x.cashApres>=0?'var(--green)':'var(--red)')+'">'+(x.cashApres>=0?'+':'')+F(Math.round(x.cashApres))+'</td>'+
+      '<td>'+F(Math.round(x.restant))+'</td>'+
+      '<td style="font-weight:500">'+F(Math.round(x.capitalNet))+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+
+  /* Ce sur quoi la simulation repose, et ce qu elle ignore */
+  const notes=[];
+  if(r.rp)notes.push('C\'est ta résidence principale : elle ne rapporte pas de loyer, donc seul le capital net a du sens ici.');
+  if(!r.aCredit)notes.push('Ce bien n\'a pas de prêt rattaché : il n\'y a rien à rembourser, le capital net ne bouge qu\'avec la valeur du bien.');
+  else if(!r.dateConnue)notes.push('La date de début du prêt n\'est pas lisible : la simulation part du premier mois du prêt. Renseigne-la dans Dettes pour un résultat juste.');
+  else if(r.finPret>0)notes.push('Le prêt est soldé dans '+r.finPret+' an'+(r.finPret>1?'s':'')+' : à partir de là, la mensualité disparaît et le cashflow fait un bond.');
+  if(r.manuel!=null)notes.push('Tu as saisi le cashflow de ce bien à la main ('+F2(r.manuel)+' par mois) : c\'est lui qui sert de base, indexé chaque année. L\'impôt, lui, est calculé sur les loyers et charges détaillés.');
+  if(r.attente>0)notes.push('Un logement est encore vide : son loyer n\'entre qu\'au bout de '+r.attente+' mois.');
+  if(r.part<1)notes.push('Tu détiens '+Math.round(r.part*100)+' % de ce bien : tous les montants sont déjà ramenés à ta part.');
+  notes.push('Le cashflow cumulé et le capital net ne comptent pas la revente : c\'est le bloc « Si je revends » qui s\'en charge, année par année.');
+  notes.push('La surtaxe sur les plus-values au-delà de 50 000 € n\'est pas calculée, et les forfaits de 7,5 % de frais d\'acquisition et 15 % de travaux sont appliqués sans justificatif.');
+  h+='<div style="font-size:11.5px;color:var(--muted);margin-top:16px;line-height:1.65">'+
+     notes.map(n=>'<div style="margin-bottom:4px">'+n+'</div>').join('')+'</div>';
+
+  z.innerHTML=h;
+
+  /* La courbe : deux series en euros, comparables entre elles */
+  const el=document.getElementById('cSimu');
+  if(el&&window.Chart){
+    if(window._cSimu)window._cSimu.destroy();
+    const lab=r.lignes.map(x=>x.annee);
+    window._cSimu=new Chart(el,{type:'line',data:{labels:lab,datasets:[
+      {label:'Capital net',data:r.lignes.map(x=>Math.round(x.capitalNet)),
+       borderColor:CV('--accent'),backgroundColor:hexA(CV('--accent'),.10),fill:true,
+       tension:.3,borderWidth:2.5,pointRadius:r.lignes.map(x=>x.an===an?4:0),
+       pointBackgroundColor:CV('--accent')},
+      {label:'Cashflow cumulé après impôt',data:r.lignes.map(x=>Math.round(x.cumCash)),
+       borderColor:CV('--c2'),backgroundColor:'transparent',fill:false,
+       tension:.3,borderWidth:2,pointRadius:r.lignes.map(x=>x.an===an?4:0),
+       pointBackgroundColor:CV('--c2')}
+    ]},options:{responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},animation:animConf,
+      plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,
+        pointStyle:'circle',boxWidth:7,boxHeight:7,padding:14,color:CV('--muted')}},
+        tooltip:tipOpts(c=>c.dataset.label+' : '+F(c.raw))},
+      scales:{x:{grid:{display:false},ticks:{color:CV('--muted'),font:{size:10},maxTicksLimit:8}},
+        y:{grid:{color:hexA(CV('--border'),.5)},
+           ticks:{color:CV('--muted'),font:{size:11},callback:v=>Math.round(v/1000)+'k'}}}}});
+  }
+}
 function fiscBien(b,mensCred){
   const tmi=(S.fiscParams&&S.fiscParams.tmi)||30;
   const reg=REGIMES[b.regime||'micro_foncier']||REGIMES.micro_foncier;
@@ -1880,15 +2307,8 @@ function fiscBien(b,mensCred){
   }
   /* Amortissement : 2,5 %/an sur 85 % de la valeur (hors terrain) */
   const amortAn=reg.amort?(nb(b.prixAchat)||nb(b.valeur))*.85*.025*part:0;
-  let base,impot,ir,ps;
-  if(reg.is){
-    base=Math.max(0,loyerAn-chargesAn-interetsAn-amortAn);
-    ir=base<=42500?base*.15:42500*.15+(base-42500)*.25;
-    ps=0;impot=ir;
-  }else{
-    base=reg.charges?Math.max(0,loyerAn-chargesAn-interetsAn-amortAn):loyerAn*(1-reg.ab);
-    ir=base*(tmi/100);ps=base*reg.soc;impot=ir+ps;
-  }
+  const im=impotAnnuel(reg,loyerAn,chargesAn,interetsAn,amortAn,tmi);
+  const base=im.base,ir=im.ir,ps=im.ps,impot=im.impot;
   const cashAvant=loyerAn-chargesAn-mensCred*12;
   return{reg,loyerAn,chargesAn,interetsAn,amortAn,base,impot,ir,ps,tmi,
          cashAvant,cashApres:cashAvant-impot,
@@ -2667,7 +3087,7 @@ document.getElementById('ps').innerHTML=[{l:'3M',m:3},{l:'6M',m:6},{l:'1A',m:12}
 /* Checkboxes courbes */
 const plDiv=document.getElementById('ps');
 let cbH='<div class="cto" style="margin-top:8px" id="perfToggles">';
-perfLines.forEach((p,i)=>{cbH+='<label class="ctb '+(p.on?'on':'')+'" style="color:'+p.c+'" onclick="tPL('+i+')"><span class="dot" style="background:'+(p.on?p.c:'#d4d9e1')+'"></span>'+p.l+'</label>'});
+perfLines.forEach((p,i)=>{cbH+='<label class="ctb '+(p.on?'on':'')+'" style="color:'+p.c+'" onclick="tPL('+i+')"><span class="dot" style="background:'+(p.on?p.c:CV('--border'))+'"></span>'+p.l+'</label>'});
 cbH+='</div>';
 const psParent=document.getElementById('ps').parentElement;
 let ptEl=document.getElementById('perfToggles');
@@ -2971,7 +3391,7 @@ document.getElementById('rstatc').innerHTML=rStat?'<span class="'+rc+'">'+rStat+
 /* Portfolio KPIs + répartition ETF/Actions */
 function etfRatio(pf,pk){let etfVal=0,actVal=0;pf.l.forEach(l=>{if(estETF(l,pk))etfVal+=l.vaEur;else actVal+=l.vaEur});const tot=etfVal+actVal;return{etf:etfVal,act:actVal,pctEtf:tot>0?Math.round(etfVal/tot*100):0}}
 const mk=(c,pf,pk)=>{const er=etfRatio(c,pk);let h='<div class="kpi sm"><div class="kl">Valeur</div><div class="kv" style="color:var(--bourse)">'+F2(c.v)+'</div></div><div class="kpi sm"><div class="kl">Jour</div><div class="kv" style="color:'+(c.dayPnl>=0?'var(--green)':'var(--red)')+'">'+((c.dayPnl>=0?'+':'')+F2(c.dayPnl))+'</div><div class="ks">'+(c.dayPct>=0?'+':'')+c.dayPct.toFixed(2)+'%</div></div><div class="kpi sm"><div class="kl">Versé</div><div class="kv"><span class="ed" onclick="edVer(this,\''+pk+'\')">'+F(pf.ver)+'</span></div></div><div class="kpi sm"><div class="kl">Perf</div><div class="kv" style="color:'+(c.pvVer>=0?'var(--green)':'var(--red)')+'">'+FP(c.ppVer)+'</div></div><div class="kpi sm"><div class="kl">Espèces</div><div class="kv"><span class="ed" onclick="edEsp(this,\''+pk+'\')">'+F(pf.esp)+'</span></div></div><div class="kpi sm"><div class="kl">Div/an</div><div class="kv" style="color:var(--orange)">'+F2(c.divTot)+'</div></div>';
-h+='<div style="grid-column:1/-1;margin-top:4px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:#0891b2;font-weight:600">ETF '+er.pctEtf+'%</span><span style="color:#7c3aed;font-weight:600">Actions '+(100-er.pctEtf)+'%</span></div><div style="display:flex;height:8px;border-radius:4px;overflow:hidden;background:#1b2745"><div style="width:'+er.pctEtf+'%;background:#0891b2"></div><div style="width:'+(100-er.pctEtf)+'%;background:#7c3aed"></div></div></div>';
+h+='<div style="grid-column:1/-1;margin-top:4px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--c6);font-weight:600">ETF '+er.pctEtf+'%</span><span style="color:var(--c5);font-weight:600">Actions '+(100-er.pctEtf)+'%</span></div><div style="display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--card2)"><div style="width:'+er.pctEtf+'%;background:var(--c6)"></div><div style="width:'+(100-er.pctEtf)+'%;background:var(--c5)"></div></div></div>';
 return h};
 document.getElementById('pk1').innerHTML=mk(t.p,S.pf.pea,'pea');document.getElementById('pk2').innerHTML=mk(t.s,S.pf.ctosb,'ctosb');document.getElementById('pk3').innerHTML=mk(t.i,S.pf.ctoibkr,'ctoibkr');document.getElementById('pk4').innerHTML=mk(t.a,S.pf.avl||{esp:0,ver:0,cur:'EUR',l:[]},'avl');
 rPT('pt1',t.p,'pea');rPT('pt2',t.s,'ctosb');rPT('pt3',t.i,'ctoibkr');rPT('pt4',t.a,'avl');
@@ -3133,7 +3553,7 @@ if(!S.journal)S.journal=[];
 let jlH='';
 if(S.journal.length>0){
   S.journal.slice().sort((a,b)=>b.ts-a.ts).forEach(j=>{
-    jlH+='<div style="padding:10px 0;border-bottom:1px solid #f0f2f5"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-weight:500;font-size:13px">'+j.action+'</div>';
+    jlH+='<div style="padding:10px 0;border-bottom:1px solid var(--line)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-weight:500;font-size:13px">'+j.action+'</div>';
     if(j.raison)jlH+='<div style="font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4">'+j.raison+'</div>';
     jlH+='</div><div style="display:flex;gap:8px;align-items:center;flex-shrink:0"><span style="font-size:11px;color:var(--muted)">'+j.date+'</span><button class="db" onclick="delJournal(\''+j.id+'\')">✕</button></div></div></div>';
   });
@@ -3326,11 +3746,14 @@ const mensDette=d=>{
 const isRP=estRP;
 const immoLoc=S.immo.filter(b=>!isRP(b)&&(b.loyer>0||b.typeLocation));
 /* loyerBien() additionne les logements d'un même bien, pas seulement le champ loyer */
-const loyerTotal=immoLoc.reduce((a,x)=>a+loyerBien(x),0);
-const chargesTotal=immoLoc.reduce((a,x)=>a+(x.charges||0)+(x.taxeFonciere||0)/12+(x.assurance||0)/12+(x.gestion||0),0);
-const mensCredImmo=immoLoc.reduce((a,b)=>a+mensDette(b.creditId?S.dettes.find(d=>d.id===b.creditId):null),0);
-const cashflowTotal=loyerTotal-chargesTotal-mensCredImmo;
-const valLoc=immoLoc.reduce((a,x)=>a+x.valeur,0);
+/* Les indicateurs du haut lisent le même calcul que le reste de l'app :
+   logements vides écartés, quote-part appliquée, cashflow saisi respecté. */
+const cfIm=cashflowLocatif(0);
+const loyerTotal=cfIm.loyers;
+const chargesTotal=cfIm.charges;
+const mensCredImmo=cfIm.mens;
+const cashflowTotal=cfIm.net;
+const valLoc=immoLoc.reduce((a,x)=>a+nb(x.valeur)*((x.partsPct!=null?nb(x.partsPct):100)/100),0);
 const rendBrut=valLoc>0?Math.round(loyerTotal*12/valLoc*10000)/100:0;
 const rendNet=valLoc>0?Math.round((loyerTotal-chargesTotal)*12/valLoc*10000)/100:0;
 /* Dettes immo = dettes liées à un bien, au prorata */
@@ -3378,13 +3801,13 @@ const capTot=(function(){
 const mqI=manquesImmo();
 const cfIncomplet=mqI.manquants.length>0;
 document.getElementById('ik').innerHTML=
- '<div class="kpi"><div class="kl">Biens en location</div><div class="kv" style="color:'+CV('--p5')+'">'+nbBiens+'</div><div class="ks">'+nbLots+' logement'+(nbLots>1?'s':'')+' · hors RP</div></div>'
-+'<div class="kpi"><div class="kl">Loyers mensuels</div><div class="kv" style="color:var(--green)">'+F(Math.round(loyerTotal))+'</div></div>'
+ '<div class="kpi"><div class="kl">Biens en location</div><div class="kv">'+nbBiens+'</div><div class="ks">'+nbLots+' logement'+(nbLots>1?'s':'')+' · hors RP</div></div>'
++'<div class="kpi"><div class="kl">Loyers mensuels</div><div class="kv">'+F(Math.round(loyerTotal))+'</div></div>'
 +'<div class="kpi"><div class="kl">Cashflow mensuel</div><div class="kv" style="color:'+(cashflowTotal>=0?'var(--green)':'var(--red)')+'">'+(cfIncomplet?'<span style="color:var(--orange)" title="Des charges manquent : le vrai montant est plus bas">≤ </span>':'')+(cashflowTotal>=0?'+':'')+F(Math.round(cashflowTotal))+'</div><div class="ks">'+(cfIncomplet?'<span style="color:var(--orange)">au plus ce montant</span>':'après charges et crédit')+'</div></div>'
-+'<div class="kpi"><div class="kl">Rendement brut moyen</div><div class="kv" style="color:var(--accent)">'+rdtBrutMoy.toFixed(1)+' %</div></div>'
++'<div class="kpi"><div class="kl">Rendement brut moyen</div><div class="kv">'+rdtBrutMoy.toFixed(1)+' %</div></div>'
 +'<div class="kpi"><div class="kl">Rendement net moyen</div><div class="kv" style="color:var(--accent)">'+rdtNetMoy.toFixed(1)+' %</div><div class="ks">net d\'impôts</div></div>'
 +'<div class="kpi"><div class="kl">Plus-value latente</div><div class="kv" style="color:'+(pvLatente>=0?'var(--green)':'var(--red)')+'">'+(pvLatente>=0?'+':'')+F(Math.round(pvLatente))+'</div><div class="ks">valeur moins investi</div></div>'
-+'<div class="kpi"><div class="kl">Capital restant dû</div><div class="kv" style="color:var(--red)">'+F(Math.round(dettesLoc))+'</div>'+(capTot.emprunte>0?'<div class="ks">'+capTot.pctG.toFixed(1)+' % déjà remboursé</div>':'')+'</div>'
++'<div class="kpi"><div class="kl">Capital restant dû</div><div class="kv">'+F(Math.round(dettesLoc))+'</div>'+(capTot.emprunte>0?'<div class="ks">'+capTot.pctG.toFixed(1)+' % déjà remboursé</div>':'')+'</div>'
 +(capTot.emprunte>0?'<div class="kpi"><div class="kl">Capital remboursé / mois</div><div class="kv" style="color:'+(capTot.capMois>0?'var(--green)':'var(--muted)')+'">'+F2(capTot.capMois)+'</div><div class="ks">'+
    (capTot.capMois>0?F2(capTot.intMois)+' d\'intérêts à côté':(capTot.enDiffere?'prêts en différé : '+F2(capTot.intMois)+' d\'intérêts seuls':F2(capTot.intMois)+' d\'intérêts'))+'</div></div>':'');
 
@@ -3493,7 +3916,7 @@ document.getElementById('ik').innerHTML=
   const pct=emprunte>0?Math.min(100,(emprunte-restant)/emprunte*100):0;
   k.innerHTML=
     '<div class="kpi"><div class="kl">Capital emprunté</div><div class="kv" style="color:var(--accent)">'+F(Math.round(emprunte))+'</div><div class="ks">'+liste.length+' prêt'+(liste.length>1?'s':'')+' actif'+(liste.length>1?'s':'')+'</div></div>'+
-    '<div class="kpi"><div class="kl">Capital restant dû</div><div class="kv" style="color:var(--red)">'+F(Math.round(restant))+'</div><div class="ks">'+pct.toFixed(1)+' % remboursé</div></div>'+
+    '<div class="kpi"><div class="kl">Capital restant dû</div><div class="kv">'+F(Math.round(restant))+'</div><div class="ks">'+pct.toFixed(1)+' % remboursé</div></div>'+
     '<div class="kpi"><div class="kl">Coût total du crédit</div><div class="kv" style="color:var(--orange)">'+F(Math.round(coutTotal))+'</div><div class="ks">intérêts sur toute la durée</div></div>'+
     '<div class="kpi"><div class="kl">Intérêts déductibles</div><div class="kv" style="color:var(--green)">'+F(Math.round(int12))+'</div><div class="ks">sur 12 mois · locatif seulement</div></div>';
 
@@ -3774,8 +4197,9 @@ immoLoc.forEach(b=>{
   const cr=b.creditId?S.dettes.find(d=>d.id===b.creditId):null;
   const mensC=mensDette(cr);
   const chM=(b.charges||0)+(b.taxeFonciere||0)/12+(b.assurance||0)/12+(b.gestion||0);
-  const loyM=loyerBien(b);
-  const cf=loyM-chM-mensC;
+  const dIm=(cfIm.detail||[]).find(x=>x.id===b.id);
+  const loyM=dIm?dIm.loyer:loyerBien(b)*pct;
+  const cf=dIm?dIm.net:(loyM-chM-mensC);
   const rb=b.valeur>0?(loyM*12/b.valeur*100).toFixed(1):0;
   totLoy+=loyM;totCh+=chM;totCr+=mensC;totCf+=cf;totValLoc+=b.valeur*pct;
   rcH+='<tr><td class="l" style="font-weight:600">'+b.nom+(pct<1?' <span style="font-size:10px;color:var(--muted)">('+b.partsPct+'%)</span>':'')+'</td><td style="color:var(--green);font-weight:600">'+F(Math.round(loyM))+'</td><td style="color:var(--red)">'+F(Math.round(chM))+'</td><td style="color:var(--red)">'+(cr?F(Math.round(mensC)):'<span style="color:var(--orange)" title="Aucun prêt rattaché à ce bien">⚠ aucun</span>')+'</td><td style="font-weight:500;color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(cf))+'</td><td>'+rb+'%</td></tr>';
@@ -3966,7 +4390,9 @@ let imH='';S.immo.forEach(b=>{
   const rb=b.valeur>0?((b.loyer||0)*12/b.valeur*100).toFixed(1):0;
   const rn=b.valeur>0?(((b.loyer||0)-chM)*12/b.valeur*100).toFixed(1):0;
 
-  imH+='<div class="card"><div class="fb"><div style="font-weight:600;font-size:15.5px;letter-spacing:-.015em">'+(b.sci?'⬡ ':'⌂ ')+b.nom+'</div><button class="db" onclick="dI(\'immo\',\''+b.id+'\')">✕</button></div>';
+  imH+='<div class="card"><div class="fb"><div style="font-weight:600;font-size:15.5px;letter-spacing:-.015em">'+(b.sci?'⬡ ':'⌂ ')+b.nom+'</div><div style="display:flex;align-items:center;gap:10px">'
+  +'<a href="#" onclick="simulerBien(\''+b.id+'\');return false" style="font-size:12px;color:var(--accent);text-decoration:underline;text-underline-offset:3px">Simuler ce bien</a>'
+  +'<button class="db" onclick="dI(\'immo\',\''+b.id+'\')">✕</button></div></div>';
   if(b.adresse)imH+='<div style="font-size:12px;color:var(--muted);margin-bottom:8px">'+b.adresse+'</div>';
   imH+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">';
   if(b.sci)imH+='<span class="badge pos">SCI '+b.partsPct+'%</span>';
@@ -4134,6 +4560,7 @@ let imH='';S.immo.forEach(b=>{
 });
 imH+='<div id="ia"></div>';document.getElementById('ic').innerHTML=imH;
 document.getElementById('ia').innerHTML='<button class="ab" onclick="addImmo()">+ Ajouter un bien</button>';
+try{renderSimu()}catch(e){console.error('simulateur :',e&&e.message)}
 
 /* Suivi courte durée */
 const cdBiens=S.immo.filter(b=>b.typeLocation==='courte');
@@ -4767,7 +5194,7 @@ const tmRoot=d3.hierarchy(tmData).sum(d=>d.value).sort((a,b)=>b.value-a.value);
 d3.treemap().size([hmW,hmH2]).padding(2).round(true)(tmRoot);
 const leaf=tmSvg.selectAll('g').data(tmRoot.leaves()).join('g').attr('transform',d=>'translate('+d.x0+','+d.y0+')');
 leaf.append('rect').attr('width',d=>Math.max(0,d.x1-d.x0)).attr('height',d=>Math.max(0,d.y1-d.y0)).attr('rx',3)
-  .attr('fill',d=>{const g=d.data.gp;return g>10?'#2fa873':g>5?CV('--green'):g>0?'#6fdcae':g>-5?CV('--accent'):g>-15?CV('--red'):'#c9484e'})
+  .attr('fill',d=>{const g=d.data.gp;return g>10?hexA(CV('--green'),1):g>5?hexA(CV('--green'),.78):g>0?hexA(CV('--green'),.52):g>-5?hexA(CV('--red'),.5):g>-15?hexA(CV('--red'),.75):CV('--red')})
   .attr('stroke','rgba(255,255,255,.12)').attr('stroke-width',1);
 leaf.each(function(d){
   const w=d.x1-d.x0,h=d.y1-d.y0;const g=d3.select(this);
@@ -4813,7 +5240,7 @@ if(hj.length>0){
     rmH+='<td style="color:'+(h.pnl>=0?'var(--green)':'var(--red)')+'">'+(h.pnl>=0?'+':'')+F2(h.pnl)+'</td></tr>';
   });
   const cumEcart=Math.round((cumP-cumS)*100)/100;
-  rmH+='<tr style="background:#1b2745;font-weight:500"><td class="l">Semaine</td>';
+  rmH+='<tr style="background:var(--card2);font-weight:500"><td class="l">Semaine</td>';
   rmH+='<td style="color:'+(cumP>=0?'var(--green)':'var(--red)')+'">'+(cumP>=0?'+':'')+cumP.toFixed(2)+'%</td>';
   rmH+='<td style="color:'+(cumS>=0?'var(--green)':'var(--red)')+'">'+(cumS>=0?'+':'')+cumS.toFixed(2)+'%</td>';
   rmH+='<td style="color:'+(cumEcart>=0?'var(--green)':'var(--red)')+'">'+(cumEcart>=0?'+':'')+cumEcart+'%</td>';
@@ -5039,7 +5466,7 @@ window.delDCA=function(i){S.simParams.dcaSteps.splice(i,1);autoSave();R(true)};
 window.edRev=function(el,id){const rs=S.revSources.find(x=>x.id===id);if(!rs)return;el.outerHTML='<input class="ci" style="width:80px" value="'+(rs.mensuel||0)+'" onkeydown="if(event.key===\'Enter\')cmRev(this,\''+id+'\');if(event.key===\'Escape\')R(true)" onblur="cmRev(this,\''+id+'\')" autofocus>'};
 window.cmRev=function(inp,id){const v=parseFloat(inp.value.replace(',','.'));const rs=S.revSources.find(x=>x.id===id);if(rs&&!isNaN(v))rs.mensuel=v;autoSave();R(true)};
 window.delRev=function(id){S.revSources=S.revSources.filter(x=>x.id!==id);autoSave();R(true)};
-window.addRev=function(){const nom=prompt("Nom de la source","Loyer");if(!nom)return;const colors=[CV('--accent'),CV('--c4'),CV('--c1'),'#14b8a6','#f97316','#8b5cf6'];S.revSources.push({id:'rs'+nid(),nom:nom,mensuel:0,auto:false,color:colors[S.revSources.length%colors.length]});autoSave();R(true)};
+window.addRev=function(){const nom=prompt("Nom de la source","Loyer");if(!nom)return;const colors=[CV('--accent'),CV('--c4'),CV('--c1'),CV('--c6'),CV('--c2'),CV('--c5')];S.revSources.push({id:'rs'+nid(),nom:nom,mensuel:0,auto:false,color:colors[S.revSources.length%colors.length]});autoSave();R(true)};
 
 /* Notes libres */
 window.edNote=function(section){if(!S||!S.notes)return;const cur=S.notes[section]||'';const n=prompt('Note pour '+section+'\n(laisse vide pour supprimer)',cur);if(n===null)return;S.notes[section]=n;autoSave();R(true)};
