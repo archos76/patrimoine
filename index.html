@@ -424,7 +424,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 </div>
 </div>
 <div class="side-perf" id="sidePerf"></div>
-<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 05/11 13h05</div>
+<div id="appVersion" style="font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 05/11 14h00</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -566,6 +566,9 @@ function majOutils(){
   toggleOutils(actif||garde);
 }
 function toggleSide(){const s=document.getElementById('side'),o=document.getElementById('sideOv');s.classList.toggle('open');o.classList.toggle('on',s.classList.contains('open'))}
+/* Choisir une page ferme le menu. Il ne faut pas « basculer » : un lien interne
+   qui change de page alors que le menu est déjà fermé l'ouvrirait. */
+function fermeSide(){const s=document.getElementById('side');if(s&&s.classList.contains('open'))toggleSide()}
 function toggleTheme(){themeMode=themeMode==='light'?'dark':'light';localStorage.setItem('theme',themeMode);applyTheme();if(typeof R==='function')R(true)}
 applyTheme();
 /* Couleurs lues depuis le thème actif */
@@ -1391,7 +1394,7 @@ window.goPage=function(p){
   const t=document.querySelector('.tab[data-page="'+p+'"]');
   if(t)t.click();
 };
-document.getElementById('tabs').onclick=e=>{const t=e.target.closest('.tab');if(!t||!t.dataset.page)return;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.getElementById('page-'+t.dataset.page).classList.add('active');majOutils();setTimeout(initReveal,30);if(t.dataset.page==='bourse')fetchIntra();if(t.dataset.page==='marches'&&(!S.marches||!S.marches[marPer]||!S.marches[marPer]._maj))fetchMarches();if(window.innerWidth<=900)toggleSide()};
+document.getElementById('tabs').onclick=e=>{const t=e.target.closest('.tab');if(!t||!t.dataset.page)return;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.getElementById('page-'+t.dataset.page).classList.add('active');majOutils();setTimeout(initReveal,30);if(t.dataset.page==='bourse')fetchIntra();if(t.dataset.page==='marches'&&(!S.marches||!S.marches[marPer]||!S.marches[marPer]._maj))fetchMarches();if(window.innerWidth<=900)fermeSide()};
 /* Fermer dropdown quand on clique ailleurs */
 
 
@@ -2058,10 +2061,13 @@ function simuBien(b,par){
 /* Affichage du simulateur : les pastilles de biens, le curseur, trois chiffres,
    une courbe et le detail annee par annee. */
 window.setSimuBien=function(id){simuParams();S.simuBien.id=id;autoSave();R(true)};
+/* Pendant le glissement : on met a jour l affichage, rien d autre.
+   La sauvegarde attend qu on lache le curseur. */
 window.setSimuAn=function(v){
   const p=simuParams();p.annees=Math.max(1,Math.min(SIMU_HORIZON,Math.round(nb(v))));
-  autoSave();renderSimu();
+  simuMaj();
 };
+window.finSimuAn=function(){autoSave()};
 window.setSimuHyp=function(k,v){
   const p=simuParams();const x=parseFloat(String(v).replace(',','.'));
   if(isNaN(x))return;
@@ -2076,7 +2082,7 @@ window.edSimuFrais=function(){
   const p=simuParams();
   const v=prompt('Frais d\'agence à la revente, en % du prix',String(p.fraisAgence!=null?p.fraisAgence:5));
   if(v==null)return;const x=parseFloat(String(v).replace(',','.'));
-  if(isNaN(x))return;p.fraisAgence=Math.max(0,Math.min(12,x));autoSave();renderSimu();
+  if(isNaN(x))return;p.fraisAgence=Math.max(0,Math.min(12,x));autoSave();simuMaj();
 };
 window.edAnneeAchat=function(id){
   const b=S.immo.find(x=>x.id===id);if(!b)return;
@@ -2109,13 +2115,114 @@ window.edSimuTmi=function(){
   if(v==null)return;const x=parseFloat(String(v).replace(',','.'));
   if(isNaN(x))return;
   if(!S.fiscParams)S.fiscParams={};
-  S.fiscParams.tmi=Math.max(0,Math.min(60,x));autoSave();renderSimu();
+  S.fiscParams.tmi=Math.max(0,Math.min(60,x));autoSave();R(true);
 };
 /* Depuis la fiche d un bien : on ouvre le simulateur deja pointe sur lui */
 window.simulerBien=function(id){
   simuParams();S.simuBien.id=id;
   setImmoVue('simu');
 };
+/* L etat courant du simulateur : le bien choisi, ses reglages et ses lignes. */
+function simuEtat(){
+  const p=simuParams();
+  if(!S.immo.length)return null;
+  if(!S.immo.some(x=>x.id===p.id))p.id=S.immo[0].id;
+  const b=S.immo.find(x=>x.id===p.id);
+  const r=simuBien(b,p);
+  const an=Math.max(1,Math.min(SIMU_HORIZON,Math.round(nb(p.annees))));
+  return{p,b,r,an,L:r.lignes[an-1]};
+}
+/* Le bloc « Si je revends », pour l annee lue par le curseur */
+function blocRevente(b,L,r,p){
+  const rv=revente(b,L,r,p);
+  if(!rv)return'';
+  const cP=rv.poche>=0?'var(--green)':'var(--red)';
+  let h='<div style="background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:16px 18px;margin-top:20px">';
+  h+='<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:12px">'+
+     '<span style="font-size:13px;font-weight:600">Si je revends en '+L.annee+'</span>'+
+     '<span style="font-size:11.5px;color:var(--muted)">acheté en <span class="ed" onclick="edAnneeAchat(\''+b.id+'\')">'+anneeAchat(b)+'</span> · '+rv.detention+' an'+(rv.detention>1?'s':'')+' de détention</span></div>';
+  h+='<div class="lr"><span>Prix de vente estimé</span><span style="font-weight:500">'+F(Math.round(rv.prix))+'</span></div>';
+  h+='<div class="lr"><span>Frais d\'agence <span class="ed" onclick="edSimuFrais()">'+(p.fraisAgence!=null?p.fraisAgence:5)+' %</span></span>'+
+     '<span style="color:var(--red)">− '+F(Math.round(rv.fraisAg))+'</span></div>';
+  h+='<div class="lr"><span>Solde du prêt à rembourser</span><span style="color:var(--red)">− '+F(Math.round(rv.restant))+'</span></div>';
+  if(rv.exonere==='rp')
+    h+='<div class="lr"><span>Impôt sur la plus-value</span><span style="color:var(--green)">exonéré (résidence principale)</span></div>';
+  else if(rv.exonere==='achat')
+    h+='<div class="lr"><span>Impôt sur la plus-value</span><span style="color:var(--muted)">prix d\'achat à renseigner</span></div>';
+  else{
+    h+='<div class="lr"><span>Impôt sur la plus-value</span><span style="color:'+(rv.impot>0?'var(--red)':'var(--green)')+'">'+(rv.impot>0?'− '+F(Math.round(rv.impot)):'néant')+'</span></div>';
+    h+='<div style="font-size:11px;color:var(--muted);padding:2px 0 6px;line-height:1.55">'+
+      (rv.brute<=0
+        ? 'À ce prix, la vente ne dégage aucune plus-value imposable : le prix d\'achat majoré des forfaits ('+F(Math.round(rv.majore))+') dépasse le prix de vente net de frais.'
+        : rv.is
+        ? 'À l\'IS : plus-value de '+F(Math.round(rv.brute))+' sur une valeur comptable de '+F(Math.round(rv.majore))+', sans abattement de durée.'
+        : 'Plus-value de '+F(Math.round(rv.brute))+' · abattement de '+Math.round(rv.aIR)+' % sur l\'impôt (19 %) et de '+(Math.round(rv.aPS*10)%10===0?String(Math.round(rv.aPS)):rv.aPS.toFixed(1).replace('.',','))+' % sur les prélèvements sociaux (17,2 %)')+
+      '</div>';
+  }
+  h+='<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:10px">'+
+     '<div class="lr"><span style="font-weight:600">Ce qu\'il te reste en poche</span>'+
+     '<span style="font-weight:600;color:'+cP+'">'+F(Math.round(rv.poche))+'</span></div></div>';
+  if(!rv.exonere&&!rv.is&&rv.detention<30&&rv.impot>0)
+    h+='<div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.55">'+
+      (rv.detention<22?'En attendant '+(22-rv.detention)+' an'+(22-rv.detention>1?'s':'')+' de plus, l\'impôt sur le revenu tombe à zéro ; il faut ':'Il faut ')+
+      (30-rv.detention)+' an'+(30-rv.detention>1?'s':'')+' de plus pour effacer aussi les prélèvements sociaux.</div>';
+  if(rv.cumAmort>0)
+    h+='<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.55">Les '+F(Math.round(rv.cumAmort))+' d\'amortissements déduits depuis aujourd\'hui sont réintégrés dans la plus-value.</div>';
+  return h+'</div>';
+}
+/* Le detail : la premiere annee, tous les cinq ans, les annees de travaux
+   et celle que montre le curseur. */
+function tableauSimu(r,an){
+  const vus={},sel=[];
+  r.lignes.forEach(x=>{
+    if(x.an===1||x.an%5===0||x.an===an||x.travAn>0){if(!vus[x.an]){vus[x.an]=1;sel.push(x)}}});
+  sel.sort((a,b2)=>a.an-b2.an);
+  const colT=r.travaux.length>0;
+  let h='<div style="overflow-x:auto;margin-top:18px"><table style="font-size:12px"><thead><tr>'+
+    '<th class="l">Année</th><th>Loyers</th><th>Impôt</th>'+(colT?'<th>Travaux</th>':'')+
+    '<th>Cashflow après impôt</th><th>Reste dû</th><th>Capital net</th></tr></thead><tbody>';
+  sel.forEach(x=>{
+    const ici=x.an===an;
+    h+='<tr'+(ici?' style="background:var(--abg)"':'')+'>'+
+      '<td class="l"'+(ici?' style="font-weight:600;color:var(--accent)"':'')+'>'+x.annee+' <span style="color:var(--muted);font-size:11px">· '+x.an+' an'+(x.an>1?'s':'')+'</span></td>'+
+      '<td>'+F(Math.round(x.loyerAn))+'</td>'+
+      '<td>'+F(Math.round(x.impot))+'</td>'+
+      (colT?'<td style="color:'+(x.travAn>0?'var(--red)':'var(--muted)')+'">'+(x.travAn>0?'− '+F(Math.round(x.travAn)):'—')+'</td>':'')+
+      '<td style="color:'+(x.cashApres>=0?'var(--green)':'var(--red)')+'">'+(x.cashApres>=0?'+':'')+F(Math.round(x.cashApres))+'</td>'+
+      '<td>'+F(Math.round(x.restant))+'</td>'+
+      '<td style="font-weight:500">'+F(Math.round(x.capitalNet))+'</td></tr>';
+  });
+  return h+'</tbody></table></div>';
+}
+/* Ce qui suit le curseur. Appelé à chaque pixel du glissement, donc il ne
+   touche ni au curseur lui-même ni au graphique : seulement aux zones qui
+   dépendent de l'année lue. Reconstruire le curseur en cours de glissement
+   ferait lâcher la prise du doigt ou de la souris à chaque cran. */
+function simuMaj(){
+  const e=simuEtat();if(!e)return;
+  const{p,b,r,an,L}=e;
+  const put=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html};
+  put('simuAnLbl',an+' an'+(an>1?'s':'')+' <span style="font-size:13px;color:var(--muted);font-weight:400">· '+L.annee+'</span>');
+  const cN=L.capitalNet>=0?'var(--green)':'var(--red)';
+  const cC=L.cumCash>=0?'var(--green)':'var(--red)';
+  put('simuKpi',
+    '<div class="kpi"><div class="kl">Capital net</div><div class="kv" style="color:'+cN+'">'+F(Math.round(L.capitalNet))+'</div>'+
+      '<div class="ks">'+F(Math.round(L.valeur))+' de valeur moins '+F(Math.round(L.restant))+' de dette</div></div>'+
+    '<div class="kpi"><div class="kl">Cashflow cumulé</div><div class="kv" style="color:'+cC+'">'+(L.cumCash>=0?'+':'')+F(Math.round(L.cumCash))+'</div>'+
+      '<div class="ks">après impôt, sur '+an+' an'+(an>1?'s':'')+'</div></div>'+
+    '<div class="kpi"><div class="kl">Impôt de l\'année</div><div class="kv">'+F(Math.round(L.impot))+'</div>'+
+      '<div class="ks">'+r.reg.n+' · '+F2(L.impot/12)+' par mois</div></div>');
+  put('simuVente',blocRevente(b,L,r,p));
+  put('simuTable',tableauSimu(r,an));
+  /* Le repère sur la courbe se déplace sans redessiner le graphique */
+  const c=window._cSimu;
+  if(c&&c.data&&c.data.datasets.length>=2){
+    const pts=r.lignes.map(x=>x.an===an?4:0);
+    c.data.datasets[0].pointRadius=pts;
+    c.data.datasets[1].pointRadius=pts.slice();
+    try{c.update('none')}catch(err){}
+  }
+}
 function renderSimu(){
   const zB=document.getElementById('simuBiens'),z=document.getElementById('simuCorps');
   if(!zB||!z)return;
@@ -2124,15 +2231,9 @@ function renderSimu(){
     z.innerHTML='<div style="color:var(--muted);font-size:12.5px">Aucun bien enregistré. Ajoute un bien dans « Mes biens » pour le simuler.</div>';
     return;
   }
-  const p=simuParams();
-  if(!S.immo.some(x=>x.id===p.id))p.id=S.immo[0].id;
-  const b=S.immo.find(x=>x.id===p.id);
+  const e=simuEtat();
+  const{p,b,r,an}=e;
   zB.innerHTML=S.immo.map(x=>'<button class="pb'+(x.id===p.id?' on':'')+'" onclick="setSimuBien(\''+x.id+'\')">'+(x.nom||'Bien')+'</button>').join('');
-
-  const r=simuBien(b,p);
-  const an=Math.max(1,Math.min(SIMU_HORIZON,Math.round(nb(p.annees))));
-  const L=r.lignes[an-1];
-  const fin=new Date().getFullYear()+an;
 
   let h='';
   /* Les trois hypotheses, dites en clair et modifiables */
@@ -2142,68 +2243,21 @@ function renderSimu(){
      '<span>Tranche d\'imposition <span class="ed" onclick="edSimuTmi()">'+r.tmi+' %</span></span>'+
      '</div>';
 
-  /* Le curseur de temps */
+  /* Le curseur de temps. Il est écrit une fois et n'est plus retouché
+     ensuite, pour qu'un glissement d'un bout à l'autre ne soit pas coupé. */
   h+='<div style="margin-bottom:18px">'+
      '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px">'+
        '<span style="font-size:12px;color:var(--muted)">Dans</span>'+
-       '<span style="font-size:20px;font-weight:500">'+an+' an'+(an>1?'s':'')+' <span style="font-size:13px;color:var(--muted);font-weight:400">· '+fin+'</span></span>'+
+       '<span style="font-size:20px;font-weight:500" id="simuAnLbl"></span>'+
      '</div>'+
-     '<input type="range" class="rg" min="1" max="'+SIMU_HORIZON+'" value="'+an+'" oninput="setSimuAn(this.value)" aria-label="Nombre d\'années">'+
+     '<input type="range" class="rg" id="simuRg" min="1" max="'+SIMU_HORIZON+'" step="1" value="'+an+'"'+
+       ' oninput="setSimuAn(this.value)" onchange="finSimuAn()" aria-label="Nombre d\'années">'+
      '<div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:5px"><span>1 an</span><span>'+SIMU_HORIZON+' ans</span></div>'+
      '</div>';
 
-  /* Les trois chiffres demandes */
-  const cN=L.capitalNet>=0?'var(--green)':'var(--red)';
-  const cC=L.cumCash>=0?'var(--green)':'var(--red)';
-  h+='<div class="kr" style="margin-bottom:18px">'+
-     '<div class="kpi"><div class="kl">Capital net</div><div class="kv" style="color:'+cN+'">'+F(Math.round(L.capitalNet))+'</div>'+
-       '<div class="ks">'+F(Math.round(L.valeur))+' de valeur moins '+F(Math.round(L.restant))+' de dette</div></div>'+
-     '<div class="kpi"><div class="kl">Cashflow cumulé</div><div class="kv" style="color:'+cC+'">'+(L.cumCash>=0?'+':'')+F(Math.round(L.cumCash))+'</div>'+
-       '<div class="ks">après impôt, sur '+an+' an'+(an>1?'s':'')+'</div></div>'+
-     '<div class="kpi"><div class="kl">Impôt de l\'année</div><div class="kv">'+F(Math.round(L.impot))+'</div>'+
-       '<div class="ks">'+r.reg.n+' · '+F2(L.impot/12)+' par mois</div></div>'+
-     '</div>';
-
+  h+='<div class="kr" id="simuKpi" style="margin-bottom:18px"></div>';
   h+='<div class="cb" style="height:260px"><canvas id="cSimu"></canvas></div>';
-
-  /* Si je revends cette annee-la */
-  const rv=revente(b,L,r,p);
-  if(rv){
-    const cP=rv.poche>=0?'var(--green)':'var(--red)';
-    h+='<div style="background:var(--card2);border:1px solid var(--border);border-radius:11px;padding:16px 18px;margin-top:20px">';
-    h+='<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:12px">'+
-       '<span style="font-size:13px;font-weight:600">Si je revends en '+L.annee+'</span>'+
-       '<span style="font-size:11.5px;color:var(--muted)">acheté en <span class="ed" onclick="edAnneeAchat(\''+b.id+'\')">'+anneeAchat(b)+'</span> · '+rv.detention+' an'+(rv.detention>1?'s':'')+' de détention</span></div>';
-    const li=(lib,val,fort,coul)=>'<div class="lr"><span'+(fort?' style="font-weight:600"':'')+'>'+lib+'</span>'+
-      '<span style="font-weight:'+(fort?'600':'500')+(coul?';color:'+coul:'')+'">'+val+'</span></div>';
-    h+=li('Prix de vente estimé',F(Math.round(rv.prix)));
-    h+='<div class="lr"><span>Frais d\'agence <span class="ed" onclick="edSimuFrais()">'+(p.fraisAgence!=null?p.fraisAgence:5)+' %</span></span>'+
-       '<span style="color:var(--red)">− '+F(Math.round(rv.fraisAg))+'</span></div>';
-    h+='<div class="lr"><span>Solde du prêt à rembourser</span><span style="color:var(--red)">− '+F(Math.round(rv.restant))+'</span></div>';
-    if(rv.exonere==='rp')
-      h+='<div class="lr"><span>Impôt sur la plus-value</span><span style="color:var(--green)">exonéré (résidence principale)</span></div>';
-    else if(rv.exonere==='achat')
-      h+='<div class="lr"><span>Impôt sur la plus-value</span><span style="color:var(--muted)">prix d\'achat à renseigner</span></div>';
-    else{
-      h+='<div class="lr"><span>Impôt sur la plus-value</span><span style="color:'+(rv.impot>0?'var(--red)':'var(--green)')+'">'+(rv.impot>0?'− '+F(Math.round(rv.impot)):'néant')+'</span></div>';
-      h+='<div style="font-size:11px;color:var(--muted);padding:2px 0 6px;line-height:1.55">'+
-        (rv.brute<=0
-          ? 'À ce prix, la vente ne dégage aucune plus-value imposable : le prix d\'achat majoré des forfaits ('+F(Math.round(rv.majore))+') dépasse le prix de vente net de frais.'
-          : rv.is
-          ? 'À l\'IS : plus-value de '+F(Math.round(rv.brute))+' sur une valeur comptable de '+F(Math.round(rv.majore))+', sans abattement de durée.'
-          : 'Plus-value de '+F(Math.round(rv.brute))+' · abattement de '+Math.round(rv.aIR)+' % sur l\'impôt (19 %) et de '+rv.aPS.toFixed(1).replace('.',',')+' % sur les prélèvements sociaux (17,2 %)')+
-        '</div>';
-    }
-    h+='<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:10px">'+
-       li('Ce qu\'il te reste en poche',(rv.poche>=0?'':'')+F(Math.round(rv.poche)),true,cP)+'</div>';
-    if(!rv.exonere&&!rv.is&&rv.detention<30&&rv.impot>0)
-      h+='<div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.55">'+
-        (rv.detention<22?'En attendant '+(22-rv.detention)+' an'+(22-rv.detention>1?'s':'')+' de plus, l\'impôt sur le revenu tombe à zéro ; il faut ':'Il faut ')+
-        (30-rv.detention)+' an'+(30-rv.detention>1?'s':'')+' de plus pour effacer aussi les prélèvements sociaux.</div>';
-    if(rv.cumAmort>0)
-      h+='<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.55">Les '+F(Math.round(rv.cumAmort))+' d\'amortissements déduits depuis aujourd\'hui sont réintégrés dans la plus-value.</div>';
-    h+='</div>';
-  }
+  h+='<div id="simuVente"></div>';
 
   /* Travaux a venir */
   h+='<div style="margin-top:20px">';
@@ -2215,9 +2269,9 @@ function renderSimu(){
     h+='<div style="font-size:11.5px;color:var(--muted);line-height:1.6">Rien de prévu. Ajoute une toiture, un ravalement ou une cuisine : la dépense tombera sur son année et creusera le cashflow de cette année-là.</div>';
   else{
     tp.forEach((t,i)=>{
-      const an=new Date().getFullYear()+Math.max(1,Math.round(nb(t.ans)));
+      const anT=new Date().getFullYear()+Math.max(1,Math.round(nb(t.ans)));
       const ded=t.ded!==false&&!!r.reg.charges;
-      h+='<div class="lr"><span>'+(t.desc||'Travaux')+' <span style="color:var(--muted);font-size:11px">· '+an+'</span></span>'+
+      h+='<div class="lr"><span>'+(t.desc||'Travaux')+' <span style="color:var(--muted);font-size:11px">· '+anT+'</span></span>'+
         '<span style="display:flex;align-items:center;gap:10px">'+
         '<span class="ed" onclick="togTravauxDed(\''+b.id+'\','+i+')" style="font-size:11px;color:'+(ded?'var(--green)':'var(--muted)')+'">'+(ded?'déductible':'non déductible')+'</span>'+
         '<span style="font-weight:500;color:var(--red)">'+F(Math.round(nb(t.montant)))+'</span>'+
@@ -2228,25 +2282,7 @@ function renderSimu(){
   }
   h+='</div>';
 
-  /* Le detail, tous les cinq ans plus l annee choisie */
-  const vus={};const sel=[];
-  r.lignes.forEach(x=>{
-    if(x.an===1||x.an%5===0||x.an===an||x.travAn>0){if(!vus[x.an]){vus[x.an]=1;sel.push(x)}}});
-  sel.sort((a,b2)=>a.an-b2.an);
-  h+='<div style="overflow-x:auto;margin-top:18px"><table style="font-size:12px"><thead><tr>'+
-     '<th class="l">Année</th><th>Loyers</th><th>Impôt</th>'+(r.travaux.length?'<th>Travaux</th>':'')+'<th>Cashflow après impôt</th><th>Reste dû</th><th>Capital net</th></tr></thead><tbody>';
-  sel.forEach(x=>{
-    const ici=x.an===an;
-    h+='<tr'+(ici?' style="background:var(--abg)"':'')+'>'+
-      '<td class="l"'+(ici?' style="font-weight:600;color:var(--accent)"':'')+'>'+x.annee+' <span style="color:var(--muted);font-size:11px">· '+x.an+' an'+(x.an>1?'s':'')+'</span></td>'+
-      '<td>'+F(Math.round(x.loyerAn))+'</td>'+
-      '<td>'+F(Math.round(x.impot))+'</td>'+
-      (r.travaux.length?'<td style="color:'+(x.travAn>0?'var(--red)':'var(--muted)')+'">'+(x.travAn>0?'− '+F(Math.round(x.travAn)):'—')+'</td>':'')+
-      '<td style="color:'+(x.cashApres>=0?'var(--green)':'var(--red)')+'">'+(x.cashApres>=0?'+':'')+F(Math.round(x.cashApres))+'</td>'+
-      '<td>'+F(Math.round(x.restant))+'</td>'+
-      '<td style="font-weight:500">'+F(Math.round(x.capitalNet))+'</td></tr>';
-  });
-  h+='</tbody></table></div>';
+  h+='<div id="simuTable"></div>';
 
   /* Ce sur quoi la simulation repose, et ce qu elle ignore */
   const notes=[];
@@ -2268,8 +2304,7 @@ function renderSimu(){
   const el=document.getElementById('cSimu');
   if(el&&window.Chart){
     if(window._cSimu)window._cSimu.destroy();
-    const lab=r.lignes.map(x=>x.annee);
-    window._cSimu=new Chart(el,{type:'line',data:{labels:lab,datasets:[
+    window._cSimu=new Chart(el,{type:'line',data:{labels:r.lignes.map(x=>x.annee),datasets:[
       {label:'Capital net',data:r.lignes.map(x=>Math.round(x.capitalNet)),
        borderColor:CV('--accent'),backgroundColor:hexA(CV('--accent'),.10),fill:true,
        tension:.3,borderWidth:2.5,pointRadius:r.lignes.map(x=>x.an===an?4:0),
@@ -2287,6 +2322,7 @@ function renderSimu(){
         y:{grid:{color:hexA(CV('--border'),.5)},
            ticks:{color:CV('--muted'),font:{size:11},callback:v=>Math.round(v/1000)+'k'}}}}});
   }
+  simuMaj();
 }
 function fiscBien(b,mensCred){
   const tmi=(S.fiscParams&&S.fiscParams.tmi)||30;
