@@ -426,7 +426,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 05/11 17h15</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 05/11 18h00</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -1118,6 +1118,15 @@ function totalTravaux(b){
 }
 /* Convertit en nombre sûr : évite qu'une valeur inattendue propage un NaN dans tout un tableau.
    Accepte aussi « 5 000,50 » saisi à la française. */
+/* Un graphique qui échoue en cours de création laisse Chart.js persuadé que
+   le canevas est pris. Tous les rendus suivants se heurtent alors à « Canvas
+   is already in use » — l app entière se fige jusqu au rechargement. On libère
+   donc toujours le canevas avant d y redessiner, quoi qu il s y soit passé. */
+function neufGraphe(el,conf){
+  if(!el||!window.Chart)return null;
+  try{const vieux=Chart.getChart?Chart.getChart(el):null;if(vieux)vieux.destroy()}catch(e){}
+  return new Chart(el,conf);
+}
 function nb(v){
   if(typeof v==='number')return isFinite(v)?v:0;
   if(v==null)return 0;
@@ -1892,7 +1901,7 @@ function drawPie(cid,ref,items,fmt){
   if(window[ref]){window[ref].destroy();window[ref]=null}
   const vals=items.map(x=>Math.max(0,x.v||0));
   if(vals.reduce((a,b)=>a+b,0)<=0)return;
-  window[ref]=new Chart(el,{type:'pie',
+  window[ref]=neufGraphe(el,{type:'pie',
     data:{labels:items.map(x=>x.n),datasets:[{data:vals,backgroundColor:items.map(x=>x.c),
       borderColor:CV('--card'),borderWidth:3,offset:8,hoverOffset:16}]},
     options:{responsive:true,maintainAspectRatio:false,layout:{padding:12},
@@ -2392,7 +2401,7 @@ function renderSimu(){
   const el=document.getElementById('cSimu');
   if(el&&window.Chart){
     if(window._cSimu)window._cSimu.destroy();
-    window._cSimu=new Chart(el,{type:'line',data:{labels:r.lignes.map(x=>x.annee),datasets:[
+    window._cSimu=neufGraphe(el,{type:'line',data:{labels:r.lignes.map(x=>x.annee),datasets:[
       {label:'Capital net',data:r.lignes.map(x=>Math.round(x.capitalNet)),
        borderColor:CV('--accent'),backgroundColor:hexA(CV('--accent'),.10),fill:true,
        tension:.3,borderWidth:2.5,pointRadius:r.lignes.map(x=>x.an===an?4:0),
@@ -2791,7 +2800,12 @@ async function fetchMarches(force){
       const lot=tous.slice(i,i+10);
       try{
         const r=await fetch(GAS+"?per="+per+"&t="+encodeURIComponent(lot.join(",")));
-        if(r.ok){const j=await r.json();Object.keys(j||{}).forEach(k=>{if(j[k]&&j[k].sem!=null)res[k]=j[k]})}
+        if(r.ok){const j=await r.json();Object.keys(j||{}).forEach(k=>{
+          if(!j[k]||j[k].sem==null)return;
+          const v=nb(j[k].sem);
+          if(!isFinite(v))return;
+          j[k].sem=v;res[k]=j[k];
+        })}
       }catch(e){}
     }
   }finally{if(_marEnCours===per)_marEnCours=null}
@@ -2816,10 +2830,14 @@ function radarMarche(cle,cid,lid){
   let d=marchesData&&Object.keys(marchesData).length?marchesData:((S.marches||{})[marPer]||{});
   /* Garde-fou : des chiffres d'une autre période ne doivent jamais s'afficher ici */
   if(d&&d._per&&d._per!==marPer)d={};
-  const dispo=g.items.filter(x=>d[x.t]&&d[x.t].sem!=null).sort((a,b)=>d[b.t].sem-d[a.t].sem);
+  /* Le service distant renvoie parfois « 1.20 » en texte, ou rien du tout :
+     on ne garde que ce qui est un vrai nombre, et on le convertit une fois. */
+  const val=t=>(d[t]&&d[t].sem!=null)?nb(d[t].sem):null;
+  const dispo=g.items.filter(x=>{const v=val(x.t);return v!=null&&isFinite(v)})
+                     .sort((a,b)=>val(b.t)-val(a.t));
   const leg=document.getElementById(lid);
   if(dispo.length<3){if(leg)leg.innerHTML='<div style="color:var(--muted);font-size:12px">Clique sur Actualiser pour charger les données.</div>';return}
-  const vals=dispo.map(x=>d[x.t].sem);
+  const vals=dispo.map(x=>val(x.t));
   const mx=Math.max(...vals.map(Math.abs),1);
   const el=document.getElementById(cid);if(!el)return;
   if(window['_r_'+cle])window['_r_'+cle].destroy();
@@ -2864,7 +2882,7 @@ function radarMarche(cle,cid,lid){
       c.restore();
     }};
 
-  window['_r_'+cle]=new Chart(el,{type:'radar',
+  window['_r_'+cle]=neufGraphe(el,{type:'radar',
     data:{labels:dispo.map(x=>x.n),datasets:[{
       data:vals,borderColor:'transparent',backgroundColor:'transparent',
       borderWidth:0,pointRadius:0,pointHoverRadius:7,
@@ -2893,7 +2911,7 @@ function radarMarche(cle,cid,lid){
   if(leg){
     const tri=dispo;
     leg.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:5px 14px">'+
-      tri.map(x=>{const v=d[x.t].sem;const c=v>=0?'var(--green)':'var(--red)';
+      tri.map(x=>{const v=val(x.t);const c=v>=0?'var(--green)':'var(--red)';
         return '<div style="display:flex;justify-content:space-between;gap:8px;font-size:11.5px;padding:2px 0"><span style="color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+x.e+' '+x.n+'</span><span style="font-weight:600;color:'+c+'">'+(v>=0?'+':'')+v.toFixed(1)+'%</span></div>'}).join('')+'</div>';
   }
 }
@@ -3201,7 +3219,7 @@ const choisies=CLS.filter(c=>S.netSel[c.k]&&Hn.some(h=>valCls(h,c.k)>0));
 if(_cN)_cN.destroy();
 const infoB={backgroundColor:CV('--card2'),titleColor:CV('--text'),bodyColor:CV('--text2'),borderColor:CV('--border'),borderWidth:1,padding:11,cornerRadius:9,usePointStyle:true,boxWidth:8,boxHeight:8,boxPadding:4};
 if(netVue==='barres'){
-  _cN=new Chart(document.getElementById('cN'),{type:'bar',
+  _cN=neufGraphe(document.getElementById('cN'),{type:'bar',
     data:{labels:Hn.map(h=>h.date),datasets:choisies.map(c=>({label:c.n,data:Hn.map(h=>Math.round(valCls(h,c.k))),backgroundColor:c.c,borderRadius:coinHaut,borderSkipped:false,barPercentage:.64,categoryPercentage:.86,borderWidth:0}))},
     options:{responsive:true,maintainAspectRatio:false,animation:animConf,
       interaction:{mode:'index',intersect:false},
@@ -3215,7 +3233,7 @@ if(netVue==='barres'){
   const ds=[];
   if(S.netSel.total)ds.push({label:'Total',data:Hn.map(h=>Math.round(valTot(h))),borderColor:nmC,backgroundColor:gradFill(nmC),fill:true,tension:.35,pointRadius:0,pointHoverRadius:5,borderWidth:2.5,order:2});
   choisies.forEach(c=>ds.push({label:c.n,data:Hn.map(h=>Math.round(valCls(h,c.k))),borderColor:c.c,backgroundColor:'transparent',fill:false,tension:.35,pointRadius:0,pointHoverRadius:5,borderWidth:1.8,order:1}));
-  _cN=new Chart(document.getElementById('cN'),{type:'line',
+  _cN=neufGraphe(document.getElementById('cN'),{type:'line',
     data:{labels:Hn.map(h=>h.date),datasets:ds},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,
       plugins:{legend:{display:false},tooltip:Object.assign({},infoB,{callbacks:{label:c=>c.dataset.label+' : '+F(c.raw)}})},
@@ -3265,7 +3283,7 @@ perfLines.forEach(p=>{
 });
 
 if(_cPf)_cPf.destroy();
-_cPf=new Chart(document.getElementById('cPf'),{type:'line',data:{labels:twrGlobal.map(d=>d.mois),datasets:ds2},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw!=null?c.dataset.label+': '+(c.raw>0?'+':'')+c.raw.toFixed(1)+'%':'—'}}},scales:axeOpts(v=>(v>0?'+':'')+v+'%')}});
+_cPf=neufGraphe(document.getElementById('cPf'),{type:'line',data:{labels:twrGlobal.map(d=>d.mois),datasets:ds2},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw!=null?c.dataset.label+': '+(c.raw>0?'+':'')+c.raw.toFixed(1)+'%':'—'}}},scales:axeOpts(v=>(v>0?'+':'')+v+'%')}});
 }/* end dc */
 
 /* VM table */
@@ -3457,7 +3475,7 @@ document.getElementById('sl').innerHTML=sH;
       /* Pas de série « Réel » quand il n'y a rien à tracer : une légende vide égare */
       const dsProjPat=[];
       if(passe.length)dsProjPat.push({label:'Réel',data:serPasse,borderColor:CV('--green'),backgroundColor:hexA(CV('--green'),.12),fill:true,tension:.3,borderWidth:2.5,pointRadius:0});
-      window._cProjPat=new Chart(el,{type:'line',data:{labels:labels.map(fmtD),datasets:dsProjPat.concat([
+      window._cProjPat=neufGraphe(el,{type:'line',data:{labels:labels.map(fmtD),datasets:dsProjPat.concat([
         {label:'Projection',data:serFut,borderColor:CV('--accent'),backgroundColor:hexA(CV('--accent'),.10),fill:true,tension:.3,borderWidth:2.5,borderDash:[6,4],pointRadius:0},
         {label:'Ce qu\'il reste à rembourser',data:serDette,borderColor:CV('--red'),backgroundColor:'transparent',fill:false,tension:.3,borderWidth:1.8,borderDash:[2,3],pointRadius:0}
       ])},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,
@@ -3496,7 +3514,7 @@ if(document.getElementById('cIntra')){
       const el=document.getElementById('cIntra');
       if(window._cIntra)window._cIntra.destroy();
       const lbl=dd.ts.map(s=>new Date(s*1000).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Paris'}));
-      window._cIntra=new Chart(el,{type:'line',
+      window._cIntra=neufGraphe(el,{type:'line',
         data:{labels:lbl,datasets:[
           {data:dd.val,borderColor:col,
             segment:{borderColor:c=>{const a=c.p0.parsed.y,b=c.p1.parsed.y;return (a+b)/2>=dd.ref?CV('--green'):CV('--red')}},
@@ -3738,7 +3756,7 @@ if(benchEl){
     idxData=getBenchCum(S.benchIdx);
   }
   const idxName={SPY:'S&P 500',QQQ:'Nasdaq 100','IWDA.AS':'MSCI World','CAC.PA':'CAC 40'}[S.benchIdx]||S.benchIdx;
-  window._cBench=new Chart(benchEl,{type:'line',data:{labels:twrG.map(d=>d.mois),datasets:[
+  window._cBench=neufGraphe(benchEl,{type:'line',data:{labels:twrG.map(d=>d.mois),datasets:[
     {label:'Mon portefeuille',data:benchData2,borderColor:'var(--accent)',backgroundColor:gradFill(CV('--green')),fill:true,tension:.35,pointRadius:0,pointHoverRadius:5,borderWidth:2},
     {label:idxName,data:idxData,borderColor:CV('--accent'),borderDash:[6,3],tension:.35,pointRadius:0,pointHoverRadius:5,borderWidth:1.5,fill:false,spanGaps:true}
   ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7,padding:16,color:CV('--muted')}},tooltip:{callbacks:{label:c=>c.raw!=null?c.dataset.label+': '+(c.raw>0?'+':'')+c.raw.toFixed(1)+'%':'—'}}},scales:axeOpts(v=>(v>0?'+':'')+v+'%')}});
@@ -3851,7 +3869,7 @@ if(cDivEl){
     /* Comparaison d'années : actions et SCPI empilées, l'année en cours ressort */
     const act=ordre.map(a=>totAn(a,'a')), scp=ordre.map(a=>totAn(a,'s'));
     const enCours=a=>a===anDivS;
-    window._cDivM=new Chart(cDivEl,{data:{labels:ordre,datasets:[
+    window._cDivM=neufGraphe(cDivEl,{data:{labels:ordre,datasets:[
       {type:'bar',label:'Actions',data:act,stack:'d',order:2,
        backgroundColor:ordre.map(a=>enCours(a)?CV('--accent'):hexA(CV('--accent'),.45)),
        borderRadius:coinHaut,borderSkipped:false,barPercentage:.6,categoryPercentage:.8,
@@ -3875,7 +3893,7 @@ if(cDivEl){
       {type:'bar',label:'SCPI',data:scp,stack:'d',order:2,backgroundColor:CV('--c2'),
        borderRadius:coinHaut,borderSkipped:false,barPercentage:.68,categoryPercentage:.8,borderWidth:0}];
     const mo=ligneMoy(tot,'Moyenne');if(mo)ds.push(mo);
-    window._cDivM=new Chart(cDivEl,{data:{labels:moisDivL,datasets:ds},
+    window._cDivM=neufGraphe(cDivEl,{data:{labels:moisDivL,datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
         animation:animConf,plugins:{legend:legDiv(true),
           tooltip:tipOpts(c=>c.dataset.label+' : '+F2(c.raw))},scales:axesDiv}});
@@ -3898,7 +3916,7 @@ if(cDivEl){
       backgroundColor:cette.map((v,i)=>i===dernier?CV('--accent'):hexA(CV('--text'),.62)),
       borderRadius:5,borderSkipped:false,barPercentage:.82,categoryPercentage:.8,borderWidth:0});
     const mo=ligneMoy(cette,'Moyenne');if(mo)ds.push(mo);
-    window._cDivM=new Chart(cDivEl,{data:{labels:moisDivL,datasets:ds},
+    window._cDivM=neufGraphe(cDivEl,{data:{labels:moisDivL,datasets:ds},
       options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
         animation:animConf,plugins:{legend:legDiv(ds.length>1),
           tooltip:tipOpts(c=>c.dataset.label+' : '+F2(c.raw))},
@@ -4361,7 +4379,7 @@ document.getElementById('ik').innerHTML=
       const rev=lignes.map(x=>x.passe?Math.round(x.rev):null);
       const dep=lignes.map(x=>x.passe?-Math.round(x.dep):null);
       const cf=lignes.map(x=>x.passe?Math.round(x.cf):null);
-      window._cImAn=new Chart(el,{data:{labels:ml,datasets:[
+      window._cImAn=neufGraphe(el,{data:{labels:ml,datasets:[
         {type:'bar',label:'Loyers encaissés',data:rev,backgroundColor:CV('--green'),borderRadius:5,borderSkipped:false,barPercentage:.75,categoryPercentage:.8,borderWidth:0,order:2},
         {type:'bar',label:'Dépenses',data:dep,backgroundColor:hexA(CV('--red'),.75),borderRadius:5,borderSkipped:false,barPercentage:.75,categoryPercentage:.8,borderWidth:0,order:2},
         {type:'line',label:'Cashflow',data:cf,borderColor:CV('--accent'),backgroundColor:'transparent',borderWidth:2,tension:.3,pointRadius:2.5,pointBackgroundColor:CV('--accent'),order:1,spanGaps:false}]},
@@ -4383,7 +4401,7 @@ let imH2=H.filter(h=>h.immobilier);
 /* Filtrage par période */
 if(immoPr===-1){const anCour=String(new Date().getFullYear()%100);const ji=imH2.findIndex(h=>h.date&&h.date.includes('Jan '+anCour));if(ji>=0)imH2=imH2.slice(ji)}
 else if(immoPr<999)imH2=imH2.slice(-immoPr);
-window._cImN=new Chart(cImEl,{type:'line',data:{labels:imH2.map(h=>h.date),datasets:[{label:'Valeur immo',data:imH2.map(h=>h.immobilier||0),borderColor:CV('--accent'),backgroundColor:gradFill(CV('--accent')),fill:true,tension:.35,pointRadius:0,pointHoverRadius:5,borderWidth:1.8},{label:'Dettes immo',data:imH2.map(h=>h.dettes||0),borderColor:CV('--red'),borderDash:[4,4],tension:.35,pointRadius:0,pointHoverRadius:5,borderWidth:1.5,fill:false}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7,padding:16,color:CV('--muted')}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+F(c.raw)}}},scales:axeOpts(v=>(v/1000).toFixed(0)+'k')}})}}
+window._cImN=neufGraphe(cImEl,{type:'line',data:{labels:imH2.map(h=>h.date),datasets:[{label:'Valeur immo',data:imH2.map(h=>h.immobilier||0),borderColor:CV('--accent'),backgroundColor:gradFill(CV('--accent')),fill:true,tension:.35,pointRadius:0,pointHoverRadius:5,borderWidth:1.8},{label:'Dettes immo',data:imH2.map(h=>h.dettes||0),borderColor:CV('--red'),borderDash:[4,4],tension:.35,pointRadius:0,pointHoverRadius:5,borderWidth:1.5,fill:false}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7,padding:16,color:CV('--muted')}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+F(c.raw)}}},scales:axeOpts(v=>(v/1000).toFixed(0)+'k')}})}}
 
 /* Tableau récap mensuel — hors RP */
 let rcH='<table><thead><tr><th class="l">Bien</th><th>Loyer</th><th>Charges</th><th>Crédit</th><th>Cashflow</th><th>Rdt brut</th></tr></thead><tbody>';
@@ -4816,7 +4834,7 @@ if(dc){
       if(k){const dispo=Object.keys(apports).filter(x=>x<=k).sort();if(dispo.length)dernier=apports[dispo[dispo.length-1]]}
       return dernier!=null?dernier:crI;
     });
-    window._cCry=new Chart(cel,{type:'line',
+    window._cCry=neufGraphe(cel,{type:'line',
       data:{labels:Hc.map(h=>h.date),datasets:[
         {label:'Valeur',data:Hc.map(h=>h.crypto||0),borderColor:CV('--crypto'),backgroundColor:gradFill(CV('--crypto')),fill:true,tension:.35,pointRadius:0,pointHoverRadius:5,borderWidth:2},
         {label:'Montant investi',data:invSerie,borderColor:CV('--muted'),borderDash:[5,4],tension:.2,pointRadius:0,pointHoverRadius:5,borderWidth:1.6,fill:false}
@@ -5114,7 +5132,7 @@ document.getElementById('widgetResume').innerHTML=wH;
     if(eel){
       if(window._cEnv)window._cEnv.destroy();
       const ds=choisis.map(p=>({label:p.n,data:base.map(b=>b[p.k]||0),backgroundColor:p.c,borderRadius:coinHaut,borderSkipped:false,barPercentage:.62,categoryPercentage:.86,borderWidth:0}));
-      window._cEnv=new Chart(eel,{type:'bar',
+      window._cEnv=neufGraphe(eel,{type:'bar',
         data:{labels:base.map(b=>b.date),datasets:ds},
         options:{responsive:true,maintainAspectRatio:false,animation:animConf,
           interaction:{mode:'index',intersect:false},
@@ -5252,7 +5270,7 @@ if(projCanvas){
     {label:'Réaliste (€ constants)',data:simInfla.data.map(d=>d.val),borderColor:CV('--c1'),borderDash:[6,3],tension:.35,pointRadius:0,pointHoverRadius:5,borderWidth:1.4},
     {label:'FIRE',data:simReal.data.map(()=>fireTarget),borderColor:CV('--accent'),borderDash:[4,4],borderWidth:1.5,pointRadius:0}
   ];
-  window._cProj=new Chart(projCanvas,{type:'line',data:{labels:simReal.data.map(d=>d.age+' ans'),datasets:dsProj},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7,padding:16,color:CV('--muted')}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+F(c.raw)}}},scales:axeOpts(v=>v>=1e6?(v/1e6).toFixed(1)+'M':(v/1000).toFixed(0)+'k')}});
+  window._cProj=neufGraphe(projCanvas,{type:'line',data:{labels:simReal.data.map(d=>d.age+' ans'),datasets:dsProj},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7,padding:16,color:CV('--muted')}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+F(c.raw)}}},scales:axeOpts(v=>v>=1e6?(v/1e6).toFixed(1)+'M':(v/1000).toFixed(0)+'k')}});
 }}
 
 /* ====== REVENUS PASSIFS (éditable) ====== */
@@ -5298,7 +5316,7 @@ if(rProjEl){
     rpData.push({y:y,rev:Math.round(totalM)});
     bourse=bourse*(1+sp.rend/100)+(sp.ep||0)*12;
   }
-  window._cRPr=new Chart(rProjEl,{type:'bar',data:{labels:rpData.map(d=>'+'+d.y+'a'),datasets:[{label:'Rev./mois',data:rpData.map(d=>d.rev),backgroundColor:CV('--green'),borderRadius:5,borderSkipped:false,barPercentage:.7,categoryPercentage:.75,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>F(c.raw)+'/mois'}}},scales:axeOpts(v=>F(v))}})
+  window._cRPr=neufGraphe(rProjEl,{type:'bar',data:{labels:rpData.map(d=>'+'+d.y+'a'),datasets:[{label:'Rev./mois',data:rpData.map(d=>d.rev),backgroundColor:CV('--green'),borderRadius:5,borderSkipped:false,barPercentage:.7,categoryPercentage:.75,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>F(c.raw)+'/mois'}}},scales:axeOpts(v=>F(v))}})
 }}
 
 /* Détail éditable */
@@ -5578,7 +5596,7 @@ if(dc&&document.getElementById('cRadIdx')){
 }
 setTimeout(initReveal,30);
 try{enrouleTables()}catch(e){}
-}catch(err){console.error('Erreur rendu R():',err)}
+}catch(err){signalePanne('mise à jour de l\'affichage',err)}
 }/* end R */
 
 /* Tri des portefeuilles */
