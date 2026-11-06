@@ -179,6 +179,7 @@ tr:hover{background:var(--card2)}
 .badge{display:inline-flex;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:550}
 .badge.pos{background:rgba(46,230,160,.14);color:var(--green)}
 .badge.neg{background:rgba(255,92,108,.14);color:var(--red)}
+.badge.warn{background:rgba(162,98,28,.14);color:var(--accent)}
 .lr{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}
 .ln{font-weight:500}.ls{font-size:12px;color:var(--muted)}
 .wb{display:flex;height:6px;border-radius:4px;overflow:hidden;background:var(--card2);margin-bottom:16px}.wb div{height:100%}
@@ -437,7 +438,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 06/11 21h15</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 06/11 22h10</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -895,17 +896,39 @@ function phraseManques(mq){
    Un logement vide ne rapporte rien, et un bien en travaux non plus : le crédit,
    lui, se paie quand même. Le délai est réglable bien par bien ; sans réglage,
    on laisse trois mois à un logement vide pour retrouver un locataire. */
+/* ===== TROIS ETATS POUR UN LOGEMENT =====
+   Loue, vacant (tu cherches un locataire) et en travaux (il n est pas
+   louable, et ce n est pas le meme probleme). Les deux derniers ne
+   rapportent rien, mais une vacance subie et un chantier choisi ne se
+   lisent pas pareil : on les distingue partout ou ca compte.
+   L ancien champ occupe (vrai/faux) reste tenu a jour pour que rien de ce
+   qui a ete saisi avant ne se perde. */
+const ETATS_LOT=[['loue','Loué','pos'],['vide','Vacant','neg'],['travaux','En travaux','warn']];
+function etatLot(l){
+  if(!l)return 'loue';
+  if(l.etat==='loue'||l.etat==='vide'||l.etat==='travaux')return l.etat;
+  return l.occupe===false?'vide':'loue';
+}
+function libelleEtat(l){const e=etatLot(l),t=ETATS_LOT.find(x=>x[0]===e);return t?t[1]:'Loué'}
+function classeEtat(l){const e=etatLot(l),t=ETATS_LOT.find(x=>x[0]===e);return t?t[2]:'pos'}
+/* Vrai quand le logement encaisse un loyer ce mois-ci */
+function lotRapporte(l){return etatLot(l)==='loue'}
+function poseEtatLot(l,e){
+  l.etat=e;
+  l.occupe=(e==='loue');
+  return e;
+}
 function delaiLoyer(b){
   if(b&&b.loyerDansMois!=null)return Math.max(0,Math.round(nb(b.loyerDansMois)));
   const lots=(b&&b.lots&&b.lots.length)?b.lots:[{occupe:b?b.occupe!==false:true}];
-  return lots.some(l=>l.occupe===false)?3:0;
+  return lots.some(l=>!lotRapporte(l))?3:0;
 }
 /* Ce que le bien encaisse avant et après que les logements vides soient reloués */
 function loyersBien(b){
   const plein=loyerBien(b);
   if(b&&b.loyerDansMois!=null)return{avant:0,apres:plein};
   const lots=(b&&b.lots&&b.lots.length)?b.lots:[{loyer:nb(b&&b.loyer),occupe:b?b.occupe!==false:true}];
-  return{avant:lots.reduce((s,l)=>s+(l.occupe===false?0:nb(l.loyer)),0),apres:plein};
+  return{avant:lots.reduce((s,l)=>s+(lotRapporte(l)?nb(l.loyer):0),0),apres:plein};
 }
 function loyerAuMois(b,k){
   const l=loyersBien(b);
@@ -951,14 +974,16 @@ function cashflowLocatif(k){
       return{id:b.id,nom:b.nom||'Bien',loyer,charges,mens,net:v,manuel:true,netAuto:loyer-charges-mens,
              attente,loyerAvant:l.avant,loyerApres:l.apres,reglé:b.loyerDansMois!=null,
              etatCredit:cr.etat,mensPleine:cr.pleine,dateCredit:dte0,
-             vides:lots0.filter(x=>x.occupe===false).length,nbLots:lots0.length};
+             vides:lots0.filter(x=>etatLot(x)==='vide').length,
+             travaux:lots0.filter(x=>etatLot(x)==='travaux').length,nbLots:lots0.length};
     }
     const lots=(b.lots&&b.lots.length)?b.lots:[];
     const dte=b.creditId?(S.dettes.find(x=>x.id===b.creditId)||{}).dateDebut:null;
     return{id:b.id,nom:b.nom||'Bien',loyer,charges,mens,net:loyer-charges-mens,
            attente,loyerAvant:l.avant,loyerApres:l.apres,reglé:b.loyerDansMois!=null,
            etatCredit:cr.etat,mensPleine:cr.pleine,dateCredit:dte,
-           vides:lots.filter(x=>x.occupe===false).length,nbLots:lots.length};
+           vides:lots.filter(x=>etatLot(x)==='vide').length,
+           travaux:lots.filter(x=>etatLot(x)==='travaux').length,nbLots:lots.length};
   });
   const loyers=detail.reduce((a,x)=>a+x.loyer,0);
   const charges=detail.reduce((a,x)=>a+x.charges,0);
@@ -2661,22 +2686,25 @@ window.cmLot=function(inp,id,li,champ){
   else{const v=parseFloat(inp.value.replace(',','.'));if(!isNaN(v))b.lots[li].loyer=v}
   b.loyer=loyerBien(b);autoSave();R(true);
 };
+/* Un clic fait tourner les trois états : loué, vacant, en travaux. */
 window.togLot=function(id,li){
   const b=S.immo.find(x=>x.id===id);if(!b||!b.lots||!b.lots[li])return;
   const l=b.lots[li];
-  const neuf=l.occupe===false;
-  l.occupe=neuf;
+  const i=ETATS_LOT.findIndex(x=>x[0]===etatLot(l));
+  const neuf=ETATS_LOT[(i+1)%ETATS_LOT.length][0];
+  poseEtatLot(l,neuf);
   /* On date le changement : sans historique, impossible de calculer un taux d'occupation */
-  noteVacance(l,neuf);
+  noteVacance(l,neuf==='loue',neuf);
   autoSave();R(true);
 };
 /* Journal des entrées et sorties de locataire, une ligne par changement d'état */
-function noteVacance(o,loue){
+function noteVacance(o,loue,etat){
   if(!o.vac)o.vac=[];
+  const e=etat||(loue?'loue':'vide');
   const j=new Date().toISOString().slice(0,10);
   const der=o.vac[o.vac.length-1];
-  if(der&&der.d===j){der.o=loue;return}
-  o.vac.push({d:j,o:loue});
+  if(der&&der.d===j){der.o=loue;der.t=e;return}
+  o.vac.push({d:j,o:loue,t:e});
   if(o.vac.length>60)o.vac=o.vac.slice(-60);
 }
 /* Corriger une date d'entrée ou de sortie saisie par erreur */
@@ -2707,31 +2735,43 @@ function occupation(o,loyer){
   const jours=Math.round((fin-deb)/86400000);
   const ev=(o&&o.vac?o.vac.slice():[]).sort((a,b)=>a.d<b.d?-1:1);
   if(!ev.length){
-    const loue=o&&o.occupe===false?false:true;
-    return {jours,joursVac:loue?0:null,pct:loue?100:null,perte:0,connu:false,loue};
+    const loue=etatLot(o)==='loue';
+    return {jours,joursVac:loue?0:null,joursTrav:0,pct:loue?100:null,pctHorsTrav:loue?100:null,
+            perte:0,connu:false,loue};
   }
   /* État au début de la fenêtre */
-  let etat=true;
-  ev.forEach(e=>{if(new Date(e.d)<=deb)etat=e.o});
+  let etat=true,type='loue';
+  ev.forEach(e=>{if(new Date(e.d)<=deb){etat=e.o;type=e.t||(e.o?'loue':'vide')}});
   const dansFen=ev.filter(e=>{const d=new Date(e.d);return d>deb&&d<=fin});
-  let curseur=new Date(deb),joursVac=0;
+  let curseur=new Date(deb),joursVac=0,joursTrav=0;
+  const compte=(d)=>{
+    const n=Math.round((d-curseur)/86400000);
+    if(!etat)joursVac+=n;
+    if(type==='travaux')joursTrav+=n;
+  };
   dansFen.forEach(e=>{
     const d=new Date(e.d);
-    if(!etat)joursVac+=Math.round((d-curseur)/86400000);
-    curseur=d;etat=e.o;
+    compte(d);
+    curseur=d;etat=e.o;type=e.t||(e.o?'loue':'vide');
   });
-  if(!etat)joursVac+=Math.round((fin-curseur)/86400000);
+  compte(fin);
   joursVac=Math.max(0,Math.min(jours,joursVac));
+  joursTrav=Math.max(0,Math.min(joursVac,joursTrav));
   const pct=Math.round((1-joursVac/jours)*1000)/10;
+  /* Un chantier n est pas une vacance subie : on donne aussi le taux
+     calcule sans ces jours-la, pour ne pas se juger trop durement. */
+  const dispo=jours-joursTrav;
+  const pctHorsTrav=dispo>0?Math.round((1-(joursVac-joursTrav)/dispo)*1000)/10:null;
   const perte=Math.round((loyer||0)*12*(joursVac/jours));
-  return {jours,joursVac,pct,perte,connu:true,loue:etat,depuis:dansFen.length?dansFen[dansFen.length-1].d:(ev[ev.length-1]||{}).d};
+  return {jours,joursVac,joursTrav,pct,pctHorsTrav,perte,connu:true,loue:etat,etat:type,
+          depuis:dansFen.length?dansFen[dansFen.length-1].d:(ev[ev.length-1]||{}).d};
 }
 /* Occupation d'un bien : moyenne de ses logements, pondérée par les loyers */
 function occupationBien(b){
   const lots=(b.lots&&b.lots.length)?b.lots:null;
   if(!lots){
     const o=occupation(b,b.loyer||0);
-    return {pct:o.pct,perte:o.perte,joursVac:o.joursVac,connu:o.connu,detail:[{nom:b.nom,loyer:b.loyer||0,o}]};
+    return {pct:o.pct,perte:o.perte,joursVac:o.joursVac,connu:o.connu,detail:[{nom:b.nom,loyer:b.loyer||0,etat:etatLot(b),o}]};
   }
   let perte=0,joursVac=0,poids=0,somme=0,connu=false;
   const detail=lots.map(l=>{
@@ -2739,7 +2779,7 @@ function occupationBien(b){
     perte+=o.perte;
     if(o.connu)connu=true;
     if(o.pct!=null){somme+=o.pct*(l.loyer||1);poids+=(l.loyer||1);joursVac+=o.joursVac||0}
-    return {nom:l.nom,loyer:l.loyer||0,o};
+    return {nom:l.nom,loyer:l.loyer||0,etat:etatLot(l),o};
   });
   return {pct:poids>0?Math.round(somme/poids*10)/10:null,perte,joursVac,connu,detail};
 }
@@ -2976,9 +3016,11 @@ function barreOccup(oc){
   return '<div style="min-width:92px">'+
     '<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">'+
       '<span style="font-weight:500;color:'+c+'">'+oc.pct+' %</span>'+
-      (oc.joursVac>0?'<span style="color:var(--muted)">'+oc.joursVac+' j vides</span>':'')+'</div>'+
+      (oc.joursVac>0?'<span style="color:var(--muted)">'+oc.joursVac+' j sans loyer</span>':'')+'</div>'+
     '<div style="height:5px;border-radius:3px;background:var(--card2);overflow:hidden">'+
       '<div style="height:100%;width:'+oc.pct+'%;background:'+c+';border-radius:3px"></div></div>'+
+    (oc.joursTrav>0?'<div class="tk" style="margin-top:2px">dont '+oc.joursTrav+' j de travaux · '+
+      (oc.pctHorsTrav!=null?oc.pctHorsTrav+' % hors chantier':'')+'</div>':'')+
     (oc.connu?'':'<div class="tk" style="margin-top:2px">supposé loué</div>')+'</div>';
 }
 /* L impot d une annee de location. Une seule formule, utilisee par la fiche du
@@ -4138,7 +4180,7 @@ const t=Tot(),H=gH();
     biensLocatifs().forEach(b=>{
       const lots=(b.lots&&b.lots.length)?b.lots:[{id:'_',loyer:nb(b.loyer),occupe:b.occupe!==false}];
       lots.forEach(l=>{
-        if(l.occupe===false||!nb(l.loyer))return;
+        if(!lotRapporte(l)||!nb(l.loyer))return;
         if(!recu[b.id+'|'+(l.id||'_')]){nonPointes++;duLoyer+=nb(l.loyer)}
       });
     });
@@ -4150,12 +4192,16 @@ const t=Tot(),H=gH();
     const sansCr=(cashflowLocatif(0).detail||[]).filter(d=>d.etatCredit==='sansCredit'||d.etatCredit==='creditIntrouvable'||d.etatCredit==='pasCommence');
     if(sansCr.length)pt('var(--red)','<b>'+sansCr.length+' bien'+(sansCr.length>1?'s':'')+'</b> sans mensualité déduite : '+sansCr.map(x=>x.nom).join(', '),'Rattacher le prêt','immo');
     /* logements vides */
-    const vides=[];
+    const vides=[],enTravaux=[];
     biensLocatifs().forEach(b=>{
       const lots=(b.lots&&b.lots.length)?b.lots:[{nom:b.nom,occupe:b.occupe!==false}];
-      lots.forEach(l=>{if(l.occupe===false)vides.push((l.nom||b.nom)+' · '+(b.nom||''))});
+      lots.forEach(l=>{const e=etatLot(l);
+        if(e==='vide')vides.push((l.nom||b.nom)+' · '+(b.nom||''));
+        else if(e==='travaux')enTravaux.push((l.nom||b.nom)+' · '+(b.nom||''))});
     });
     if(vides.length)pt('var(--orange)','<b>'+vides.length+' logement'+(vides.length>1?'s':'')+' vide'+(vides.length>1?'s':'')+'</b> : '+vides.slice(0,2).join(', ')+(vides.length>2?'…':''),'Voir l\'occupation','immo');
+    /* un chantier n est pas une vacance subie : meme manque a gagner, autre message */
+    if(enTravaux.length)pt('var(--muted)','<b>'+enTravaux.length+' logement'+(enTravaux.length>1?'s':'')+' en travaux</b> : '+enTravaux.slice(0,2).join(', ')+(enTravaux.length>2?' et '+(enTravaux.length-2)+' autre'+(enTravaux.length>3?'s':''):'')+' — aucun loyer attendu tant que le chantier dure','Voir les logements','immo');
     /* relevé du mois pas encore enregistré */
     const derSnap=snaps.length?snaps[snaps.length-1]:null;
     const vieux=derSnap?Math.round((Date.now()-nb(derSnap.ts))/86400000):null;
@@ -5349,7 +5395,7 @@ document.getElementById('ik').innerHTML=
   biensLocatifs().forEach(b=>{
     const lots=(b.lots&&b.lots.length)?b.lots:[{id:'_',nom:b.nom||'Logement',loyer:nb(b.loyer),occupe:b.occupe!==false}];
     lots.forEach(l=>logs.push({cle:b.id+'|'+(l.id||'_'),bien:b.nom||'Bien',nom:l.nom||'Logement',
-      loyer:nb(l.loyer),occupe:l.occupe!==false}));
+      loyer:nb(l.loyer),occupe:lotRapporte(l),etat:etatLot(l)}));
   });
   const loues=logs.filter(l=>l.occupe&&l.loyer>0);
   const encaisse=loues.filter(l=>recu[l.cle]).reduce((a,l)=>a+l.loyer,0);
@@ -5722,7 +5768,7 @@ document.getElementById('immoRecap').innerHTML=rcH;
   const biens=S.immo.filter(b=>!estRP(b));
   if(!biens.length){carte.style.display='none';return}
   carte.style.display='';
-  let perteTot=0,sommePct=0,poids=0,nbLogts=0,nbVides=0,aHisto=false,nbMesures=0;
+  let perteTot=0,sommePct=0,poids=0,nbLogts=0,nbVides=0,nbTravaux=0,aHisto=false,nbMesures=0;
   const lignes=[];
   biens.forEach(b=>{
     const ob=occupationBien(b);
@@ -5730,9 +5776,10 @@ document.getElementById('immoRecap').innerHTML=rcH;
     if(ob.connu)aHisto=true;
     ob.detail.forEach(d=>{
       nbLogts++;
-      if(d.o.loue===false)nbVides++;
+      if(d.etat==='vide')nbVides++;
+      else if(d.etat==='travaux')nbTravaux++;
       if(d.o.pct!=null){sommePct+=d.o.pct*(d.loyer||1);poids+=(d.loyer||1);nbMesures++}
-      lignes.push({bien:b.nom,nom:d.nom,loyer:d.loyer,o:d.o});
+      lignes.push({bien:b.nom,nom:d.nom,loyer:d.loyer,etat:d.etat,o:d.o});
     });
   });
   const pctG=poids>0?Math.round(sommePct/poids*10)/10:100;
@@ -5743,20 +5790,22 @@ document.getElementById('immoRecap').innerHTML=rcH;
   h+='<div><div class="ml">Taux d\'occupation</div><div class="mv" style="color:'+(horsMesure&&!nbMesures?'var(--muted)':(pctG>=95?'var(--green)':pctG>=85?'var(--accent)':'var(--red)'))+'">'+(nbMesures?pctG+' %':'—')+'</div><div class="ms">'+
     (horsMesure?'<span style="color:var(--orange)">sur '+nbMesures+' logement'+(nbMesures>1?'s':'')+' sur '+nbLogts+'</span>':'sur douze mois')+'</div></div>';
   h+='<div><div class="ml">Manque à gagner</div><div class="mv" style="color:'+(perteTot>0?'var(--red)':'var(--green)')+'">'+F(perteTot)+'</div><div class="ms">'+(loyerTh>0?'soit '+(perteTot/loyerTh*100).toFixed(1)+' % des loyers':'sur douze mois')+'</div></div>';
-  h+='<div><div class="ml">Logements vides</div><div class="mv" style="color:'+(nbVides?'var(--red)':'var(--green)')+'">'+nbVides+' / '+nbLogts+'</div><div class="ms">aujourd\'hui</div></div>';
+  h+='<div><div class="ml">Logements vides</div><div class="mv" style="color:'+(nbVides?'var(--red)':'var(--green)')+'">'+nbVides+' / '+nbLogts+'</div><div class="ms">'+
+    (nbTravaux?'aujourd\'hui, plus '+nbTravaux+' en travaux':'aujourd\'hui')+'</div></div>';
   h+='</div>';
   h+='<div class="tw"><table><thead><tr><th class="l">Logement</th><th>Loyer</th><th>État</th><th>Occupation 12 mois</th><th>Manque à gagner</th></tr></thead><tbody>';
   lignes.sort((a,b2)=>(a.o.pct==null?101:a.o.pct)-(b2.o.pct==null?101:b2.o.pct)).forEach(x=>{
     h+='<tr><td class="l"><b style="font-size:12px">'+x.nom+'</b><div class="tk">'+x.bien+'</div></td>'+
       '<td style="color:var(--green)">'+F(x.loyer)+'</td>'+
-      '<td><span class="badge '+(x.o.loue===false?'neg':'pos')+'">'+(x.o.loue===false?'Vacant':'Loué')+'</span>'+
+      '<td><span class="badge '+classeEtat({etat:x.etat})+'">'+libelleEtat({etat:x.etat})+'</span>'+
         (x.o.connu&&x.o.depuis?'<div class="tk">depuis le '+x.o.depuis.slice(8)+'/'+x.o.depuis.slice(5,7)+'</div>':'')+'</td>'+
       '<td>'+barreOccup(x.o)+'</td>'+
       '<td style="font-weight:'+(x.o.perte>0?'700':'400')+';color:'+(x.o.perte>0?'var(--red)':'var(--muted)')+'">'+(x.o.perte>0?F(x.o.perte):'—')+'</td></tr>';
   });
   h+='</tbody></table></div>';
   h+='<div style="font-size:11.5px;color:var(--muted);margin-top:11px;line-height:1.6">'+
-    'Le taux se calcule sur les douze derniers mois, d\'après les dates auxquelles vous basculez un logement entre « Loué » et « Vacant » dans sa fiche. '+
+    'Le taux se calcule sur les douze derniers mois, d\'après les dates auxquelles vous basculez un logement entre « Loué », « Vacant » et « En travaux » dans sa fiche. '+
+    'Un chantier ne rapporte rien non plus, mais il est compté à part : la ligne précise alors le taux hors chantier. '+
     (aHisto?'Le manque à gagner est le loyer que la vacance vous a coûté sur la période.'
           :'Aucun changement n\'a encore été enregistré : tous les logements sont supposés loués. Basculez l\'état d\'un logement le jour où il se libère, et le calcul démarrera.')+
     '</div>';
@@ -6021,19 +6070,21 @@ let imH='';S.immo.forEach(b=>{
       const oc=occupation(l,l.loyer||0);
       imH+='<tr><td class="l"><span class="ed" onclick="edLot(this,\''+b.id+'\','+li+',\'nom\')">'+l.nom+'</span></td>';
       imH+='<td><span class="ed" onclick="edLot(this,\''+b.id+'\','+li+',\'loyer\')" style="color:var(--green);font-weight:600">'+F(l.loyer||0)+'</span></td>';
-      imH+='<td><span class="ed" onclick="togLot(\''+b.id+'\','+li+')"><span class="badge '+(l.occupe!==false?'pos':'neg')+'">'+(l.occupe!==false?'Loué':'Vacant')+'</span></span>'+
+      imH+='<td><span class="ed" onclick="togLot(\''+b.id+'\','+li+')" title="Cliquer : loué, vacant, en travaux"><span class="badge '+classeEtat(l)+'">'+libelleEtat(l)+'</span></span>'+
         (oc.connu&&oc.depuis?'<div class="tk">depuis le '+oc.depuis.slice(8)+'/'+oc.depuis.slice(5,7)+'</div>':'')+'</td>';
       imH+='<td>'+barreOccup(oc)+'</td>';
       imH+='<td style="color:'+(oc.perte>0?'var(--red)':'var(--muted)')+';font-weight:'+(oc.perte>0?'700':'400')+'">'+(oc.perte>0?F(oc.perte):'—')+'</td>';
       imH+='<td><button class="db" onclick="delLot(\''+b.id+'\','+li+')">✕</button></td></tr>';
     });
-    const loue=b.lots.filter(l=>l.occupe!==false).reduce((a,l)=>a+(l.loyer||0),0);
+    const loue=b.lots.filter(lotRapporte).reduce((a,l)=>a+(l.loyer||0),0);
     const ocB=occupationBien(b);
-    imH+='<tr class="total-row"><td class="l">Total</td><td style="color:var(--green)">'+F(loyerBien(b))+'</td><td>'+b.lots.filter(l=>l.occupe!==false).length+'/'+b.lots.length+' loués</td>'+
+    imH+='<tr class="total-row"><td class="l">Total</td><td style="color:var(--green)">'+F(loyerBien(b))+'</td><td>'+b.lots.filter(lotRapporte).length+'/'+b.lots.length+' loués'+
+      (b.lots.filter(l=>etatLot(l)==='travaux').length?'<div class="tk">'+b.lots.filter(l=>etatLot(l)==='travaux').length+' en travaux</div>':'')+'</td>'+
       '<td style="font-weight:500;color:'+(ocB.pct>=95?'var(--green)':ocB.pct>=85?'var(--accent)':'var(--red)')+'">'+(ocB.pct!=null?ocB.pct+' %':'—')+'</td>'+
       '<td style="font-weight:500;color:'+(ocB.perte>0?'var(--red)':'var(--muted)')+'">'+(ocB.perte>0?F(ocB.perte):'—')+'</td><td></td></tr>';
     imH+='</tbody></table>';
-    if(loue<loyerBien(b))imH+='<div style="font-size:11px;color:var(--accent);margin-top:8px">Loyers effectivement perçus : '+F(loue)+' — écart de '+F(loyerBien(b)-loue)+' dû aux logements vacants.</div>';
+    if(loue<loyerBien(b))imH+='<div style="font-size:11px;color:var(--accent);margin-top:8px">Loyers effectivement perçus : '+F(loue)+' — écart de '+F(loyerBien(b)-loue)+' dû aux logements '+
+      (b.lots.some(l=>etatLot(l)==='travaux')?(b.lots.some(l=>etatLot(l)==='vide')?'vacants et en travaux':'en travaux'):'vacants')+'.</div>';
   }else imH+='<div style="font-size:11.5px;color:var(--muted)">Ce bien est traité comme un logement unique. Ajoute des logements s\'il en compte plusieurs : le loyer total sera alors calculé automatiquement.</div>';
   imH+='<button class="ab" onclick="addLot(\''+b.id+'\')">+ Logement</button></div></details>';
   }
