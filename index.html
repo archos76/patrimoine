@@ -15,16 +15,18 @@
 :root{
 /* Une seule rampe de neutres, tintée vers l'encre du registre.
    La couleur ne vit que dans l'accent et dans ce qui porte du sens. */
---bg:#0f1012;--card:#17181b;--card2:#202226;--border:rgba(237,237,237,.09);--line:rgba(237,237,237,.07);
---text:#ededed;--text2:#a1a1a6;--muted:#85858b;
---accent:#d99a3c;--abg:rgba(217,154,60,.10);
---green:#4cc38a;--red:#e5484d;--orange:#d99a3c;--bourse:#4e9cc4;--crypto:#9183cf;
+--bg:#15130f;--card:#1c1a16;--card2:#262219;--border:rgba(242,235,224,.10);--line:rgba(242,235,224,.06);
+--text:#f2ebe0;--text2:#aca294;--muted:#8b8176;
+--accent:#dc9b45;--abg:rgba(220,155,69,.12);
+--green:#5fb98a;--red:#e0665f;--orange:#dc9b45;--bourse:#5ea3c8;--crypto:#9b8fd0;
+--posbg:rgba(95,185,138,.13);--negbg:rgba(224,102,95,.13);--warnbg:rgba(220,155,69,.13);
+--zone:rgba(95,185,138,.20);--lift:rgba(255,255,255,.07);
 /* Séries de données : chaque teinte désigne une chose. L'ambre mène,
    les autres sont espacées en teinte et proches en clarté, pour se
    distinguer sans crier sur un fond gris. */
---c1:#d99a3c;--c2:#4e9cc4;--c3:#52b08a;--c4:#cc7a9e;--c5:#9183cf;--c6:#45aaa8;
---grid:rgba(237,237,237,.05);--shadow:none;
---p1:#d99a3c;--p2:#4e9cc4;--p3:#52b08a;--p4:#cc7a9e;--p5:#9183cf;--p6:#45aaa8;--p7:#7d8fa8;--p8:#b8705f;
+--c1:#dc9b45;--c2:#5e9ebd;--c3:#5fb98a;--c4:#c4808f;--c5:#998cc4;--c6:#56a69c;
+--grid:rgba(242,235,224,.055);--shadow:none;
+--p1:#dc9b45;--p2:#5e9ebd;--p3:#5fb98a;--p4:#c4808f;--p5:#998cc4;--p6:#56a69c;--p7:#8b8d9e;--p8:#bb7a62;
 --font:'Onest',system-ui,sans-serif}
 body.light{
 /* Papier : fond creme, encre brun-noir, un seul ambre pour l accent. */
@@ -33,6 +35,8 @@ body.light{
 --accent:#a2621c;--abg:rgba(162,98,28,.09);
 --green:#2f7d4f;--red:#c0362f;--orange:#a2621c;--bourse:#2d6e8f;--crypto:#6a5a9c;
 --c1:#a2621c;--c2:#2d6e8f;--c3:#3f7f5c;--c4:#9c4a6a;--c5:#6a5a9c;--c6:#1f7f7c;
+--posbg:rgba(47,125,79,.11);--negbg:rgba(192,54,47,.10);--warnbg:rgba(162,98,28,.11);
+--zone:rgba(47,125,79,.18);--lift:rgba(255,255,255,.4);
 --grid:rgba(31,27,22,.07);--shadow:0 1px 2px rgba(74,56,30,.06);
 --p1:#a2621c;--p2:#2d6e8f;--p3:#3f7f5c;--p4:#9c4a6a;--p5:#6a5a9c;--p6:#1f7f7c;--p7:#5c6b82;--p8:#9c4f3f}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -79,7 +83,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .zwrap{min-width:170px}
 .zhead{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;margin-bottom:5px}
 .zbar{position:relative;height:20px;border-radius:6px;background:var(--card2);border:1px solid var(--border);overflow:hidden}
-.zbar .zz{position:absolute;top:0;bottom:0;background:linear-gradient(180deg,rgba(46,230,160,.28),rgba(46,230,160,.12))}
+.zbar .zz{position:absolute;top:0;bottom:0;background:var(--zone)}
 .zbar .zz:before,.zbar .zz:after{content:'';position:absolute;top:0;bottom:0;width:1px;background:var(--green);opacity:.7}
 .zbar .zz:before{left:0}.zbar .zz:after{right:0}
 .zbar .zc{position:absolute;top:-1px;bottom:-1px;width:3px;border-radius:4px;box-shadow:0 0 0 2px var(--card)}
@@ -130,9 +134,7 @@ td,th,.vc,.kv,.ks,.drow-v{font-variant-numeric:tabular-nums}
 /* Éclaircissement progressif vers la droite */
 .pf::after,.obj-fill::after,.dbar i::after{
   content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.22))}
-body.light .pf::after,body.light .obj-fill::after,body.light .dbar i::after{
-  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.4))}
+  background:linear-gradient(90deg,rgba(255,255,255,0),var(--lift))}
 .obj-bar{height:10px;margin:10px 0}
 .pg{height:8px}
 .dbar{height:8px}
@@ -177,9 +179,9 @@ td.l{color:var(--text)}
 tr:hover{background:var(--card2)}
 .tk{font-size:12px;color:var(--muted)}
 .badge{display:inline-flex;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:550}
-.badge.pos{background:rgba(46,230,160,.14);color:var(--green)}
-.badge.neg{background:rgba(255,92,108,.14);color:var(--red)}
-.badge.warn{background:rgba(162,98,28,.14);color:var(--accent)}
+.badge.pos{background:var(--posbg);color:var(--green)}
+.badge.neg{background:var(--negbg);color:var(--red)}
+.badge.warn{background:var(--warnbg);color:var(--accent)}
 .lr{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}
 .ln{font-weight:500}.ls{font-size:12px;color:var(--muted)}
 .wb{display:flex;height:6px;border-radius:4px;overflow:hidden;background:var(--card2);margin-bottom:16px}.wb div{height:100%}
@@ -239,7 +241,8 @@ tr:hover{background:var(--card2)}
 .fr{display:flex;gap:10px;flex-wrap:wrap}
 .cto{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
 .ctb{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;padding:5px 11px;border-radius:8px;border:1px solid var(--border);background:transparent;user-select:none;transition:background-color .15s,color .15s,border-color .15s;color:var(--muted)}
-.ctb.on{border-color:currentColor;font-weight:550}
+/* La couleur vit dans la pastille, pas dans six contours alignés */
+.ctb.on{background:var(--card2);font-weight:550}
 .ctb.active{background:var(--card2);color:var(--text);border-color:var(--accent);font-weight:600}
 .ctb .dot{width:7px;height:7px;border-radius:4px}
 .pt{width:100%;font-size:13px;margin-top:12px}
@@ -248,8 +251,6 @@ tr:hover{background:var(--card2)}
 .pt .rl{text-align:left;font-weight:550}
 .pt .total-row{background:var(--card2);font-weight:600}
 .cg{color:var(--green)}.cr{color:var(--red)}
-body:not(.light) .cg,body:not(.light) .vc.cg{text-shadow:0 0 14px rgba(46,230,160,.35)}
-body:not(.light) .cr,body:not(.light) .vc.cr{text-shadow:0 0 14px rgba(255,92,108,.3)}
 body:not(.light) .badge.pos{box-shadow:none}
 body:not(.light) .badge.neg{box-shadow:none}
 .ss{font-size:12px;color:var(--muted);margin-top:6px}
@@ -438,7 +439,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 06/11 22h10</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 06/11 23h05</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -4306,7 +4307,7 @@ const valTot=h=>{
 };
 /* Cases à cocher : le total n'a de sens qu'en courbes */
 const listeCases=(netVue==='courbe'?[{k:'total',n:'Total',c:nmC}]:[]).concat(CLS);
-document.getElementById('netCases').innerHTML=listeCases.map(c=>'<label class="ctb '+(S.netSel[c.k]?'on':'')+'" style="color:'+(S.netSel[c.k]?c.c:'var(--muted)')+'" onclick="tNetCls(\''+c.k+'\')"><span class="dot" style="background:'+(S.netSel[c.k]?c.c:'var(--border)')+'"></span>'+c.n+'</label>').join('');
+document.getElementById('netCases').innerHTML=listeCases.map(c=>'<label class="ctb '+(S.netSel[c.k]?'on':'')+'" style="color:'+(S.netSel[c.k]?'var(--text)':'var(--muted)')+'" onclick="tNetCls(\''+c.k+'\')"><span class="dot" style="background:'+(S.netSel[c.k]?c.c:'var(--border)')+'"></span>'+c.n+'</label>').join('');
 const choisies=CLS.filter(c=>S.netSel[c.k]&&Hn.some(h=>valCls(h,c.k)>0));
 if(_cN)_cN.destroy();
 const infoB={backgroundColor:CV('--card2'),titleColor:CV('--text'),bodyColor:CV('--text2'),borderColor:CV('--border'),borderWidth:1,padding:11,cornerRadius:9,usePointStyle:true,boxWidth:8,boxHeight:8,boxPadding:4};
@@ -4370,7 +4371,7 @@ perfLines.forEach(p=>{
     if(spData.some(d=>d!=null))ds2.push({label:'S&P 500',data:spData,borderColor:p.c,borderDash:[6,3],tension:.35,pointRadius:0,pointHoverRadius:5,borderWidth:1.5,fill:false,spanGaps:true});
   }else{
     const data=sliceTwr(cTWR(p.k));
-    ds2.push({label:p.l,data:data.map(d=>d.twr),borderColor:p.c,backgroundColor:p.k==='bourse'?'rgba(122,162,247,.06)':'transparent',fill:p.k==='bourse',tension:.3,pointRadius:p.k==='bourse'?4:2,borderWidth:p.k==='bourse'?2.5:2});
+    ds2.push({label:p.l,data:data.map(d=>d.twr),borderColor:p.c,backgroundColor:p.k==='bourse'?hexA(CV('--accent'),.07):'transparent',fill:p.k==='bourse',tension:.3,pointRadius:p.k==='bourse'?4:2,borderWidth:p.k==='bourse'?2.5:2});
   }
 });
 
@@ -5758,7 +5759,7 @@ immoLoc.forEach(b=>{
   rcH+='<tr><td class="l" style="font-weight:600">'+b.nom+(pct<1?' <span style="font-size:10px;color:var(--muted)">('+b.partsPct+'%)</span>':'')+'</td><td style="color:var(--green);font-weight:600">'+F(Math.round(loyM))+'</td><td style="color:var(--red)">'+F(Math.round(chM))+'</td><td style="color:var(--red)">'+(cr?F(Math.round(mensC)):'<span style="color:var(--orange)" title="Aucun prêt rattaché à ce bien">⚠ aucun</span>')+'</td><td style="font-weight:500;color:'+(cf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(cf))+'</td><td>'+rb+'%</td></tr>';
 });
 if(immoLoc.length===0)rcH+='<tr><td colspan="6" style="text-align:center;color:var(--muted)">Aucun bien locatif. Change le type de location d\'un bien.</td></tr>';
-rcH+='<tr style="background:rgba(122,162,247,.05);font-weight:500"><td class="l">Total</td><td style="color:var(--green)">'+F(Math.round(totLoy))+'</td><td style="color:var(--red)">'+F(Math.round(totCh))+'</td><td style="color:var(--red)">'+F(Math.round(totCr))+'</td><td style="color:'+(totCf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(totCf))+'</td><td>'+(totValLoc>0?(totLoy*12/totValLoc*100).toFixed(1):0)+'%</td></tr>';
+rcH+='<tr class="total-row" style="font-weight:500"><td class="l">Total</td><td style="color:var(--green)">'+F(Math.round(totLoy))+'</td><td style="color:var(--red)">'+F(Math.round(totCh))+'</td><td style="color:var(--red)">'+F(Math.round(totCr))+'</td><td style="color:'+(totCf>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(totCf))+'</td><td>'+(totValLoc>0?(totLoy*12/totValLoc*100).toFixed(1):0)+'%</td></tr>';
 rcH+='</tbody></table>';
 document.getElementById('immoRecap').innerHTML=rcH;
 
