@@ -437,7 +437,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 06/11 19h05</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 06/11 19h40</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -653,6 +653,12 @@ function tipSafe(fmt){
     try{return fmt(c)}catch(e){return ''}
   };
 }
+/* Toute fonction d infobulle est protegee : quand l une d elles jetait
+   pendant un survol, le graphe restait accroche au canevas et plus rien
+   ne se mettait a jour sur la page. */
+function tipCbs(o){const r={};Object.keys(o||{}).forEach(k=>{const f=o[k];
+  r[k]=(typeof f==='function')?function(){try{return f.apply(this,arguments)}catch(e){return ''}}:f});
+  return r}
 function tipOpts(fmt){return{backgroundColor:CV('--card2'),titleColor:CV('--text'),bodyColor:CV('--text2'),borderColor:CV('--border'),borderWidth:1,padding:11,cornerRadius:9,displayColors:true,boxWidth:8,boxHeight:8,boxPadding:4,usePointStyle:true,callbacks:fmt?{label:tipSafe(fmt)}:{}}}
 
 /* Mode masquer montants */
@@ -4502,8 +4508,10 @@ if(document.getElementById('cIntra')){
         options:{responsive:true,maintainAspectRatio:false,animation:animConf,
           interaction:{mode:'index',intersect:false},
           plugins:{legend:{display:false},
-            tooltip:{...tipOpts(),callbacks:{title:it=>it[0].label,
-              label:c=>c.datasetIndex===1?'Veille : '+F(Math.round(c.raw)):F(Math.round(c.raw))+'  ('+(c.raw-dd.ref>=0?'+':'')+F2(c.raw-dd.ref)+')'},
+            tooltip:{...tipOpts(),callbacks:tipCbs({
+              /* le filtre peut tout retirer : il ne reste alors aucun point */
+              title:it=>(it&&it[0]&&it[0].label)||'',
+              label:c=>c.datasetIndex===1?'Veille : '+F(Math.round(c.raw)):F(Math.round(c.raw))+'  ('+(c.raw-dd.ref>=0?'+':'')+F2(c.raw-dd.ref)+')'}),
               filter:c=>c.datasetIndex===0}},
           scales:{x:{ticks:{color:CV('--muted'),font:{size:10},maxTicksLimit:8,maxRotation:0},grid:{display:false},border:{display:false}},
                   y:{ticks:{color:CV('--muted'),font:{size:10},padding:6,callback:v=>(v/1000).toFixed(1)+'k'},grid:{color:CV('--grid'),drawTicks:false},border:{display:false}}}}});
