@@ -429,7 +429,7 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 05/11 21h20</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 06/11 10h05</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -527,6 +527,8 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-g" onclick="expSauvegarde()">Télécharger une sauvegarde</button><button class="btn btn-o" onclick="document.getElementById('impFile').click()">⤒ Restaurer un fichier</button></div>
 <input type="file" id="impFile" accept=".json,application/json" style="display:none" onchange="impSauvegarde(this)">
 <div id="sauveInfo" style="font-size:12px;margin-top:14px"></div></div>
+<div class="card"><div class="ct">Ménage dans les données</div>
+<div id="menageZone"></div></div>
 <div class="card"><div class="ct">Sécurité et clés</div>
 <div style="font-size:12.5px;color:var(--text2);line-height:1.65;margin-bottom:14px">Cette application est une page publique : n'importe qui peut en lire le code source. Rien de ce qui est écrit dans le fichier n'est secret. Tes données, elles, sont dans ta base Google et protégées par les règles de sécurité de celle-ci — pas par le code de la page.</div>
 <div class="lr"><span>Clé Alpha Vantage <span style="color:var(--muted);font-size:11px">(comparaison au S&amp;P 500)</span></span><span class="ed" onclick="edCleAV()" id="cleAVaff">—</span></div>
@@ -1449,6 +1451,165 @@ c+="\nDETTES\nNom;Emprunté;Restant;Taux;Durée\n";S.dettes.forEach(x=>{c+=x.nom
 c+="\nBUDGET\n";if(S.budget){c+="Revenus\n";S.budget.revenus.forEach(r=>{c+=r.nom+";"+r.montant+"\n"});S.budget.categories.forEach(cat=>{c+="\n"+cat.nom+"\n";cat.postes.forEach(p=>{c+=p.nom+";"+p.montant+"\n"})})}
 const blob=new Blob(["\uFEFF"+c],{type:"text/csv;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download="patrimoine_"+now+".csv";a.click();URL.revokeObjectURL(url)};
 
+/* ===== HISTORIQUE DE VALEUR D UN BIEN =====
+   La valeur d un bien etait un chiffre qu on ecrasait a chaque reestimation,
+   sans memoire. On note donc, chaque mois, la valeur courante. Le prix
+   d achat sert de premier point quand on connait l annee d acquisition :
+   la courbe dit alors quelque chose des le premier jour. */
+function noteValeurBien(b){
+  if(!b||nb(b.valeur)<=0)return false;
+  if(!b.histVal)b.histVal={};
+  const k=moisCle(),v=Math.round(nb(b.valeur));
+  if(b.histVal[k]===v)return false;
+  b.histVal[k]=v;
+  return true;
+}
+function noteValeursImmo(){
+  let n=0;
+  (S.immo||[]).forEach(b=>{if(noteValeurBien(b))n++});
+  return n;
+}
+/* La serie d un bien : le prix d achat en tete, puis les releves. */
+function histValBien(b){
+  const pts=[];
+  const achat=nb(b&&b.prixAchat);
+  const anA=b&&b.anneeAchat?Math.round(nb(b.anneeAchat)):null;
+  const h=(b&&b.histVal)||{};
+  const cles=Object.keys(h).sort();
+  if(achat>0&&anA){
+    const kA=anA+'-01';
+    if(!cles.length||kA<cles[0])pts.push({k:kA,v:achat,achat:true});
+  }
+  cles.forEach(k=>{const v=nb(h[k]);if(v>0)pts.push({k,v:Math.round(v)})});
+  return pts;
+}
+window.ajouteEstimation=function(id){
+  const b=S.immo.find(x=>x.id===id);if(!b)return;
+  ouvreForm('histv-'+id,'Ajouter une estimation passée de '+(b.nom||'ce bien'),[
+    {k:'annee',lib:'Année',type:'nombre',val:new Date().getFullYear()-1},
+    {k:'mois',lib:'Mois (1 à 12)',type:'nombre',val:1},
+    {k:'valeur',lib:'Valeur estimée (€)',type:'nombre'}
+  ],v=>{
+    const an=Math.round(v.annee), m=Math.max(1,Math.min(12,Math.round(v.mois)));
+    if(an<1900||an>2100||nb(v.valeur)<=0)return;
+    if(!b.histVal)b.histVal={};
+    b.histVal[an+'-'+String(m).padStart(2,'0')]=Math.round(nb(v.valeur));
+    autoSave();R(true);
+  });
+};
+window.oublieEstimation=function(id,k){
+  const b=S.immo.find(x=>x.id===id);if(!b||!b.histVal)return;
+  if(!confirm('Oublier l’estimation de '+moisLisible(k)+' ('+F(b.histVal[k])+') ?'))return;
+  const v=b.histVal[k];
+  delete b.histVal[k];
+  proposeAnnuler('L estimation de '+moisLisible(k),()=>{b.histVal[k]=v});
+  autoSave();R(true);
+};
+function dessineHistBien(b){
+  const el=document.getElementById('cHistB-'+b.id);if(!el||!window.Chart)return;
+  const h=histValBien(b);if(h.length<2)return;
+  neufGraphe(el,{type:'line',
+    data:{labels:h.map(x=>moisLisible(x.k)),
+      datasets:[{label:'Valeur estimée',data:h.map(x=>x.v),
+        borderColor:CV('--accent'),backgroundColor:hexA(CV('--accent'),.10),
+        fill:true,tension:.25,borderWidth:2.5,
+        pointRadius:h.map(x=>x.achat?4:(h.length<16?2.5:0)),
+        pointBackgroundColor:h.map(x=>x.achat?CV('--c2'):CV('--accent'))}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:animConf,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:tipOpts(c=>F(c.raw))},
+      scales:{x:{grid:{display:false},ticks:{color:CV('--muted'),font:{size:10},maxTicksLimit:7}},
+        y:{grid:{color:hexA(CV('--border'),.5)},
+           ticks:{color:CV('--muted'),font:{size:11},callback:v=>Math.round(v/1000)+'k'}}}}});
+}
+function blocHistBien(b){
+  const h=histValBien(b);
+  const part=(b.partsPct!=null?nb(b.partsPct):100)/100;
+  let x='<div style="margin-top:14px"><div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:8px">'+
+    '<span class="sect" style="margin:0">Valeur dans le temps</span>'+
+    '<button class="pb" onclick="ajouteEstimation(\''+b.id+'\')">+ Estimation</button></div>';
+  x+='<div id="histv-'+b.id+'"></div>';
+  if(h.length>=2){
+    const prem=h[0],dern=h[h.length-1];
+    const ev=dern.v-prem.v, pct=prem.v>0?ev/prem.v*100:0;
+    x+='<div class="cbs" style="height:170px"><canvas id="cHistB-'+b.id+'"></canvas></div>';
+    x+='<div style="font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.6">'+
+      '<span style="color:'+(ev>=0?'var(--green)':'var(--red)')+'">'+(ev>=0?'+':'')+F(Math.round(ev))+
+      ' ('+(pct>=0?'+':'')+pct.toFixed(1).replace('.',',')+' %)</span> depuis '+
+      (prem.achat?'l\'achat en '+String(prem.k).slice(0,4):moisLisible(prem.k))+'.'+
+      (part<1?' Montants à 100 % ; ta part en représente '+Math.round(part*100)+' %.':'')+
+      '</div>';
+    /* De quoi corriger une estimation saisie de travers */
+    const saisies=Object.keys(b.histVal||{}).sort().slice(-4).reverse();
+    if(saisies.length)
+      x+='<div style="font-size:11px;color:var(--muted);margin-top:6px">Derniers relevés : '+
+        saisies.map(k=>'<span class="ed" onclick="oublieEstimation(\''+b.id+'\',\''+k+'\')" title="Oublier ce relevé">'+
+          moisLisible(k)+' · '+F(b.histVal[k])+'</span>').join(' ')+'</div>';
+  }else{
+    x+='<div class="tk" style="line-height:1.6">La valeur de ce bien est relevée chaque mois à partir de maintenant.'+
+      (nb(b.prixAchat)>0&&!b.anneeAchat?' Renseigne l’année d’achat dans le simulateur pour que le prix d’achat serve de point de départ.':'')+
+      ' Tu peux aussi ajouter une estimation passée.</div>';
+  }
+  return x+'</div>';
+}
+/* ===== MENAGE DANS LES DONNEES =====
+   Les modules retires laissent leurs donnees dans la base : elles sont
+   relues et reecrites a chaque sauvegarde, sans jamais servir. On les
+   reconnait a ce qu elles ne figurent pas dans la liste des cles utilisees
+   par l application. Rien n est supprime sans une sauvegarde prealable. */
+/* La liste part du schema lui-meme : toute cle presente dans l etat par
+   defaut est utile par construction, meme si le code ne la lit jamais
+   directement. On n y ajoute a la main que ce qui est apparu depuis. */
+const CLES_AJOUTEES=['allocCible','avScpiHist','benchCours','benchIdx','bourseGoals',
+ 'cles','cryptoInvest','depReelles','divMois','envSel','etfGoals','fiscParams',
+ 'histComptes','histJour','journal','lastRefresh','loyersRecus','marches',
+ 'moisReleveForce','netSel','notes','peeHist','projParams','projets','revSources',
+ 'simParams','simuBien','watchlist'];
+const CLES_UTILES=Object.keys(D).concat(CLES_AJOUTEES)
+  .filter((k,i,t)=>t.indexOf(k)===i);
+function tailleTexte(v){try{return JSON.stringify(v).length}catch(e){return 0}}
+function compteElements(v){
+  if(Array.isArray(v))return v.length;
+  if(v&&typeof v==='object')return Object.keys(v).length;
+  return v==null?0:1;
+}
+function clesOrphelines(){
+  if(!S||typeof S!=='object')return [];
+  return Object.keys(S)
+    .filter(k=>k[0]!=='_'&&CLES_UTILES.indexOf(k)<0)
+    .map(k=>({cle:k,n:compteElements(S[k]),octets:tailleTexte(S[k])}))
+    .sort((a,b)=>b.octets-a.octets);
+}
+window.menageDonnees=function(){
+  const orph=clesOrphelines();
+  if(!orph.length)return;
+  const total=orph.reduce((a,x)=>a+x.octets,0);
+  if(!confirm('Supprimer '+orph.length+' jeu'+(orph.length>1?'x':'')+' de données inutilisées ('+
+     orph.map(x=>x.cle).join(', ')+') ?\n\nUne sauvegarde sera téléchargée avant la suppression.'))return;
+  /* La sauvegarde part d abord : on ne supprime rien qu on n ait pu rendre */
+  const copie={};orph.forEach(x=>{copie[x.cle]=S[x.cle]});
+  try{
+    const json=JSON.stringify(copie,null,2);
+    let url=null,objet=false;
+    /* Le chemin habituel, et un repli si le navigateur refuse les liens d objet */
+    try{
+      url=URL.createObjectURL(new Blob([json],{type:'application/json'}));objet=true;
+    }catch(e1){
+      url='data:application/json;charset=utf-8,'+encodeURIComponent(json);
+    }
+    const a=document.createElement('a');
+    a.href=url;a.download='anciennes-donnees-'+new Date().toISOString().slice(0,10)+'.json';
+    a.click();
+    if(objet)try{URL.revokeObjectURL(url)}catch(e2){}
+  }catch(e){
+    signalePanne('sauvegarde avant ménage',e);
+    alert('La sauvegarde n’a pas pu être téléchargée. Rien n’a été supprimé.');
+    return;
+  }
+  orph.forEach(x=>{delete S[x.cle]});
+  autoSave();R(true);
+  alert('Ménage fait : '+Math.round(total/1024)+' Ko libérés.\nLa sauvegarde est dans tes téléchargements.');
+};
 /* ===== CE QU ON PEUT DIRE D UN COMPTE, SOUS SON TABLEAU =====
    L app ne garde qu une valeur de portefeuille par mois, pour l ensemble :
    il n y a donc pas d historique par compte, et pas de courbe honnete a
@@ -1508,7 +1669,7 @@ function dessineHistCompte(pk){
 }
 function blocCompte(pk,c){
   const l=c.l||[];
-  if(!l.length)return '<div class="tk" style="margin-top:14px">Ce compte est vide. Ajoute une première ligne ci-dessus pour voir ce qu\'il raconte.</div>';
+  if(!l.length)return '<div class="tk" style="margin-top:14px">Ce compte est vide. Ajoute une première ligne ci-dessus pour voir ce qu’il raconte.</div>';
   const u=c.isUSD;
   const mt=v=>u?('$'+v.toFixed(2)):F2(v);
 
@@ -2082,7 +2243,7 @@ window.addProjet=function(){
   ouvreForm('projetsList','Nouveau projet d achat',[
     {k:'nom',lib:'Nom du projet',ph:'Lot 3 maisons Rouen'},
     {k:'prix',lib:'Prix visé (€)',type:'nombre',val:200000},
-    {k:'ans',lib:'Dans combien d années',type:'nombre',val:2},
+    {k:'ans',lib:'Dans combien d’années',type:'nombre',val:2},
     {k:'loyer',lib:'Loyer mensuel attendu (€)',type:'nombre',opt:true,ph:'0 si tu ne sais pas encore'}
   ],v=>{
     if(!S.projets)S.projets=[];
@@ -2492,7 +2653,7 @@ window.addTravauxPrevu=function(id){
   ouvreForm('simuTrav','Travaux à venir sur '+(b.nom||'ce bien'),[
     {k:'desc',lib:'Quels travaux',ph:'Ravalement, toiture…'},
     {k:'montant',lib:'Combien (€)',type:'nombre'},
-    {k:'ans',lib:'Dans combien d années',type:'nombre',val:3}
+    {k:'ans',lib:'Dans combien d’années',type:'nombre',val:3}
   ],v=>{
     const ans=Math.max(1,Math.min(SIMU_HORIZON,Math.round(v.ans)));
     if(!b.travauxPrevus)b.travauxPrevus=[];
@@ -3887,6 +4048,30 @@ function etfRatio(pf,pk){let etfVal=0,actVal=0;pf.l.forEach(l=>{if(estETF(l,pk))
 const mk=(c,pf,pk)=>{const er=etfRatio(c,pk);let h='<div class="kpi sm"><div class="kl">Valeur</div><div class="kv" style="color:var(--bourse)">'+F2(c.v)+'</div></div><div class="kpi sm"><div class="kl">Jour</div><div class="kv" style="color:'+(c.dayPnl>=0?'var(--green)':'var(--red)')+'">'+((c.dayPnl>=0?'+':'')+F2(c.dayPnl))+'</div><div class="ks">'+(c.dayPct>=0?'+':'')+c.dayPct.toFixed(2)+'%</div></div><div class="kpi sm"><div class="kl">Versé</div><div class="kv"><span class="ed" onclick="edVer(this,\''+pk+'\')">'+F(pf.ver)+'</span></div></div><div class="kpi sm"><div class="kl">Perf</div><div class="kv" style="color:'+(c.pvVer>=0?'var(--green)':'var(--red)')+'">'+FP(c.ppVer)+'</div></div><div class="kpi sm"><div class="kl">Espèces</div><div class="kv"><span class="ed" onclick="edEsp(this,\''+pk+'\')">'+F(pf.esp)+'</span></div></div><div class="kpi sm"><div class="kl">Div/an</div><div class="kv" style="color:var(--orange)">'+F2(c.divTot)+'</div></div>';
 h+='<div style="grid-column:1/-1;margin-top:4px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--c6);font-weight:600">ETF '+er.pctEtf+'%</span><span style="color:var(--c5);font-weight:600">Actions '+(100-er.pctEtf)+'%</span></div><div style="display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--card2)"><div style="width:'+er.pctEtf+'%;background:var(--c6)"></div><div style="width:'+(100-er.pctEtf)+'%;background:var(--c5)"></div></div></div>';
 return h};
+/* Réglages : ce qui dort dans la base sans servir */
+(function(){
+  const z=document.getElementById('menageZone');if(!z)return;
+  const orph=clesOrphelines();
+  if(!orph.length){
+    z.innerHTML='<div style="font-size:12.5px;color:var(--text2);line-height:1.65">'+
+      'Rien à jeter : toutes les données enregistrées servent à quelque chose.</div>';
+    return;
+  }
+  const total=orph.reduce((a,x)=>a+x.octets,0);
+  let h='<div style="font-size:12.5px;color:var(--text2);line-height:1.65;margin-bottom:12px">'+
+    'Des données d’anciens modules dorment dans ta base. Elles ne s’affichent nulle part, '+
+    'mais elles sont relues et réécrites à chaque sauvegarde.</div>';
+  orph.forEach(x=>{
+    h+='<div class="lr"><span>'+x.cle+' <span style="color:var(--muted);font-size:11px">· '+
+      x.n+' élément'+(x.n>1?'s':'')+'</span></span>'+
+      '<span style="color:var(--muted)">'+(x.octets>1024?Math.round(x.octets/1024)+' Ko':x.octets+' o')+'</span></div>';
+  });
+  h+='<div style="margin-top:12px"><button class="btn btn-g" onclick="menageDonnees()">Télécharger et supprimer</button></div>';
+  h+='<div style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.6">'+
+    'Un fichier de sauvegarde part dans tes téléchargements avant toute suppression. '+
+    'Total à libérer : '+(total>1024?Math.round(total/1024)+' Ko':total+' octets')+'.</div>';
+  z.innerHTML=h;
+})();
 /* Réglages : la clé et l avertissement qui va avec */
 (function(){
   const aff=document.getElementById('cleAVaff');if(!aff)return;
@@ -3923,7 +4108,7 @@ try{if(releveComptes(t))autoSave()}catch(e){console.error('relevé des comptes :
   /* Le texte d abord, le graphique ensuite : si le graphique échoue,
      il ne doit pas emporter le bloc déjà écrit. */
   try{el.innerHTML=blocCompte(pk,c)}
-  catch(e){el.innerHTML='<div class="tk">Ce bloc n a pas pu être calculé.</div>';
+  catch(e){el.innerHTML='<div class="tk">Ce bloc n’a pas pu être calculé.</div>';
            console.error('bloc compte '+pk+' :',e&&e.message)}
   try{dessineHistCompte(pk)}
   catch(e){console.error('courbe du compte '+pk+' :',e&&e.message)}
@@ -5013,6 +5198,7 @@ let imH='';S.immo.forEach(b=>{
   imH+='<div class="lr"><span>SCI</span><span class="ed" onclick="togSCI(\''+b.id+'\')">'+(b.sci?'Oui':'Non')+'</span></div>';
   imH+='<div class="lr"><span>% détention (ta part)</span><span class="ed" onclick="edPct(this,\''+b.id+'\')" style="font-weight:500;color:var(--accent)">'+(b.partsPct||100)+'%</span></div>';
   imH+='<div class="lr"><span>Ta part (valeur)</span><span style="font-weight:500;color:var(--orange)">'+F(Math.round(b.valeur*((b.partsPct||100)/100)))+'</span></div>';
+  imH+=blocHistBien(b);
   imH+='</div><div>';
   const aLots=b.lots&&b.lots.length;
   imH+='<div class="sect">'+(rp?'Charges':'Revenus et charges')+'</div>';
@@ -5116,6 +5302,9 @@ let imH='';S.immo.forEach(b=>{
 });
 imH+='<div id="ia"></div>';document.getElementById('ic').innerHTML=imH;
 document.getElementById('ia').innerHTML='<button class="ab" onclick="addImmo()">+ Ajouter un bien</button>';
+/* La valeur de chaque bien est notée pour le mois en cours */
+try{if(noteValeursImmo())autoSave()}catch(e){console.error('relevé des biens :',e&&e.message)}
+(S.immo||[]).forEach(b=>{try{dessineHistBien(b)}catch(e){console.error('courbe du bien :',e&&e.message)}});
 try{renderSimu()}catch(e){console.error('simulateur :',e&&e.message)}
 
 /* Suivi courte durée */
