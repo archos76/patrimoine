@@ -452,7 +452,7 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 09/11 14h20</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 09/11 15h10</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -593,7 +593,8 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="page" id="page-objectifs"><div id="objContent"></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Objectifs Bourse</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addBourseGoal()">+ Objectif</button></div><div id="bourseGoals" style="margin-top:12px"></div></div></div>
 <div class="page" id="page-revenus"><div class="kr" id="revKpi"></div><div class="g2"><div class="card"><div class="ct">Revenus passifs mensuels</div><div class="cbs" style="height:230px"><canvas id="cRevPie"></canvas></div><div id="revLeg" style="padding:8px 12px 0"></div></div><div class="card"><div class="ct">Projection revenus passifs</div><div class="cbs"><canvas id="cRevProj"></canvas></div></div></div><div class="card"><div class="ct">Couverture de tes dépenses</div><div id="couvKpi"></div><div id="couvDetail" style="margin-top:16px"></div></div><div class="card"><div class="ct">Détail des sources</div><div id="revDetail"></div></div></div>
 <div class="page" id="page-marches">
-<div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Revue de marchés</div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="marPs" style="display:flex;gap:4px"></span><span id="marchesMaj" style="font-size:11px;color:var(--muted)"></span><button class="pb" onclick="fetchMarches(true)">Actualiser</button></div></div><div style="font-size:11.5px;color:var(--muted)" id="marLegende"></div></div>
+<div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Revue de marchés</div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="marPs" style="display:flex;gap:4px"></span><span id="marchesMaj" style="font-size:11px;color:var(--muted)"></span><button class="pb" onclick="fetchMarches(true);chargeCac(true)">Actualiser</button></div></div><div style="font-size:11.5px;color:var(--muted)" id="marLegende"></div></div>
+<div class="card"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">CAC 40 aujourd’hui</div><button class="pb" onclick="chargeCac(true)">Actualiser</button></div><div id="cacJour"></div></div>
 <div class="g2"><div class="card"><div class="ct" data-radtitre="Indices mondiaux">Indices mondiaux</div><div class="cb" style="height:330px"><canvas id="cRadIdx"></canvas></div><div id="legIdx" style="margin-top:12px"></div></div>
 <div class="card"><div class="ct" data-radtitre="Secteurs américains">Secteurs américains</div><div class="cb" style="height:330px"><canvas id="cRadSec"></canvas></div><div id="legSec" style="margin-top:12px"></div></div></div>
 <div class="g2"><div class="card"><div class="ct" data-radtitre="Matières premières & crypto">Matières premières & crypto</div><div class="cb" style="height:330px"><canvas id="cRadCom"></canvas></div><div id="legCom" style="margin-top:12px"></div></div>
@@ -2395,7 +2396,7 @@ window.goPage=function(p){
   const t=document.querySelector('.tab[data-page="'+p+'"]');
   if(t)t.click();
 };
-document.getElementById('tabs').onclick=e=>{const t=e.target.closest('.tab');if(!t||!t.dataset.page)return;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.getElementById('page-'+t.dataset.page).classList.add('active');majOutils();setTimeout(initReveal,30);if(t.dataset.page==='bourse')fetchIntra();if(t.dataset.page==='marches'&&(!S.marches||!S.marches[marPer]||!S.marches[marPer]._maj))fetchMarches();if(window.innerWidth<=900)fermeSide()};
+document.getElementById('tabs').onclick=e=>{const t=e.target.closest('.tab');if(!t||!t.dataset.page)return;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.getElementById('page-'+t.dataset.page).classList.add('active');majOutils();setTimeout(initReveal,30);if(t.dataset.page==='bourse')fetchIntra();if(t.dataset.page==='marches'&&(!S.marches||!S.marches[marPer]||!S.marches[marPer]._maj))fetchMarches();if(t.dataset.page==='marches')chargeCac();if(window.innerWidth<=900)fermeSide()};
 /* Fermer dropdown quand on clique ailleurs */
 
 
@@ -3890,6 +3891,90 @@ let marchesData={};
 const PERIODES=[{k:'sem',l:'Semaine',d:'depuis la clôture de vendredi dernier'},{k:'1m',l:'1 mois',d:'sur un mois glissant'},{k:'3m',l:'3 mois',d:'sur trois mois glissants'},{k:'6m',l:'6 mois',d:'sur six mois glissants'},{k:'ytd',l:'Depuis janvier',d:'depuis le 1er janvier'}];
 let marPer='sem';
 let _marEnCours=null;
+
+/* ===== LE CAC 40 DU JOUR =====
+   Les quarante valeurs de l indice, d apres la revision de decembre 2025.
+   La composition change une a deux fois par an : si une societe sort,
+   son symbole cesse de repondre, sa ligne disparait du classement et
+   l encart dit sur combien de valeurs il a ete etabli. Pour mettre la
+   liste a jour, il suffit de corriger ce tableau. */
+const CAC40=[
+  ['AC.PA','Accor'],['AI.PA','Air Liquide'],['AIR.PA','Airbus'],['MT.AS','ArcelorMittal'],
+  ['CS.PA','Axa'],['BNP.PA','BNP Paribas'],['EN.PA','Bouygues'],['BVI.PA','Bureau Veritas'],
+  ['CAP.PA','Capgemini'],['CA.PA','Carrefour'],['ACA.PA','Crédit Agricole'],['BN.PA','Danone'],
+  ['DSY.PA','Dassault Systèmes'],['FGR.PA','Eiffage'],['ENGI.PA','Engie'],['EL.PA','EssilorLuxottica'],
+  ['ERF.PA','Eurofins'],['ENX.PA','Euronext'],['RMS.PA','Hermès'],['KER.PA','Kering'],
+  ['OR.PA','L’Oréal'],['LR.PA','Legrand'],['MC.PA','LVMH'],['ML.PA','Michelin'],
+  ['ORA.PA','Orange'],['RI.PA','Pernod Ricard'],['PUB.PA','Publicis'],['RNO.PA','Renault'],
+  ['SAF.PA','Safran'],['SGO.PA','Saint-Gobain'],['SAN.PA','Sanofi'],['SU.PA','Schneider Electric'],
+  ['GLE.PA','Société Générale'],['STLAP.PA','Stellantis'],['STMPA.PA','STMicroelectronics'],
+  ['HO.PA','Thales'],['TTE.PA','TotalEnergies'],['URW.PA','Unibail-Rodamco'],
+  ['VIE.PA','Veolia'],['DG.PA','Vinci']];
+/* En memoire seulement : ce sont des cours publics, pas tes donnees. */
+let cacData=null,cacEtat='vide',cacEnCours=false;
+async function chargeCac(force){
+  if(cacEnCours)return;
+  if(!force&&cacData&&Date.now()-cacData.maj<15*60*1000)return;
+  cacEnCours=true;cacEtat='charge';
+  try{majCac()}catch(e){}
+  try{
+    const res=await yQBatch(CAC40.map(c=>c[0]));
+    const lignes=[];
+    CAC40.forEach(([t,n])=>{
+      const d=res[t];
+      if(!d||!nb(d.price))return;
+      lignes.push({t,n,prix:nb(d.price),var:nb(d.chg)});
+    });
+    cacData={lignes,maj:Date.now(),demandees:CAC40.length};
+    cacEtat=lignes.length?'ok':'vide';
+  }catch(e){cacEtat='panne'}
+  cacEnCours=false;
+  try{majCac()}catch(e){}
+}
+/* Les trois qui montent le plus, les trois qui baissent le plus */
+function cacExtremes(){
+  if(!cacData||!cacData.lignes.length)return null;
+  const tri=cacData.lignes.slice().sort((a,b)=>b.var-a.var);
+  return{hausses:tri.slice(0,3),baisses:tri.slice(-3).reverse(),
+    repondu:tri.length,demandees:cacData.demandees,maj:cacData.maj};
+}
+function ligneCac(x,maxi){
+  const pos=x.var>=0;
+  const c=pos?CV('--green'):CV('--red');
+  return '<div style="display:flex;align-items:center;gap:10px;padding:6px 0">'+
+    '<span style="flex:0 0 38%;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+x.n+'</span>'+
+    barreFine(maxi>0?Math.max(4,Math.abs(x.var)/maxi*100):0,c)+
+    '<span style="flex:0 0 68px;text-align:right;font-size:12.5px;font-weight:500;color:'+c+'">'+
+      (pos?'+':'')+x.var.toFixed(2).replace('.',',')+' %</span>'+
+    '<span style="flex:0 0 74px;text-align:right;font-size:12px;color:var(--muted)">'+F2(x.prix)+'</span></div>';
+}
+function majCac(){
+  const z=document.getElementById('cacJour');if(!z)return;
+  if(cacEtat==='charge'&&!cacData){
+    z.innerHTML='<div class="tk">Chargement des quarante valeurs…</div>';return;
+  }
+  const e=cacExtremes();
+  if(!e){
+    z.innerHTML='<div class="tk" style="line-height:1.65">'+
+      (cacEtat==='panne'
+        ?'Les cours ne sont pas arrivés. Réessaie avec le bouton Actualiser ; si ça insiste, c’est ton relais Google qui ne répond pas.'
+        :'Aucun cours reçu pour l’instant. Clique sur Actualiser pour les demander.')+'</div>';
+    return;
+  }
+  const maxi=Math.max.apply(null,e.hausses.concat(e.baisses).map(x=>Math.abs(x.var)))||1;
+  let h='<div class="sect">Ce qui monte</div>';
+  e.hausses.forEach(x=>{h+=ligneCac(x,maxi)});
+  h+='<div class="sect" style="margin-top:16px">Ce qui baisse</div>';
+  e.baisses.forEach(x=>{h+=ligneCac(x,maxi)});
+  const d=new Date(e.maj);
+  h+='<div class="tk" style="margin-top:14px;line-height:1.65">Variation depuis la clôture de la veille, '+
+     'relevée à '+String(d.getHours()).padStart(2,'0')+'h'+String(d.getMinutes()).padStart(2,'0')+'. '+
+     'Hors séance, c’est la dernière journée de bourse. '+
+     (e.repondu<e.demandees
+       ? '<span style="color:var(--accent)">'+e.repondu+' valeurs sur '+e.demandees+' ont répondu : le classement est établi sur celles-là.</span>'
+       : 'Les '+e.demandees+' valeurs de l’indice ont répondu.')+'</div>';
+  z.innerHTML=h;
+}
 async function fetchMarches(force){
   /* La période est figée ici une fois pour toutes : le chargement se fait en plusieurs
      lots successifs, et changer de période entre-temps mélangeait les résultats. */
@@ -4846,6 +4931,7 @@ return h};
   z.innerHTML=h;
 })();
 try{majEtatSauve()}catch(e){}
+try{majCac()}catch(e){}
 try{majDefil()}catch(e){}
 /* Les taux de prélèvement, un par compte */
 (function(){
