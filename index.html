@@ -107,7 +107,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 /* Bandeau d'indices défilant */
 .ticker{flex:1;overflow:hidden;position:relative;min-width:0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
 .ticker-track{display:inline-flex;white-space:nowrap;animation:tick 55s linear infinite;will-change:transform}
-.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker:hover .ticker-track,.ticker:focus-within .ticker-track{animation-play-state:paused}
+/* Arrêté à la main, ou parce que le système demande moins d animations */
+body.sansdefil .ticker-track{animation:none}
+@media(prefers-reduced-motion:reduce){.ticker-track{animation:none}}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .tk-it{display:inline-flex;align-items:center;gap:7px;padding:0 20px;font-size:12px}
 .tk-it .tk-n{color:var(--text2);font-weight:500}
@@ -188,6 +191,8 @@ tr:hover{background:var(--card2)}
 .pg{height:5px;border-radius:4px;background:var(--card2);overflow:hidden;margin-top:6px}
 .pf{height:100%;border-radius:4px;background:var(--accent)}
 .ed{cursor:pointer;padding:2px 7px;border-radius:6px;border:1px dashed var(--border);
+     /* 24px de haut au minimum : en dessous, on vise mal au doigt */
+     display:inline-flex;align-items:center;min-height:24px;
      transition:background-color .15s,color .15s,border-color .15s}
 .ed:hover{border-color:var(--accent);background:var(--abg);color:var(--accent)}
 .ci{width:90px;padding:5px 9px;border-radius:8px;background:var(--card2);border:1px solid var(--accent);color:var(--text);font-size:12px;font-weight:500;outline:0;text-align:right;font-family:var(--font)}
@@ -266,7 +271,6 @@ body:not(.light) .badge.neg{box-shadow:none}
 #panne button{margin-top:8px}
 .rs{display:inline-flex;font-size:12px;padding:4px 0}.rs.ok{color:var(--green)}.rs.err{color:var(--red)}.rs.load{color:var(--muted)}
 .vc{font-size:12px;font-weight:550}
-.reset-btn{font-size:12px;color:var(--muted);background:0;border:1px solid var(--border);border-radius:6px;padding:3px 9px;cursor:pointer}.reset-btn:hover{color:var(--red);border-color:var(--red)}
 .amor-table{font-size:12px;margin-top:8px;max-height:200px;overflow-y:auto;border:1px solid var(--border);border-radius:8px}
 .vm-table{font-size:12px;margin-top:8px}.vm-table td{padding:7px 10px}
 #login-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center}
@@ -409,6 +413,15 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
   background:var(--card);color:var(--text);border:1px solid var(--border);
   border-radius:8px;padding:6px 10px;font-size:11.5px;white-space:nowrap;
   box-shadow:0 4px 14px rgba(0,0,0,.12)}
+/* ===== SE VOIR AU CLAVIER =====
+   Sans anneau, on tape dans un champ sans savoir lequel. Il n apparaît
+   qu au clavier : à la souris, rien ne change. */
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ci:focus-visible,.ai:focus-visible,.sel:focus-visible,input:focus-visible,
+select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.ed:focus-visible{border-color:var(--accent);background:var(--abg);color:var(--accent)}
+/* Le focus ne doit pas se cacher derrière la barre du haut */
+.page{scroll-margin-top:72px}
 </style>
 </head>
 <body>
@@ -439,25 +452,25 @@ body.light .tab.active{box-shadow:none;border:1px solid var(--border)}
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 06/11 23h05</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 09/11 14h20</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
 <header class="topbar">
-<button class="hamburger" onclick="toggleSide()">☰</button>
-<div class="ticker" id="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
+<button class="hamburger" onclick="toggleSide()" aria-label="Ouvrir le menu">☰</button>
+<div class="ticker" id="ticker"><div class="ticker-track" id="tickerTrack"></div></div><button class="btn btn-o" id="defilBtn" onclick="toggleDefil()" aria-label="Mettre le bandeau en pause" title="Mettre le bandeau en pause">⏸</button>
 <div class="topacts">
-<button class="btn btn-o" id="themeBtn" onclick="toggleTheme()" title="Mode clair / sombre">☾</button>
-<button class="btn btn-o" id="rbtn" onclick="doRef()">↻</button>
-<button class="btn btn-o" onclick="exportCSV()">⤓</button>
-<button class="btn btn-g" id="sbtn" onclick="doSave()">◉</button>
+<button class="btn btn-o" id="themeBtn" onclick="toggleTheme()" aria-label="Changer de thème, clair ou sombre" title="Thème clair ou sombre">☾</button>
+<button class="btn btn-o" id="rbtn" onclick="doRef()" aria-label="Actualiser les cours" title="Actualiser les cours">↻</button>
+<button class="btn btn-o" onclick="exportCSV()" aria-label="Télécharger tes données en CSV" title="Télécharger en CSV">⤓</button>
+<button class="btn btn-g" id="sbtn" onclick="doSave()" aria-label="Enregistrer maintenant" title="Enregistrer maintenant">◉</button>
 <div class="user-bar" id="userBar"></div>
 </div>
 </header>
 <div id="panne" style="display:none"></div>
 <div id="annul" style="display:none"></div>
 <main>
-<div class="page active" id="page-home"><div id="homeAlerts"></div><div class="hBande"><div class="hTete" id="hTete"></div><div class="hCote" id="hCote"></div></div><div class="kr" id="hk" style="display:none"></div><div id="widgetResume" style="display:none"></div><div class="g21 gSeul"><div class="card"><div class="fb" style="margin-bottom:10px"><div class="ct" style="margin:0" id="netTitre">Évolution du patrimoine</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div style="display:flex;gap:4px"><button class="ctb" id="netMode_brut" onclick="setNetMode('brut')">Brut</button><button class="ctb active" id="netMode_net" onclick="setNetMode('net')">Net</button></div><div style="display:flex;gap:4px"><button class="ctb active" id="netVue_courbe" onclick="setNetVue('courbe')">Courbes</button><button class="ctb" id="netVue_barres" onclick="setNetVue('barres')">Barres</button></div><div style="display:flex;gap:4px" id="netPs"></div></div></div><div class="cto" id="netCases"></div><div class="cb"><canvas id="cN"></canvas></div></div><div class="g21"><div class="card hRegistre" id="hRegistre"></div><div class="card hAttention" id="hAttention"></div></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Historique</div><button class="reset-btn" onclick="if(confirm('Reset?'))doReset()">Réinitialiser</button></div><div id="sl" style="margin-top:12px"></div></div></div>
+<div class="page active" id="page-home"><div id="homeAlerts"></div><div class="hBande"><div class="hTete" id="hTete"></div><div class="hCote" id="hCote"></div></div><div class="kr" id="hk" style="display:none"></div><div id="widgetResume" style="display:none"></div><div class="g21 gSeul"><div class="card"><div class="fb" style="margin-bottom:10px"><div class="ct" style="margin:0" id="netTitre">Évolution du patrimoine</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div style="display:flex;gap:4px"><button class="ctb" id="netMode_brut" onclick="setNetMode('brut')">Brut</button><button class="ctb active" id="netMode_net" onclick="setNetMode('net')">Net</button></div><div style="display:flex;gap:4px"><button class="ctb active" id="netVue_courbe" onclick="setNetVue('courbe')">Courbes</button><button class="ctb" id="netVue_barres" onclick="setNetVue('barres')">Barres</button></div><div style="display:flex;gap:4px" id="netPs"></div></div></div><div class="cto" id="netCases"></div><div class="cb"><canvas id="cN"></canvas></div></div><div class="g21"><div class="card hRegistre" id="hRegistre"></div><div class="card hAttention" id="hAttention"></div></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Historique</div></div><div id="sl" style="margin-top:12px"></div></div></div>
 <div class="page" id="page-bourse">
 <div id="rstat" class="rs" style="margin:0 0 8px"></div>
 <div class="stabs" id="bourseTabs"></div>
@@ -614,6 +627,21 @@ function toggleSide(){const s=document.getElementById('side'),o=document.getElem
 /* Choisir une page ferme le menu. Il ne faut pas « basculer » : un lien interne
    qui change de page alors que le menu est déjà fermé l'ouvrirait. */
 function fermeSide(){const s=document.getElementById('side');if(s&&s.classList.contains('open'))toggleSide()}
+/* Le bandeau d indices défile sans fin : on doit pouvoir l arrêter,
+   au doigt comme au clavier. Le choix est retenu. */
+function majDefil(){
+  const b=document.getElementById('defilBtn');if(!b)return;
+  const off=document.body.classList.contains('sansdefil');
+  b.textContent=off?'▶':'⏸';
+  const t=off?'Faire défiler le bandeau':'Mettre le bandeau en pause';
+  b.setAttribute('aria-label',t);b.setAttribute('title',t);
+}
+function toggleDefil(){
+  document.body.classList.toggle('sansdefil');
+  try{localStorage.setItem('defil',document.body.classList.contains('sansdefil')?'off':'on')}catch(e){}
+  majDefil();
+}
+try{if(localStorage.getItem('defil')==='off')document.body.classList.add('sansdefil')}catch(e){}
 function toggleTheme(){themeMode=themeMode==='light'?'dark':'light';localStorage.setItem('theme',themeMode);applyTheme();if(typeof R==='function')R(true)}
 applyTheme();
 /* Couleurs lues depuis le thème actif */
@@ -2475,7 +2503,7 @@ window.edWatchZone=function(el,id,type){const w=S.watchlist.find(x=>x.id===id);i
 /* Journal d'investissement */
 /* Edit helpers */
 function mkEd(val,onclick){return '<span class="ed" onclick="'+onclick+'">'+val+'</span>'}
-function mkInp(val,onenter){return '<input class="ci" value="'+val+'" onkeydown="if(event.key===\'Enter\')'+onenter+';if(event.key===\'Escape\')R()" onblur="'+onenter+'" autofocus>'}
+function mkInp(val,onenter){return '<input class="ci" aria-label="Nouvelle valeur" value="'+val+'" onkeydown="if(event.key===\'Enter\')'+onenter+';if(event.key===\'Escape\')R()" onblur="'+onenter+'" autofocus>'}
 
 window.edEsp=function(el,pk){el.outerHTML=mkInp(S.pf[pk].esp,"cmEsp(this,'"+pk+"')")};
 window.cmEsp=function(i,pk){const v=parseFloat(i.value.replace(',','.'));if(!isNaN(v))S.pf[pk].esp=v;autoSave();R()};
@@ -2502,13 +2530,13 @@ if(!inserted)S.versMensuels.push(newEntry);
 autoSave();R(true)};
 window.delVM=function(i){S.versMensuels.splice(i,1);autoSave();R(true)};
 
-window.edObj=function(el,id,f){const o=S.objectifs.find(x=>x.id===id);if(!o)return;const v=f==='cible'?o.cible:f==='actuel'?(o.actuel||0):o.nom;const w=f==='nom'?160:100;el.outerHTML='<input class="ci" style="width:'+w+'px;text-align:'+(f==='nom'?'left':'right')+'" value="'+v+'" onkeydown="if(event.key===\'Enter\')cmObj(this,\''+id+'\',\''+f+'\');if(event.key===\'Escape\')R(true)" onblur="cmObj(this,\''+id+'\',\''+f+'\')" autofocus>'};
+window.edObj=function(el,id,f){const o=S.objectifs.find(x=>x.id===id);if(!o)return;const v=f==='cible'?o.cible:f==='actuel'?(o.actuel||0):o.nom;const w=f==='nom'?160:100;el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:'+w+'px;text-align:'+(f==='nom'?'left':'right')+'" value="'+v+'" onkeydown="if(event.key===\'Enter\')cmObj(this,\''+id+'\',\''+f+'\');if(event.key===\'Escape\')R(true)" onblur="cmObj(this,\''+id+'\',\''+f+'\')" autofocus>'};
 window.cmObj=function(i,id,f){const o=S.objectifs.find(x=>x.id===id);if(!o)return;if(f==='cible'||f==='actuel'){const v=parseFloat(i.value.replace(',','.'));if(!isNaN(v))o[f]=v}else o.nom=i.value.trim()||o.nom;autoSave();R(true)};
 window.delObj=function(id){S.objectifs=S.objectifs.filter(x=>x.id!==id);autoSave();R(true)};
 window.addObj=function(){const t=prompt("Type: net, epargne, bourse, crypto, brut, liq, custom","custom");if(!t)return;S.objectifs.push({id:'o'+nid(),nom:"Objectif",cible:10000,actuel:0,type:t});autoSave();R(true)};
 
-window.eI=function(el,sk,id,fk){const it=S[sk].find(x=>x.id===id);if(!it)return;el.outerHTML='<input class="ci" style="width:100px" value="'+it[fk]+'" onkeydown="if(event.key===\'Enter\')cI(this,\''+sk+'\',\''+id+'\',\''+fk+'\');if(event.key===\'Escape\')R()" onblur="cI(this,\''+sk+'\',\''+id+'\',\''+fk+'\')" autofocus>'};
-window.edTxt=function(el,sk,id,fk){const it=S[sk].find(x=>x.id===id);if(!it)return;el.outerHTML='<input class="ci" style="width:120px;text-align:left" value="'+(it[fk]||'')+'" onkeydown="if(event.key===\'Enter\')cTxt(this,\''+sk+'\',\''+id+'\',\''+fk+'\');if(event.key===\'Escape\')R()" onblur="cTxt(this,\''+sk+'\',\''+id+'\',\''+fk+'\')" autofocus>'};
+window.eI=function(el,sk,id,fk){const it=S[sk].find(x=>x.id===id);if(!it)return;el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:100px" value="'+it[fk]+'" onkeydown="if(event.key===\'Enter\')cI(this,\''+sk+'\',\''+id+'\',\''+fk+'\');if(event.key===\'Escape\')R()" onblur="cI(this,\''+sk+'\',\''+id+'\',\''+fk+'\')" autofocus>'};
+window.edTxt=function(el,sk,id,fk){const it=S[sk].find(x=>x.id===id);if(!it)return;el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:120px;text-align:left" value="'+(it[fk]||'')+'" onkeydown="if(event.key===\'Enter\')cTxt(this,\''+sk+'\',\''+id+'\',\''+fk+'\');if(event.key===\'Escape\')R()" onblur="cTxt(this,\''+sk+'\',\''+id+'\',\''+fk+'\')" autofocus>'};
 window.cTxt=function(i,sk,id,fk){const it=S[sk].find(x=>x.id===id);if(it)it[fk]=i.value.trim();autoSave();R(true)};
 window.cI=function(i,sk,id,fk){const v=parseFloat(i.value.replace(',','.'));const it=S[sk].find(x=>x.id===id);if(it&&!isNaN(v))it[fk]=v;autoSave();R()};
 /* ===== SUPPRIMER SANS PERDRE =====
@@ -2558,7 +2586,7 @@ function ouvreForm(ancreId,titre,champs,surValider,apres){
   h+='<div style="font-size:12.5px;font-weight:600;margin-bottom:10px">'+titre+'</div>';
   h+='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px">';
   champs.forEach((c,i)=>{
-    h+='<label style="display:block;font-size:11px;color:var(--muted)">'+c.lib+
+    h+='<label for="fch'+i+'" style="display:block;font-size:11px;color:var(--muted)">'+c.lib+
        (c.opt&&!c.muet?' <span style="opacity:.7">(facultatif)</span>':'');
     if(c.type==='choix'){
       h+='<select class="ai" id="fch'+i+'" style="width:100%;margin-top:4px">'+
@@ -2582,6 +2610,7 @@ function ouvreForm(ancreId,titre,champs,surValider,apres){
   /* le formulaire s ouvre la ou on a clique : on l amene sous les yeux
      au lieu de laisser la page sauter ailleurs */
   if(d.scrollIntoView)try{d.scrollIntoView({block:'center',behavior:'smooth'})}catch(e){}
+  try{rendAccessible()}catch(e){}
   const prem=document.getElementById('fch0');if(prem&&prem.focus)try{prem.focus()}catch(e){}
 }
 window.valideForm=function(){
@@ -2636,7 +2665,7 @@ window.dI=function(sk,id){
 };
 
 function addB(cid,fields,sk,defs){return '<button class="ab" onclick="sAF(\''+cid+'\',\''+sk+'\','+JSON.stringify(fields).replace(/"/g,'&quot;')+',\''+btoa(JSON.stringify(defs))+'\')">+ Ajouter</button>'}
-window.sAF=function(cid,sk,fields,b64){const fs=typeof fields==='string'?JSON.parse(fields):fields;let h='<div class="ar">';fs.forEach(f=>{h+='<input class="ai" '+(f.w?'style="flex:'+f.w+'"':'')+'placeholder="'+f.label+'" id="nf_'+cid+'_'+f.k+'">'});h+='<button class="ac" onclick="cAF(\''+cid+'\',\''+sk+'\','+JSON.stringify(fs).replace(/"/g,'&quot;')+',\''+b64+'\')">✓</button><button class="ax" onclick="R()">✕</button></div>';document.getElementById(cid).innerHTML=h};
+window.sAF=function(cid,sk,fields,b64){const fs=typeof fields==='string'?JSON.parse(fields):fields;let h='<div class="ar">';fs.forEach(f=>{h+='<input class="ai" '+(f.w?'style="flex:'+f.w+'"':'')+'placeholder="'+f.label+'" aria-label="'+f.label+'" id="nf_'+cid+'_'+f.k+'">'});h+='<button class="ac" onclick="cAF(\''+cid+'\',\''+sk+'\','+JSON.stringify(fs).replace(/"/g,'&quot;')+',\''+b64+'\')">✓</button><button class="ax" onclick="R()">✕</button></div>';document.getElementById(cid).innerHTML=h};
 window.cAF=function(cid,sk,fields,b64){const defs=JSON.parse(atob(b64));const fs=typeof fields==='string'?JSON.parse(fields):fields;const obj={id:'n'+nid(),...defs};fs.forEach(f=>{const v=document.getElementById('nf_'+cid+'_'+f.k).value.trim();if(f.num)obj[f.k]=parseFloat(v.replace(',','.'))||0;else obj[f.k]=v||f.def||''});if(!obj.nom)return R();S[sk].push(obj);autoSave();R()};
 
 function mkL(items,sk,fields){return items.map(c=>{let l='<div class="ln">'+(c.nom||'')+'</div>';if(c.banque)l+='<div class="ls">'+c.banque+'</div>';let r='';fields.forEach(f=>{r+='<span class="ed" onclick="eI(this,\''+sk+'\',\''+c.id+'\',\''+f.k+'\')" style="margin-left:8px">'+(f.fmt?f.fmt(c[f.k]):F(c[f.k]))+'</span>'});return '<div class="lr"><div>'+l+'</div><div style="display:flex;align-items:center">'+r+'<button class="db" style="margin-left:8px" onclick="dI(\''+sk+'\',\''+c.id+'\')">✕</button></div></div>'}).join('')}
@@ -2645,9 +2674,9 @@ function mkL(items,sk,fields){return items.map(c=>{let l='<div class="ln">'+(c.n
 window.edBgt=function(el,type,id1,id2){
   let v=0;
   if(type==='rev'){const r=S.budget.revenus.find(x=>x.id===id1);v=r?r.montant:0}
-  else if(type==='catnom'){const c=S.budget.categories.find(x=>x.id===id1);el.outerHTML='<input class="ci" style="width:150px;text-align:left" value="'+(c?c.nom:'')+'" onkeydown="if(event.key===\'Enter\')cmBgt(this,\'catnom\',\''+id1+'\');if(event.key===\'Escape\')R(true)" onblur="cmBgt(this,\'catnom\',\''+id1+'\')" autofocus>';return}
+  else if(type==='catnom'){const c=S.budget.categories.find(x=>x.id===id1);el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:150px;text-align:left" value="'+(c?c.nom:'')+'" onkeydown="if(event.key===\'Enter\')cmBgt(this,\'catnom\',\''+id1+'\');if(event.key===\'Escape\')R(true)" onblur="cmBgt(this,\'catnom\',\''+id1+'\')" autofocus>';return}
   else{const c=S.budget.categories.find(x=>x.id===id1);const p=c?c.postes.find(x=>x.id===id2):null;v=p?p.montant:0}
-  el.outerHTML='<input class="ci" style="width:80px" value="'+v+'" onkeydown="if(event.key===\'Enter\')cmBgt(this,\''+type+'\',\''+id1+'\',\''+(id2||'')+'\');if(event.key===\'Escape\')R(true)" onblur="cmBgt(this,\''+type+'\',\''+id1+'\',\''+(id2||'')+'\')" autofocus>'};
+  el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:80px" value="'+v+'" onkeydown="if(event.key===\'Enter\')cmBgt(this,\''+type+'\',\''+id1+'\',\''+(id2||'')+'\');if(event.key===\'Escape\')R(true)" onblur="cmBgt(this,\''+type+'\',\''+id1+'\',\''+(id2||'')+'\')" autofocus>'};
 window.cmBgt=function(i,type,id1,id2){
   if(type==='rev'){const v=parseFloat(i.value.replace(',','.'));const r=S.budget.revenus.find(x=>x.id===id1);if(r&&!isNaN(v))r.montant=v}
   else if(type==='catnom'){const c=S.budget.categories.find(x=>x.id===id1);if(c)c.nom=i.value.trim()||c.nom}
@@ -2677,7 +2706,7 @@ window.addLot=function(id){
 window.edLot=function(el,id,li,champ){
   const b=S.immo.find(x=>x.id===id);if(!b||!b.lots||!b.lots[li])return;
   const val=champ==='nom'?b.lots[li].nom:(b.lots[li].loyer||0);
-  el.outerHTML='<input class="ci" style="width:'+(champ==='nom'?'130px;text-align:left':'80px')+'" value="'+String(val).replace(/"/g,'&quot;')+'"'
+  el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:'+(champ==='nom'?'130px;text-align:left':'80px')+'" value="'+String(val).replace(/"/g,'&quot;')+'"'
     +' onkeydown="if(event.key===\'Enter\')cmLot(this,\''+id+'\','+li+',\''+champ+'\');if(event.key===\'Escape\')R(true)"'
     +' onblur="cmLot(this,\''+id+'\','+li+',\''+champ+'\')" autofocus>';
 };
@@ -2786,7 +2815,15 @@ function occupationBien(b){
 }
 window.delLot=function(id,li){
   const b=S.immo.find(x=>x.id===id);if(!b||!b.lots)return;
-  if(!confirm('Supprimer ce logement ?'))return;
+  /* On nomme ce qui part : un logement emporte son loyer et son historique
+     d occupation, et le loyer du bien baisse d autant. */
+  const l=b.lots[li];if(!l)return;
+  const perdu=[];
+  if(nb(l.loyer)>0)perdu.push('son loyer de '+F(nb(l.loyer))+' par mois');
+  if(l.vac&&l.vac.length)perdu.push(l.vac.length+' changement'+(l.vac.length>1?'s':'')+' d’état enregistré'+(l.vac.length>1?'s':''));
+  if(!confirm('Supprimer « '+(l.nom||'ce logement')+' » de '+(b.nom||'ce bien')+' ?'+
+    (perdu.length?'\n\nTu perds '+perdu.join(' et ')+'.':'')+
+    '\n\nCette suppression ne peut pas être annulée.'))return;
   b.lots.splice(li,1);b.loyer=loyerBien(b);autoSave();R(true);
 };
 window.addImmo=function(){const nom=prompt('Nom du bien','');if(!nom)return;S.immo.push({id:'i'+nid(),nom,type:'',prixAchat:0,valeur:0,sci:false,partsPct:100,adresse:'',surface:0,typeLocation:'',loyer:0,charges:0,taxeFonciere:0,assurance:0,gestion:0,travaux:[],creditId:'',cdRevenus:new Array(12).fill(0),cdNuits:new Array(12).fill(0)});autoSave();R(true)};
@@ -2828,7 +2865,11 @@ window.addProjet=function(){
 window.setProjetDelai=function(id,ans){const p=(S.projets||[]).find(x=>x.id===id);if(!p)return;const v=parseFloat(String(ans).replace(',','.'));if(isNaN(v))return;p.dansMois=Math.max(0,Math.round(v*12));autoSave();R(true)};
 window.toggleProjetProj=function(id){const p=(S.projets||[]).find(x=>x.id===id);if(!p)return;p.enProj=!(p.enProj!==false);autoSave();R(true)};
 window.edProjet=function(el,id,f){const p=S.projets.find(x=>x.id===id);if(!p)return;const v=parseFloat(prompt('Nouvelle valeur',p[f]||0));if(isNaN(v))return;p[f]=v;autoSave();R(true)};
-window.delProjet=function(id){if(!confirm('Supprimer ce projet ?'))return;S.projets=S.projets.filter(x=>x.id!==id);autoSave();R(true)};
+window.delProjet=function(id){
+  const p=S.projets.find(x=>x.id===id);
+  if(!confirm('Supprimer le projet « '+((p&&p.nom)||'sans nom')+' » ?'+
+    '\n\nTu perds son montage : prix, apport, travaux et simulation de prêt.'+
+    '\n\nCette suppression ne peut pas être annulée.'))return;S.projets=S.projets.filter(x=>x.id!==id);autoSave();R(true)};
 window.convertProjet=function(id){
   const p=S.projets.find(x=>x.id===id);if(!p)return;
   if(!confirm('Transformer "'+p.nom+'" en vrai bien dans ton patrimoine ?\n\nCela va créer :\n- Le bien immobilier\n- Le crédit associé (si emprunt)'))return;
@@ -2865,7 +2906,7 @@ function divPart(annee,mois,champ){const c=divCase(annee,mois);return champ==='s
 window.edDivMois=function(el,annee,mois,champ){
   if(champ!=='a'&&champ!=='s')return;
   if(!S.divMois)S.divMois={};if(!S.divMois[annee])S.divMois[annee]={};
-  el.outerHTML='<input class="ci" style="width:45px" value="'+divPart(annee,mois,champ)+'" onkeydown="if(event.key===\'Enter\')cmDivMois(this,\''+annee+'\',\''+mois+'\',\''+champ+'\');if(event.key===\'Escape\')R(true)" onblur="cmDivMois(this,\''+annee+'\',\''+mois+'\',\''+champ+'\')" autofocus>';
+  el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:45px" value="'+divPart(annee,mois,champ)+'" onkeydown="if(event.key===\'Enter\')cmDivMois(this,\''+annee+'\',\''+mois+'\',\''+champ+'\');if(event.key===\'Escape\')R(true)" onblur="cmDivMois(this,\''+annee+'\',\''+mois+'\',\''+champ+'\')" autofocus>';
 };
 window.cmDivMois=function(inp,annee,mois,champ){
   const v=parseFloat(String(inp.value).replace(',','.'));
@@ -2889,9 +2930,9 @@ window.divBascule=function(annee,vers){
 window.addDivAnnee=function(){const def=String(new Date().getFullYear()-1);const a=prompt('Quelle année ajouter ?',def);if(!a||!/^\d{4}$/.test(a.trim()))return;if(!S.divMois)S.divMois={};if(!S.divMois[a.trim()])S.divMois[a.trim()]={};autoSave();R(true)};
 window.delDivAnnee=function(a){if(!confirm('Supprimer les dividendes de '+a+' ?'))return;delete S.divMois[a];autoSave();R(true)};
 
-window.edRevMois=function(el,id,annee,mois){const b=S.immo.find(x=>x.id===id);if(!b)return;if(!b.revenusMois)b.revenusMois={};if(!b.revenusMois[annee])b.revenusMois[annee]={};el.outerHTML='<input class="ci" style="width:45px" value="'+(b.revenusMois[annee][mois]||0)+'" onkeydown="if(event.key===\'Enter\')cmRevMois(this,\''+id+'\',\''+annee+'\',\''+mois+'\');if(event.key===\'Escape\')R(true)" onblur="cmRevMois(this,\''+id+'\',\''+annee+'\',\''+mois+'\')" autofocus>'};
+window.edRevMois=function(el,id,annee,mois){const b=S.immo.find(x=>x.id===id);if(!b)return;if(!b.revenusMois)b.revenusMois={};if(!b.revenusMois[annee])b.revenusMois[annee]={};el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:45px" value="'+(b.revenusMois[annee][mois]||0)+'" onkeydown="if(event.key===\'Enter\')cmRevMois(this,\''+id+'\',\''+annee+'\',\''+mois+'\');if(event.key===\'Escape\')R(true)" onblur="cmRevMois(this,\''+id+'\',\''+annee+'\',\''+mois+'\')" autofocus>'};
 window.cmRevMois=function(inp,id,annee,mois){const v=parseFloat(inp.value.replace(',','.'));const b=S.immo.find(x=>x.id===id);if(b&&!isNaN(v)){if(!b.revenusMois)b.revenusMois={};if(!b.revenusMois[annee])b.revenusMois[annee]={};b.revenusMois[annee][mois]=v}autoSave();R(true)};
-window.edCD=function(el,id,field,mi){const b=S.immo.find(x=>x.id===id);if(!b)return;el.outerHTML='<input class="ci" style="width:45px" value="'+(b[field][mi]||0)+'" onkeydown="if(event.key===\'Enter\')cmCD(this,\''+id+'\',\''+field+'\','+mi+');if(event.key===\'Escape\')R(true)" onblur="cmCD(this,\''+id+'\',\''+field+'\','+mi+')" autofocus>'};
+window.edCD=function(el,id,field,mi){const b=S.immo.find(x=>x.id===id);if(!b)return;el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:45px" value="'+(b[field][mi]||0)+'" onkeydown="if(event.key===\'Enter\')cmCD(this,\''+id+'\',\''+field+'\','+mi+');if(event.key===\'Escape\')R(true)" onblur="cmCD(this,\''+id+'\',\''+field+'\','+mi+')" autofocus>'};
 window.cmCD=function(inp,id,field,mi){const v=parseFloat(inp.value.replace(',','.'));const b=S.immo.find(x=>x.id===id);if(b&&!isNaN(v))b[field][mi]=v;autoSave();R(true)};
 
 
@@ -4090,7 +4131,33 @@ function _signalePanne(ou,e){
 }
 window.addEventListener('error',e=>{if(e&&e.error)signalePanne('erreur inattendue',e.error)});
 window.addEventListener('unhandledrejection',e=>{if(e&&e.reason)signalePanne('tâche en arrière-plan',e.reason)});
-function R(dc){try{_R(dc)}catch(e){signalePanne('mise à jour de l\'affichage',e)}}
+/* ===== ATTEINDRE TOUT AU CLAVIER =====
+   Beaucoup de valeurs se modifient en cliquant sur un bout de texte : les
+   pointillés, les pastilles « Loué », les noms d actions. Pratique à la
+   souris, mais au clavier ces textes n existaient pas : la touche
+   Tabulation passait à côté et rien ne les activait. On les déclare donc
+   comme de vrais boutons après chaque rendu, et Entrée ou Espace les
+   active, exactement comme un clic. */
+function rendAccessible(){
+  const els=document.querySelectorAll('span[onclick],div[onclick],label[onclick]');
+  for(let i=0;i<els.length;i++){
+    const e=els[i];
+    if(!e.hasAttribute('tabindex'))e.setAttribute('tabindex','0');
+    if(!e.hasAttribute('role'))e.setAttribute('role','button');
+  }
+}
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Enter'&&e.key!==' ')return;
+  const c=e.target;
+  if(!c||!c.getAttribute||c.getAttribute('role')!=='button')return;
+  if(c.tagName==='BUTTON'||c.tagName==='A'||c.tagName==='INPUT')return;
+  e.preventDefault();
+  c.click();
+});
+function R(dc){
+  try{_R(dc)}catch(e){signalePanne('mise à jour de l\'affichage',e)}
+  try{rendAccessible()}catch(e){}
+}
 function _R(dc){
 try{
 /* Mettre à jour le restant dû de chaque dette AVANT les calculs */
@@ -4432,7 +4499,7 @@ document.getElementById('sl').innerHTML=sH;
     const champ=(lab,cle,unite,aide)=>'<div style="flex:1;min-width:150px">'+
       '<div style="font-size:11px;color:var(--muted);margin-bottom:4px">'+lab+'</div>'+
       '<div style="display:flex;align-items:baseline;gap:4px">'+
-        '<input class="ci" style="width:72px" value="'+nb(p[cle])+'" onchange="setProjVal(\''+cle+'\',this.value)">'+
+        '<input class="ci" aria-label="Nouvelle valeur" style="width:72px" value="'+nb(p[cle])+'" onchange="setProjVal(\''+cle+'\',this.value)">'+
         '<span style="font-size:11.5px;color:var(--muted)">'+unite+'</span></div>'+
       '<div style="font-size:10.5px;color:var(--muted);margin-top:3px">'+aide+'</div></div>';
     rg.innerHTML='<div style="display:flex;gap:16px;flex-wrap:wrap;background:var(--card2);border-radius:12px;padding:14px">'+
@@ -4479,10 +4546,10 @@ document.getElementById('sl').innerHTML=sH;
           '<td style="color:'+(d.manuel?'var(--muted)':(d.net>=0?'var(--green)':'var(--red)'))+'">'+
             (d.manuel?F2(d.netAuto)+'<div style="font-size:10px;color:var(--muted)">ignoré</div>'
                      :((d.net>=0?'+':'')+F2(d.net)+(pasEncore?'<div style="font-size:10px;color:var(--muted)">puis '+(futur>=0?'+':'')+F2(futur)+' une fois loué</div>':'')))+'</td>'+
-          '<td><input class="ci" style="width:66px" placeholder="auto" value="'+(d.manuel?nb(d.net):'')+'" onchange="setCfManuel(\''+d.id+'\',this.value)" title="Laisse vide pour le calcul automatique">'+
+          '<td><input class="ci" aria-label="Nouvelle valeur" style="width:66px" placeholder="auto" value="'+(d.manuel?nb(d.net):'')+'" onchange="setCfManuel(\''+d.id+'\',this.value)" title="Laisse vide pour le calcul automatique">'+
             (d.manuel?'<div style="font-size:10px;color:var(--accent)">saisi par toi</div>':'')+'</td>'+
           '<td>'+(d.manuel?'<span style="color:var(--muted);font-size:10.5px">sans objet</span>'
-                 :'<input class="ci" style="width:42px" value="'+d.attente+'" onchange="setLoyerDelai(\''+d.id+'\',this.value)"> mois')+'</td></tr>';
+                 :'<input class="ci" aria-label="Nouvelle valeur" style="width:42px" value="'+d.attente+'" onchange="setLoyerDelai(\''+d.id+'\',this.value)"> mois')+'</td></tr>';
       });
       bH+='</tbody></table></div>';
       if(alerteCredit)bH+='<div style="font-size:11.5px;color:var(--orange);background:var(--card2);border-radius:10px;padding:10px 12px;margin-top:10px;line-height:1.6">Pour un ou plusieurs biens, la mensualité n\'est pas déduite : leur cashflow est donc trop optimiste. Soit le prêt n\'est pas rattaché au bien — page Immo, fiche du bien, « Prêt rattaché » — soit sa date de début est postérieure à aujourd\'hui : vérifie-la sur la page Dettes.</div>';
@@ -4510,12 +4577,12 @@ document.getElementById('sl').innerHTML=sH;
           '<td class="l" style="font-weight:600">'+String(x.nom||'Projet').slice(0,28)+'</td>'+
           '<td>'+F(nb(x.prix))+'</td>'+
           '<td>'+F(nb(x.apport))+'</td>'+
-          '<td><input class="ci" style="width:48px" value="'+ans+'" onchange="setProjetDelai(\''+x.id+'\',this.value)"> an'+(ans>1?'s':'')+'</td>'+
+          '<td><input class="ci" aria-label="Nouvelle valeur" style="width:48px" value="'+ans+'" onchange="setProjetDelai(\''+x.id+'\',this.value)"> an'+(ans>1?'s':'')+'</td>'+
           '<td style="color:'+(manuelP||cfp==null||!nb(x.loyer)?'var(--muted)':(cfp>=0?'var(--green)':'var(--red)'))+'">'+
             (cfp==null?'—':!nb(x.loyer)?'<span title="Renseigne le loyer sur la page Immo">loyer à saisir</span>':(cfp>=0?'+':'')+F2(cfp))+
             (manuelP?'<div style="font-size:10px;color:var(--muted)">ignoré</div>'
                     :(a&&a.differe>0&&nb(x.loyer)?'<div style="font-size:10px;color:var(--muted)">après '+a.differe+' mois de différé</div>':''))+'</td>'+
-          '<td><input class="ci" style="width:66px" placeholder="auto" value="'+(manuelP?nb(x.cfManuel):'')+'" onchange="setCfProjet(\''+x.id+'\',this.value)" title="Laisse vide pour le calcul automatique">'+
+          '<td><input class="ci" aria-label="Nouvelle valeur" style="width:66px" placeholder="auto" value="'+(manuelP?nb(x.cfManuel):'')+'" onchange="setCfProjet(\''+x.id+'\',this.value)" title="Laisse vide pour le calcul automatique">'+
             (manuelP?'<div style="font-size:10px;color:var(--accent)">saisi par toi</div>':'')+'</td>'+
           '<td><button class="pb '+(inclus?'on':'')+'" onclick="toggleProjetProj(\''+x.id+'\')">'+(inclus?'Oui':'Non')+'</button></td></tr>';
       });
@@ -4779,6 +4846,7 @@ return h};
   z.innerHTML=h;
 })();
 try{majEtatSauve()}catch(e){}
+try{majDefil()}catch(e){}
 /* Les taux de prélèvement, un par compte */
 (function(){
   const z=document.getElementById('prelevZone');if(!z)return;
@@ -5695,7 +5763,7 @@ document.getElementById('ik').innerHTML=
       }
       h+='<tr><td class="l" style="font-weight:600">'+x.nom+'</td>'+
         '<td style="color:'+(x.rev>0?'var(--green)':'var(--muted)')+'">'+F(Math.round(x.rev))+'</td>'+
-        '<td><input class="ci" style="width:72px" placeholder="'+Math.round(estDep)+'" value="'+(x.reel?Math.round(x.dep):'')+'" onchange="setDepMois(\''+x.cle+'\',this.value)" title="Laisse vide pour utiliser l\'estimation">'+
+        '<td><input class="ci" aria-label="Nouvelle valeur" style="width:72px" placeholder="'+Math.round(estDep)+'" value="'+(x.reel?Math.round(x.dep):'')+'" onchange="setDepMois(\''+x.cle+'\',this.value)" title="Laisse vide pour utiliser l\'estimation">'+
           (x.reel?'':'<div style="font-size:10px;color:var(--muted)">estimé</div>')+'</td>'+
         '<td style="font-weight:500;color:'+(x.cf>=0?'var(--green)':'var(--red)')+'">'+(x.cf>=0?'+':'')+F(Math.round(x.cf))+'</td></tr>';
     });
@@ -7016,7 +7084,7 @@ const ouverte=S.ficheLigne&&S.ficheLigne.pk===pk&&String(S.ficheLigne.id)===Stri
 h+='<tr'+(ouverte?' style="background:var(--abg)"':'')+'><td class="l"><b style="font-size:12px;cursor:pointer;border-bottom:1px dotted var(--border)" onclick="ouvreFicheLigne(\''+pk+'\',\''+l.id+'\')" title="Voir la fiche">'+l.n+'</b><div class="tk">'+l.c+' · <a href="'+lienNews(YM[l.c]||l.c)+'" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--border)">actus</a></div></td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'p\')">'+l.p+'</span></td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'pr\')">'+(l.pr==null||!isFinite(nb(l.pr))?'—':(u?'$'+nb(l.pr).toFixed(2):F2(nb(l.pr))))+'</span></td><td>'+F2(l.co)+(u&&l.usd?'<div class="tk">$'+l.usd.toFixed(2)+'</div>':'')+'</td><td>'+VC(l.var)+'</td><td style="font-weight:500">'+F2(l.vaEur)+'</td><td style="color:'+(!isFinite(l.g)?'var(--muted)':l.g>=0?'var(--green)':'var(--red)')+';font-weight:600">'+(!isFinite(l.g)?'—':(l.g>=0?'+':'')+(u?'$'+l.g.toFixed(2):F2(l.g)))+'</td><td>'+(isFinite(l.gp)?BG(l.gp):'<span style="color:var(--muted)">—</span>')+'</td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'div\')" style="color:var(--orange)">'+(l.div||0).toFixed(2)+'€</span></td><td style="color:var(--muted);font-size:11px">'+l.w.toFixed(1)+'%</td><td>'+sparkSvg+'</td><td class="l"><span class="ed" onclick="edSecteur(\''+pk+'\','+l.id+')" style="font-size:11px;color:'+(SC[secteurDe(l,pk)]||CV('--muted'))+'">'+secteurDe(l,pk)+'</span></td><td><button class="db" onclick="dPf(\''+pk+'\','+l.id+')">✕</button></td></tr>'});
 h+='</tbody></table><div id="add-'+pk+'"><button class="ab" onclick="sA(\''+pk+'\')">+ Ajouter</button></div>';document.getElementById(cid).innerHTML=h}
 
-window.ePf=function(el,pk,id,f){const c=el.textContent.replace(/[^\d.,-]/g,'').replace(',','.');el.outerHTML='<input class="ci" value="'+c+'" onkeydown="if(event.key===\'Enter\')cPf2(this,\''+pk+'\','+id+',\''+f+'\');if(event.key===\'Escape\')R()" onblur="cPf2(this,\''+pk+'\','+id+',\''+f+'\')" autofocus>'};
+window.ePf=function(el,pk,id,f){const c=el.textContent.replace(/[^\d.,-]/g,'').replace(',','.');el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" value="'+c+'" onkeydown="if(event.key===\'Enter\')cPf2(this,\''+pk+'\','+id+',\''+f+'\');if(event.key===\'Escape\')R()" onblur="cPf2(this,\''+pk+'\','+id+',\''+f+'\')" autofocus>'};
 window.cPf2=function(i,pk,id,f){const v=parseFloat(i.value.replace(',','.'));const l=S.pf[pk].l.find(x=>x.id===id);if(l&&!isNaN(v))l[f]=v;autoSave();R()};
 window.dPf=function(pk,id){
   const i=S.pf[pk].l.findIndex(l=>l.id===id);if(i<0)return;
@@ -7032,7 +7100,7 @@ window.dPf=function(pk,id){
 window.sA=function(pk){document.getElementById('add-'+pk).innerHTML='<div class="ar"><input class="ai" placeholder="Ticker Yahoo (AI.PA, GOOGL...)" id="ac-'+pk+'" style="flex:1.5"><input class="ai" style="flex:2" placeholder="Nom *" id="an-'+pk+'"><input class="ai" placeholder="Cours €" id="ao-'+pk+'"><input class="ai" placeholder="Qté" id="ap-'+pk+'"><input class="ai" placeholder="PRU" id="ar-'+pk+'"><input class="ai" placeholder="Div" id="ad-'+pk+'"><button class="ac" onclick="cA(\''+pk+'\')">✓</button><button class="ax" onclick="R()">✕</button></div><div style="font-size:10px;color:var(--muted);margin-top:4px">Laisse cours vide + ticker Yahoo → prix auto</div>'};
 window.cA=async function(pk){const n=document.getElementById('an-'+pk).value.trim();if(!n)return;const ticker=document.getElementById('ac-'+pk).value.trim()||'—';let co=parseFloat(document.getElementById('ao-'+pk).value.replace(',','.'))||0;const nl={id:nid(),c:ticker,n:n,co:co,p:parseFloat(document.getElementById('ap-'+pk).value.replace(',','.'))||0,pr:parseFloat(document.getElementById('ar-'+pk).value.replace(',','.'))||0,div:parseFloat(document.getElementById('ad-'+pk).value.replace(',','.'))||0,var:0};if(ticker!=='—')YM[ticker]=ticker;if(co===0&&ticker!=='—'){const q=await yQ(ticker);if(q){nl.co=Math.round(q.price*100)/100;if(q.cur==='USD'){nl.usd=nl.co;nl.co=Math.round(q.price*eurUsd*100)/100}}}S.pf[pk].l.push(nl);autoSave();R()};
 
-window.edSim=function(el,f){if(!S.simParams)S.simParams={age:30,dep:25000,rend:7,ep:500,inflation:2,dcaSteps:[],horizon:30};const v=S.simParams[f];el.outerHTML='<input class="ci" style="width:100px" value="'+v+'" onkeydown="if(event.key===\'Enter\')cmSim(this,\''+f+'\');if(event.key===\'Escape\')R(true)" onblur="cmSim(this,\''+f+'\')" autofocus>'};
+window.edSim=function(el,f){if(!S.simParams)S.simParams={age:30,dep:25000,rend:7,ep:500,inflation:2,dcaSteps:[],horizon:30};const v=S.simParams[f];el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:100px" value="'+v+'" onkeydown="if(event.key===\'Enter\')cmSim(this,\''+f+'\');if(event.key===\'Escape\')R(true)" onblur="cmSim(this,\''+f+'\')" autofocus>'};
 window.cmSim=function(i,f){const v=parseFloat(i.value.replace(/[^\d.,-]/g,'').replace(',','.'));if(!isNaN(v)){S.simParams[f]=v;autoSave()}R(true)};
 window.addDCA=function(){
   ouvreForm('simContent','Changer le versement mensuel à partir d une année',[
@@ -7044,12 +7112,12 @@ window.addDCA=function(){
     autoSave();R(true);
   });
 };;
-window.edDCA=function(el,i){const s=S.simParams.dcaSteps[i];el.outerHTML='<input class="ci" style="width:80px" value="'+s.montant+'" onkeydown="if(event.key===\'Enter\')cmDCA(this,'+i+');if(event.key===\'Escape\')R(true)" onblur="cmDCA(this,'+i+')" autofocus>'};
+window.edDCA=function(el,i){const s=S.simParams.dcaSteps[i];el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:80px" value="'+s.montant+'" onkeydown="if(event.key===\'Enter\')cmDCA(this,'+i+');if(event.key===\'Escape\')R(true)" onblur="cmDCA(this,'+i+')" autofocus>'};
 window.cmDCA=function(inp,i){const v=parseFloat(inp.value.replace(',','.'));if(!isNaN(v))S.simParams.dcaSteps[i].montant=v;autoSave();R(true)};
 window.delDCA=function(i){S.simParams.dcaSteps.splice(i,1);autoSave();R(true)};
 
 /* Revenus passifs */
-window.edRev=function(el,id){const rs=S.revSources.find(x=>x.id===id);if(!rs)return;el.outerHTML='<input class="ci" style="width:80px" value="'+(rs.mensuel||0)+'" onkeydown="if(event.key===\'Enter\')cmRev(this,\''+id+'\');if(event.key===\'Escape\')R(true)" onblur="cmRev(this,\''+id+'\')" autofocus>'};
+window.edRev=function(el,id){const rs=S.revSources.find(x=>x.id===id);if(!rs)return;el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" style="width:80px" value="'+(rs.mensuel||0)+'" onkeydown="if(event.key===\'Enter\')cmRev(this,\''+id+'\');if(event.key===\'Escape\')R(true)" onblur="cmRev(this,\''+id+'\')" autofocus>'};
 window.cmRev=function(inp,id){const v=parseFloat(inp.value.replace(',','.'));const rs=S.revSources.find(x=>x.id===id);if(rs&&!isNaN(v))rs.mensuel=v;autoSave();R(true)};
 window.delRev=function(id){S.revSources=S.revSources.filter(x=>x.id!==id);autoSave();R(true)};
 window.addRev=function(){const nom=prompt("Nom de la source","Loyer");if(!nom)return;const colors=[CV('--accent'),CV('--c4'),CV('--c1'),CV('--c6'),CV('--c2'),CV('--c5')];S.revSources.push({id:'rs'+nid(),nom:nom,mensuel:0,auto:false,color:colors[S.revSources.length%colors.length]});autoSave();R(true)};
