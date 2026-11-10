@@ -449,6 +449,8 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 #page-techno .at-read .tag{display:inline-block;text-align:center;border-radius:6px;padding:2px 6px;font-size:11.5px;font-weight:600;border:1px solid currentColor}
 #page-techno .at-read .what{color:var(--muted);font-size:11.5px;display:block}
 #page-techno .up{color:var(--green)}#page-techno .down{color:var(--red)}#page-techno .warn{color:var(--accent)}#page-techno .muted{color:var(--muted)}
+#page-techno #at-vue tbody tr{cursor:pointer}
+#page-techno #at-vue td.l b{font-weight:500}
 #page-techno .kv{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 @media (max-width:520px){#page-techno .at-read li{grid-template-columns:1fr;gap:4px}#page-techno .at-read .tag{justify-self:start}}
 </style>
@@ -636,14 +638,16 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="card"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Analyse technique</div><div class="at-seg" id="at-seg"><button class="pb" data-p="5">5 ans</button><button class="pb" data-p="10">10 ans</button><button class="pb" data-p="20">20 ans</button><button class="pb on" data-p="all">Tout</button></div></div>
 <div class="at-pick"><select id="at-sel" aria-label="Valeur à analyser"></select><input type="text" id="at-q" placeholder="ou un code Yahoo (ex. RMS.PA)" aria-label="Code Yahoo Finance" autocomplete="off"><button class="pb" id="at-go">Analyser</button><button class="pb" id="at-upd" hidden>Mettre à jour</button></div>
 <div class="tk" id="at-status" role="status"></div></div>
+<div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Vue d’ensemble de mes lignes</div><button class="pb" id="at-vueBtn">Charger toutes mes lignes</button></div><p class="at-help" style="margin:0 0 10px">Les mêmes indicateurs pour chaque ligne, calculés sur tout l’historique chargé (20 ans au plus). Touche une ligne pour ouvrir son analyse.</p><div class="tw" id="at-vue"></div><div class="tk" id="at-vueInfo" style="margin-top:8px;line-height:1.5"></div></div>
 <div id="at-body" style="display:none">
 <div class="at-head"><div class="at-title" id="at-title"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div>
 <div class="kr" id="at-tiles"></div>
 <div class="card"><div class="ct">Lecture rapide</div><ul class="at-read" id="at-read"></ul></div>
 <div class="card"><div class="ct">Cours et paliers</div><p class="at-help">La courbe bleue est le prix de l’action. Les deux moyennes lissent le prix pour montrer la tendance. Les lignes rouges et vertes sont des prix où l’action a souvent buté ou rebondi par le passé.</p><div class="at-ro" id="at-roPrice"></div><canvas id="at-cvPrice"></canvas>
-<div class="at-legend"><span><i style="background:var(--bourse)"></i>Cours</span><span><i style="background:var(--accent)"></i>Moyenne 50 semaines</span><span><i style="background:var(--text)"></i>Moyenne 200 semaines</span><span><i style="background:var(--red)"></i>Palier au-dessus (résistance)</span><span><i style="background:var(--green)"></i>Palier en dessous (support)</span><span><i style="background:var(--muted);height:8px;opacity:.5"></i>Prix les plus échangés</span></div></div>
+<div class="at-legend"><span><i style="background:var(--bourse)"></i>Cours</span><span><i style="background:var(--accent)"></i>Moyenne 50 semaines</span><span><i style="background:var(--text)"></i>Moyenne 200 semaines</span><span><i style="background:var(--red)"></i>Palier au-dessus (résistance)</span><span><i style="background:var(--green)"></i>Palier en dessous (support)</span><span><i style="background:var(--muted);height:8px;opacity:.5"></i>Prix les plus échangés</span><span><i style="background:var(--green);width:8px;height:8px;border-radius:50%"></i>Croisement haussier des moyennes</span><span><i style="background:var(--red);width:8px;height:8px;border-radius:50%"></i>Croisement baissier</span><span><i style="background:var(--crypto)"></i>Ton prix de revient</span></div></div>
 <div class="card"><div class="ct">Baisse depuis le plus haut</div><p class="at-help">À 0 %, l’action est à son record. Plus la courbe descend, plus l’action est loin de son dernier sommet.</p><div class="at-ro" id="at-roDD"></div><canvas id="at-cvDD"></canvas></div>
 <div class="card"><div class="ct">Trajectoire de long terme</div><p class="at-help">La ligne claire est la trajectoire moyenne de l’action sur la période. Zone rouge : le prix est haut par rapport à son habitude. Zone verte : il est bas par rapport à son habitude.</p><div class="at-ro" id="at-roReg"></div><canvas id="at-cvReg"></canvas></div>
+<div class="card" id="at-cmpCard" style="display:none"><div class="ct">Comparaison avec le marché</div><p class="at-help">Les deux courbes partent du même point au début de la période. Si la courbe bleue finit au-dessus de l’autre, l’action a fait mieux que son indice. Les dividendes ne sont comptés d’aucun côté.</p><div class="at-ro" id="at-roCmp"></div><canvas id="at-cvCmp"></canvas><div class="at-legend"><span><i style="background:var(--bourse)"></i><span id="at-cmpA"></span></span><span><i style="background:var(--text)"></i><span id="at-cmpB"></span></span></div></div>
 <div class="g2"><div class="card"><div class="ct">Retracement Fibonacci</div><p class="at-help">On mesure la dernière grande hausse, du point bas au point haut. Les lignes indiquent quelle part de cette hausse serait effacée si le prix redescendait jusque-là.</p><div class="at-ro" id="at-roFib"></div><canvas id="at-cvFib"></canvas></div>
 <div class="card"><div class="ct">Élan récent (RSI)</div><p class="at-help">Le RSI va de 0 à 100. Au-dessus de 70, l’action a beaucoup monté récemment. En dessous de 30, elle a beaucoup baissé récemment.</p><div class="at-ro" id="at-roRsi"></div><canvas id="at-cvRsi"></canvas></div></div>
 <div class="tk" style="margin:4px 2px 24px;line-height:1.55">Lecture du passé du cours, à titre pédagogique. Ce n’est pas un conseil en investissement. Les performances passées ne préjugent pas des performances futures.</div>
@@ -783,7 +787,7 @@ await db.collection('users').doc(uid).set({patrimoine:clean,snapshots:snaps,upda
 function cleAV(){return (S&&S.cles&&S.cles.av)||''}let nxId=Date.now();const nid=()=>++nxId;
 const INDICES=[{t:'^GSPC',n:'S&P 500'},{t:'^IXIC',n:'Nasdaq'},{t:'^DJI',n:'Dow Jones'},{t:'^FCHI',n:'CAC 40'},{t:'^GDAXI',n:'DAX'},{t:'^STOXX50E',n:'Euro Stoxx 50'},{t:'^FTSE',n:'FTSE 100'},{t:'^N225',n:'Nikkei'},{t:'^HSI',n:'Hang Seng'},{t:'BTC-EUR',n:'Bitcoin'}];
 let idxData={};
-const GAS="https://script.google.com/macros/s/AKfycbzp37mHpvSmUpeao_UuLUgvlEfTnu_pgG-R-EbBordWuDQBEOFNYoAg76gvX5W7BQNajw/exec";
+const GAS="https://script.google.com/macros/s/AKfycbx2csJnXYb0jWSpu4jt4XZbdn-KhseLLr4DFjYSdR1wseMKuxY5zvr6NZqyd4RPJ39nzw/exec";
 async function yQ(t){try{const r=await fetch(GAS+"?t="+encodeURIComponent(t));if(!r.ok)return null;const j=await r.json();const d=j[t]||j;if(d.error||!d.price)return null;return{price:d.price,prev:d.prev||0,chg:d.chg||0,cur:d.cur||'USD'}}catch(e){return null}}
 async function yQBatch(tickers){
   const results={};
@@ -7278,9 +7282,9 @@ function initApp(){
 "use strict";
 const $=id=>document.getElementById('at-'+id);
 const C={},FONT="'Onest',system-ui,sans-serif",DAY=864e5,YEAR=365.25*DAY;
-const T={w:null,name:'',demo:false,period:'all',hover:null,hoverR:null,A:null,cur:'€',key:null,src:null};
+const T={w:null,name:'',demo:false,period:'all',hover:null,hoverR:null,A:null,cur:'€',key:null,src:null,bench:null,pos:null};
 function cols(){const cs=getComputedStyle(document.body),g=n=>cs.getPropertyValue(n).trim();
-  C.bg=g('--bg');C.panel=g('--card');C.line=g('--border');C.text=g('--text');C.muted=g('--muted');C.accent=g('--accent');C.up=g('--green');C.down=g('--red');C.price=g('--bourse');}
+  C.bg=g('--bg');C.panel=g('--card');C.line=g('--border');C.text=g('--text');C.muted=g('--muted');C.accent=g('--accent');C.up=g('--green');C.down=g('--red');C.price=g('--bourse');C.pru=g('--crypto');}
 /* ---------- formats ---------- */
 const nf0=new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0});
 const nf1=new Intl.NumberFormat('fr-FR',{minimumFractionDigits:1,maximumFractionDigits:1});
@@ -7292,10 +7296,10 @@ function mstr(t){return new Date(t).toLocaleDateString('fr-FR',{month:'long',yea
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
 function toWeekly(pts){
-  const W={t:[],c:[],h:[],l:[],v:[]};let key=null;
+  const W={t:[],c:[],h:[],l:[],v:[],a:[]};let key=null;
   for(const p of pts){const k=Math.floor((p.t-4*DAY)/(7*DAY));
-    if(k!==key){key=k;W.t.push(p.t);W.c.push(p.c);W.h.push(p.h);W.l.push(p.l);W.v.push(p.v);}
-    else{const i=W.t.length-1;W.t[i]=p.t;W.c[i]=p.c;W.h[i]=Math.max(W.h[i],p.h);W.l[i]=Math.min(W.l[i],p.l);W.v[i]+=p.v;}}
+    if(k!==key){key=k;W.t.push(p.t);W.c.push(p.c);W.h.push(p.h);W.l.push(p.l);W.v.push(p.v);W.a.push(p.a);}
+    else{const i=W.t.length-1;W.t[i]=p.t;W.c[i]=p.c;W.h[i]=Math.max(W.h[i],p.h);W.l[i]=Math.min(W.l[i],p.l);W.v[i]+=p.v;W.a[i]=p.a;}}
   if(W.t.length<26)throw new Error("L'historique est trop court. Il faut au moins six mois de cours.");
   return W;
 }
@@ -7385,7 +7389,7 @@ function drawPrice(){const A=T.A,cv=$('cvPrice'),H=cv.clientWidth<500?340:420;
   A.lev.res.forEach(v=>{c.globalAlpha=.7;hline(g,v,C.down,[],1);c.globalAlpha=1;});
   A.lev.sup.forEach(v=>{c.globalAlpha=.7;hline(g,v,C.up,[],1);c.globalAlpha=1;});
   hline(g,A.ath,C.muted,[2,4]);
-  line(g,A.ma200,C.text,1.6);line(g,A.ma50,C.accent,1.4);line(g,A.c,C.price,1.6);
+  line(g,A.ma200,C.text,1.6);line(g,A.ma50,C.accent,1.4);line(g,A.c,C.price,1.6);drawCross(g,A);overlayPos(g,A);
   dot(g,A.n-1,A.last,C.price);
   const ax=g.X(A.athI);tag(g,'Plus haut · '+eur(A.ath),ax>M.l+g.pw/2?ax-8:ax+8,g.Y(A.ath)-13,C.text,ax>M.l+g.pw/2?'right':'left');
   chips(g,[...A.lev.res.map(v=>({v,label:eur(v),color:C.down})),...A.lev.sup.map(v=>({v,label:eur(v),color:C.up})),{v:A.last,label:eur(A.last),color:C.price}]);
@@ -7438,7 +7442,7 @@ function drawRsi(){const R=T.A.R,cv=$('cvRsi'),g=base(cv,220,0,100,R.t,v=>String
   if(T.hoverR!=null){cross(g,i);if(R.v[i]!=null)dot(g,i,R.v[i],C.price);}
   $('roRsi').innerHTML=R.v[i]==null?'Historique trop court pour calculer le RSI.':`${mstr(R.t[i])} · RSI sur 14 ${R.unit} : <b>${nf1.format(R.v[i])}</b>`;
 }
-function drawAll(){cols();drawPrice();drawDD();drawReg();drawFib();drawRsi();}
+function drawAll(){cols();drawPrice();drawDD();drawReg();drawFib();drawRsi();drawCmp();}
 
 /* ---------- résumé ---------- */
 function renderSummary(){const A=T.A,n=A.n;
@@ -7451,7 +7455,8 @@ function renderSummary(){const A=T.A,n=A.n;
     ['Dernier cours',eur(A.last),'le '+dstr(A.t[n-1]),''],
     ['Évolution sur la période',pct(A.perf,0,true),'soit '+pct(A.cagr,1,true)+' par an en moyenne',cls(A.perf)],
     ['Écart au plus haut',A.ddNow>-0.005?'0 %':pct(A.ddNow),'plus haut : '+eur(A.ath),A.ddNow<-0.005?'down':'up'],
-    ['RSI (14 '+R.unit+')',rs==null?'—':nf0.format(rs),rs==null?'historique trop court':rs>70?'a beaucoup monté récemment':rs<30?'a beaucoup baissé récemment':'zone neutre',rs==null?'':rs>70||rs<30?'warn':'']
+    ['RSI (14 '+R.unit+')',rs==null?'—':nf0.format(rs),rs==null?'historique trop court':rs>70?'a beaucoup monté récemment':rs<30?'a beaucoup baissé récemment':'zone neutre',rs==null?'':rs>70||rs<30?'warn':''],
+    ...extraTiles(A)
   ].map(t=>`<div class="kpi"><div class="kl">${t[0]}</div><div class="kv ${t[3]}">${t[1]}</div><div class="ks">${t[2]}</div></div>`).join('');
   const li=[];const m200=A.ma200[n-1];
   if(m200!=null){const d=A.last/m200-1,up=d>=0;li.push([up?'Haussière':'Fragilisée',up?'up':'down','Tendance de fond',`Le cours est ${up?'au-dessus':'en dessous'} de sa moyenne des 200 dernières semaines (${pct(d,0,true)}). ${up?'La tendance de fond reste orientée à la hausse.':'La tendance de fond est fragilisée.'}`]);}
@@ -7463,9 +7468,9 @@ function renderSummary(){const A=T.A,n=A.n;
   if(rs!=null)li.push([rs>70?'Surchauffe':rs<30?'Essoufflement':'Neutre',rs>70||rs<30?'warn':'muted','Élan récent',rs>70?`RSI à ${nf0.format(rs)} : l'action a beaucoup monté ces derniers ${R.unit}. Une pause ou un repli n'est pas rare dans ce cas.`:rs<30?`RSI à ${nf0.format(rs)} : l'action a beaucoup baissé ces derniers ${R.unit}. Un rebond n'est pas rare dans ce cas, sans garantie.`:`RSI à ${nf0.format(rs)} : ni emballement, ni forte baisse récente.`]);
   const r1=A.lev.res[0],s1=A.lev.sup[0];
   li.push(['Paliers','muted','Prix à surveiller',(r1?`Prochain palier au-dessus : ${eur(r1)}. `:'Aucun palier repéré au-dessus du cours. ')+(s1?`Prochain palier en dessous : ${eur(s1)}. `:'Aucun palier repéré en dessous du cours. ')+`Prix le plus échangé de la période : autour de ${eur(A.prof.poc)}.`]);
-  $('read').innerHTML=li.map(x=>`<li><span class="tag ${x[1]}">${esc(x[0])}</span><span><span class="what">${x[2]}</span>${x[3]}</span></li>`).join('');
+  extraRead(A,li);$('read').innerHTML=li.map(x=>`<li><span class="tag ${x[1]}">${esc(x[0])}</span><span><span class="what">${x[2]}</span>${x[3]}</span></li>`).join('');
 }
-function refresh(){T.A=analyse();T.hover=null;T.hoverR=null;renderSummary();drawAll();}
+function refresh(){T.A=analyse();extras(T.A);T.hover=null;T.hoverR=null;renderSummary();drawAll();}
 
 
 /* ---------- valeurs disponibles ---------- */
@@ -7484,37 +7489,135 @@ function statut(msg,err){const s=$('status');s.textContent=msg||'';s.className='
 /* ---------- chargement de l'historique ---------- */
 let occupe=false;
 function lisCache(){try{return JSON.parse(localStorage.getItem('at-hist')||'{}')||{}}catch(e){return{}}}
-function ecrisCache(c){const k=Object.keys(c);if(k.length>12){k.sort((a,b)=>(c[a].ts||0)-(c[b].ts||0));k.slice(0,k.length-12).forEach(x=>delete c[x]);}
-  try{localStorage.setItem('at-hist',JSON.stringify(c))}catch(e){}}
+function ecrisCache(c){const tri=()=>Object.keys(c).sort((x,y)=>(c[y].ts||0)-(c[x].ts||0));
+  tri().slice(45).forEach(x=>delete c[x]);
+  try{localStorage.setItem('at-hist',JSON.stringify(c))}catch(e){tri().slice(10).forEach(x=>delete c[x]);try{localStorage.setItem('at-hist',JSON.stringify(c))}catch(e2){}}}
+function num(x){if(x==null)return NaN;if(typeof x==='number')return x;return parseFloat(String(x).replace(/\s/g,'').replace(',','.'));}
+function wk(t){return Math.floor((t-4*DAY)/(7*DAY));}
+function versW(d){const off=(d.off||0)*1000,pts=[];
+  for(let i=0;i<d.t.length;i++){const c=+d.c[i],t=(+d.t[i])*1000+off;if(!isFinite(t)||!isFinite(c)||c<=0)continue;
+    let h=d.h?+d.h[i]:c,l=d.l?+d.l[i]:c,v=d.v?+d.v[i]:0;if(!isFinite(h)||h<c)h=c;if(!isFinite(l)||l>c||l<=0)l=c;if(!isFinite(v)||v<0)v=0;
+    pts.push({t:t,c:c,h:h,l:l,v:v,a:d.a?+d.a[i]:NaN});}
+  pts.sort((x,y)=>x.t-y.t);const W=toWeekly(pts);if(!d.a||W.a.some(x=>!isFinite(x)||x<=0))W.a=null;return W;}
+/* Rend les historiques demandés : ceux du jour viennent du cache, les autres du script Google, par lots de 4. */
+async function getHists(tks,force){const jour=new Date().toISOString().slice(0,10),cache=lisCache(),out={},manq=[];
+  tks.forEach(t=>{const d=cache[t];if(!force&&d&&d.j===jour&&Array.isArray(d.t))out[t]=d;else manq.push(t);});
+  for(let i=0;i<manq.length;i+=4){const lot=manq.slice(i,i+4);let r;
+    try{r=await fetch(GAS+"?hist=1&t="+encodeURIComponent(lot.join(",")));}catch(e){throw new Error('Impossible de joindre le script Google. Vérifie ta connexion, puis réessaie.');}
+    if(!r.ok)throw new Error('Le script Google a répondu par une erreur ('+r.status+'). Réessaie dans un instant.');
+    const j=(await r.json())||{};
+    lot.forEach(t=>{const d=j[t];
+      if(d&&!d.t&&d.price!=null)throw new Error('Le script Google n’a pas encore la fonction « historique ». Colle la nouvelle version du script et redéploie-la, puis réessaie.');
+      if(d&&!d.error&&Array.isArray(d.t)&&d.t.length){d.j=jour;d.ts=Date.now();cache[t]=d;out[t]=d;}});
+  }
+  if(manq.length)ecrisCache(cache);
+  return out;}
+function indiceDe(yt){const s=String(yt).toUpperCase();if(s.charAt(0)==='^')return null;
+  if(/\.PA$/.test(s))return['^FCHI','CAC 40'];if(/\.DE$/.test(s))return['^GDAXI','DAX'];if(/\.L$/.test(s))return['^FTSE','FTSE 100'];
+  if(/\.AS$/.test(s))return['^AEX','AEX'];if(/\.SW$/.test(s))return['^SSMI','SMI'];
+  if(!/[.\-=]/.test(s))return['^GSPC','S&P 500'];return null;}
+/* Ce que tu détiens sur cette valeur : prix de revient moyen, et fourchette d'achat de la watchlist. */
+function position(yt){const st=etat(),o={pru:null,q:0,zmin:null,zmax:null};if(!st)return o;let q=0,cout=0;
+  ['pea','ctosb','ctoibkr','avl'].forEach(pk=>{const p=st.pf&&st.pf[pk];((p&&p.l)||[]).forEach(x=>{if(ytDe(x.c)!==yt)return;const n=num(x.p),pr=num(x.pr);if(n>0&&pr>0){q+=n;cout+=n*pr;}});});
+  if(q>0){o.pru=cout/q;o.q=q;}
+  (st.watchlist||[]).forEach(w=>{if(w.ticker===yt){const a=num(w.zoneMin),b=num(w.zoneMax);if(a>0&&b>0){o.zmin=Math.min(a,b);o.zmax=Math.max(a,b);}}});
+  return o;}
 async function charge(yt,nom,force){
   if(occupe||!yt)return;occupe=true;$('go').disabled=true;$('upd').disabled=true;
   try{
-    const jour=new Date().toISOString().slice(0,10),cache=lisCache();let d=cache[yt];
-    if(force||!d||d.j!==jour){
-      statut('Chargement de l’historique de '+(nom||yt)+'…');
-      let r;try{r=await fetch(GAS+"?hist=1&t="+encodeURIComponent(yt));}catch(e){throw new Error('Impossible de joindre le script Google. Vérifie ta connexion, puis réessaie.');}
-      if(!r.ok)throw new Error('Le script Google a répondu par une erreur ('+r.status+'). Réessaie dans un instant.');
-      const j=await r.json();d=j&&(j[yt]||j[Object.keys(j)[0]]);
-      if(d&&!d.t&&d.price!=null)throw new Error('Le script Google n’a pas encore la fonction « historique ». Colle la nouvelle version du script et redéploie-la, puis réessaie.');
-      if(!d||d.error||!Array.isArray(d.t)||!d.t.length)throw new Error('Aucun historique trouvé pour « '+yt+' ». Vérifie le code Yahoo (ex. RMS.PA pour Hermès).');
-      d.j=jour;d.ts=Date.now();cache[yt]=d;ecrisCache(cache);
-    }
-    const off=(d.off||0)*1000,pts=[];
-    for(let i=0;i<d.t.length;i++){const c=+d.c[i],t=(+d.t[i])*1000+off;if(!isFinite(t)||!isFinite(c)||c<=0)continue;
-      let h=d.h?+d.h[i]:c,l=d.l?+d.l[i]:c,v=d.v?+d.v[i]:0;if(!isFinite(h)||h<c)h=c;if(!isFinite(l)||l>c||l<=0)l=c;if(!isFinite(v)||v<0)v=0;pts.push({t:t,c:c,h:h,l:l,v:v});}
-    pts.sort((a,b)=>a.t-b.t);
-    T.w=toWeekly(pts);T.key=yt;T.name=nom||d.nom||yt;T.cur=({EUR:'€',USD:'$',GBP:'£',JPY:'¥',CHF:'CHF'})[d.cur]||d.cur||'€';
+    statut('Chargement de l’historique de '+(nom||yt)+'…');
+    const ind=indiceDe(yt),H=await getHists(ind?[yt,ind[0]]:[yt],force),d=H[yt];
+    if(!d)throw new Error('Aucun historique trouvé pour « '+yt+' ». Vérifie le code Yahoo (ex. RMS.PA pour Hermès).');
+    T.w=versW(d);T.key=yt;T.name=nom||d.nom||yt;T.cur=({EUR:'€',USD:'$',GBP:'£',JPY:'¥',CHF:'CHF'})[d.cur]||d.cur||'€';
+    T.bench=null;if(ind&&H[ind[0]]){try{T.bench={w:versW(H[ind[0]]),nom:ind[1]}}catch(e){}}
+    T.pos=position(yt);
+    if(T.pos.pru!=null){const lo=Math.min.apply(null,T.w.l),hi=Math.max.apply(null,T.w.h);if(T.pos.pru>hi*6||T.pos.pru<lo/6)T.pos.pru=null;}
     T.src='Cours Yahoo Finance, chargés le '+new Date(d.ts||Date.now()).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
     $('body').style.display='';refresh();statut('');
     const sel=$('sel');if([].some.call(sel.options,o=>o.value===yt))sel.value=yt;else sel.value='';
+    try{$('body').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
   }catch(e){statut(e.message||'Une erreur est survenue. Réessaie.',true);}
   finally{occupe=false;$('go').disabled=false;$('upd').disabled=false;}
 }
 
+/* ---------- compléments : dividendes, agitation, croisements, marché ---------- */
+function extras(A){const W=T.w,N=W.t.length,i0=N-A.n,n=A.n;
+  A.tr=null;if(W.a&&W.a.length===N&&W.a[i0]>0){const r=W.a[N-1]/W.a[i0];A.tr=r-1;A.trCagr=Math.pow(r,1/Math.max(A.years,.1))-1;}
+  let s1=0,s2=0,k=0;for(let i=1;i<n;i++){const r=Math.log(A.c[i]/A.c[i-1]);s1+=r;s2+=r*r;k++;}
+  const sd=k>1?Math.sqrt(Math.max(0,s2/k-(s1/k)*(s1/k))):0;A.volW=sd;A.vol=sd*Math.sqrt(52);
+  let ep=0,dedans=false;A.dd.forEach(d=>{if(!dedans&&d<=-0.2){dedans=true;ep++;}else if(dedans&&d>-0.001)dedans=false;});A.nb20=ep;
+  A.cross=[];let prev=null;for(let i=0;i<n;i++){const a=A.ma50[i],b=A.ma200[i];if(a==null||b==null)continue;const s=a>=b?1:-1;if(prev!==null&&s!==prev)A.cross.push({i:i,up:s>0,v:(a+b)/2});prev=s;}
+  A.cmp=null;
+  if(T.bench&&T.bench.w){const B=T.bench.w,map={};for(let i=0;i<B.t.length;i++)map[wk(B.t[i])]=B.c[i];
+    const s=[],m=[];let b0=null,i1=0,der=null,vus=0;
+    for(let i=0;i<n;i++){s.push(A.c[i]/A.c[0]*100);const v=map[wk(A.t[i])];if(v!=null){der=v;vus++;if(b0===null){b0=v;i1=i;}}m.push(b0===null?null:der/b0*s[i1]);}
+    if(b0!==null&&vus>n*0.6&&i1<n*0.15)A.cmp={s:s,m:m,i1:i1,nom:T.bench.nom,ps:A.c[n-1]/A.c[i1]-1,pm:der/b0-1};}
+  A.pos=T.pos;}
+function analyseDe(w){const g=[T.w,T.period,T.bench,T.pos];T.w=w;T.period='all';T.bench=null;T.pos=null;
+  try{const A=analyse();extras(A);return A;}finally{T.w=g[0];T.period=g[1];T.bench=g[2];T.pos=g[3];}}
+function extraTiles(A){const o=[];
+  if(A.tr!=null)o.push(['Dividendes réinvestis',pct(A.tr,0,true),'soit '+pct(A.trCagr,1,true)+' par an en moyenne',A.tr>0?'up':A.tr<0?'down':'']);
+  o.push(['Agitation (volatilité)',pct(A.vol),'environ ±'+pct(A.volW,1)+' sur une semaine ordinaire','']);
+  return o;}
+function extraRead(A,li){const P=A.pos,n=A.n;
+  if(P&&P.pru!=null){const d=A.last/P.pru-1;li.unshift([pct(d,0,true),d>=0?'up':'down','Ta position',`Ton prix de revient moyen est de ${eur(P.pru)}. Le cours actuel est ${pct(Math.abs(d))} ${d>=0?'au-dessus':'en dessous'}.`]);}
+  if(P&&P.zmin!=null){const dans=A.last>=P.zmin&&A.last<=P.zmax,sous=A.last<P.zmin;
+    li.splice(P.pru!=null?1:0,0,[dans?'Dans la zone':sous?'Sous la zone':'Au-dessus',dans?'up':sous?'warn':'muted','Ta fourchette d’achat',`Ta fourchette va de ${eur(P.zmin)} à ${eur(P.zmax)}. Le cours est ${dans?'dedans':sous?'en dessous':'au-dessus'}.`]);}
+  if(A.cmp){const K=A.cmp,r=(1+K.ps)/(1+K.pm)-1;
+    li.push([r>0.05?'Fait mieux':r<-0.05?'Fait moins bien':'Comme le marché',r>0.05?'up':r<-0.05?'down':'muted','Face au marché',`Sur la période, le cours a fait ${pct(K.ps,0,true)}, contre ${pct(K.pm,0,true)} pour le ${esc(K.nom)} (dividendes non comptés).`]);}
+  if(A.tr!=null)li.push(['Dividendes','muted','Ce que les dividendes ajoutent',`Le cours seul a fait ${pct(A.perf,0,true)} sur la période. Avec les dividendes réinvestis, le gain passe à ${pct(A.tr,0,true)}.`]);
+  const v=A.vol;li.push([v<0.2?'Calme':v<0.35?'Modérée':'Agitée',v<0.35?'muted':'warn','Agitation',
+    `En année ordinaire, le cours varie d’environ ±${pct(v)}. Sur la période, l’action a connu ${A.nb20} baisse${A.nb20>1?'s':''} de plus de 20 %.`+(A.ddNow<-0.2?` La baisse actuelle (${pct(A.ddNow)}) en fait partie.`:'')]);
+  if(A.cross.length){const x=A.cross[A.cross.length-1];
+    li.push([x.up?'Signal haussier':'Signal baissier',x.up?'up':'down','Croisement des moyennes',`La moyenne 50 semaines est passée ${x.up?'au-dessus':'en dessous'} de la moyenne 200 semaines en ${mstr(A.t[x.i])}. C’est un signal de tendance ${x.up?'haussière':'baissière'} très suivi, qui arrive souvent tard.`]);}
+  else if(A.ma200[n-1]!=null)li.push(['Aucun','muted','Croisement des moyennes','Les deux moyennes ne se sont pas croisées sur la période affichée.']);}
+function drawCross(g,A){const c=g.c;(A.cross||[]).forEach(x=>{c.beginPath();c.arc(g.X(x.i),g.Y(x.v),4.5,0,7);c.fillStyle=x.up?C.up:C.down;c.fill();c.lineWidth=1.5;c.strokeStyle=C.panel;c.stroke();});}
+function overlayPos(g,A){const P=A.pos;if(!P)return;const c=g.c,haut=M.t,bas=g.h-M.b,x=M.l+g.pw*0.34;
+  if(P.zmin!=null){const y1=Math.max(haut,g.Y(P.zmax)),y2=Math.min(bas,g.Y(P.zmin));
+    if(y2>y1){c.fillStyle=C.up;c.globalAlpha=.14;c.fillRect(M.l,y1,g.pw,Math.max(2,y2-y1));c.globalAlpha=1;tag(g,'Ta fourchette d’achat',x,Math.max(haut+10,y1-11),C.up,'left');}}
+  if(P.pru!=null){const y=g.Y(P.pru);if(y>=haut&&y<=bas){hline(g,P.pru,C.pru,[8,4],1.5);tag(g,'Ton prix de revient · '+eur(P.pru),x,Math.min(bas-10,y+12),C.pru,'left');}}}
+function drawCmp(){const A=T.A,card=document.getElementById('at-cmpCard');if(!A||!A.cmp){card.style.display='none';return;}card.style.display='';
+  const cv=$('cvCmp'),K=A.cmp,tous=K.s.concat(K.m.filter(v=>v!=null)),lo=Math.min.apply(null,tous),hi=Math.max.apply(null,tous),pad=(hi-lo)*0.06;
+  const g=base(cv,cv.clientWidth<500?260:320,Math.max(0,lo-pad),hi+pad,A.t,v=>nf0.format(v)),e=A.n-1;
+  line(g,K.m,C.text,1.5);line(g,K.s,C.price,1.7);dot(g,e,K.s[e],C.price);
+  chips(g,[{v:K.s[e],label:nf0.format(K.s[e]),color:C.price},{v:K.m[e],label:nf0.format(K.m[e]),color:C.text}]);
+  cross(g,T.hover);const i=T.hover==null?e:T.hover,b=K.s[K.i1];
+  $('cmpA').textContent=T.name;$('cmpB').textContent=K.nom;
+  $('roCmp').innerHTML=`${dstr(A.t[i])} · ${esc(T.name)} <b>${i<K.i1?'—':pct(K.s[i]/b-1,0,true)}</b> · ${esc(K.nom)} <b>${K.m[i]==null?'—':pct(K.m[i]/b-1,0,true)}</b> depuis le début de la comparaison`;}
+
+/* ---------- vue d'ensemble de toutes les lignes ---------- */
+let vueOcc=false;
+function celluleVue(x,d,fini){const nomc='<td class="l"><b>'+esc(x.n)+'</b><div style="font-size:11px;color:var(--muted)">'+esc(x.g)+'</div></td>';
+  if(!d)return nomc+'<td colspan="6" style="text-align:left;color:var(--muted)">'+(fini?'pas d’historique chez Yahoo':'historique non chargé')+'</td>';
+  let A,cur;try{A=analyseDe(versW(d));}catch(e){return nomc+'<td colspan="6" style="text-align:left;color:var(--muted)">historique trop court</td>';}
+  const n=A.n,m=A.ma200[n-1],tr=m!=null?A.last/m-1:null,z=A.z,rs=A.R.last;
+  const zl=z>1.5?['Très haut','--red']:z>0.5?['Plutôt haut','--accent']:z<-1.5?['Très bas','--green']:z<-0.5?['Plutôt bas','--green']:['Dans la moyenne','--muted'];
+  const dev=({EUR:'€',USD:'$',GBP:'£'})[d.cur]||d.cur||'';
+  return nomc+'<td>'+(A.last>=100?nf1.format(A.last):nf2.format(A.last))+' '+dev+'</td>'+
+    '<td style="color:var('+(tr==null?'--muted':tr>=0?'--green':'--red')+')">'+(tr==null?'—':(tr>=0?'Haussière ':'Fragilisée ')+pct(tr,0,true))+'</td>'+
+    '<td style="color:var('+(A.ddNow<-0.2?'--red':A.ddNow<-0.05?'--accent':'--green')+')">'+(A.ddNow>-0.005?'au sommet':pct(A.ddNow))+'</td>'+
+    '<td style="color:var('+(rs==null?'--muted':rs>70||rs<30?'--accent':'--text2')+')">'+(rs==null?'—':nf0.format(rs)+(rs>70?' surchauffe':rs<30?' essoufflé':''))+'</td>'+
+    '<td style="color:var('+zl[1]+')">'+zl[0]+'</td><td>'+pct(A.vol)+'</td>';}
+async function vue(charger){const L=liste(),btn=$('vueBtn'),info=$('vueInfo');
+  if(!L.length){$('vue').innerHTML='';info.textContent='Aucune ligne avec un code de bourse pour l’instant.';return;}
+  const jour=new Date().toISOString().slice(0,10);let H={};const cache=lisCache();
+  L.forEach(x=>{const d=cache[x.yt];if(d&&d.j===jour&&Array.isArray(d.t))H[x.yt]=d;});
+  let err='';
+  if(charger&&!vueOcc){vueOcc=true;btn.disabled=true;info.className='tk';info.textContent='Chargement de l’historique de '+L.length+' valeurs… cela peut prendre jusqu’à une minute.';
+    try{H=await getHists(L.map(x=>x.yt));}catch(e){err=e.message||'Le chargement a échoué.';}
+    vueOcc=false;btn.disabled=false;}
+  const nb=L.filter(x=>H[x.yt]).length;
+  if(!nb&&!charger){$('vue').innerHTML='';info.textContent='Touche « Charger toutes mes lignes » pour comparer tes '+L.length+' valeurs d’un coup d’œil.';return;}
+  $('vue').innerHTML='<table><thead><tr><th class="l">Valeur</th><th>Cours</th><th>Tendance de fond</th><th>Écart au sommet</th><th>RSI</th><th>Prix / habitude</th><th>Agitation</th></tr></thead><tbody>'+
+    L.map(x=>'<tr data-yt="'+esc(x.yt)+'" data-n="'+esc(x.n)+'">'+celluleVue(x,H[x.yt],charger&&!err)+'</tr>').join('')+'</tbody></table>';
+  const manq=L.length-nb;btn.textContent=manq?'Charger toutes mes lignes':'Actualiser';
+  info.className='tk'+(err?' err':'');
+  info.textContent=err||(manq?(charger?manq+' valeur'+(manq>1?'s':'')+' sans historique chez Yahoo (fonds sans code de bourse, par exemple).':manq+' valeur'+(manq>1?'s':'')+' pas encore chargée'+(manq>1?'s':'')+' aujourd’hui.'):'Tendance de fond : écart du cours à sa moyenne 200 semaines. Prix / habitude : position par rapport à la trajectoire de long terme.');}
+
 /* ---------- interactions ---------- */
 function hoverable(cv,getN,set){const mv=e=>{if(!T.A)return;const r=cv.getBoundingClientRect(),n=getN();let i=Math.round((e.clientX-r.left-M.l)/(r.width-M.l-M.r)*(n-1));set(Math.max(0,Math.min(n-1,i)));};
   cv.addEventListener('pointermove',mv);cv.addEventListener('pointerdown',mv);cv.addEventListener('pointerleave',()=>{if(T.A)set(null)});}
-['cvPrice','cvDD','cvReg','cvFib'].forEach(id=>hoverable($(id),()=>T.A.n,i=>{if(T.hover!==i){T.hover=i;cols();drawPrice();drawDD();drawReg();drawFib();}}));
+['cvPrice','cvDD','cvReg','cvFib','cvCmp'].forEach(id=>hoverable($(id),()=>T.A.n,i=>{if(T.hover!==i){T.hover=i;cols();drawPrice();drawDD();drawReg();drawFib();drawCmp();}}));
 hoverable($('cvRsi'),()=>T.A.R.n,i=>{if(T.hoverR!==i){T.hoverR=i;cols();drawRsi();}});
 $('seg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;T.period=b.dataset.p;$('seg').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));if(T.w)refresh();});
 $('sel').addEventListener('change',()=>{const o=$('sel').selectedOptions[0];if(o&&o.value){$('q').value='';charge(o.value,o.textContent);}});
@@ -7522,10 +7625,12 @@ function lance(){const q=$('q').value.trim();if(q){charge(q.toUpperCase(),null);
 $('go').addEventListener('click',lance);
 $('q').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();lance();}});
 $('upd').addEventListener('click',()=>{if(T.key)charge(T.key,T.name,true);});
+$('vueBtn').addEventListener('click',()=>vue(true));
+$('vue').addEventListener('click',e=>{const r=e.target.closest('tr[data-yt]');if(r)charge(r.dataset.yt,r.dataset.n);});
 let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{if(T.A&&document.getElementById('page-techno').classList.contains('active'))drawAll();},150);});
 /* À l'ouverture de la page : la liste suit le portefeuille, et les graphiques se redessinent à la bonne largeur. */
 document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t||t.dataset.page!=='techno')return;
-  remplitSel();if(!T.A)statut('Choisis une valeur pour afficher son analyse.');setTimeout(()=>{if(T.A)drawAll();},60);});
+  remplitSel();vue(false);if(!T.A)statut('Choisis une valeur pour afficher son analyse.');setTimeout(()=>{if(T.A)drawAll();},60);});
 /* Depuis la fiche d'une ligne */
 window.atOuvre=function(pk,id){const st=etat(),p=st&&st.pf&&st.pf[pk],l=p&&(p.l||[]).find(x=>String(x.id)===String(id));if(!l)return;
   const yt=ytDe(l.c);if(typeof goPage==='function')goPage('techno');charge(yt,l.n||l.c);};
