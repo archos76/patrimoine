@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -870,7 +870,7 @@ await db.collection('users').doc(uid).set({patrimoine:clean,snapshots:snaps,upda
 function cleAV(){return (S&&S.cles&&S.cles.av)||''}let nxId=Date.now();const nid=()=>++nxId;
 const INDICES=[{t:'^GSPC',n:'S&P 500'},{t:'^IXIC',n:'Nasdaq'},{t:'^DJI',n:'Dow Jones'},{t:'^FCHI',n:'CAC 40'},{t:'^GDAXI',n:'DAX'},{t:'^STOXX50E',n:'Euro Stoxx 50'},{t:'^FTSE',n:'FTSE 100'},{t:'^N225',n:'Nikkei'},{t:'^HSI',n:'Hang Seng'},{t:'BTC-EUR',n:'Bitcoin'}];
 let idxData={};
-const GAS_DEF="https://script.google.com/macros/s/AKfycbx2csJnXYb0jWSpu4jt4XZbdn-KhseLLr4DFjYSdR1wseMKuxY5zvr6NZqyd4RPJ39nzw/exec";
+const GAS_DEF="https://script.google.com/macros/s/AKfycbyxJr3yJO5g4rIMZhKCj2oPrlHjiFM7cc8wz2vaHOVNQftY15wnepmPizUbuNVDHvfsGA/exec";
 /* L'adresse du script se règle dans Réglages : elle vit dans les données, pas dans le fichier.
    GAS se lit comme avant partout dans le code ; il rend l'adresse choisie, sinon celle d'origine. */
 const GAS_RE=/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/;
