@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -426,6 +426,41 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 /* ===== Analyse technique ===== */
 #page-techno .card{min-width:0}
 #page-techno canvas{display:block;width:100%;touch-action:pan-y}
+#page-techno .at-note{display:flex;flex-wrap:wrap;gap:18px 36px;align-items:center}
+#page-techno .at-jauge{flex:0 0 260px;max-width:100%;margin:0 auto;text-align:center}
+#page-techno .at-jauge canvas{width:260px;margin:0 auto}
+#page-techno .at-noteLib{font-size:14px;font-weight:600;margin-top:2px}
+#page-techno .at-parts{flex:1 1 280px;min-width:0;display:flex;flex-direction:column;gap:10px}
+#page-techno .at-part{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:12.5px;line-height:1.4}
+#page-techno .at-part .p{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#page-techno .at-part .b{grid-column:1/-1;height:6px;border-radius:3px;background:var(--border);overflow:hidden}
+#page-techno .at-part .b i{display:block;height:100%;border-radius:3px}
+#page-techno .at-head{align-items:center}
+#page-techno .at-hl{flex:1 1 280px;min-width:0}
+#page-techno .at-hg{flex:0 0 auto}
+#page-techno .at-cours{font-size:15px;color:var(--text2);margin:2px 0 8px;font-variant-numeric:tabular-nums}
+#page-techno .at-cours b{font-size:22px;font-weight:600;color:var(--text)}
+#page-techno .at-hg{display:flex;gap:18px}
+#page-techno .at-hg>div,#page-techno .at-vg>div{text-align:center}
+#page-techno .at-gl{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:2px}
+#page-techno .at-gs{font-size:11.5px;color:var(--muted);margin-top:3px;min-height:1.3em}
+#page-techno .at-vg{display:flex;justify-content:space-around;gap:12px;flex-wrap:wrap}
+#page-techno .at-cb{position:relative;height:46px;margin:26px 6px 30px}
+#page-techno .at-cb .r{position:absolute;top:18px;height:10px;border-radius:5px;background:var(--border)}
+#page-techno .at-cb .f{position:absolute;top:18px;height:10px;border-radius:5px;background:var(--green);opacity:.35}
+#page-techno .at-cb .m{position:absolute;top:10px;width:2px;height:26px;margin-left:-1px}
+#page-techno .at-cb .l{position:absolute;font-size:11px;white-space:nowrap;transform:translateX(-50%);font-variant-numeric:tabular-nums}
+#page-techno .at-ct{font-size:13px;line-height:1.6}
+#page-techno .at-ct b{font-weight:600}
+#page-techno #at-body:not(.at-synth) .at-hg{display:none}
+#page-techno #at-body.at-synth{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;align-items:start}
+#page-techno #at-body.at-synth>*{min-width:0}
+#page-techno #at-body.at-synth .card{margin:0}
+#page-techno #at-body.at-synth>.at-head,#page-techno #at-body.at-synth>.tk{grid-column:1/-1;margin:0}
+#page-techno #at-body.at-synth #at-cNote,#page-techno #at-body.at-synth #at-cLect,#page-techno #at-body.at-synth #at-tiles,#page-techno #at-body.at-synth .at-cFR,#page-techno #at-body.at-synth .at-help,#page-techno #at-body.at-synth .at-legend{display:none}
+#page-techno #at-body.at-synth .at-g2v{display:contents}
+#page-techno #at-body.at-synth .ct{margin-bottom:10px}
+#page-techno #at-body.at-synth #at-cReg{order:1}#page-techno #at-body.at-synth #at-cPrix{order:2}#page-techno #at-body.at-synth #at-cValo{order:3}#page-techno #at-body.at-synth #at-cCible{order:4}#page-techno #at-body.at-synth #at-cDD{order:5}#page-techno #at-body.at-synth #at-cmpCard{order:6}#page-techno #at-body.at-synth>.tk{order:9}
 #page-techno .at-pick{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 #page-techno .at-pick select,#page-techno .at-pick input{font-family:var(--font);font-size:14px;color:var(--text);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;min-width:0}
 #page-techno .at-pick select{flex:1 1 220px}
@@ -506,10 +541,10 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 <div class="page" id="page-bourse">
 <div id="rstat" class="rs" style="margin:0 0 8px"></div>
 <div class="stabs" id="bourseTabs"></div>
-<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:#e8a33d">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div class="svue" id="bvue-pea" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">PEA — Fortuneo</div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div><div id="pb1"></div><div id="fiche-pea"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist PEA</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('pea')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-pea" style="margin-top:8px"></div></div></div>
-<div class="svue" id="bvue-ctosb" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">CTO — Saxo <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div><div id="pb2"></div><div id="fiche-ctosb"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist CTO Saxo</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('ctosb')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-ctosb" style="margin-top:8px"></div></div></div>
-<div class="svue" id="bvue-ctoibkr" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">CTO — IBKR</div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div><div id="pb3"></div><div id="fiche-ctoibkr"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist CTO IBKR</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('ctoibkr')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-ctoibkr" style="margin-top:8px"></div></div></div>
-<div class="svue" id="bvue-avl" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0">AV — Linxea</div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div><div id="pb4"></div><div id="fiche-avl"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist AV Linxea</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('avl')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-avl" style="margin-top:8px"></div></div></div>
+<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:#e8a33d">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div class="svue" id="bvue-pea" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="pea">PEA</span></div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div><div id="pb1"></div><div id="fiche-pea"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="pea">PEA</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('pea')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-pea" style="margin-top:8px"></div></div></div>
+<div class="svue" id="bvue-ctosb" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="ctosb">CTO</span> <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div><div id="pb2"></div><div id="fiche-ctosb"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="ctosb">CTO</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('ctosb')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-ctosb" style="margin-top:8px"></div></div></div>
+<div class="svue" id="bvue-ctoibkr" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="ctoibkr">CTO 2</span></div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div><div id="pb3"></div><div id="fiche-ctoibkr"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="ctoibkr">CTO 2</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('ctoibkr')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-ctoibkr" style="margin-top:8px"></div></div></div>
+<div class="svue" id="bvue-avl" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="avl">Assurance-vie</span></div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div><div id="pb4"></div><div id="fiche-avl"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="avl">Assurance-vie</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('avl')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-avl" style="margin-top:8px"></div></div></div>
 </div>
 <div class="page" id="page-epargne"><div class="kr" id="ek"></div><div class="g2"><div class="card"><div class="ct" id="ct1"></div><div id="cl1"></div><div id="af1"></div></div><div class="card"><div class="ct" id="ct2"></div><div id="cl2"></div><div id="af2"></div></div><div class="card sf"><div class="ct" id="ct3"></div><div id="cl3"></div><div id="af3"></div></div></div></div>
 <div class="page" id="page-immo">
@@ -576,11 +611,18 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 <div class="page" id="page-reglages">
 <div class="card"><div class="ct">Sauvegarde de secours</div>
 <div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:16px">Tes données sont stockées sur ton compte Google. Ce fichier de sauvegarde te permet de tout récupérer en cas de problème, ou de repartir d'une version antérieure. Pense à en faire une de temps en temps.</div>
-<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-g" onclick="expSauvegarde()">Télécharger une sauvegarde</button><button class="btn btn-o" onclick="document.getElementById('impFile').click()">⤒ Restaurer un fichier</button></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-g" onclick="expSauvegarde()">Télécharger une sauvegarde</button><button class="btn btn-o" onclick="document.getElementById('impFile').click()">⤒ Restaurer un fichier</button><button class="btn btn-o" onclick="document.getElementById('impHist').click()">Ajouter un ancien historique</button></div>
 <input type="file" id="impFile" accept=".json,application/json" style="display:none" onchange="impSauvegarde(this)">
+<input type="file" id="impHist" accept=".json,application/json" style="display:none" onchange="impHistorique(this)">
 <div id="etatSauve" style="font-size:12px;color:var(--text2);margin-top:14px"></div><div id="sauveInfo" style="font-size:12px;margin-top:8px"></div></div><div class="card" style="margin-top:16px"><div class="ct">Prélèvements sur les dividendes</div><div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:14px">Ce que l’État retient au moment où le dividende est versé. Sur un compte-titres c’est 30 % (le prélèvement forfaitaire unique). Dans un PEA ou une assurance-vie, rien n’est retenu tant que tu ne retires pas : laisse 0. Change un taux si ta situation diffère, par exemple pour une retenue étrangère.</div><div id="prelevZone"></div></div>
 <div class="card"><div class="ct">Ménage dans les données</div>
 <div id="menageZone"></div></div>
+<div class="card"><div class="ct">Noms de mes comptes</div>
+<div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:14px">L’application suit quatre comptes de bourse. Donne à chacun le nom que tu veux, par exemple celui de ton courtier : il sera repris partout. Clique sur un nom pour le changer.</div>
+<div class="lr"><span>PEA</span><span class="ed" onclick="edNomCompte('pea')" id="ncAff-pea">—</span></div>
+<div class="lr"><span>Compte-titres en dollars</span><span class="ed" onclick="edNomCompte('ctosb')" id="ncAff-ctosb">—</span></div>
+<div class="lr"><span>Compte-titres en euros</span><span class="ed" onclick="edNomCompte('ctoibkr')" id="ncAff-ctoibkr">—</span></div>
+<div class="lr"><span>Assurance-vie</span><span class="ed" onclick="edNomCompte('avl')" id="ncAff-avl">—</span></div></div>
 <div class="card"><div class="ct">Source des cours</div>
 <div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:14px">Les cours viennent de Yahoo Finance, par l’intermédiaire de ton script Google. Si tu redéploies le script et que Google te donne une nouvelle adresse, colle-la ici : plus besoin de toucher au fichier.</div>
 <div class="lr"><span>Adresse du script Google</span><span class="ed" onclick="edGas()" id="gasAff">—</span></div>
@@ -640,23 +682,29 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="page" id="page-brokers"><div class="kr" id="brokersKpi"></div><div class="card"><div class="ct">Comparateur de brokers</div><div class="tw" id="brokersTable"></div></div><div class="card"><div class="ct">⇋ Impact devises EUR/USD</div><div id="devisesInfo"></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Benchmark personnalisé</div><div style="display:flex;gap:4px" id="benchBtns"></div></div><div class="cb"><canvas id="cBench"></canvas></div></div></div>
 <div class="page" id="page-analyse"><div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Évolution par poste</div><div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button class="pb" onclick="edHistPoste()">Historique</button><span id="envPs" style="display:flex;gap:4px"></span></div></div><div class="cto" id="envCases"></div><div class="cb" style="height:310px"><canvas id="cEnv"></canvas></div><div id="envLeg" style="margin-top:14px"></div></div><div class="card"><div class="ct">Rendement par poche</div><div id="rdtPoches"></div></div></div>
 <div class="page" id="page-techno">
-<div class="card"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Analyse technique</div><div class="at-seg" id="at-seg"><button class="pb" data-p="5">5 ans</button><button class="pb" data-p="10">10 ans</button><button class="pb" data-p="20">20 ans</button><button class="pb on" data-p="all">Tout</button></div></div>
+<div class="card"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Analyse technique</div><div style="display:flex;gap:10px;flex-wrap:wrap"><div class="at-seg" id="at-mode"><button class="pb on" data-m="1">Fiche</button><button class="pb" data-m="0">Détail</button></div><div class="at-seg" id="at-seg"><button class="pb" data-p="5">5 ans</button><button class="pb" data-p="10">10 ans</button><button class="pb" data-p="20">20 ans</button><button class="pb on" data-p="all">Tout</button></div></div></div>
 <div class="at-pick"><select id="at-sel" aria-label="Valeur à analyser"></select><input type="text" id="at-q" placeholder="ou un code Yahoo (ex. RMS.PA)" aria-label="Code Yahoo Finance" autocomplete="off"><button class="pb" id="at-go">Analyser</button><button class="pb" id="at-upd" hidden>Mettre à jour</button></div>
 <div class="tk" id="at-status" role="status"></div></div>
-<div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Vue d’ensemble de mes lignes</div><button class="pb" id="at-vueBtn">Charger toutes mes lignes</button></div><p class="at-help" style="margin:0 0 10px">Les mêmes indicateurs pour chaque ligne, calculés sur tout l’historique chargé (20 ans au plus). Touche une ligne pour ouvrir son analyse.</p><div class="tw" id="at-vue"></div><div class="tk" id="at-vueInfo" style="margin-top:8px;line-height:1.5"></div></div>
 <div id="at-body" style="display:none">
-<div class="at-head"><div class="at-title" id="at-title"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div>
+<div class="at-head"><div class="at-hl"><div class="at-title" id="at-title"></div><div class="at-cours" id="at-cours"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div><div class="at-hg"><div><canvas id="at-cvG1"></canvas><div class="at-gl">Fenêtre d’entrée</div></div><div><canvas id="at-cvG2"></canvas><div class="at-gl">Momentum 1 an</div></div></div></div>
+<div class="card" id="at-cNote"><div class="ct">Fenêtre d’entrée</div>
+<div class="at-note"><div class="at-jauge"><canvas id="at-cvNote"></canvas><div class="at-noteLib" id="at-noteLib"></div></div><div class="at-parts" id="at-parts"></div></div>
+<p class="at-help" style="margin:16px 0 0">Cette note est un calcul mécanique à partir du cours passé et du PER prévisionnel. Elle est haute quand une action en tendance haussière revient sur un prix bas pour elle, et plafonnée quand la tendance est baissière. Elle ne prévoit rien, ignore l’actualité et la santé de l’entreprise, et n’est pas un conseil d’investissement. <span id="at-noteInfo"></span></p></div>
 <div class="kr" id="at-tiles"></div>
-<div class="card"><div class="ct">Lecture rapide</div><ul class="at-read" id="at-read"></ul></div>
-<div class="card"><div class="ct">Cours et paliers</div><p class="at-help">La courbe bleue est le prix de l’action. Les deux moyennes lissent le prix pour montrer la tendance. Les lignes rouges et vertes sont des prix où l’action a souvent buté ou rebondi par le passé.</p><div class="at-ro" id="at-roPrice"></div><canvas id="at-cvPrice"></canvas>
+<div class="g2 at-g2v"><div class="card" id="at-cValo"><div class="ct">Valorisation</div><p class="at-help">Combien le marché paie pour 1 € de bénéfice attendu (PER) et pour 1 € de trésorerie dégagée (P/FCF). Les zones de couleur sont des repères généraux, pas une comparaison avec le secteur.</p>
+<div class="at-vg"><div><canvas id="at-cvPer"></canvas><div class="at-gl">PER prévisionnel</div><div class="at-gs" id="at-perSub"></div></div><div><canvas id="at-cvPfcf"></canvas><div class="at-gl">Prix / trésorerie (P/FCF)</div><div class="at-gs" id="at-pfcfSub"></div></div></div></div>
+<div class="card" id="at-cCible"><div class="ct">Objectif des analystes</div><p class="at-help">Le prix que les analystes financiers visent en moyenne d’ici un an. C’est une opinion, souvent trop optimiste, pas une promesse.</p><div id="at-cible"></div></div></div>
+<div class="card" id="at-cLect"><div class="ct">Lecture rapide</div><ul class="at-read" id="at-read"></ul></div>
+<div class="card" id="at-cPrix"><div class="ct">Cours et paliers</div><p class="at-help">La courbe bleue est le prix de l’action. Les deux moyennes lissent le prix pour montrer la tendance. Les lignes rouges et vertes sont des prix où l’action a souvent buté ou rebondi par le passé.</p><div class="at-ro" id="at-roPrice"></div><canvas id="at-cvPrice"></canvas>
 <div class="at-legend"><span><i style="background:var(--bourse)"></i>Cours</span><span><i style="background:var(--accent)"></i>Moyenne 50 semaines</span><span><i style="background:var(--text)"></i>Moyenne 200 semaines</span><span><i style="background:var(--red)"></i>Palier au-dessus (résistance)</span><span><i style="background:var(--green)"></i>Palier en dessous (support)</span><span><i style="background:var(--muted);height:8px;opacity:.5"></i>Prix les plus échangés</span><span><i style="background:var(--green);width:8px;height:8px;border-radius:50%"></i>Croisement haussier des moyennes</span><span><i style="background:var(--red);width:8px;height:8px;border-radius:50%"></i>Croisement baissier</span><span><i style="background:var(--crypto)"></i>Ton prix de revient</span></div></div>
-<div class="card"><div class="ct">Baisse depuis le plus haut</div><p class="at-help">À 0 %, l’action est à son record. Plus la courbe descend, plus l’action est loin de son dernier sommet.</p><div class="at-ro" id="at-roDD"></div><canvas id="at-cvDD"></canvas></div>
-<div class="card"><div class="ct">Trajectoire de long terme</div><p class="at-help">La ligne claire est la trajectoire moyenne de l’action sur la période. Zone rouge : le prix est haut par rapport à son habitude. Zone verte : il est bas par rapport à son habitude.</p><div class="at-ro" id="at-roReg"></div><canvas id="at-cvReg"></canvas></div>
+<div class="card" id="at-cDD"><div class="ct">Baisse depuis le plus haut</div><p class="at-help">À 0 %, l’action est à son record. Plus la courbe descend, plus l’action est loin de son dernier sommet.</p><div class="at-ro" id="at-roDD"></div><canvas id="at-cvDD"></canvas></div>
+<div class="card" id="at-cReg"><div class="fb" style="margin-bottom:14px;gap:8px"><div class="ct" style="margin:0">Trajectoire de long terme</div><div class="at-pills" id="at-regPills"></div></div><p class="at-help">La ligne claire est la trajectoire moyenne de l’action sur la période. Zone rouge : le prix est haut par rapport à son habitude. Zone verte : il est bas par rapport à son habitude.</p><div class="at-ro" id="at-roReg"></div><canvas id="at-cvReg"></canvas></div>
 <div class="card" id="at-cmpCard" style="display:none"><div class="ct">Comparaison avec le marché</div><p class="at-help">Les deux courbes partent du même point au début de la période. Si la courbe bleue finit au-dessus de l’autre, l’action a fait mieux que son indice. Les dividendes ne sont comptés d’aucun côté.</p><div class="at-ro" id="at-roCmp"></div><canvas id="at-cvCmp"></canvas><div class="at-legend"><span><i style="background:var(--bourse)"></i><span id="at-cmpA"></span></span><span><i style="background:var(--text)"></i><span id="at-cmpB"></span></span></div></div>
-<div class="g2"><div class="card"><div class="ct">Retracement Fibonacci</div><p class="at-help">On mesure la dernière grande hausse, du point bas au point haut. Les lignes indiquent quelle part de cette hausse serait effacée si le prix redescendait jusque-là.</p><div class="at-ro" id="at-roFib"></div><canvas id="at-cvFib"></canvas></div>
+<div class="g2 at-cFR"><div class="card"><div class="ct">Retracement Fibonacci</div><p class="at-help">On mesure la dernière grande hausse, du point bas au point haut. Les lignes indiquent quelle part de cette hausse serait effacée si le prix redescendait jusque-là.</p><div class="at-ro" id="at-roFib"></div><canvas id="at-cvFib"></canvas></div>
 <div class="card"><div class="ct">Élan récent (RSI)</div><p class="at-help">Le RSI va de 0 à 100. Au-dessus de 70, l’action a beaucoup monté récemment. En dessous de 30, elle a beaucoup baissé récemment.</p><div class="at-ro" id="at-roRsi"></div><canvas id="at-cvRsi"></canvas></div></div>
 <div class="tk" style="margin:4px 2px 24px;line-height:1.55">Lecture du passé du cours, à titre pédagogique. Ce n’est pas un conseil en investissement. Les performances passées ne préjugent pas des performances futures.</div>
-</div></div>
+</div>
+<div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Vue d’ensemble de mes lignes</div><button class="pb" id="at-vueBtn">Charger toutes mes lignes</button></div><p class="at-help" style="margin:0 0 10px">Les mêmes indicateurs pour chaque ligne, calculés sur tout l’historique chargé (20 ans au plus). Touche une ligne pour ouvrir son analyse.</p><div class="tw" id="at-vue"></div><div class="tk" id="at-vueInfo" style="margin-top:8px;line-height:1.5"></div></div></div>
 <div class="page" id="page-resume"><div class="kr" id="resumeKpi"></div><div class="card"><div class="ct">Heatmap portefeuille</div><div id="heatmap" class="tw" style="width:100%"></div></div><div class="card"><div class="ct">Résumé du mois</div><div id="resumeDetail"></div></div></div>
 <div class="page" id="page-simulator"><div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Où j'en serai</div><div style="display:flex;gap:4px" id="projAgeBtns"></div></div><div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;line-height:1.6">Ton patrimoine d'aujourd'hui, prolongé avec ce que tu rembourses chaque mois, ce que tes biens rapportent et ce que tu épargnes.</div><div class="kr" id="projKpi" style="margin-bottom:14px"></div><div class="cb"><canvas id="cProjPat"></canvas></div><div id="projReglages" style="margin-top:16px"></div><div id="projNote" style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6"></div></div><div id="simContent"></div></div>
 </main></div></div>
@@ -754,20 +802,49 @@ if(hiddenMode){document.getElementById('dmBtn').textContent='◍'}
 firebase.initializeApp({apiKey:"AIzaSyB1ngpW9j09gV2FrW6leTN5kf3JVi9j6-g",authDomain:"patrimoine-1e959.firebaseapp.com",projectId:"patrimoine-1e959",storageBucket:"patrimoine-1e959.firebasestorage.app",messagingSenderId:"77172547528",appId:"1:77172547528:web:2f15c6cdcda20a85fcaafd"});
 const auth=firebase.auth(),db=firebase.firestore();let uid=null;
 window.doLogin=async()=>{try{await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())}catch(e){document.getElementById('login-err').textContent=e.message}};
-auth.onAuthStateChanged(async u=>{if(u){uid=u.uid;document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';document.getElementById('userBar').innerHTML=(u.photoURL?'<img src="'+u.photoURL+'">':'')+'<span>'+(u.displayName||'')+'</span><span class="logout" onclick="auth.signOut()">Déco</span>';await loadData();initApp()}else{uid=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none'}});
+auth.onAuthStateChanged(async u=>{if(u){uid=u.uid;document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';document.getElementById('userBar').innerHTML=(u.photoURL?'<img src="'+u.photoURL+'">':'')+'<span>'+(u.displayName||'')+'</span><span class="logout" onclick="auth.signOut()">Déco</span>';await loadData();majNomsComptes();initApp()}else{uid=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none'}});
 
 const SECTORS={"EPA:AI":"Chimie","EPA:DCAM":"ETF","EPA:PUST":"ETF","EPA:GTT":"Énergie","EPA:DG":"Industrie","EPA:EL":"Santé","EPA:SU":"Industrie","EPA:ALMIB":"Biotech","GOOGL":"Tech","AMBA":"Tech","NET":"Tech","DXCM":"Santé","ON":"Tech","NU":"Finance","RKLB":"Aérospatial","TOST":"Tech","AMZN":"Tech","SNOW":"Tech","SOFI":"Finance","SYM":"Tech","TER":"Tech","TTD":"Tech","TMDX":"Santé","CELH":"Conso","PATH":"Tech","VRT":"Industrie","ZS":"Tech","EPA:BNKE":"Finance","LON:HNSC":"ETF","XDGU":"Obligations","CS.PA":"Finance","SAN.PA":"Santé","TTE.PA":"Énergie","HO.PA":"Aérospatial","EPA:CS":"Finance","EPA:SAN":"Santé","EPA:TTE":"Énergie","EPA:HO":"Aérospatial"};
 /* Secteurs : dix-sept teintes espacees mais de meme intensite, assez
    foncees pour tenir sur le papier creme et assez claires pour le fond sombre. */
 const SC={"Tech":"#4e7fc4","ETF":"#b5781f","Santé":"#8c6bbf","Finance":"#a8862a","Industrie":"#5d7fa8","Énergie":"#c2544e","Chimie":"#2f9b6e","Biotech":"#9a63ab","Aérospatial":"#3f9fb0","Conso":"#c2714a","Obligations":"#7a8597","Immobilier":"#a8703f","Luxe":"#b05a85","Télécom":"#4a9aa8","Matériaux":"#7d914f","Services":"#8878ad","Autre":"#6b7585"};
-const BDEF={revenus:[{id:'r1',nom:'Salaire',montant:2500}],categories:[{id:'cat1',nom:'Investissements',postes:[{id:'p1',nom:'Actions',montant:200},{id:'p2',nom:'Assurance vie',montant:200}]},{id:'cat2',nom:'Logement',postes:[{id:'p3',nom:'Loyer',montant:1498},{id:'p4',nom:'Charges',montant:120}]},{id:'cat3',nom:'Vie quotidienne',postes:[{id:'p5',nom:'Courses',montant:300},{id:'p6',nom:'Restaurants',montant:100}]},{id:'cat4',nom:'Abonnements',postes:[{id:'p7',nom:'Internet',montant:50},{id:'p8',nom:'Sport',montant:32}]}]};
+const BDEF={revenus:[{id:'r1',nom:'Salaire',montant:2200}],categories:[{id:'cat1',nom:'Investissements',postes:[{id:'p1',nom:'Actions',montant:200},{id:'p2',nom:'Assurance vie',montant:200}]},{id:'cat2',nom:'Logement',postes:[{id:'p3',nom:'Loyer',montant:800},{id:'p4',nom:'Charges',montant:120}]},{id:'cat3',nom:'Vie quotidienne',postes:[{id:'p5',nom:'Courses',montant:300},{id:'p6',nom:'Restaurants',montant:100}]},{id:'cat4',nom:'Abonnements',postes:[{id:'p7',nom:'Internet',montant:50},{id:'p8',nom:'Sport',montant:32}]}]};
 
-const D={comptes:[{id:'c1',nom:"Compte courant",banque:"BP",montant:0},{id:'c2',nom:"Compte commun",banque:"BP",montant:44},{id:'c3',nom:"Compte courant",banque:"Fortuneo",montant:3360}],epLibre:[{id:'el1',nom:"LDDS",banque:"BP",montant:30},{id:'el2',nom:"Livret A",banque:"Fortuneo",montant:14260}],epBloq:[{id:'eb1',nom:"PEE Veolia",banque:"Natixis",montant:10142},{id:'eb2',nom:"AV Linxea",banque:"Linxea",montant:19637}],immo:[{id:'i1',nom:"La Houssaye",type:"RP",prixAchat:109500,valeur:125000,sci:false,partsPct:100}],dettes:[{id:'d1',nom:"PTZ PAC",type:"Immo",banque:"BP",emprunte:12691,restant:9650,taux:0,dureeMois:84,fin:"Mars 2032"},{id:'d2',nom:"Prêt RP",type:"Immo",banque:"BP",emprunte:124000,restant:121265,taux:1.5,dureeMois:300,fin:"Sep 2050"}],crypto:[{id:'cr1',nom:"Bitcoin",symbol:"BTC",qte:.01086,prix:0,pru:0,var:0,montant:662},{id:'cr2',nom:"Ethereum",symbol:"ETH",qte:.17304,prix:0,pru:0,var:0,montant:311},{id:'cr3',nom:"Near",symbol:"NEAR",qte:118,prix:0,pru:0,var:0,montant:119},{id:'cr4',nom:"Solana",symbol:"SOL",qte:3.778,prix:0,pru:0,var:0,montant:269},{id:'cr5',nom:"Aster",symbol:"ASTER",qte:59.94,prix:0,pru:0,var:0,montant:36},{id:'cr6',nom:"USDC",symbol:"USDC",qte:.86,prix:1,pru:1,var:0,montant:1}],pf:{pea:{esp:557,ver:16174,cur:'EUR',l:[{id:1,c:"EPA:AI",n:"Air Liquide",co:168,p:10,pr:167.67,div:3.7,var:0},{id:2,c:"EPA:DCAM",n:"Amundi World",co:5.46,p:1450,pr:5.285,div:0,var:0},{id:3,c:"EPA:PUST",n:"Amundi Nasdaq",co:86,p:25,pr:85.2,div:0,var:0},{id:4,c:"EPA:GTT",n:"GTT",co:200,p:8,pr:154.53,div:8.94,var:0},{id:5,c:"EPA:DG",n:"Vinci",co:130,p:9,pr:120.09,div:4.75,var:0},{id:6,c:"EPA:EL",n:"EssilorLuxottica",co:209,p:5,pr:266.94,div:3.95,var:0},{id:7,c:"EPA:SU",n:"Schneider",co:255,p:5,pr:244.45,div:3.9,var:0},{id:8,c:"EPA:ALMIB",n:"Amoeba",co:1,p:100,pr:1.1,div:0,var:0}]},ctosb:{esp:150,ver:11014,cur:'USD',l:[{id:101,c:"GOOGL",n:"Alphabet",co:267,usd:309,p:6,pr:218.28,div:0,var:0},{id:102,c:"AMBA",n:"Ambarella",co:47,usd:54,p:9,pr:64.95,div:0,var:0},{id:103,c:"NET",n:"Cloudflare",co:184,usd:213,p:3,pr:188,div:0,var:0},{id:104,c:"DXCM",n:"DexCom",co:57,usd:66,p:8,pr:70.47,div:0,var:0},{id:105,c:"ON",n:"ON Semi",co:51,usd:59,p:8,pr:62.96,div:0,var:0},{id:106,c:"NU",n:"Nu Holdings",co:13,usd:14,p:35,pr:16.54,div:0,var:0},{id:107,c:"RKLB",n:"Rocket Lab",co:62,usd:72,p:6,pr:86.58,div:0,var:0},{id:108,c:"TOST",n:"Toast",co:25,usd:29,p:20,pr:26.57,div:0,var:0},{id:109,c:"AMZN",n:"Amazon",co:184,usd:213,p:6,pr:220.86,div:0,var:0},{id:110,c:"SNOW",n:"Snowflake",co:155,usd:179,p:3,pr:207,div:0,var:0},{id:111,c:"SOFI",n:"SoFi",co:16,usd:19,p:21,pr:26.34,div:0,var:0},{id:112,c:"SYM",n:"Symbotic",co:44,usd:51,p:8,pr:68.01,div:0,var:0},{id:113,c:"TER",n:"Teradyne",co:261,usd:302,p:3,pr:229,div:0,var:0},{id:114,c:"TTD",n:"Trade Desk",co:24,usd:27,p:16,pr:36.57,div:0,var:0},{id:115,c:"TMDX",n:"TransMedics",co:112,usd:129,p:4,pr:138,div:0,var:0},{id:116,c:"CELH",n:"Celsius",co:40,usd:46,p:11,pr:49.43,div:0,var:0},{id:117,c:"PATH",n:"UiPath",co:11,usd:12,p:36,pr:15.57,div:0,var:0},{id:118,c:"VRT",n:"Vertiv",co:232,usd:268,p:3,pr:173,div:0,var:0},{id:119,c:"ZS",n:"Zscaler",co:133,usd:154,p:3,pr:217,div:0,var:0}]},ctoibkr:{esp:40,ver:1500,cur:'EUR',l:[{id:201,c:"EPA:BNKE",n:"Banks ETF",co:303,p:1.42,pr:323,div:0,var:0},{id:202,c:"LON:HNSC",n:"Nasdaq Semi",co:24,p:25,pr:24.19,div:0,var:0},{id:203,c:"XDGU",n:"USD Bond",co:57,p:8,pr:57.51,div:0,var:0}]},avl:{esp:0,ver:0,cur:'EUR',l:[]}},versMensuels:[{mois:"Jan 26",bourse:27112,versement:0},{mois:"Fév 26",bourse:29223,versement:0},{mois:"Mar 26",bourse:29564,versement:0}],perfData:[{date:"Juin 25",portf:0,sp:0},{date:"Juil 25",portf:19.4,sp:null},{date:"Août 25",portf:105.3,sp:null},{date:"Sep 25",portf:113.1,sp:null},{date:"Oct 25",portf:424.7,sp:null},{date:"Nov 25",portf:500.7,sp:null},{date:"Déc 25",portf:532.6,sp:null},{date:"Jan 26",portf:530.5,sp:null},{date:"Fév 26",portf:579.6,sp:null},{date:"Mar 26",portf:587.5,sp:null}],objectifs:[{id:'o1',nom:"Épargne de précaution",cible:15000,type:"epargne",actuel:0},{id:'o2',nom:"FIRE Number",cible:625000,type:"net",actuel:0},{id:'o3',nom:"Revenus passifs",cible:1000,type:"custom",actuel:0}],budget:null};
+const D={comptes:[{id:'c1',nom:"Compte courant",banque:"Ma banque",montant:1500}],epLibre:[{id:'el1',nom:"Livret A",banque:"Ma banque",montant:5000}],epBloq:[],immo:[{id:'i1',nom:"Appartement (exemple)",type:"RP",prixAchat:200000,valeur:210000,sci:false,partsPct:100}],dettes:[{id:'d1',nom:"Prêt immobilier (exemple)",type:"Immo",banque:"Ma banque",emprunte:180000,restant:165000,taux:2,dureeMois:300,fin:"Jan 2048"}],crypto:[{id:'cr1',nom:"Bitcoin",symbol:"BTC",qte:.01,prix:0,pru:0,var:0,montant:600}],pf:{pea:{esp:100,ver:3000,cur:'EUR',l:[{id:1,c:"EPA:AI",n:"Air Liquide",co:170,p:5,pr:160,div:3.7,var:0},{id:2,c:"EPA:DCAM",n:"Amundi World",co:5.5,p:300,pr:5,div:0,var:0},{id:3,c:"EPA:SU",n:"Schneider",co:250,p:2,pr:230,div:3.9,var:0}]},ctosb:{esp:50,ver:1500,cur:'USD',l:[{id:101,c:"GOOGL",n:"Alphabet",co:270,usd:310,p:3,pr:200,div:0,var:0},{id:102,c:"AMZN",n:"Amazon",co:185,usd:215,p:3,pr:190,div:0,var:0}]},ctoibkr:{esp:0,ver:0,cur:'EUR',l:[]},avl:{esp:0,ver:0,cur:'EUR',l:[]}},versMensuels:[],perfData:[],objectifs:[{id:'o1',nom:"Épargne de précaution",cible:10000,type:"epargne",actuel:0},{id:'o2',nom:"Indépendance financière",cible:500000,type:"net",actuel:0}],budget:null};
 
 let S,snaps=[];
-const SEED=[{date:"Juin 25",immobilier:125000,comptes:2665,epargne:9178,bourse:4300,crypto:500,dettes:134708,brut:141643,net:6935},{date:"Juil 25",immobilier:125000,comptes:8760,epargne:9446,bourse:5134,crypto:521,dettes:134708,brut:148861,net:14153},{date:"Août 25",immobilier:125000,comptes:2460,epargne:12818,bourse:8826,crypto:684,dettes:134575,brut:149788,net:15213},{date:"Sep 25",immobilier:125000,comptes:2042,epargne:11440,bourse:9164,crypto:756,dettes:134444,brut:148402,net:13958},{date:"Oct 25",immobilier:125000,comptes:31654,epargne:42869,bourse:22562,crypto:730,dettes:134311,brut:222815,net:88504},{date:"Nov 25",immobilier:125000,comptes:7539,epargne:61970,bourse:25829,crypto:2249,dettes:134179,brut:222587,net:88408},{date:"Déc 25",immobilier:125000,comptes:2520,epargne:59927,bourse:27200,crypto:1791,dettes:132098,brut:216438,net:84340},{date:"Jan 26",immobilier:125000,comptes:3925,epargne:51101,bourse:27112,crypto:1730,dettes:131702,brut:208868,net:77166},{date:"Fév 26",immobilier:125000,comptes:19651,epargne:28844,bourse:29223,crypto:1648,dettes:131309,brut:204365,net:73056},{date:"Mar 26",immobilier:125000,comptes:3404,epargne:44069,bourse:29564,crypto:1324,dettes:130915,brut:203361,net:72446}];
+const SEED=[];/* plus d'historique dans le fichier : celui de chacun vit dans ses données */
 
-async function loadData(){try{const doc=await db.collection('users').doc(uid).get();if(doc.exists){S=doc.data().patrimoine||JSON.parse(JSON.stringify(D));snaps=doc.data().snapshots||[]}else{let ls=localStorage.getItem('patrimoine_data');if(ls){S=JSON.parse(ls);snaps=JSON.parse(localStorage.getItem('patrimoine_snaps')||'[]');await saveData()}else{S=JSON.parse(JSON.stringify(D));snaps=[]}}if(!S.versMensuels)S.versMensuels=D.versMensuels.map(x=>({...x}));if(!S.objectifs)S.objectifs=D.objectifs.map(x=>({...x}));S.objectifs.forEach(o=>{if(o.actuel===undefined)o.actuel=0});if(!S.budget)S.budget=JSON.parse(JSON.stringify(BDEF));if(!S.pf.avl)S.pf.avl={esp:0,ver:0,cur:'EUR',l:[]};if(!S.simParams)S.simParams={age:30,dep:25000,rend:7,ep:500};if(!S.notes)S.notes={};if(!S.histJour)S.histJour=[];if(!S.bourseGoals)S.bourseGoals=[];if(!S.watchlist)S.watchlist=[];migreWatchlist();if(!S.revSources)S.revSources=[];if(!S.etfGoals)S.etfGoals={pea:60,ctosb:0,ctoibkr:0};if(!S.benchCours)S.benchCours={};if(!S.projets)S.projets=[];if(!S.divMois)S.divMois={};if(!S.fiscParams)S.fiscParams={tmi:30};if(!S.allocCible)S.allocCible={...ALLOC_DEF};['bloq','immo'].forEach(k=>delete S.allocCible[k])}catch(e){S=JSON.parse(JSON.stringify(D));snaps=[]}}
+/* ===== NOMS DES COMPTES =====
+   Les quatre comptes de bourse portent le nom que leur donne l'utilisateur (Réglages).
+   Sans réglage, ils prennent un nom neutre. */
+const NOMS_DEF={pea:'PEA',ctosb:'CTO',ctoibkr:'CTO 2',avl:'Assurance-vie'};
+function nomCpt(pk){try{const n=S&&S.nomsComptes&&S.nomsComptes[pk];if(n)return n}catch(e){}return NOMS_DEF[pk]||pk}
+/* Version courte, pour les petits boutons */
+function nomCourt(pk){const n=nomCpt(pk);if(n.length<=6)return n;const m=n.split(' ');return m.length<2?n:(m[0]==='CTO'?m.slice(1).join(' '):m[0])}
+/* Les listes créées au chargement de la page et les titres fixes reprennent les noms à jour */
+function majNomsComptes(){
+  const pks=['pea','ctosb','ctoibkr','avl'];
+  try{
+    pks.forEach(k=>{PK_NOMS[k]=nomCpt(k);PFN[k]=nomCpt(k)});
+    BVUES.forEach(v=>{if(v.pf){v.l=nomCpt(v.pf);v.c=nomCourt(v.pf)}});
+    COMPTES_DIV.forEach(a=>{a[1]=nomCpt(a[0])});
+    perfLines.forEach(p=>{if(pks.indexOf(p.k)>=0)p.l=nomCpt(p.k)});
+  }catch(e){}
+  document.querySelectorAll('[data-nc]').forEach(e=>{e.textContent=nomCpt(e.dataset.nc)});
+  pks.forEach(k=>{const z=document.getElementById('ncAff-'+k);if(z)z.textContent=nomCpt(k)});
+}
+window.edNomCompte=function(pk){
+  if(!S.nomsComptes)S.nomsComptes={};
+  const v=prompt('Nom de ce compte\n\nIl sera affiché partout dans l’application.\nLaisse vide pour revenir au nom par défaut.',nomCpt(pk));
+  if(v===null)return;
+  const n=v.replace(/[<>&"'`\\]/g,'').trim().slice(0,24);
+  if(n)S.nomsComptes[pk]=n;else delete S.nomsComptes[pk];
+  majNomsComptes();autoSave();R(true);
+};
+async function loadData(){try{const doc=await db.collection('users').doc(uid).get();if(doc.exists){S=doc.data().patrimoine||JSON.parse(JSON.stringify(D));snaps=doc.data().snapshots||[]}else{let ls=localStorage.getItem('patrimoine_data');if(ls){S=JSON.parse(ls);snaps=JSON.parse(localStorage.getItem('patrimoine_snaps')||'[]');await saveData()}else{S=JSON.parse(JSON.stringify(D));snaps=[]}}/* Un compte créé avant ce réglage garde les noms qu'il avait */
+if(doc.exists&&doc.data().patrimoine&&!S.nomsComptes)S.nomsComptes={pea:'PEA',ctosb:'CTO Sa'+'xo',ctoibkr:'CTO IB'+'KR',avl:'AV Lin'+'xea'};
+if(!S.versMensuels)S.versMensuels=D.versMensuels.map(x=>({...x}));if(!S.objectifs)S.objectifs=D.objectifs.map(x=>({...x}));S.objectifs.forEach(o=>{if(o.actuel===undefined)o.actuel=0});if(!S.budget)S.budget=JSON.parse(JSON.stringify(BDEF));if(!S.pf.avl)S.pf.avl={esp:0,ver:0,cur:'EUR',l:[]};if(!S.simParams)S.simParams={age:30,dep:25000,rend:7,ep:500};if(!S.notes)S.notes={};if(!S.histJour)S.histJour=[];if(!S.bourseGoals)S.bourseGoals=[];if(!S.watchlist)S.watchlist=[];migreWatchlist();if(!S.revSources)S.revSources=[];if(!S.etfGoals)S.etfGoals={pea:60,ctosb:0,ctoibkr:0};if(!S.benchCours)S.benchCours={};if(!S.projets)S.projets=[];if(!S.divMois)S.divMois={};if(!S.fiscParams)S.fiscParams={tmi:30};if(!S.allocCible)S.allocCible={...ALLOC_DEF};['bloq','immo'].forEach(k=>delete S.allocCible[k])}catch(e){chargeKO=true;S=JSON.parse(JSON.stringify(D));snaps=[];try{document.body.insertAdjacentHTML('afterbegin','<div style="background:var(--red);color:#fff;padding:10px 16px;font-size:13px;text-align:center;line-height:1.5">Tes données n’ont pas pu être chargées : ce que tu vois est un exemple. Rien ne sera enregistré. Recharge la page.</div>')}catch(e2){}}}
 /* Les lignes de watchlist d avant les comptes rejoignent le PEA. Celles
    deja rattachees a un compte gardent le leur. */
 function migreWatchlist(){
@@ -777,7 +854,8 @@ function migreWatchlist(){
   return n;
 }
 let sT=null;function autoSave(){if(sT)clearTimeout(sT);sT=setTimeout(saveData,2000)}
-async function saveData(){if(!uid)return;try{
+let chargeKO=false;
+async function saveData(){if(!uid||chargeKO)return;try{
 /* Nettoyer les données avant sauvegarde */
 const clean=JSON.parse(JSON.stringify(S));
 /* Supprimer les champs temporaires des actions (spark, var) */
@@ -921,10 +999,10 @@ let immoVue=(function(){try{return localStorage.getItem('immoVue')||'mensuel'}ca
    onglet par compte. Les comptes vides ne prennent pas de place. */
 const BVUES=[{k:'ensemble',l:'Ensemble',c:'Tout'},
              {k:'dividendes',l:'Dividendes',c:'Div.'},
-             {k:'pea',l:'PEA',c:'PEA',pf:'pea'},
-             {k:'ctosb',l:'CTO Saxo',c:'Saxo',pf:'ctosb'},
-             {k:'avl',l:'AV Linxea',c:'AV',pf:'avl'},
-             {k:'ctoibkr',l:'CTO IBKR',c:'IBKR',pf:'ctoibkr'}];
+             {k:'pea',l:nomCpt('pea'),c:'PEA',pf:'pea'},
+             {k:'ctosb',l:nomCpt('ctosb'),c:'CTO',pf:'ctosb'},
+             {k:'avl',l:nomCpt('avl'),c:'AV',pf:'avl'},
+             {k:'ctoibkr',l:nomCpt('ctoibkr'),c:'CTO 2',pf:'ctoibkr'}];
 /* Tous les comptes ont leur onglet, meme vides : c est dans l onglet du
    compte que vit le bouton pour y ajouter une premiere ligne. En cacher un
    le rendrait inatteignable. Le compteur dit lequel est vide. */
@@ -1751,8 +1829,8 @@ function versementsEgaux(l){
 /* Ce qui tombe un mois donné (1 à 12), quelle que soit l année : une
    fréquence ne dépend pas de l année. Sert au calendrier à venir comme
    au recoupement sur un mois déjà passé. */
-const COMPTES_DIV=[['pea','PEA'],['ctosb','CTO Saxo'],
-                   ['ctoibkr','CTO IBKR'],['avl','AV Linxea']];
+const COMPTES_DIV=[['pea',nomCpt('pea')],['ctosb',nomCpt('ctosb')],
+                   ['ctoibkr',nomCpt('ctoibkr')],['avl',nomCpt('avl')]];
 /* ===== CE QUI ARRIVE VRAIMENT SUR LE COMPTE =====
    Un dividende annonce est un dividende brut. Sur un compte-titres l Etat
    prend sa part tout de suite (30 % au prelevement forfaitaire unique).
@@ -2419,7 +2497,7 @@ const avScpi=[...S.epLibre,...S.epBloq].filter(x=>/linxea|assurance.?vie|^av /i.
 snaps.push({date:lb,ts:Date.now(),immobilier:t.im,comptes:t.co,epargne:t.ep,bourse:t.bo,crypto:t.cr,dettes:t.de,brut:t.br,net:t.ne,
   pea:t.p.v,ctosb:t.s.v,ctoibkr:t.i.v,avl:t.a.v,avScpi:avScpi,pee:pee,immoNet:t.im-t.de});autoSave();const b=document.getElementById('sbtn');b.classList.add('btn-ok');b.textContent='✓';setTimeout(()=>{b.classList.remove('btn-ok');b.textContent='◉'},1500);R(true)};
 window.dS=ts=>{snaps=snaps.filter(s=>s.ts!==ts);autoSave();R(true)};
-window.doReset=async()=>{S=JSON.parse(JSON.stringify(D));snaps=[];await saveData();R(true)};
+window.doReset=async()=>{S=JSON.parse(JSON.stringify(D));snaps=[];majNomsComptes();await saveData();R(true)};
 /* Un point d'historique peut venir des données de départ ("Juin 25") ou d'une
    sauvegarde manuelle ("20 avr. 2026"). On en déduit le mois sous forme AAAAMM. */
 const MOIS_FR={jan:1,fev:2,mar:3,avr:4,mai:5,juin:6,juil:7,aou:8,sep:9,oct:10,nov:11,dec:12};
@@ -2472,7 +2550,7 @@ document.getElementById('tabs').onclick=e=>{const t=e.target.closest('.tab');if(
 
 
 let _cN,_cP,_cPf,_cS,cPr=12,immoPr=12,netPr=12,cryPr=12,envPr=12,pieMode='brut',netMode='net',netVue='courbe',divVue='mois',divType='a';
-const perfLines=[{k:'bourse',l:'Global',c:CV('--c1'),on:true},{k:'pea',l:'PEA',c:CV('--c1'),on:false},{k:'ctosb',l:'CTO Saxo',c:CV('--c3'),on:false},{k:'ctoibkr',l:'CTO IBKR',c:CV('--c4'),on:false},{k:'avl',l:'AV Linxea',c:CV('--p6'),on:false},{k:'sp',l:'S&P 500',c:CV('--muted'),on:true}];
+const perfLines=[{k:'bourse',l:'Global',c:CV('--c1'),on:true},{k:'pea',l:nomCpt('pea'),c:CV('--c1'),on:false},{k:'ctosb',l:nomCpt('ctosb'),c:CV('--c3'),on:false},{k:'ctoibkr',l:nomCpt('ctoibkr'),c:CV('--c4'),on:false},{k:'avl',l:nomCpt('avl'),c:CV('--p6'),on:false},{k:'sp',l:'S&P 500',c:CV('--muted'),on:true}];
 window.tPL=i=>{perfLines[i].on=!perfLines[i].on;R(true)};
 window.sP=m=>{cPr=m;R(true)};window.setPieMode=m=>{pieMode=m;R(true)};window.setNetMode=m=>{netMode=m;R(true)};window.setNetVue=v=>{netVue=v;R(true)};window.tNetCls=k=>{if(!S.netSel)S.netSel={};S.netSel[k]=!S.netSel[k];autoSave();R(true)};window.sIP=m=>{immoPr=m;R(true)};window.sNP=m=>{netPr=m;R(true)};window.sCP=m=>{cryPr=m;R(true)};window.sEnvP=m=>{envPr=m;R(true)};window.edHistPoste=function(){
   const c=parseInt(prompt('Quel poste veux-tu renseigner ?\n\n1. PEE\n2. Assurance-vie (part SCPI et fonds euros)','1'));
@@ -2527,8 +2605,8 @@ window.addBourseGoal=function(){
       ['etf_pct','% ETF dans le portefeuille'],['valeur','Valeur du portefeuille (€)'],
       ['dividendes','Dividendes annuels (€)'],['nb_positions','Nombre de positions']]},
     {k:'pk',lib:'Sur quel compte',type:'choix',val:'all',options:[
-      ['all','Tous les comptes'],['pea','PEA'],['ctosb','CTO Saxo'],
-      ['ctoibkr','CTO IBKR'],['avl','AV Linxea']]},
+      ['all','Tous les comptes'],['pea',nomCpt('pea')],['ctosb',nomCpt('ctosb')],
+      ['ctoibkr',nomCpt('ctoibkr')],['avl',nomCpt('avl')]]},
     {k:'cible',lib:'Cible à atteindre',type:'nombre'},
     {k:'nom',lib:'Intitulé',opt:true,ph:'pour t y retrouver'},
     {k:'echeance',lib:'Échéance',opt:true,ph:'Déc 27'}
@@ -2544,7 +2622,7 @@ window.delBourseGoal=function(i){S.bourseGoals.splice(i,1);autoSave();R(true)};
 
 /* Watchlist */
 /* Les comptes, pour la watchlist. Une ligne sans compte reste « non rattachée ». */
-const PK_NOMS={pea:'PEA',ctosb:'CTO Saxo',ctoibkr:'CTO IBKR',avl:'AV Linxea'};
+const PK_NOMS={pea:nomCpt('pea'),ctosb:nomCpt('ctosb'),ctoibkr:nomCpt('ctoibkr'),avl:nomCpt('avl')};
 const PK_LISTE=['pea','ctosb','avl','ctoibkr'];
 function nomCompte(pk){return PK_NOMS[pk]||'non rattachée'}
 window.addWatch=function(pk){
@@ -3073,7 +3151,7 @@ function nomTitre(y){
   if(w)return{n:w.nom,q:0,src:'Watchlist'};
   return{n:y,q:0,src:''};
 }
-const PFN={pea:'PEA',ctosb:'CTO Saxo',ctoibkr:'CTO IBKR',avl:'AV Linxea'};
+const PFN={pea:nomCpt('pea'),ctosb:nomCpt('ctosb'),ctoibkr:nomCpt('ctoibkr'),avl:nomCpt('avl')};
 /* Lien vers les actualités du titre */
 function lienNews(y){
   return 'https://finance.yahoo.com/quote/'+encodeURIComponent(y);
@@ -3657,6 +3735,30 @@ window.expSauvegarde=function(){
     try{majEtatSauve()}catch(e){}
   }catch(e){infoSauve('Échec de la sauvegarde : '+e.message,'var(--red)')}
 };
+/* Ajoute des relevés mensuels anciens à l'historique, sans toucher au reste.
+   Les mois déjà présents sont laissés tels quels : on peut relancer l'import sans risque. */
+window.impHistorique=function(input){
+  const f=input.files&&input.files[0];input.value='';
+  if(!f)return;
+  const r=new FileReader();
+  r.onload=function(){
+    let p;
+    try{p=JSON.parse(r.result)}catch(e){return infoSauve('Fichier illisible.','var(--red)')}
+    if(!p||p.format!=='patrimoine-historique'||!Array.isArray(p.snapshots))return infoSauve('Ce fichier n\'est pas un historique de cette application.','var(--red)');
+    const deja={};snaps.forEach(s=>{deja[s.date]=1});
+    const neufs=p.snapshots.filter(s=>s&&s.date&&!deja[s.date]&&isFinite(s.net));
+    if(!neufs.length)return infoSauve('Rien à ajouter : ces mois sont déjà dans ton historique.','var(--muted)');
+    const mn=["Jan","Fév","Mar","Avr","Mai","Juin","Juil","Août","Sep","Oct","Nov","Déc"];
+    const rang=s=>{const a=String(s.date).split(' '),m=mn.indexOf(a[0]),y=parseInt(a[1],10);return m<0||!isFinite(y)?null:y*12+m};
+    let tous=neufs.concat(snaps);
+    if(tous.every(s=>rang(s)!==null))tous=tous.map((s,i)=>[s,i]).sort((a,b)=>(rang(a[0])-rang(b[0]))||(a[1]-b[1])).map(x=>x[0]);
+    snaps=tous;saveData();
+    infoSauve('✓ '+neufs.length+' mois ajoutés à ton historique.','var(--green)');
+    R(true);
+  };
+  r.onerror=function(){infoSauve('Impossible de lire le fichier.','var(--red)')};
+  r.readAsText(f);
+};
 window.impSauvegarde=function(input){
   const f=input.files&&input.files[0];input.value='';
   if(!f)return;
@@ -3667,7 +3769,7 @@ window.impSauvegarde=function(input){
     if(!p||!p.patrimoine||p.format!=='patrimoine')return infoSauve('Ce fichier ne provient pas de cette application.','var(--red)');
     const d=p.date?new Date(p.date).toLocaleString('fr-FR'):'date inconnue';
     if(!confirm('Restaurer la sauvegarde du '+d+' ?\n\nToutes tes données actuelles seront remplacées.'))return;
-    S=p.patrimoine;snaps=p.snapshots||[];
+    S=p.patrimoine;snaps=p.snapshots||[];majNomsComptes();
     saveData();
     infoSauve('✓ Sauvegarde du '+d+' restaurée.','var(--green)');
     R(true);
@@ -4465,7 +4567,7 @@ try{(window.atSignaux?window.atSignaux():[]).forEach(a=>alertes.push(a))}catch(e
   if(parts.length!==3)return;
   const target=new Date(parseInt(parts[2]),parseInt(parts[1])-1,parseInt(parts[0]));
   const jours=Math.ceil((target-new Date())/(1000*60*60*24));
-  const pkN={pea:'PEA',ctosb:'CTO Saxo',ctoibkr:'CTO IBKR',avl:'AV Linxea',all:'Global'};
+  const pkN={pea:nomCpt('pea'),ctosb:nomCpt('ctosb'),ctoibkr:nomCpt('ctoibkr'),avl:nomCpt('avl'),all:'Global'};
   if(jours<0)alertes.push({icon:'◷',txt:'Objectif <b>'+(pkN[g.pk]||g.pk)+'</b> : échéance dépassée ('+g.echeance+')',color:'var(--red)'});
   else if(jours<=30)alertes.push({icon:'◷',txt:'Objectif <b>'+(pkN[g.pk]||g.pk)+'</b> : '+jours+' jours restants',color:'var(--orange)'});
 });
@@ -4612,7 +4714,7 @@ _cPf=neufGraphe(document.getElementById('cPf'),{type:'line',data:{labels:twrGlob
 }/* end dc */
 
 /* VM table */
-let vmH='<div class="tw"><table class="vm-table"><thead><tr><th class="l">Mois</th><th colspan="2" style="text-align:center;color:var(--text)">Global</th><th colspan="2" style="text-align:center;color:'+CV('--c1')+'">PEA</th><th colspan="2" style="text-align:center;color:'+CV('--c3')+'">CTO Saxo</th><th colspan="2" style="text-align:center;color:'+CV('--c4')+'">CTO IBKR</th><th colspan="2" style="text-align:center;color:'+CV('--p6')+'">AV Linxea</th><th colspan="2" style="text-align:center">Performance</th><th></th></tr><tr><th></th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Du mois</th><th>Cumul</th><th></th></tr></thead><tbody>';
+let vmH='<div class="tw"><table class="vm-table"><thead><tr><th class="l">Mois</th><th colspan="2" style="text-align:center;color:var(--text)">Global</th><th colspan="2" style="text-align:center;color:'+CV('--c1')+'">'+nomCpt('pea')+'</th><th colspan="2" style="text-align:center;color:'+CV('--c3')+'">'+nomCpt('ctosb')+'</th><th colspan="2" style="text-align:center;color:'+CV('--c4')+'">'+nomCpt('ctoibkr')+'</th><th colspan="2" style="text-align:center;color:'+CV('--p6')+'">'+nomCpt('avl')+'</th><th colspan="2" style="text-align:center">Performance</th><th></th></tr><tr><th></th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Du mois</th><th>Cumul</th><th></th></tr></thead><tbody>';
 const tw2=cTWR('bourse');const vmL=S.versMensuels||[];vmL.forEach((v,i)=>{const tw=tw2[i]?tw2[i].twr:0;
 /* Performance du mois seul : (valeur - versement - valeur du mois précédent) / valeur du mois précédent */
 let pm=0;if(i>0){const deb=vmL[i-1].bourse||0;if(deb>0)pm=((v.bourse||0)-(v.versement||0)-deb)/deb*100}
@@ -5181,7 +5283,7 @@ const goalTypes={
   'dividendes':{label:'Dividendes/an',calc:(g)=>{const pf=g.pk==='pea'?t.p:g.pk==='ctosb'?t.s:g.pk==='ctoibkr'?t.i:g.pk==='avl'?t.a:{divTot:t.p.divTot+t.s.divTot+t.i.divTot+t.a.divTot};return{cur:Math.round(pf.divTot*100)/100,unit:'€'}},fmt:v=>F2(v)},
   'nb_positions':{label:'Nb positions',calc:(g)=>{const l=g.pk==='pea'?S.pf.pea.l:g.pk==='ctosb'?S.pf.ctosb.l:g.pk==='ctoibkr'?S.pf.ctoibkr.l:g.pk==='avl'?(S.pf.avl?S.pf.avl.l:[]):[...S.pf.pea.l,...S.pf.ctosb.l,...S.pf.ctoibkr.l,...(S.pf.avl?S.pf.avl.l:[])];return{cur:l.length,unit:''}},fmt:v=>v}
 };
-const pkNames={pea:'PEA',ctosb:'CTO Saxo',ctoibkr:'CTO IBKR',avl:'AV Linxea',all:'Global'};
+const pkNames={pea:nomCpt('pea'),ctosb:nomCpt('ctosb'),ctoibkr:nomCpt('ctoibkr'),avl:nomCpt('avl'),all:'Global'};
 
 S.bourseGoals.forEach((g,i)=>{
   const gt=goalTypes[g.type];if(!gt)return;
@@ -5278,10 +5380,10 @@ return wlH;
 
 /* ====== COMPARATEUR BROKERS ====== */
 const brokers=[
-  {name:'PEA Fortuneo',pk:'pea',calc:t.p,pf:S.pf.pea,color:CV('--c1')},
-  {name:'CTO Saxo',pk:'ctosb',calc:t.s,pf:S.pf.ctosb,color:CV('--accent')},
-  {name:'CTO IBKR',pk:'ctoibkr',calc:t.i,pf:S.pf.ctoibkr,color:CV('--c4')},
-  {name:'AV Linxea',pk:'avl',calc:t.a,pf:S.pf.avl||{esp:0,ver:0,cur:'EUR',l:[]},color:CV('--p6')}
+  {name:nomCpt('pea'),pk:'pea',calc:t.p,pf:S.pf.pea,color:CV('--c1')},
+  {name:nomCpt('ctosb'),pk:'ctosb',calc:t.s,pf:S.pf.ctosb,color:CV('--accent')},
+  {name:nomCpt('ctoibkr'),pk:'ctoibkr',calc:t.i,pf:S.pf.ctoibkr,color:CV('--c4')},
+  {name:nomCpt('avl'),pk:'avl',calc:t.a,pf:S.pf.avl||{esp:0,ver:0,cur:'EUR',l:[]},color:CV('--p6')}
 ];
 document.getElementById('brokersKpi').innerHTML=brokers.map(b=>'<div class="kpi"><div class="kl">'+b.name+'</div><div class="kv" style="color:'+b.color+'">'+F(b.calc.v)+'</div><div class="ks">'+b.calc.l.length+' positions</div></div>').join('');
 
@@ -6595,7 +6697,7 @@ if(document.getElementById('relEpargne')){
   document.getElementById('relEpargne').innerHTML=he;
 
   /* Enveloppes boursières, en lecture seule */
-  const env=[{n:'PEA Fortuneo',v:t.p.v,d:t.p.dayPnl},{n:'CTO Saxo',v:t.s.v,d:t.s.dayPnl},{n:'CTO IBKR',v:t.i.v,d:t.i.dayPnl},{n:'AV Linxea (ETF)',v:t.a.v,d:t.a.dayPnl}];
+  const env=[{n:nomCpt('pea'),v:t.p.v,d:t.p.dayPnl},{n:nomCpt('ctosb'),v:t.s.v,d:t.s.dayPnl},{n:nomCpt('ctoibkr'),v:t.i.v,d:t.i.dayPnl},{n:nomCpt('avl')+' (ETF)',v:t.a.v,d:t.a.dayPnl}];
   let hb='<table><thead><tr><th class="l">Enveloppe</th><th>Valeur</th><th>Jour</th></tr></thead><tbody>';
   env.forEach(e=>{hb+='<tr><td class="l">'+e.n+'</td><td style="font-weight:600">'+F(e.v)+'</td><td style="color:'+(e.d>=0?'var(--green)':'var(--red)')+'">'+(e.d>=0?'+':'')+F2(e.d)+'</td></tr>'});
   hb+='<tr class="total-row"><td class="l">Total bourse</td><td>'+F(t.bo)+'</td><td></td></tr></tbody></table>';
@@ -6635,8 +6737,8 @@ document.getElementById('widgetResume').innerHTML=wH;
   const cases=document.getElementById('envCases');if(!cases)return;
   if(!S.envSel)S.envSel={pea:1,ctosb:1,ctoibkr:1,avl:1,pee:1,crypto:1,immoNet:1};
   const POSTES=[
-    {k:'pea',n:'PEA',c:CV('--p5')},{k:'ctosb',n:'CTO Saxo',c:CV('--p1')},
-    {k:'ctoibkr',n:'CTO IBKR',c:CV('--p6')},{k:'avl',n:'AV Linxea',c:CV('--p6')},
+    {k:'pea',n:nomCpt('pea'),c:CV('--p5')},{k:'ctosb',n:nomCpt('ctosb'),c:CV('--p1')},
+    {k:'ctoibkr',n:nomCpt('ctoibkr'),c:CV('--p6')},{k:'avl',n:nomCpt('avl'),c:CV('--p6')},
     {k:'pee',n:'PEE',c:CV('--p7')},{k:'crypto',n:'Crypto',c:CV('--p4')},
     {k:'immoNet',n:'Immobilier net',c:CV('--p3')}
   ];
@@ -7047,7 +7149,7 @@ if(hj.length>0){
 
 /* Répartition par broker */
 rmH+='<div style="font-weight:500;margin-top:20px;margin-bottom:8px">Répartition par broker</div>';
-[{n:'PEA Fortuneo',v:t.p.v,c:CV('--c1')},{n:'CTO Saxo',v:t.s.v,c:CV('--c1')},{n:'CTO IBKR',v:t.i.v,c:CV('--c5')},{n:'AV Linxea',v:t.a.v,c:CV('--green')}].forEach(b=>{
+[{n:nomCpt('pea'),v:t.p.v,c:CV('--c1')},{n:nomCpt('ctosb'),v:t.s.v,c:CV('--c1')},{n:nomCpt('ctoibkr'),v:t.i.v,c:CV('--c5')},{n:nomCpt('avl'),v:t.a.v,c:CV('--green')}].forEach(b=>{
   const pct=t.bo>0?(b.v/t.bo*100).toFixed(1):0;
   rmH+='<div class="lr"><span>'+b.n+'</span><div style="display:flex;gap:12px;align-items:center"><span style="font-weight:500">'+F(b.v)+'</span><span style="color:var(--muted)">'+pct+'%</span></div></div>';
 });
@@ -7312,7 +7414,8 @@ function initApp(){
 "use strict";
 const $=id=>document.getElementById('at-'+id);
 const C={},FONT="'Onest',system-ui,sans-serif",DAY=864e5,YEAR=365.25*DAY;
-const T={w:null,name:'',demo:false,period:'all',hover:null,hoverR:null,A:null,cur:'€',key:null,src:null,bench:null,pos:null};
+const T={w:null,name:'',demo:false,period:'all',hover:null,hoverR:null,A:null,cur:'€',key:null,src:null,bench:null,pos:null,fond:null,synth:true};
+try{if(localStorage.getItem('at-mode')==='detail')T.synth=false}catch(e){}
 function cols(){const cs=getComputedStyle(document.body),g=n=>cs.getPropertyValue(n).trim();
   C.bg=g('--bg');C.panel=g('--card');C.line=g('--border');C.text=g('--text');C.muted=g('--muted');C.accent=g('--accent');C.up=g('--green');C.down=g('--red');C.price=g('--bourse');C.pru=g('--crypto');}
 /* ---------- formats ---------- */
@@ -7410,7 +7513,7 @@ function tag(g,text,x,y,color,align){const c=g.c;c.font='500 11px '+FONT;const w
 const pe=v=>nf0.format(v)+' '+T.cur;
 function pfmt(A){return A.hi<20?(v=>nf1.format(v)+' '+T.cur):pe;}
 
-function drawPrice(){const A=T.A,cv=$('cvPrice'),H=cv.clientWidth<500?340:420;
+function drawPrice(){const A=T.A,cv=$('cvPrice'),H=T.synth?230:(cv.clientWidth<500?340:420);
   const pad=(A.hi-A.lo)*0.06,ymin=Math.max(0,A.lo-pad),ymax=A.hi+pad*1.6,g=base(cv,H,ymin,ymax,A.t,pfmt(A)),c=g.c;
   // prix les plus échangés
   const P=A.prof,bm=Math.max(...P.bins),bh=(g.Y(P.lo)-g.Y(P.hi))/P.bins.length;
@@ -7428,7 +7531,7 @@ function drawPrice(){const A=T.A,cv=$('cvPrice'),H=cv.clientWidth<500?340:420;
   $('roPrice').innerHTML=`${dstr(A.t[i])} · cours <b>${eur(A.c[i])}</b>`+(A.ma50[i]!=null?` · moy. 50 sem. <b>${eur(A.ma50[i])}</b>`:'')+(A.ma200[i]!=null?` · moy. 200 sem. <b>${eur(A.ma200[i])}</b>`:'');
 }
 function drawDD(){const A=T.A,cv=$('cvDD'),lo=Math.min(-0.1,Math.floor(A.maxDD*10-0.5)/10),st=lo<-0.5?0.2:0.1,yt=[];for(let v=0;v>=lo-1e-9;v-=st)yt.push(v);
-  const g=base(cv,170,lo,0.02,A.t,v=>pct(v),yt),c=g.c;
+  const g=base(cv,T.synth?230:170,lo,0.02,A.t,v=>pct(v),yt),c=g.c;
   const grd=c.createLinearGradient(0,g.Y(0),0,g.Y(lo));grd.addColorStop(0,'rgba(239,107,95,.05)');grd.addColorStop(1,'rgba(239,107,95,.45)');
   c.fillStyle=grd;c.beginPath();c.moveTo(g.X(0),g.Y(0));A.dd.forEach((v,i)=>c.lineTo(g.X(i),g.Y(v)));c.lineTo(g.X(A.n-1),g.Y(0));c.closePath();c.fill();
   line(g,A.dd,C.down,1.4);dot(g,A.n-1,A.ddNow,C.down);
@@ -7437,7 +7540,7 @@ function drawDD(){const A=T.A,cv=$('cvDD'),lo=Math.min(-0.1,Math.floor(A.maxDD*1
   const i=T.hover==null?A.n-1:T.hover;
   $('roDD').innerHTML=`${dstr(A.t[i])} · <b>${pct(A.dd[i],1)}</b> sous le plus haut · pire baisse de la période <b>${pct(A.maxDD)}</b> (${mstr(A.t[A.maxDDI])})`;
 }
-function drawReg(){const A=T.A,cv=$('cvReg'),H=cv.clientWidth<500?300:360,f=[-2,-1,0,1,2].map(k=>A.fit(k));
+function drawReg(){const A=T.A,cv=$('cvReg'),H=T.synth?230:(cv.clientWidth<500?300:360),f=[-2,-1,0,1,2].map(k=>A.fit(k));
   const lo=Math.min(A.lo,Math.min(...f[0])),hi=Math.max(A.hi,Math.max(...f[4])),pad=(hi-lo)*0.05,g=base(cv,H,Math.max(0,lo-pad),hi+pad,A.t,pfmt(A)),c=g.c;
   const band=(a,b,col)=>{c.fillStyle=col;c.beginPath();a.forEach((v,i)=>i?c.lineTo(g.X(i),g.Y(v)):c.moveTo(g.X(i),g.Y(v)));for(let i=b.length-1;i>=0;i--)c.lineTo(g.X(i),g.Y(b[i]));c.closePath();c.fill();};
   band(f[4],f[2],'rgba(239,107,95,.13)');band(f[2],f[0],'rgba(65,192,139,.13)');
@@ -7472,7 +7575,7 @@ function drawRsi(){const R=T.A.R,cv=$('cvRsi'),g=base(cv,220,0,100,R.t,v=>String
   if(T.hoverR!=null){cross(g,i);if(R.v[i]!=null)dot(g,i,R.v[i],C.price);}
   $('roRsi').innerHTML=R.v[i]==null?'Historique trop court pour calculer le RSI.':`${mstr(R.t[i])} · RSI sur 14 ${R.unit} : <b>${nf1.format(R.v[i])}</b>`;
 }
-function drawAll(){cols();drawPrice();drawDD();drawReg();drawFib();drawRsi();drawCmp();}
+function drawAll(){cols();drawPrice();drawDD();drawReg();drawFib();drawRsi();drawCmp();drawNote();drawSynth();}
 
 /* ---------- résumé ---------- */
 function renderSummary(){const A=T.A,n=A.n;
@@ -7500,14 +7603,14 @@ function renderSummary(){const A=T.A,n=A.n;
   li.push(['Paliers','muted','Prix à surveiller',(r1?`Prochain palier au-dessus : ${eur(r1)}. `:'Aucun palier repéré au-dessus du cours. ')+(s1?`Prochain palier en dessous : ${eur(s1)}. `:'Aucun palier repéré en dessous du cours. ')+`Prix le plus échangé de la période : autour de ${eur(A.prof.poc)}.`]);
   extraRead(A,li);$('read').innerHTML=li.map(x=>`<li><span class="tag ${x[1]}">${esc(x[0])}</span><span><span class="what">${x[2]}</span>${x[3]}</span></li>`).join('');
 }
-function refresh(){T.A=analyse();extras(T.A);T.hover=null;T.hoverR=null;renderSummary();drawAll();}
+function refresh(){T.A=analyse();extras(T.A);T.hover=null;T.hoverR=null;renderSummary();renderNote();renderSynth();drawAll();}
 
 
 /* ---------- valeurs disponibles ---------- */
 function etat(){try{return (typeof S!=='undefined'&&S)?S:null}catch(e){return null}}
 function ytDe(c){try{return (typeof YM!=='undefined'&&YM[c])||c}catch(e){return c}}
 function liste(){const out=[],vu={},st=etat();if(!st)return out;
-  [['pea','PEA'],['ctosb','CTO Saxo'],['ctoibkr','CTO IBKR'],['avl','AV Linxea']].forEach(g=>{
+  [['pea',nomCpt('pea')],['ctosb',nomCpt('ctosb')],['ctoibkr',nomCpt('ctoibkr')],['avl',nomCpt('avl')]].forEach(g=>{
     const p=st.pf&&st.pf[g[0]];((p&&p.l)||[]).forEach(x=>{const yt=ytDe(x.c);if(!yt||yt==='—'||vu[yt])return;vu[yt]=1;out.push({yt:yt,n:x.n||x.c,g:g[1]});});});
   (st.watchlist||[]).forEach(w=>{if(w.ticker&&!vu[w.ticker]){vu[w.ticker]=1;out.push({yt:w.ticker,n:w.nom||w.ticker,g:'Watchlist'});}});
   return out;}
@@ -7557,11 +7660,12 @@ async function charge(yt,nom,force){
   if(occupe||!yt)return;occupe=true;$('go').disabled=true;$('upd').disabled=true;
   try{
     statut('Chargement de l’historique de '+(nom||yt)+'…');
-    const ind=indiceDe(yt),H=await getHists(ind?[yt,ind[0]]:[yt],force),d=H[yt];
+    const ind=indiceDe(yt),pF=getFonds([yt],force).catch(()=>({})),H=await getHists(ind?[yt,ind[0]]:[yt],force),d=H[yt];
     if(!d)throw new Error('Aucun historique trouvé pour « '+yt+' ». Vérifie le code Yahoo (ex. RMS.PA pour Hermès).');
     T.w=versW(d);T.key=yt;T.name=nom||d.nom||yt;T.cur=({EUR:'€',USD:'$',GBP:'£',JPY:'¥',CHF:'CHF'})[d.cur]||d.cur||'€';
     T.bench=null;if(ind&&H[ind[0]]){try{T.bench={w:versW(H[ind[0]]),nom:ind[1]}}catch(e){}}
     T.pos=position(yt);
+    T.fond=(await pF)[yt]||lisFond()[yt]||null;
     if(T.pos.pru!=null){const lo=Math.min.apply(null,T.w.l),hi=Math.max.apply(null,T.w.h);if(T.pos.pru>hi*6||T.pos.pru<lo/6)T.pos.pru=null;}
     T.src='Cours Yahoo Finance, chargés le '+new Date(d.ts||Date.now()).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
     $('body').style.display='';refresh();statut('');
@@ -7583,14 +7687,101 @@ function extras(A){const W=T.w,N=W.t.length,i0=N-A.n,n=A.n;
     const s=[],m=[];let b0=null,i1=0,der=null,vus=0;
     for(let i=0;i<n;i++){s.push(A.c[i]/A.c[0]*100);const v=map[wk(A.t[i])];if(v!=null){der=v;vus++;if(b0===null){b0=v;i1=i;}}m.push(b0===null?null:der/b0*s[i1]);}
     if(b0!==null&&vus>n*0.6&&i1<n*0.15)A.cmp={s:s,m:m,i1:i1,nom:T.bench.nom,ps:A.c[n-1]/A.c[i1]-1,pm:der/b0-1};}
-  A.pos=T.pos;}
-function analyseDe(w){const g=[T.w,T.period,T.bench,T.pos];T.w=w;T.period='all';T.bench=null;T.pos=null;
-  try{const A=analyse();extras(A);return A;}finally{T.w=g[0];T.period=g[1];T.bench=g[2];T.pos=g[3];}}
-function extraTiles(A){const o=[];
+  A.pos=T.pos;A.fond=T.fond;A.note=note(A,T.fond);A.mom=N>53?W.c[N-1]/W.c[N-53]-1:null;}
+/* ---------- données de valorisation (PER), via le script Google ---------- */
+let fondMem=null;
+function lisFond(){if(fondMem)return fondMem;try{fondMem=JSON.parse(localStorage.getItem('at-fond')||'{}')||{}}catch(e){fondMem={}}return fondMem;}
+async function getFonds(tks,force){const jour=new Date().toISOString().slice(0,10),c=lisFond(),out={},manq=[];
+  tks.forEach(t=>{const d=c[t];if(!force&&d&&d.j===jour&&d.ok)out[t]=d;else manq.push(t);});
+  for(let i=0;i<manq.length;i+=8){const lot=manq.slice(i,i+8);
+    try{const r=await fetch(GAS+"?fond=1&t="+encodeURIComponent(lot.join(",")));if(!r.ok)continue;const j=(await r.json())||{};
+      lot.forEach(t=>{const d=j[t];if(!d)return;
+        if('fpe' in d||'pe' in d){const o={j:jour,ok:true,fpe:num(d.fpe),pe:num(d.pe),pfcf:num(d.pfcf),tm:num(d.tm),tl:num(d.tl),th:num(d.th),na:num(d.na)};c[t]=o;out[t]=o;}
+        else if(d.price!=null)out[t]={vieux:true};else out[t]={err:true};});
+    }catch(e){}}
+  try{localStorage.setItem('at-fond',JSON.stringify(c))}catch(e){}
+  return out;}
+/* ---------- note d'entrée sur 100 ----------
+   Une lecture mécanique : une action en tendance haussière, revenue sur un prix bas pour elle,
+   obtient une note haute. Chaque critère est affiché, avec ses points. Ce n'est pas une prévision. */
+function note(A,F){const n=A.n,parts=[],cl=(x,a,b)=>Math.max(a,Math.min(b,x));
+  let t=null;const m=A.ma200[n-1],m50=A.ma50[n-1];
+  if(m!=null){t=0;if(A.last>=m)t+=14;if(m50!=null&&m50>=m)t+=11;const m0=A.ma200[Math.max(0,n-27)];if(m0!=null&&m>m0)t+=10;}
+  const baisse=m!=null&&A.last<m&&m50!=null&&m50<m;
+  parts.push({k:'Tendance de fond',v:t,max:35,q:t==null?'historique trop court':t>=25?'haussière':baisse?'baissière':'hésitante'});
+  const z=cl(A.z,-2,2);parts.push({k:'Prix par rapport à son habitude',v:Math.round((2-z)/4*20),max:20,q:A.z>0.5?'plutôt haut':A.z<-0.5?'plutôt bas':'dans la moyenne'});
+  parts.push({k:'Repli depuis le sommet',v:Math.round(cl(A.closer,0,1)*10),max:10,q:A.ddNow>-0.005?'au plus haut':pct(A.ddNow)});
+  const rs=A.R.last;parts.push({k:'Élan récent (RSI)',v:rs==null?null:Math.round(cl((80-rs)/50,0,1)*10),max:10,q:rs==null?'historique trop court':'RSI '+nf0.format(rs)});
+  const s=A.lev.sup[0];let ps=0,qs='aucun support repéré';if(s){const d=A.last/s-1;ps=d<=0.03?10:d<=0.08?6:d<=0.15?3:1;qs='à '+pct(d)+' du support';}
+  parts.push({k:'Proximité d’un support',v:ps,max:10,q:qs});
+  let pv=null,qv='indisponible';if(F&&F.fpe>0){const p=F.fpe;pv=p<12?15:p<18?12:p<25?9:p<35?5:2;qv='PER '+nf1.format(p);}
+  parts.push({k:'Valorisation (PER prévisionnel)',v:pv,max:15,q:qv});
+  let tot=0,mx=0;parts.forEach(p=>{if(p.v!=null){tot+=p.v;mx+=p.max;}});
+  let sc=mx>=50?Math.round(tot/mx*100):null,plaf=false;
+  /* Une action qui baisse sous ses deux moyennes n'obtient jamais une note favorable : un prix bas ne suffit pas */
+  if(sc!=null&&baisse&&sc>55){sc=55;plaf=true;}
+  return{score:sc,parts:parts,sur:mx,plaf:plaf,lib:sc==null?'Note indisponible':sc>=70?'Fenêtre favorable':sc>=45?'Fenêtre neutre':'Fenêtre peu favorable',col:sc==null?'muted':sc>=70?'up':sc>=45?'accent':'down'};}
+function renderNote(){const A=T.A,N=A.note,z=$('parts');
+  z.innerHTML=N.parts.map(p=>{const r=p.v==null?0:p.v/p.max,c=p.v==null?'--muted':r>=0.66?'--green':r>=0.33?'--accent':'--red';
+    return '<div class="at-part"><span>'+esc(p.k)+' <span class="muted">· '+esc(p.q)+'</span></span><span class="p">'+(p.v==null?'—':p.v+' / '+p.max)+'</span><span class="b"><i style="width:'+Math.round(r*100)+'%;background:var('+c+')"></i></span></div>';}).join('');
+  const lib=$('noteLib');lib.textContent=N.lib;lib.style.color=N.col==='muted'?'var(--muted)':'var(--'+({up:'green',accent:'accent',down:'red'})[N.col]+')';
+  $('noteInfo').textContent=(N.plaf?'Tendance baissière : la note est plafonnée à 55. ':'')+(N.sur<100&&N.score!=null?'Note calculée sur '+N.sur+' points : un critère n’a pas pu être évalué.':'');}
+function drawNote(){const A=T.A;if(!A||!A.note)return;const N=A.note,cv=$('cvNote'),W=260,H=158,dpr=window.devicePixelRatio||1;
+  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);
+  const cx=W/2,cy=134,r=104,ang=v=>Math.PI*(1+v/100),arc=(a,b,col,w,al)=>{c.beginPath();c.arc(cx,cy,r,ang(a),ang(b));c.strokeStyle=col;c.lineWidth=w;c.globalAlpha=al;c.lineCap='round';c.stroke();c.globalAlpha=1;};
+  arc(1,43,C.down,14,.22);arc(47,68,C.accent,14,.22);arc(72,99,C.up,14,.22);
+  c.font='11px '+FONT;c.fillStyle=C.muted;c.textAlign='center';c.textBaseline='middle';
+  [[0,'0'],[45,'45'],[70,'70'],[100,'100']].forEach(g=>{const a=ang(g[0]);c.fillText(g[1],cx+Math.cos(a)*(r-22),cy+Math.sin(a)*(r-22)+(g[0]===0||g[0]===100?-2:0));});
+  const col=N.col==='up'?C.up:N.col==='accent'?C.accent:N.col==='down'?C.down:C.muted;
+  if(N.score!=null){const s=Math.max(1,Math.min(99,N.score));arc(1,s,col,14,1);
+    const a=ang(s),px=cx+Math.cos(a)*r,py=cy+Math.sin(a)*r;c.beginPath();c.arc(px,py,10,0,7);c.fillStyle=C.panel;c.fill();c.lineWidth=4;c.strokeStyle=col;c.stroke();}
+  c.textBaseline='alphabetic';c.fillStyle=N.score==null?C.muted:C.text;c.font='600 50px '+FONT;const txt=N.score==null?'—':String(N.score),tw=c.measureText(txt).width;
+  c.textAlign='left';c.fillText(txt,cx-tw/2-(N.score==null?0:14),cy-4);
+  if(N.score!=null){c.font='500 14px '+FONT;c.fillStyle=C.muted;c.fillText('/100',cx+tw/2-12,cy-5);}}
+/* ---------- fiche synthétique : petits compteurs, valorisation, objectif des analystes ---------- */
+function jauge(cv,W,H,o){const dpr=window.devicePixelRatio||1;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';cv.style.margin='0 auto';
+  const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);
+  const lw=o.lw||10,cx=W/2,cy=H-12,r=Math.min(W/2-lw,H-22),ang=f=>Math.PI*(1+f);
+  const arc=(a,b,col,al)=>{c.beginPath();c.arc(cx,cy,r,ang(a),ang(b));c.strokeStyle=col;c.lineWidth=lw;c.globalAlpha=al;c.lineCap='round';c.stroke();c.globalAlpha=1;};
+  o.zones.forEach(z=>arc(z[0]+0.02,z[1]-0.02,z[2],.24));
+  if(o.f!=null){const f=Math.max(0.02,Math.min(0.98,o.f));arc(0.02,f,o.col,1);
+    const a=ang(f);c.beginPath();c.arc(cx+Math.cos(a)*r,cy+Math.sin(a)*r,lw*0.72,0,7);c.fillStyle=C.panel;c.fill();c.lineWidth=3;c.strokeStyle=o.col;c.stroke();}
+  if(o.tick!=null){const a=ang(Math.max(0,Math.min(1,o.tick)));c.beginPath();c.moveTo(cx+Math.cos(a)*(r-lw),cy+Math.sin(a)*(r-lw));c.lineTo(cx+Math.cos(a)*(r+lw),cy+Math.sin(a)*(r+lw));c.strokeStyle=C.text;c.lineWidth=2;c.stroke();}
+  c.textAlign='center';c.textBaseline='alphabetic';c.fillStyle=o.f==null?C.muted:C.text;c.font='600 '+(o.fs||20)+'px '+FONT;c.fillText(o.txt,cx,cy-2);}
+function zoneCol(f,zones){for(const z of zones)if(f<=z[1])return z[2];return zones[zones.length-1][2];}
+function renderSynth(){const A=T.A,F=A.fond,n=A.n;
+  $('body').classList.toggle('at-synth',!!T.synth);
+  const y=T.w.c.length>53?T.w.c[T.w.c.length-53]:null;
+  $('cours').innerHTML='<b>'+eur(A.last)+'</b>'+(A.mom!=null?' · <span class="'+(A.mom>=0?'up':'down')+'">'+pct(A.mom,1,true)+' sur 1 an</span>':'');
+  $('regPills').innerHTML='<span class="at-pill">Tendance '+pct(A.trend,1,true)+'/an</span><span class="at-pill '+(A.z>1?'down':A.z<-1?'up':'')+'">Écart '+(A.z>0?'+':'−')+nf1.format(Math.abs(A.z))+' σ</span>';
+  $('perSub').textContent=F&&F.fpe>0?(F.pe>0?'sur les bénéfices passés : '+nf1.format(F.pe)+'x (trait)':''):(F&&F.vieux?'script Google à mettre à jour':'indisponible');
+  $('pfcfSub').textContent=F&&F.pfcf>0?'':(F&&F.vieux?'script Google à mettre à jour':'indisponible');
+  const z=$('cible');
+  if(F&&F.tm>0){const lo=F.tl>0?F.tl:F.tm,hi=F.th>0?F.th:F.tm,a=Math.min(lo,A.last)*0.94,b=Math.max(hi,A.last)*1.06,X=v=>((v-a)/(b-a)*100).toFixed(1)+'%',d=F.tm/A.last-1;
+    z.innerHTML='<div class="at-ct">Objectif moyen : <b>'+eur(F.tm)+'</b> <span class="'+(d>=0?'up':'down')+'">('+pct(d,1,true)+' par rapport au cours)</span></div>'+
+      '<div class="at-cb"><div class="r" style="left:0;right:0"></div><div class="f" style="left:'+X(lo)+';width:'+((hi-lo)/(b-a)*100).toFixed(1)+'%"></div>'+
+      '<div class="m" style="left:'+X(F.tm)+';background:var(--green)"></div><div class="l" style="left:'+X(F.tm)+';top:-10px;color:var(--green)">objectif '+eur(F.tm)+'</div>'+
+      '<div class="m" style="left:'+X(A.last)+';background:var(--text)"></div><div class="l" style="left:'+X(A.last)+';top:40px">cours '+eur(A.last)+'</div></div>'+
+      '<div class="at-ro">'+(lo<hi?'Du plus prudent au plus optimiste : '+eur(lo)+' à '+eur(hi)+' · ':'')+(F.na>0?nf0.format(F.na)+' analyste'+(F.na>1?'s':'')+' · ':'')+'source Yahoo Finance</div>';}
+  else z.innerHTML='<div class="at-ro">'+(F&&F.vieux?'Le script Google doit être mis à jour pour afficher cet objectif.':F&&F.ok?'Pas d’objectif d’analystes pour cette valeur.':'Objectif indisponible pour l’instant.')+'</div>';}
+function drawSynth(){const A=T.A;if(!A)return;const N=A.note,F=A.fond,Z3=[[0,.45,C.down],[.45,.7,C.accent],[.7,1,C.up]];
+  jauge($('cvG1'),132,86,{f:N.score==null?null:N.score/100,zones:Z3,col:N.score==null?C.muted:zoneCol(N.score/100,Z3),txt:N.score==null?'—':N.score+'/100',fs:19});
+  const Zm=[[0,.4,C.down],[.4,.6,C.accent],[.6,1,C.up]],fm=A.mom==null?null:Math.max(0,Math.min(1,A.mom+0.5));
+  jauge($('cvG2'),132,86,{f:fm,zones:Zm,col:fm==null?C.muted:zoneCol(fm,Zm),txt:A.mom==null?'—':pct(A.mom,1,true),fs:19});
+  const Zv=[[0,.375,C.up],[.375,.625,C.accent],[.625,1,C.down]],g=v=>v>0?Math.min(1,v/40):null;
+  const fp=F?g(F.fpe):null,ff=F?g(F.pfcf):null;
+  jauge($('cvPer'),170,104,{f:fp,zones:Zv,col:fp==null?C.muted:zoneCol(fp,Zv),txt:fp==null?'—':nf1.format(F.fpe)+'x',fs:24,lw:12,tick:F&&F.pe>0&&fp!=null?F.pe/40:null});
+  jauge($('cvPfcf'),170,104,{f:ff,zones:Zv,col:ff==null?C.muted:zoneCol(ff,Zv),txt:ff==null?'—':nf1.format(F.pfcf)+'x',fs:24,lw:12});}
+function analyseDe(w,F){const g=[T.w,T.period,T.bench,T.pos,T.fond];T.w=w;T.period='all';T.bench=null;T.pos=null;T.fond=F||null;
+  try{const A=analyse();extras(A);return A;}finally{T.w=g[0];T.period=g[1];T.bench=g[2];T.pos=g[3];T.fond=g[4];}}
+function extraTiles(A){const o=[],F=A.fond;
+  o.push(['PER prévisionnel',F&&F.fpe>0?nf1.format(F.fpe):'—',F&&F.fpe>0?(F.pe>0?'PER sur les bénéfices passés : '+nf1.format(F.pe):'prix payé pour 1 € de bénéfice attendu'):(F&&F.vieux?'script Google à mettre à jour':F&&F.ok?'pas de prévision pour cette valeur':'indisponible pour l’instant'),'']);
   if(A.tr!=null)o.push(['Dividendes réinvestis',pct(A.tr,0,true),'soit '+pct(A.trCagr,1,true)+' par an en moyenne',A.tr>0?'up':A.tr<0?'down':'']);
   o.push(['Agitation (volatilité)',pct(A.vol),'environ ±'+pct(A.volW,1)+' sur une semaine ordinaire','']);
   return o;}
-function extraRead(A,li){const P=A.pos,n=A.n;
+function extraRead(A,li){const P=A.pos,n=A.n,F=A.fond;
+  if(F&&F.fpe>0){const p=F.fpe;li.push([p<15?'Modérée':p<25?'Moyenne':'Élevée',p<15?'up':p<25?'muted':'warn','Valorisation',
+    `Le marché paie ${nf1.format(p)} fois les bénéfices attendus sur les 12 prochains mois (PER prévisionnel).`+(F.pe>0?` Sur les bénéfices déjà réalisés, c’est ${nf1.format(F.pe)} fois${p<F.pe?' : les analystes attendent donc des bénéfices en hausse':p>F.pe?' : les analystes attendent donc des bénéfices en baisse':''}.`:'')+' Ce chiffre se compare surtout à celui des entreprises du même secteur.']);}
   if(P&&P.pru!=null){const d=A.last/P.pru-1;li.unshift([pct(d,0,true),d>=0?'up':'down','Ta position',`Ton prix de revient moyen est de ${eur(P.pru)}. Le cours actuel est ${pct(Math.abs(d))} ${d>=0?'au-dessus':'en dessous'}.`]);}
   if(P&&P.zmin!=null){const dans=A.last>=P.zmin&&A.last<=P.zmax,sous=A.last<P.zmin;
     li.splice(P.pru!=null?1:0,0,[dans?'Dans la zone':sous?'Sous la zone':'Au-dessus',dans?'up':sous?'warn':'muted','Ta fourchette d’achat',`Ta fourchette va de ${eur(P.zmin)} à ${eur(P.zmax)}. Le cours est ${dans?'dedans':sous?'en dessous':'au-dessus'}.`]);}
@@ -7609,7 +7800,7 @@ function overlayPos(g,A){const P=A.pos;if(!P)return;const c=g.c,haut=M.t,bas=g.h
   if(P.pru!=null){const y=g.Y(P.pru);if(y>=haut&&y<=bas){hline(g,P.pru,C.pru,[8,4],1.5);tag(g,'Ton prix de revient · '+eur(P.pru),x,Math.min(bas-10,y+12),C.pru,'left');}}}
 function drawCmp(){const A=T.A,card=document.getElementById('at-cmpCard');if(!A||!A.cmp){card.style.display='none';return;}card.style.display='';
   const cv=$('cvCmp'),K=A.cmp,tous=K.s.concat(K.m.filter(v=>v!=null)),lo=Math.min.apply(null,tous),hi=Math.max.apply(null,tous),pad=(hi-lo)*0.06;
-  const g=base(cv,cv.clientWidth<500?260:320,Math.max(0,lo-pad),hi+pad,A.t,v=>nf0.format(v)),e=A.n-1;
+  const g=base(cv,T.synth?230:(cv.clientWidth<500?260:320),Math.max(0,lo-pad),hi+pad,A.t,v=>nf0.format(v)),e=A.n-1;
   line(g,K.m,C.text,1.5);line(g,K.s,C.price,1.7);dot(g,e,K.s[e],C.price);
   chips(g,[{v:K.s[e],label:nf0.format(K.s[e]),color:C.price},{v:K.m[e],label:nf0.format(K.m[e]),color:C.text}]);
   cross(g,T.hover);const i=T.hover==null?e:T.hover,b=K.s[K.i1];
@@ -7619,8 +7810,8 @@ function drawCmp(){const A=T.A,card=document.getElementById('at-cmpCard');if(!A|
 /* ---------- vue d'ensemble de toutes les lignes ---------- */
 let vueOcc=false;
 function celluleVue(x,d,fini){const nomc='<td class="l"><b>'+esc(x.n)+'</b><div style="font-size:11px;color:var(--muted)">'+esc(x.g)+'</div></td>';
-  if(!d)return nomc+'<td colspan="6" style="text-align:left;color:var(--muted)">'+(fini?'pas d’historique chez Yahoo':'historique non chargé')+'</td>';
-  let A,cur;try{A=analyseDe(versW(d));}catch(e){return nomc+'<td colspan="6" style="text-align:left;color:var(--muted)">historique trop court</td>';}
+  if(!d)return nomc+'<td colspan="7" style="text-align:left;color:var(--muted)">'+(fini?'pas d’historique chez Yahoo':'historique non chargé')+'</td>';
+  let A,cur;try{A=analyseDe(versW(d),lisFond()[x.yt]);}catch(e){return nomc+'<td colspan="7" style="text-align:left;color:var(--muted)">historique trop court</td>';}
   const n=A.n,m=A.ma200[n-1],tr=m!=null?A.last/m-1:null,z=A.z,rs=A.R.last;
   const zl=z>1.5?['Très haut','--red']:z>0.5?['Plutôt haut','--accent']:z<-1.5?['Très bas','--green']:z<-0.5?['Plutôt bas','--green']:['Dans la moyenne','--muted'];
   const dev=({EUR:'€',USD:'$',GBP:'£'})[d.cur]||d.cur||'';
@@ -7628,18 +7819,19 @@ function celluleVue(x,d,fini){const nomc='<td class="l"><b>'+esc(x.n)+'</b><div 
     '<td style="color:var('+(tr==null?'--muted':tr>=0?'--green':'--red')+')">'+(tr==null?'—':(tr>=0?'Haussière ':'Fragilisée ')+pct(tr,0,true))+'</td>'+
     '<td style="color:var('+(A.ddNow<-0.2?'--red':A.ddNow<-0.05?'--accent':'--green')+')">'+(A.ddNow>-0.005?'au sommet':pct(A.ddNow))+'</td>'+
     '<td style="color:var('+(rs==null?'--muted':rs>70||rs<30?'--accent':'--text2')+')">'+(rs==null?'—':nf0.format(rs)+(rs>70?' surchauffe':rs<30?' essoufflé':''))+'</td>'+
-    '<td style="color:var('+zl[1]+')">'+zl[0]+'</td><td>'+pct(A.vol)+'</td>';}
+    '<td style="color:var('+zl[1]+')">'+zl[0]+'</td><td>'+pct(A.vol)+'</td>'+
+    '<td style="font-weight:600;color:var('+(A.note.score==null?'--muted':A.note.score>=70?'--green':A.note.score>=45?'--accent':'--red')+')">'+(A.note.score==null?'—':A.note.score)+'</td>';}
 async function vue(charger){const L=liste(),btn=$('vueBtn'),info=$('vueInfo');
   if(!L.length){$('vue').innerHTML='';info.textContent='Aucune ligne avec un code de bourse pour l’instant.';return;}
   const jour=new Date().toISOString().slice(0,10);let H={};const cache=lisCache();
   L.forEach(x=>{const d=cache[x.yt];if(d&&d.j===jour&&Array.isArray(d.t))H[x.yt]=d;});
   let err='';
   if(charger&&!vueOcc){vueOcc=true;btn.disabled=true;info.className='tk';info.textContent='Chargement de l’historique de '+L.length+' valeurs… cela peut prendre jusqu’à une minute.';
-    try{H=await getHists(L.map(x=>x.yt));}catch(e){err=e.message||'Le chargement a échoué.';}
+    try{H=await getHists(L.map(x=>x.yt));await getFonds(L.map(x=>x.yt)).catch(()=>{});}catch(e){err=e.message||'Le chargement a échoué.';}
     vueOcc=false;btn.disabled=false;}
   const nb=L.filter(x=>H[x.yt]).length;
   if(!nb&&!charger){$('vue').innerHTML='';info.textContent='Touche « Charger toutes mes lignes » pour comparer tes '+L.length+' valeurs d’un coup d’œil.';return;}
-  $('vue').innerHTML='<table><thead><tr><th class="l">Valeur</th><th>Cours</th><th>Tendance de fond</th><th>Écart au sommet</th><th>RSI</th><th>Prix / habitude</th><th>Agitation</th></tr></thead><tbody>'+
+  $('vue').innerHTML='<table><thead><tr><th class="l">Valeur</th><th>Cours</th><th>Tendance de fond</th><th>Écart au sommet</th><th>RSI</th><th>Prix / habitude</th><th>Agitation</th><th>Note /100</th></tr></thead><tbody>'+
     L.map(x=>'<tr data-yt="'+esc(x.yt)+'" data-n="'+esc(x.n)+'">'+celluleVue(x,H[x.yt],charger&&!err)+'</tr>').join('')+'</tbody></table>';
   const manq=L.length-nb;btn.textContent=manq?'Charger toutes mes lignes':'Actualiser';
   info.className='tk'+(err?' err':'');
@@ -7650,6 +7842,9 @@ function hoverable(cv,getN,set){const mv=e=>{if(!T.A)return;const r=cv.getBoundi
   cv.addEventListener('pointermove',mv);cv.addEventListener('pointerdown',mv);cv.addEventListener('pointerleave',()=>{if(T.A)set(null)});}
 ['cvPrice','cvDD','cvReg','cvFib','cvCmp'].forEach(id=>hoverable($(id),()=>T.A.n,i=>{if(T.hover!==i){T.hover=i;cols();drawPrice();drawDD();drawReg();drawFib();drawCmp();}}));
 hoverable($('cvRsi'),()=>T.A.R.n,i=>{if(T.hoverR!==i){T.hoverR=i;cols();drawRsi();}});
+$('mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;T.synth=b.dataset.m==='1';try{localStorage.setItem('at-mode',T.synth?'fiche':'detail')}catch(e2){}
+  $('mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));$('body').classList.toggle('at-synth',T.synth);if(T.A)drawAll();});
+$('mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',(x.dataset.m==='1')===T.synth));$('body').classList.toggle('at-synth',T.synth);
 $('seg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;T.period=b.dataset.p;$('seg').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));if(T.w)refresh();});
 $('sel').addEventListener('change',()=>{const o=$('sel').selectedOptions[0];if(o&&o.value){$('q').value='';charge(o.value,o.textContent);}});
 function lance(){const q=$('q').value.trim();if(q){charge(q.toUpperCase(),null);return;}const o=$('sel').selectedOptions[0];if(o&&o.value)charge(o.value,o.textContent);else statut('Choisis une valeur dans la liste, ou tape un code Yahoo.',true);}
@@ -7675,7 +7870,7 @@ function signaux(){const L=liste();if(!L.length)return[];const cache=lisCache();
   if(cle===sigMemo.cle)return sigMemo.liste;
   const out=[];
   L.forEach(x=>{const d=cache[x.yt];if(!d||!Array.isArray(d.t)||Date.now()-(d.ts||0)>8*DAY)return;
-    let A;try{A=analyseDe(versW(d));}catch(e){return;}
+    let A;try{A=analyseDe(versW(d),lisFond()[x.yt]);}catch(e){return;}
     const n=A.n,m=A.ma200,detenue=x.g!=='Watchlist',dev=({EUR:'€',USD:'$',GBP:'£'})[d.cur]||d.cur||'';
     const lien=t=>'<span style="cursor:pointer" title="Ouvrir l’analyse technique" onclick="atOuvreYt(\''+String(x.yt).replace(/[^A-Za-z0-9.^=\-]/g,'')+'\')"><b>'+esc(x.n)+'</b> '+t+'</span>';
     if(n>5&&m[n-1]!=null&&m[n-5]!=null){const avant=A.c[n-5]>=m[n-5],apres=A.c[n-1]>=m[n-1];
@@ -7696,7 +7891,7 @@ async function precharge(){if(preOk)return;const L=liste();
   if(!L.length){if(++preEssais<6)setTimeout(precharge,20000);return;}
   preOk=true;const jour=new Date().toISOString().slice(0,10),cache=lisCache();
   if(L.every(x=>cache[x.yt]&&cache[x.yt].j===jour))return;
-  try{await getHists(L.map(x=>x.yt));}catch(e){return;}
+  try{await getHists(L.map(x=>x.yt));await getFonds(L.map(x=>x.yt)).catch(()=>{});}catch(e){return;}
   try{if(typeof R==='function')R(true);}catch(e){}}
 setTimeout(precharge,15000);
 
