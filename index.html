@@ -14,20 +14,18 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&display=swap');
 :root{
-/* Une seule rampe de neutres, tintée vers l'encre du registre.
-   La couleur ne vit que dans l'accent et dans ce qui porte du sens. */
---bg:#15130f;--card:#1c1a16;--card2:#262219;--border:rgba(242,235,224,.10);--line:rgba(242,235,224,.06);
---text:#f2ebe0;--text2:#aca294;--muted:#8b8176;
---accent:#dc9b45;--abg:rgba(220,155,69,.12);
---green:#5fb98a;--red:#e0665f;--orange:#dc9b45;--bourse:#5ea3c8;--crypto:#9b8fd0;
---posbg:rgba(95,185,138,.13);--negbg:rgba(224,102,95,.13);--warnbg:rgba(220,155,69,.13);
---zone:rgba(95,185,138,.20);--lift:rgba(255,255,255,.07);
-/* Séries de données : chaque teinte désigne une chose. L'ambre mène,
-   les autres sont espacées en teinte et proches en clarté, pour se
-   distinguer sans crier sur un fond gris. */
---c1:#dc9b45;--c2:#5e9ebd;--c3:#5fb98a;--c4:#c4808f;--c5:#998cc4;--c6:#56a69c;
---grid:rgba(242,235,224,.055);--shadow:none;
---p1:#dc9b45;--p2:#5e9ebd;--p3:#5fb98a;--p4:#c4808f;--p5:#998cc4;--p6:#56a69c;--p7:#8b8d9e;--p8:#bb7a62;
+/* Thème sombre « vert profond et ivoire ». Des neutres vert-noir, un accent ivoire pour l'interface,
+   et la couleur gardée pour ce qui porte du sens : gains, pertes, alertes, séries de données. */
+--bg:#0b1311;--card:#111b18;--card2:#18251f;--border:rgba(232,238,228,.10);--line:rgba(232,238,228,.06);
+--text:#eef1ea;--text2:#a9b5ab;--muted:#7f8d83;
+--accent:#e9e2cf;--abg:rgba(233,226,207,.10);
+--green:#6fd3a0;--red:#f27a6f;--orange:#dcb27a;--bourse:#7db7e8;--crypto:#b3a3e6;
+--posbg:rgba(111,211,160,.13);--negbg:rgba(242,122,111,.13);--warnbg:rgba(220,178,122,.13);
+--zone:rgba(111,211,160,.20);--lift:rgba(255,255,255,.06);
+/* Séries de données : des teintes espacées et de clarté proche, aucune ne domine. */
+--c1:#7db7e8;--c2:#dcb27a;--c3:#6fd3a0;--c4:#e094a8;--c5:#b3a3e6;--c6:#5cc0c0;
+--grid:rgba(232,238,228,.055);--shadow:none;
+--p1:#7db7e8;--p2:#dcb27a;--p3:#6fd3a0;--p4:#e094a8;--p5:#b3a3e6;--p6:#5cc0c0;--p7:#93a09a;--p8:#c39680;
 --font:'Onest',system-ui,sans-serif}
 body.light{
 /* Papier : fond creme, encre brun-noir, un seul ambre pour l accent. */
@@ -498,7 +496,7 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 #page-techno .at-read li{display:grid;grid-template-columns:118px 1fr;gap:12px;align-items:start;font-size:13px;line-height:1.55}
 #page-techno .at-read .tag{display:inline-block;text-align:center;border-radius:6px;padding:2px 6px;font-size:11.5px;font-weight:600;border:1px solid currentColor}
 #page-techno .at-read .what{color:var(--muted);font-size:11.5px;display:block}
-#page-techno .up{color:var(--green)}#page-techno .down{color:var(--red)}#page-techno .warn{color:var(--accent)}#page-techno .muted{color:var(--muted)}
+#page-techno .up{color:var(--green)}#page-techno .down{color:var(--red)}#page-techno .warn{color:var(--orange)}#page-techno .muted{color:var(--muted)}
 #page-techno #at-vue tbody tr{cursor:pointer}
 #page-techno #at-vue td.l b{font-weight:500}
 #page-techno .kv{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
@@ -534,7 +532,7 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 09/11 15h10</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 11/11 08h50</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -557,7 +555,7 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 <div class="page" id="page-bourse">
 <div id="rstat" class="rs" style="margin:0 0 8px"></div>
 <div class="stabs" id="bourseTabs"></div>
-<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:#e8a33d">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div class="svue" id="bvue-pea" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="pea">PEA</span></div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div><div id="pb1"></div><div id="fiche-pea"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="pea">PEA</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('pea')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-pea" style="margin-top:8px"></div></div></div>
+<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:var(--text)">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div class="svue" id="bvue-pea" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="pea">PEA</span></div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div><div id="pb1"></div><div id="fiche-pea"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="pea">PEA</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('pea')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-pea" style="margin-top:8px"></div></div></div>
 <div class="svue" id="bvue-ctosb" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="ctosb">CTO</span> <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div><div id="pb2"></div><div id="fiche-ctosb"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="ctosb">CTO</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('ctosb')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-ctosb" style="margin-top:8px"></div></div></div>
 <div class="svue" id="bvue-ctoibkr" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="ctoibkr">CTO 2</span></div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div><div id="pb3"></div><div id="fiche-ctoibkr"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="ctoibkr">CTO 2</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('ctoibkr')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-ctoibkr" style="margin-top:8px"></div></div></div>
 <div class="svue" id="bvue-avl" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="avl">Assurance-vie</span></div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div><div id="pb4"></div><div id="fiche-avl"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="avl">Assurance-vie</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('avl')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-avl" style="margin-top:8px"></div></div></div>
@@ -714,7 +712,7 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="card" id="at-cLect"><div class="ct">Lecture rapide</div><ul class="at-read" id="at-read"></ul></div>
 <div class="at-onglets" id="at-onglets"><button class="pb" data-c="at-cPrix">Cours et paliers</button><button class="pb" data-c="at-cReg">Trajectoire</button><button class="pb" data-c="at-cDD">Baisse depuis le sommet</button><button class="pb" data-c="at-cmpCard">Face au marché</button><button class="pb" data-c="at-cHist">Historique de la note</button></div>
 <div class="card" id="at-cPrix"><div class="ct">Cours et paliers</div><p class="at-help">La courbe bleue est le prix de l’action. Les deux moyennes lissent le prix pour montrer la tendance. Les lignes rouges et vertes sont des prix où l’action a souvent buté ou rebondi par le passé.</p><div class="at-ro" id="at-roPrice"></div><canvas id="at-cvPrice"></canvas>
-<div class="at-legend"><span><i style="background:var(--bourse)"></i>Cours</span><span><i style="background:var(--accent)"></i>Moyenne 50 semaines</span><span><i style="background:var(--text)"></i>Moyenne 200 semaines</span><span><i style="background:var(--red)"></i>Palier au-dessus (résistance)</span><span><i style="background:var(--green)"></i>Palier en dessous (support)</span><span><i style="background:var(--muted);height:8px;opacity:.5"></i>Prix les plus échangés</span><span><i style="background:var(--green);width:8px;height:8px;border-radius:50%"></i>Croisement haussier des moyennes</span><span><i style="background:var(--red);width:8px;height:8px;border-radius:50%"></i>Croisement baissier</span><span><i style="background:var(--crypto)"></i>Ton prix de revient</span></div></div>
+<div class="at-legend"><span><i style="background:var(--bourse)"></i>Cours</span><span><i style="background:var(--orange)"></i>Moyenne 50 semaines</span><span><i style="background:var(--text)"></i>Moyenne 200 semaines</span><span><i style="background:var(--red)"></i>Palier au-dessus (résistance)</span><span><i style="background:var(--green)"></i>Palier en dessous (support)</span><span><i style="background:var(--muted);height:8px;opacity:.5"></i>Prix les plus échangés</span><span><i style="background:var(--green);width:8px;height:8px;border-radius:50%"></i>Croisement haussier des moyennes</span><span><i style="background:var(--red);width:8px;height:8px;border-radius:50%"></i>Croisement baissier</span><span><i style="background:var(--crypto)"></i>Ton prix de revient</span></div></div>
 <div class="card" id="at-cDD"><div class="ct">Baisse depuis le plus haut</div><p class="at-help">À 0 %, l’action est à son record. Plus la courbe descend, plus l’action est loin de son dernier sommet.</p><div class="at-ro" id="at-roDD"></div><canvas id="at-cvDD"></canvas></div>
 <div class="card" id="at-cReg"><div class="fb" style="margin-bottom:14px;gap:8px"><div class="ct" style="margin:0">Trajectoire de long terme</div><div class="at-pills" id="at-regPills"></div></div><p class="at-help">La ligne claire est la trajectoire moyenne de l’action sur la période. Zone rouge : le prix est haut par rapport à son habitude. Zone verte : il est bas par rapport à son habitude.</p><div class="at-ro" id="at-roReg"></div><canvas id="at-cvReg"></canvas></div>
 <div class="card" id="at-cmpCard" style="display:none"><div class="ct">Comparaison avec le marché</div><p class="at-help">Les deux courbes partent du même point au début de la période. Si la courbe bleue finit au-dessus de l’autre, l’action a fait mieux que son indice. Les dividendes ne sont comptés d’aucun côté.</p><div class="at-ro" id="at-roCmp"></div><canvas id="at-cvCmp"></canvas><div class="at-legend"><span><i style="background:var(--bourse)"></i><span id="at-cmpA"></span></span><span><i style="background:var(--text)"></i><span id="at-cmpB"></span></span></div></div>
@@ -6307,7 +6305,7 @@ if(sciBiens.length>0){
   /* comme pour la valeur, on ne compte que ta part — et pas les logements vides */
   const sciLoyer=sciBiens.reduce((a,b)=>a+loyersBien(b).avant*((b.partsPct!=null?nb(b.partsPct):100)/100),0);
   const sciCharges=sciBiens.reduce((a,b)=>a+(nb(b.charges)+nb(b.taxeFonciere)/12+nb(b.assurance)/12+nb(b.gestion))*((b.partsPct!=null?nb(b.partsPct):100)/100),0);
-  let sciH='<div class="kr"><div class="kpi sm"><div class="kl">Valeur SCI (tes parts)</div><div class="kv" style="color:#e8a33d">'+F(sciVal)+'</div></div><div class="kpi sm"><div class="kl">Loyers SCI</div><div class="kv" style="color:var(--accent)">'+F(sciLoyer)+'</div><div class="ks">/mois</div></div><div class="kpi sm"><div class="kl">Charges SCI</div><div class="kv" style="color:var(--red)">'+F(Math.round(sciCharges))+'</div><div class="ks">/mois</div></div><div class="kpi sm"><div class="kl">Résultat SCI</div><div class="kv" style="color:'+(sciLoyer-sciCharges>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(sciLoyer-sciCharges))+'</div><div class="ks">/mois</div></div></div>';
+  let sciH='<div class="kr"><div class="kpi sm"><div class="kl">Valeur SCI (tes parts)</div><div class="kv" style="color:var(--text)">'+F(sciVal)+'</div></div><div class="kpi sm"><div class="kl">Loyers SCI</div><div class="kv" style="color:var(--accent)">'+F(sciLoyer)+'</div><div class="ks">/mois</div></div><div class="kpi sm"><div class="kl">Charges SCI</div><div class="kv" style="color:var(--red)">'+F(Math.round(sciCharges))+'</div><div class="ks">/mois</div></div><div class="kpi sm"><div class="kl">Résultat SCI</div><div class="kv" style="color:'+(sciLoyer-sciCharges>=0?'var(--green)':'var(--red)')+'">'+F(Math.round(sciLoyer-sciCharges))+'</div><div class="ks">/mois</div></div></div>';
   sciBiens.forEach(b=>{sciH+='<div class="lr"><span>'+b.nom+' ('+b.partsPct+'% parts)</span><span style="font-weight:600">'+F(b.valeur)+'</span></div>'});
   document.getElementById('sciDash').innerHTML=sciH;
 }else document.getElementById('immoSCI').style.display='none';
@@ -6340,7 +6338,7 @@ let imH='';S.immo.forEach(b=>{
   const rp=estRP(b);
   imH+='<div class="mkpi">';
   if(rp){
-    imH+='<div><div class="ml">Valeur du bien</div><div class="mv" style="color:#e8a33d">'+F(nb(b.valeur))+'</div><div class="ms">'+(b.partsPct||100)+' % à vous</div></div>';
+    imH+='<div><div class="ml">Valeur du bien</div><div class="mv" style="color:var(--text)">'+F(nb(b.valeur))+'</div><div class="ms">'+(b.partsPct||100)+' % à vous</div></div>';
     if(av){
       imH+='<div><div class="ml">Capital remboursé</div><div class="mv" style="color:var(--green)">'+F(Math.round(av.capMois))+'</div><div class="ms">par mois</div></div>';
       imH+='<div><div class="ml">Reste à rembourser</div><div class="mv" style="color:var(--red)">'+F(av.restant)+'</div><div class="ms">'+av.reste+' échéances</div></div>';
@@ -6380,7 +6378,7 @@ let imH='';S.immo.forEach(b=>{
   /* 3. Le détail, rangé par thème */
   imH+='<div class="g2"><div>';
   imH+='<div class="sect">Le bien</div>';
-  imH+='<div class="lr"><span>Valeur</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'valeur\')" style="font-weight:500;color:#e8a33d">'+F(b.valeur)+'</span></div>';
+  imH+='<div class="lr"><span>Valeur</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'valeur\')" style="font-weight:500;color:var(--text)">'+F(b.valeur)+'</span></div>';
   imH+='<div class="lr"><span>Prix achat</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'prixAchat\')">'+F(b.prixAchat)+'</span></div>';
   imH+='<div class="lr"><span>Surface m²</span><span class="ed" onclick="eI(this,\'immo\',\''+b.id+'\',\'surface\')">'+(b.surface||'—')+'</span></div>';
   imH+='<div class="lr"><span>Adresse</span><span class="ed" onclick="edTxt(this,\'immo\',\''+b.id+'\',\'adresse\')">'+(b.adresse||'—')+'</span></div>';
@@ -7455,7 +7453,7 @@ const C={},FONT="'Onest',system-ui,sans-serif",DAY=864e5,YEAR=365.25*DAY;
 const T={w:null,name:'',demo:false,period:'all',hover:null,hoverR:null,A:null,cur:'€',key:null,src:null,bench:null,pos:null,fond:null,synth:true,onglet:'at-cPrix'};
 try{if(localStorage.getItem('at-mode')==='detail')T.synth=false}catch(e){}
 function cols(){const cs=getComputedStyle(document.body),g=n=>cs.getPropertyValue(n).trim();
-  C.bg=g('--bg');C.panel=g('--card');C.line=g('--border');C.text=g('--text');C.muted=g('--muted');C.accent=g('--accent');C.up=g('--green');C.down=g('--red');C.price=g('--bourse');C.pru=g('--crypto');}
+  C.bg=g('--bg');C.panel=g('--card');C.line=g('--border');C.text=g('--text');C.muted=g('--muted');C.accent=g('--orange');C.up=g('--green');C.down=g('--red');C.price=g('--bourse');C.pru=g('--crypto');}
 /* ---------- formats ---------- */
 const nf0=new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0});
 const nf1=new Intl.NumberFormat('fr-FR',{minimumFractionDigits:1,maximumFractionDigits:1});
@@ -7760,10 +7758,10 @@ function note(A,F){const n=A.n,parts=[],cl=(x,a,b)=>Math.max(a,Math.min(b,x));
   if(sc!=null&&baisse&&sc>55){sc=55;plaf=true;}
   return{score:sc,parts:parts,sur:mx,plaf:plaf,lib:sc==null?'Note indisponible':sc>=70?'Fenêtre favorable':sc>=45?'Fenêtre neutre':'Fenêtre peu favorable',col:sc==null?'muted':sc>=70?'up':sc>=45?'accent':'down'};}
 function renderNote(){const A=T.A,N=A.note,z=$('parts');
-  z.innerHTML=N.parts.map(p=>{const r=p.v==null?0:p.v/p.max,c=p.v==null?'--muted':r>=0.66?'--green':r>=0.33?'--accent':'--red';
+  z.innerHTML=N.parts.map(p=>{const r=p.v==null?0:p.v/p.max,c=p.v==null?'--muted':r>=0.66?'--green':r>=0.33?'--orange':'--red';
     return '<div class="at-part"><span>'+esc(p.k)+' <span class="muted">· '+esc(p.q)+'</span></span><span class="p">'+(p.v==null?'—':p.v+' / '+p.max)+'</span><span class="b"><i style="width:'+Math.round(r*100)+'%;background:var('+c+')"></i></span></div>';}).join('');
-  $('noteNum').textContent=N.score==null?'—':N.score;$('regle').innerHTML=regle(N.score,[[45,'--red'],[70,'--accent'],[100,'--green']],100,null,['Peu favorable','Neutre','Favorable']);
-  const lib=$('noteLib');lib.textContent=N.lib;lib.style.color=N.col==='muted'?'var(--muted)':'var(--'+({up:'green',accent:'accent',down:'red'})[N.col]+')';
+  $('noteNum').textContent=N.score==null?'—':N.score;$('regle').innerHTML=regle(N.score,[[45,'--red'],[70,'--orange'],[100,'--green']],100,null,['Peu favorable','Neutre','Favorable']);
+  const lib=$('noteLib');lib.textContent=N.lib;lib.style.color=N.col==='muted'?'var(--muted)':'var(--'+({up:'green',accent:'orange',down:'red'})[N.col]+')';
   $('noteInfo').textContent=(N.plaf?'Tendance baissière : la note est plafonnée à 55. ':'')+(N.sur<100&&N.score!=null?'Note calculée sur '+N.sur+' points : un critère n’a pas pu être évalué.':'');}
 function drawNote(){}
 /* ---------- fiche synthétique : petits compteurs, valorisation, objectif des analystes ---------- */
@@ -7792,7 +7790,7 @@ function renderSynth(){const A=T.A,F=A.fond;
     ['Objectif des analystes',d==null?'—':pct(d,0,true),d==null?nd:'objectif moyen : '+eur(F.tm),d==null?'':d>=0?'up':'down']
   ].map(t=>'<div class="kpi"><div class="kl">'+t[0]+'</div><div class="kv '+t[3]+'">'+t[1]+'</div><div class="ks">'+t[2]+'</div></div>').join('');
   /* valorisation : deux règles */
-  const Zv=[[15,'--green'],[25,'--accent'],[40,'--red']],bloc=(titre,v,trait,sous)=>'<div><div class="t">'+titre+'</div><div class="v">'+(v>0?nf1.format(v)+'x':'—')+'</div>'+regle(v>0?v:null,Zv,40,trait,['Bas','Moyen','Élevé'])+'<div class="at-ro" style="margin:8px 0 0">'+sous+'</div></div>';
+  const Zv=[[15,'--green'],[25,'--orange'],[40,'--red']],bloc=(titre,v,trait,sous)=>'<div><div class="t">'+titre+'</div><div class="v">'+(v>0?nf1.format(v)+'x':'—')+'</div>'+regle(v>0?v:null,Zv,40,trait,['Bas','Moyen','Élevé'])+'<div class="at-ro" style="margin:8px 0 0">'+sous+'</div></div>';
   $('valo').innerHTML='<div class="at-vl">'+bloc('PER prévisionnel',F?F.fpe:null,F&&F.fpe>0?F.pe:null,F&&F.fpe>0?(F.pe>0?'Le trait marque le PER sur les bénéfices passés : '+nf1.format(F.pe)+'x':''):nd)+bloc('Prix / trésorerie dégagée (P/FCF)',F?F.pfcf:null,null,F&&F.pfcf>0?'':nd)+'</div>';
   const z=$('cible');
   if(F&&F.tm>0){const lo=F.tl>0?F.tl:F.tm,hi=F.th>0?F.th:F.tm,a=Math.min(lo,A.last)*0.94,b=Math.max(hi,A.last)*1.06,X=v=>((v-a)/(b-a)*100).toFixed(1)+'%';
@@ -7851,7 +7849,7 @@ function histNote(){const W=T.w,N=W.t.length;if(N<240)return null;
     let s=null;try{s=analyseDe(sub,null).note.score;}catch(e){}
     if(s!=null)pts.push({t:W.t[i],s:s,c:W.c[i],f:i+52<N?W.c[i+52]/W.c[i]-1:null});});
   if(pts.length<8)return null;
-  const G=[['Favorable (70 et plus)',70,101,'--green'],['Neutre (45 à 69)',45,70,'--accent'],['Peu favorable (moins de 45)',-1,45,'--red']].map(z=>{
+  const G=[['Favorable (70 et plus)',70,101,'--green'],['Neutre (45 à 69)',45,70,'--orange'],['Peu favorable (moins de 45)',-1,45,'--red']].map(z=>{
     const sel=pts.filter(p=>p.f!=null&&p.s>=z[1]&&p.s<z[2]),n=sel.length;
     return{nom:z[0],col:z[3],n:n,m:n?sel.reduce((a,p)=>a+p.f,0)/n:null,h:n?sel.filter(p=>p.f>0).length/n:null};});
   return{pts:pts,G:G,pas:pas};}
@@ -7891,14 +7889,14 @@ function celluleVue(x,d,fini,A){const nomc='<td class="l"><b>'+esc(x.n)+'</b><di
   if(!d)return nomc+'<td colspan="7" style="text-align:left;color:var(--muted)">'+(fini?'pas d’historique chez Yahoo':'historique non chargé')+'</td>';
   if(!A){return nomc+'<td colspan="7" style="text-align:left;color:var(--muted)">historique trop court</td>';}
   const n=A.n,m=A.ma200[n-1],tr=m!=null?A.last/m-1:null,z=A.z,rs=A.R.last;
-  const zl=z>1.5?['Très haut','--red']:z>0.5?['Plutôt haut','--accent']:z<-1.5?['Très bas','--green']:z<-0.5?['Plutôt bas','--green']:['Dans la moyenne','--muted'];
+  const zl=z>1.5?['Très haut','--red']:z>0.5?['Plutôt haut','--orange']:z<-1.5?['Très bas','--green']:z<-0.5?['Plutôt bas','--green']:['Dans la moyenne','--muted'];
   const dev=({EUR:'€',USD:'$',GBP:'£'})[d.cur]||d.cur||'';
   return nomc+'<td>'+(A.last>=100?nf1.format(A.last):nf2.format(A.last))+' '+dev+'</td>'+
     '<td style="color:var('+(tr==null?'--muted':tr>=0?'--green':'--red')+')">'+(tr==null?'—':(tr>=0?'Haussière ':'Fragilisée ')+pct(tr,0,true))+'</td>'+
-    '<td style="color:var('+(A.ddNow<-0.2?'--red':A.ddNow<-0.05?'--accent':'--green')+')">'+(A.ddNow>-0.005?'au sommet':pct(A.ddNow))+'</td>'+
-    '<td style="color:var('+(rs==null?'--muted':rs>70||rs<30?'--accent':'--text2')+')">'+(rs==null?'—':nf0.format(rs)+(rs>70?' surchauffe':rs<30?' essoufflé':''))+'</td>'+
+    '<td style="color:var('+(A.ddNow<-0.2?'--red':A.ddNow<-0.05?'--orange':'--green')+')">'+(A.ddNow>-0.005?'au sommet':pct(A.ddNow))+'</td>'+
+    '<td style="color:var('+(rs==null?'--muted':rs>70||rs<30?'--orange':'--text2')+')">'+(rs==null?'—':nf0.format(rs)+(rs>70?' surchauffe':rs<30?' essoufflé':''))+'</td>'+
     '<td style="color:var('+zl[1]+')">'+zl[0]+'</td><td>'+pct(A.vol)+'</td>'+
-    '<td style="font-weight:600;color:var('+(A.note.score==null?'--muted':A.note.score>=70?'--green':A.note.score>=45?'--accent':'--red')+')">'+(A.note.score==null?'—':A.note.score)+'</td>';}
+    '<td style="font-weight:600;color:var('+(A.note.score==null?'--muted':A.note.score>=70?'--green':A.note.score>=45?'--orange':'--red')+')">'+(A.note.score==null?'—':A.note.score)+'</td>';}
 async function vue(charger){const L=liste(),btn=$('vueBtn'),info=$('vueInfo');
   if(!L.length){$('vue').innerHTML='';info.textContent='Aucune ligne avec un code de bourse pour l’instant.';return;}
   const jour=new Date().toISOString().slice(0,10);let H={};const cache=lisCache();
