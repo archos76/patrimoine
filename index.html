@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -452,15 +453,29 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 #page-techno .at-cb .l{position:absolute;font-size:11px;white-space:nowrap;transform:translateX(-50%);font-variant-numeric:tabular-nums}
 #page-techno .at-ct{font-size:13px;line-height:1.6}
 #page-techno .at-ct b{font-weight:600}
-#page-techno #at-body:not(.at-synth) .at-hg{display:none}
-#page-techno #at-body.at-synth{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;align-items:start}
+#page-techno .at-score{flex:0 1 300px;min-width:220px}
+#page-techno .at-sn{font-size:60px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+#page-techno .at-sn small{font-size:16px;font-weight:500;color:var(--muted);margin-left:4px;letter-spacing:0}
+#page-techno .at-score .at-noteLib{margin:6px 0 0}
+#page-techno .at-rg{position:relative;height:10px;margin:18px 0 6px}
+#page-techno .at-rg i{position:absolute;top:0;bottom:0;opacity:.32}
+#page-techno .at-rg i:first-child{border-radius:5px 0 0 5px}
+#page-techno .at-rg i.fin{border-radius:0 5px 5px 0}
+#page-techno .at-rg u{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:-1px;background:var(--text);opacity:.5}
+#page-techno .at-rg b{position:absolute;top:-6px;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:var(--card);border:5px solid var(--text);box-sizing:border-box}
+#page-techno .at-rgl{display:grid;font-size:11px;color:var(--muted);text-align:center}
+#page-techno .at-vl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px 28px}
+#page-techno .at-vl .t{font-size:12px;color:var(--muted)}
+#page-techno .at-vl .v{font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
+#page-techno .at-onglets{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}
+#page-techno #at-body:not(.at-synth) #at-onglets,#page-techno #at-body:not(.at-synth) #at-reperes{display:none}
+#page-techno #at-body.at-synth{display:flex;flex-direction:column}
 #page-techno #at-body.at-synth>*{min-width:0}
-#page-techno #at-body.at-synth .card{margin:0}
-#page-techno #at-body.at-synth>.at-head,#page-techno #at-body.at-synth>.tk{grid-column:1/-1;margin:0}
-#page-techno #at-body.at-synth #at-cNote,#page-techno #at-body.at-synth #at-cLect,#page-techno #at-body.at-synth #at-tiles,#page-techno #at-body.at-synth .at-cFR,#page-techno #at-body.at-synth .at-help,#page-techno #at-body.at-synth .at-legend{display:none}
-#page-techno #at-body.at-synth .at-g2v{display:contents}
-#page-techno #at-body.at-synth .ct{margin-bottom:10px}
-#page-techno #at-body.at-synth #at-cReg{order:1}#page-techno #at-body.at-synth #at-cPrix{order:2}#page-techno #at-body.at-synth #at-cValo{order:3}#page-techno #at-body.at-synth #at-cCible{order:4}#page-techno #at-body.at-synth #at-cDD{order:5}#page-techno #at-body.at-synth #at-cmpCard{order:6}#page-techno #at-body.at-synth>.tk{order:9}
+#page-techno #at-body.at-synth #at-tiles,#page-techno #at-body.at-synth .at-cFR,#page-techno #at-body.at-synth .at-g2v,#page-techno #at-body.at-synth .at-help,#page-techno #at-body.at-synth .at-legend{display:none}
+#page-techno #at-body.at-synth #at-cPrix:not(.at-vu),#page-techno #at-body.at-synth #at-cReg:not(.at-vu),#page-techno #at-body.at-synth #at-cDD:not(.at-vu),#page-techno #at-body.at-synth #at-cmpCard:not(.at-vu),#page-techno #at-body.at-synth #at-cHist:not(.at-vu){display:none!important}
+#page-techno #at-body.at-synth #at-cLect{order:2}
+#page-techno #at-body.at-synth>.tk{order:3}
+#page-techno #at-body.at-synth .at-read li:nth-child(n+5){display:none}
 #page-techno .at-pick{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 #page-techno .at-pick select,#page-techno .at-pick input{font-family:var(--font);font-size:14px;color:var(--text);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;min-width:0}
 #page-techno .at-pick select{flex:1 1 220px}
@@ -537,6 +552,7 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 <div id="panne" style="display:none"></div>
 <div id="annul" style="display:none"></div>
 <main>
+<div id="exBandeau"></div>
 <div class="page active" id="page-home"><div id="homeAlerts"></div><div class="hBande"><div class="hTete" id="hTete"></div><div class="hCote" id="hCote"></div></div><div class="kr" id="hk" style="display:none"></div><div id="widgetResume" style="display:none"></div><div class="g21 gSeul"><div class="card"><div class="fb" style="margin-bottom:10px"><div class="ct" style="margin:0" id="netTitre">Évolution du patrimoine</div><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div style="display:flex;gap:4px"><button class="ctb" id="netMode_brut" onclick="setNetMode('brut')">Brut</button><button class="ctb active" id="netMode_net" onclick="setNetMode('net')">Net</button></div><div style="display:flex;gap:4px"><button class="ctb active" id="netVue_courbe" onclick="setNetVue('courbe')">Courbes</button><button class="ctb" id="netVue_barres" onclick="setNetVue('barres')">Barres</button></div><div style="display:flex;gap:4px" id="netPs"></div></div></div><div class="cto" id="netCases"></div><div class="cb"><canvas id="cN"></canvas></div></div><div class="g21"><div class="card hRegistre" id="hRegistre"></div><div class="card hAttention" id="hAttention"></div></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Historique</div></div><div id="sl" style="margin-top:12px"></div></div></div>
 <div class="page" id="page-bourse">
 <div id="rstat" class="rs" style="margin:0 0 8px"></div>
@@ -686,25 +702,28 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="at-pick"><select id="at-sel" aria-label="Valeur à analyser"></select><input type="text" id="at-q" placeholder="ou un code Yahoo (ex. RMS.PA)" aria-label="Code Yahoo Finance" autocomplete="off"><button class="pb" id="at-go">Analyser</button><button class="pb" id="at-upd" hidden>Mettre à jour</button></div>
 <div class="tk" id="at-status" role="status"></div></div>
 <div id="at-body" style="display:none">
-<div class="at-head"><div class="at-hl"><div class="at-title" id="at-title"></div><div class="at-cours" id="at-cours"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div><div class="at-hg"><div><canvas id="at-cvG1"></canvas><div class="at-gl">Fenêtre d’entrée</div></div><div><canvas id="at-cvG2"></canvas><div class="at-gl">Momentum 1 an</div></div></div></div>
+<div class="at-head"><div class="at-hl"><div class="at-title" id="at-title"></div><div class="at-cours" id="at-cours"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div></div>
 <div class="card" id="at-cNote"><div class="ct">Fenêtre d’entrée</div>
-<div class="at-note"><div class="at-jauge"><canvas id="at-cvNote"></canvas><div class="at-noteLib" id="at-noteLib"></div></div><div class="at-parts" id="at-parts"></div></div>
-<p class="at-help" style="margin:16px 0 0">Cette note est un calcul mécanique à partir du cours passé et du PER prévisionnel. Elle est haute quand une action en tendance haussière revient sur un prix bas pour elle, et plafonnée quand la tendance est baissière. Elle ne prévoit rien, ignore l’actualité et la santé de l’entreprise, et n’est pas un conseil d’investissement. <span id="at-noteInfo"></span></p></div>
+<div class="at-note"><div class="at-score"><div class="at-sn"><span id="at-noteNum"></span><small>/100</small></div><div class="at-noteLib" id="at-noteLib"></div><div id="at-regle"></div></div><div class="at-parts" id="at-parts"></div></div>
+<p class="at-help" style="margin:16px 0 0">Cette note est un calcul mécanique à partir du cours passé et du PER prévisionnel. Elle est haute quand une action en tendance haussière revient sur un prix bas pour elle, et plafonnée quand la tendance est baissière. Elle ne prévoit rien, ignore l’actualité et la santé de l’entreprise, et n’est pas un conseil d’investissement.</p><div class="at-ro" id="at-noteInfo" style="margin:10px 0 0"></div></div>
+<div class="kr" id="at-reperes"></div>
 <div class="kr" id="at-tiles"></div>
 <div class="g2 at-g2v"><div class="card" id="at-cValo"><div class="ct">Valorisation</div><p class="at-help">Combien le marché paie pour 1 € de bénéfice attendu (PER) et pour 1 € de trésorerie dégagée (P/FCF). Les zones de couleur sont des repères généraux, pas une comparaison avec le secteur.</p>
-<div class="at-vg"><div><canvas id="at-cvPer"></canvas><div class="at-gl">PER prévisionnel</div><div class="at-gs" id="at-perSub"></div></div><div><canvas id="at-cvPfcf"></canvas><div class="at-gl">Prix / trésorerie (P/FCF)</div><div class="at-gs" id="at-pfcfSub"></div></div></div></div>
+<div id="at-valo"></div></div>
 <div class="card" id="at-cCible"><div class="ct">Objectif des analystes</div><p class="at-help">Le prix que les analystes financiers visent en moyenne d’ici un an. C’est une opinion, souvent trop optimiste, pas une promesse.</p><div id="at-cible"></div></div></div>
 <div class="card" id="at-cLect"><div class="ct">Lecture rapide</div><ul class="at-read" id="at-read"></ul></div>
+<div class="at-onglets" id="at-onglets"><button class="pb" data-c="at-cPrix">Cours et paliers</button><button class="pb" data-c="at-cReg">Trajectoire</button><button class="pb" data-c="at-cDD">Baisse depuis le sommet</button><button class="pb" data-c="at-cmpCard">Face au marché</button><button class="pb" data-c="at-cHist">Historique de la note</button></div>
 <div class="card" id="at-cPrix"><div class="ct">Cours et paliers</div><p class="at-help">La courbe bleue est le prix de l’action. Les deux moyennes lissent le prix pour montrer la tendance. Les lignes rouges et vertes sont des prix où l’action a souvent buté ou rebondi par le passé.</p><div class="at-ro" id="at-roPrice"></div><canvas id="at-cvPrice"></canvas>
 <div class="at-legend"><span><i style="background:var(--bourse)"></i>Cours</span><span><i style="background:var(--accent)"></i>Moyenne 50 semaines</span><span><i style="background:var(--text)"></i>Moyenne 200 semaines</span><span><i style="background:var(--red)"></i>Palier au-dessus (résistance)</span><span><i style="background:var(--green)"></i>Palier en dessous (support)</span><span><i style="background:var(--muted);height:8px;opacity:.5"></i>Prix les plus échangés</span><span><i style="background:var(--green);width:8px;height:8px;border-radius:50%"></i>Croisement haussier des moyennes</span><span><i style="background:var(--red);width:8px;height:8px;border-radius:50%"></i>Croisement baissier</span><span><i style="background:var(--crypto)"></i>Ton prix de revient</span></div></div>
 <div class="card" id="at-cDD"><div class="ct">Baisse depuis le plus haut</div><p class="at-help">À 0 %, l’action est à son record. Plus la courbe descend, plus l’action est loin de son dernier sommet.</p><div class="at-ro" id="at-roDD"></div><canvas id="at-cvDD"></canvas></div>
 <div class="card" id="at-cReg"><div class="fb" style="margin-bottom:14px;gap:8px"><div class="ct" style="margin:0">Trajectoire de long terme</div><div class="at-pills" id="at-regPills"></div></div><p class="at-help">La ligne claire est la trajectoire moyenne de l’action sur la période. Zone rouge : le prix est haut par rapport à son habitude. Zone verte : il est bas par rapport à son habitude.</p><div class="at-ro" id="at-roReg"></div><canvas id="at-cvReg"></canvas></div>
 <div class="card" id="at-cmpCard" style="display:none"><div class="ct">Comparaison avec le marché</div><p class="at-help">Les deux courbes partent du même point au début de la période. Si la courbe bleue finit au-dessus de l’autre, l’action a fait mieux que son indice. Les dividendes ne sont comptés d’aucun côté.</p><div class="at-ro" id="at-roCmp"></div><canvas id="at-cvCmp"></canvas><div class="at-legend"><span><i style="background:var(--bourse)"></i><span id="at-cmpA"></span></span><span><i style="background:var(--text)"></i><span id="at-cmpB"></span></span></div></div>
+<div class="card" id="at-cHist"><div class="ct">Historique de la note</div><p class="at-help">La note que l’action aurait eue à chaque date, calculée avec les seules données connues à ce moment-là, puis ce que le cours a fait dans l’année suivante. C’est le moyen de vérifier si la note a été utile sur cette action.</p><div class="at-ro" id="at-roHist"></div><canvas id="at-cvHist"></canvas><div id="at-histTab" style="margin-top:14px"></div></div>
 <div class="g2 at-cFR"><div class="card"><div class="ct">Retracement Fibonacci</div><p class="at-help">On mesure la dernière grande hausse, du point bas au point haut. Les lignes indiquent quelle part de cette hausse serait effacée si le prix redescendait jusque-là.</p><div class="at-ro" id="at-roFib"></div><canvas id="at-cvFib"></canvas></div>
 <div class="card"><div class="ct">Élan récent (RSI)</div><p class="at-help">Le RSI va de 0 à 100. Au-dessus de 70, l’action a beaucoup monté récemment. En dessous de 30, elle a beaucoup baissé récemment.</p><div class="at-ro" id="at-roRsi"></div><canvas id="at-cvRsi"></canvas></div></div>
 <div class="tk" style="margin:4px 2px 24px;line-height:1.55">Lecture du passé du cours, à titre pédagogique. Ce n’est pas un conseil en investissement. Les performances passées ne préjugent pas des performances futures.</div>
 </div>
-<div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Vue d’ensemble de mes lignes</div><button class="pb" id="at-vueBtn">Charger toutes mes lignes</button></div><p class="at-help" style="margin:0 0 10px">Les mêmes indicateurs pour chaque ligne, calculés sur tout l’historique chargé (20 ans au plus). Touche une ligne pour ouvrir son analyse.</p><div class="tw" id="at-vue"></div><div class="tk" id="at-vueInfo" style="margin-top:8px;line-height:1.5"></div></div></div>
+<div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Vue d’ensemble de mes lignes</div><button class="pb" id="at-vueBtn">Charger toutes mes lignes</button></div><p class="at-help" style="margin:0 0 10px">Les mêmes indicateurs pour chaque ligne, calculés sur tout l’historique chargé (20 ans au plus). Touche une ligne pour ouvrir son analyse, ou un titre de colonne pour trier.</p><div class="tw" id="at-vue"></div><div class="tk" id="at-vueInfo" style="margin-top:8px;line-height:1.5"></div></div></div>
 <div class="page" id="page-resume"><div class="kr" id="resumeKpi"></div><div class="card"><div class="ct">Heatmap portefeuille</div><div id="heatmap" class="tw" style="width:100%"></div></div><div class="card"><div class="ct">Résumé du mois</div><div id="resumeDetail"></div></div></div>
 <div class="page" id="page-simulator"><div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Où j'en serai</div><div style="display:flex;gap:4px" id="projAgeBtns"></div></div><div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;line-height:1.6">Ton patrimoine d'aujourd'hui, prolongé avec ce que tu rembourses chaque mois, ce que tes biens rapportent et ce que tu épargnes.</div><div class="kr" id="projKpi" style="margin-bottom:14px"></div><div class="cb"><canvas id="cProjPat"></canvas></div><div id="projReglages" style="margin-top:16px"></div><div id="projNote" style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6"></div></div><div id="simContent"></div></div>
 </main></div></div>
@@ -802,7 +821,7 @@ if(hiddenMode){document.getElementById('dmBtn').textContent='◍'}
 firebase.initializeApp({apiKey:"AIzaSyB1ngpW9j09gV2FrW6leTN5kf3JVi9j6-g",authDomain:"patrimoine-1e959.firebaseapp.com",projectId:"patrimoine-1e959",storageBucket:"patrimoine-1e959.firebasestorage.app",messagingSenderId:"77172547528",appId:"1:77172547528:web:2f15c6cdcda20a85fcaafd"});
 const auth=firebase.auth(),db=firebase.firestore();let uid=null;
 window.doLogin=async()=>{try{await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())}catch(e){document.getElementById('login-err').textContent=e.message}};
-auth.onAuthStateChanged(async u=>{if(u){uid=u.uid;document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';document.getElementById('userBar').innerHTML=(u.photoURL?'<img src="'+u.photoURL+'">':'')+'<span>'+(u.displayName||'')+'</span><span class="logout" onclick="auth.signOut()">Déco</span>';await loadData();majNomsComptes();initApp()}else{uid=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none'}});
+auth.onAuthStateChanged(async u=>{if(u){uid=u.uid;document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';document.getElementById('userBar').innerHTML=(u.photoURL?'<img src="'+u.photoURL+'">':'')+'<span>'+(u.displayName||'')+'</span><span class="logout" onclick="auth.signOut()">Déco</span>';await loadData();majNomsComptes();initApp();majExemple()}else{uid=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none'}});
 
 const SECTORS={"EPA:AI":"Chimie","EPA:DCAM":"ETF","EPA:PUST":"ETF","EPA:GTT":"Énergie","EPA:DG":"Industrie","EPA:EL":"Santé","EPA:SU":"Industrie","EPA:ALMIB":"Biotech","GOOGL":"Tech","AMBA":"Tech","NET":"Tech","DXCM":"Santé","ON":"Tech","NU":"Finance","RKLB":"Aérospatial","TOST":"Tech","AMZN":"Tech","SNOW":"Tech","SOFI":"Finance","SYM":"Tech","TER":"Tech","TTD":"Tech","TMDX":"Santé","CELH":"Conso","PATH":"Tech","VRT":"Industrie","ZS":"Tech","EPA:BNKE":"Finance","LON:HNSC":"ETF","XDGU":"Obligations","CS.PA":"Finance","SAN.PA":"Santé","TTE.PA":"Énergie","HO.PA":"Aérospatial","EPA:CS":"Finance","EPA:SAN":"Santé","EPA:TTE":"Énergie","EPA:HO":"Aérospatial"};
 /* Secteurs : dix-sept teintes espacees mais de meme intensite, assez
@@ -810,7 +829,7 @@ const SECTORS={"EPA:AI":"Chimie","EPA:DCAM":"ETF","EPA:PUST":"ETF","EPA:GTT":"É
 const SC={"Tech":"#4e7fc4","ETF":"#b5781f","Santé":"#8c6bbf","Finance":"#a8862a","Industrie":"#5d7fa8","Énergie":"#c2544e","Chimie":"#2f9b6e","Biotech":"#9a63ab","Aérospatial":"#3f9fb0","Conso":"#c2714a","Obligations":"#7a8597","Immobilier":"#a8703f","Luxe":"#b05a85","Télécom":"#4a9aa8","Matériaux":"#7d914f","Services":"#8878ad","Autre":"#6b7585"};
 const BDEF={revenus:[{id:'r1',nom:'Salaire',montant:2200}],categories:[{id:'cat1',nom:'Investissements',postes:[{id:'p1',nom:'Actions',montant:200},{id:'p2',nom:'Assurance vie',montant:200}]},{id:'cat2',nom:'Logement',postes:[{id:'p3',nom:'Loyer',montant:800},{id:'p4',nom:'Charges',montant:120}]},{id:'cat3',nom:'Vie quotidienne',postes:[{id:'p5',nom:'Courses',montant:300},{id:'p6',nom:'Restaurants',montant:100}]},{id:'cat4',nom:'Abonnements',postes:[{id:'p7',nom:'Internet',montant:50},{id:'p8',nom:'Sport',montant:32}]}]};
 
-const D={comptes:[{id:'c1',nom:"Compte courant",banque:"Ma banque",montant:1500}],epLibre:[{id:'el1',nom:"Livret A",banque:"Ma banque",montant:5000}],epBloq:[],immo:[{id:'i1',nom:"Appartement (exemple)",type:"RP",prixAchat:200000,valeur:210000,sci:false,partsPct:100}],dettes:[{id:'d1',nom:"Prêt immobilier (exemple)",type:"Immo",banque:"Ma banque",emprunte:180000,restant:165000,taux:2,dureeMois:300,fin:"Jan 2048"}],crypto:[{id:'cr1',nom:"Bitcoin",symbol:"BTC",qte:.01,prix:0,pru:0,var:0,montant:600}],pf:{pea:{esp:100,ver:3000,cur:'EUR',l:[{id:1,c:"EPA:AI",n:"Air Liquide",co:170,p:5,pr:160,div:3.7,var:0},{id:2,c:"EPA:DCAM",n:"Amundi World",co:5.5,p:300,pr:5,div:0,var:0},{id:3,c:"EPA:SU",n:"Schneider",co:250,p:2,pr:230,div:3.9,var:0}]},ctosb:{esp:50,ver:1500,cur:'USD',l:[{id:101,c:"GOOGL",n:"Alphabet",co:270,usd:310,p:3,pr:200,div:0,var:0},{id:102,c:"AMZN",n:"Amazon",co:185,usd:215,p:3,pr:190,div:0,var:0}]},ctoibkr:{esp:0,ver:0,cur:'EUR',l:[]},avl:{esp:0,ver:0,cur:'EUR',l:[]}},versMensuels:[],perfData:[],objectifs:[{id:'o1',nom:"Épargne de précaution",cible:10000,type:"epargne",actuel:0},{id:'o2',nom:"Indépendance financière",cible:500000,type:"net",actuel:0}],budget:null};
+const D={comptes:[{id:'c1',nom:"Compte courant",banque:"Ma banque",montant:1500}],epLibre:[{id:'el1',nom:"Livret A",banque:"Ma banque",montant:5000}],epBloq:[],immo:[{id:'i1',nom:"Appartement (exemple)",type:"RP",prixAchat:200000,valeur:210000,sci:false,partsPct:100}],dettes:[{id:'d1',nom:"Prêt immobilier (exemple)",type:"Immo",banque:"Ma banque",emprunte:180000,restant:165000,taux:2,dureeMois:300,fin:"Jan 2048"}],crypto:[{id:'cr1',nom:"Bitcoin",symbol:"BTC",qte:.01,prix:0,pru:0,var:0,montant:600}],pf:{pea:{esp:100,ver:3000,cur:'EUR',l:[{id:1,c:"EPA:AI",n:"Air Liquide",co:170,p:5,pr:160,div:3.7,var:0},{id:2,c:"EPA:DCAM",n:"Amundi World",co:5.5,p:300,pr:5,div:0,var:0},{id:3,c:"EPA:SU",n:"Schneider",co:250,p:2,pr:230,div:3.9,var:0}]},ctosb:{esp:50,ver:1500,cur:'USD',l:[{id:101,c:"GOOGL",n:"Alphabet",co:270,usd:310,p:3,pr:200,div:0,var:0},{id:102,c:"AMZN",n:"Amazon",co:185,usd:215,p:3,pr:190,div:0,var:0}]},ctoibkr:{esp:0,ver:0,cur:'EUR',l:[]},avl:{esp:0,ver:0,cur:'EUR',l:[]}},versMensuels:[],perfData:[],objectifs:[{id:'o1',nom:"Épargne de précaution",cible:10000,type:"epargne",actuel:0},{id:'o2',nom:"Indépendance financière",cible:500000,type:"net",actuel:0}],budget:null,exemple:true};
 
 let S,snaps=[];
 const SEED=[];/* plus d'historique dans le fichier : celui de chacun vit dans ses données */
@@ -841,6 +860,25 @@ window.edNomCompte=function(pk){
   const n=v.replace(/[<>&"'`\\]/g,'').trim().slice(0,24);
   if(n)S.nomsComptes[pk]=n;else delete S.nomsComptes[pk];
   majNomsComptes();autoSave();R(true);
+};
+/* ===== PREMIÈRE VISITE =====
+   Un nouvel utilisateur arrive sur des données d'exemple : on le lui dit, et on lui propose de repartir de zéro. */
+function majExemple(){
+  const z=document.getElementById('exBandeau');if(!z)return;
+  if(!S||!S.exemple||chargeKO){z.innerHTML='';return}
+  z.innerHTML='<div class="card" style="border-color:var(--accent);margin-bottom:16px"><div style="font-weight:600;font-size:15px;margin-bottom:6px">Bienvenue ! Ce que tu vois est un exemple</div>'+
+    '<div style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:14px;max-width:70ch">L’appartement, le prêt, les comptes et les actions affichés sont inventés, pour te montrer à quoi ressemble l’outil une fois rempli. Les autres utilisateurs ne peuvent pas voir ce que tu saisis.</div>'+
+    '<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" onclick="exVider()">Tout vider et commencer</button><button class="btn btn-o" onclick="exGarder()">Garder les exemples et les modifier</button></div></div>';
+}
+window.exGarder=function(){delete S.exemple;autoSave();majExemple()};
+window.exVider=function(){
+  S.comptes=[];S.epLibre=[];S.epBloq=[];S.immo=[];S.dettes=[];S.crypto=[];
+  ['pea','ctosb','ctoibkr','avl'].forEach(k=>{if(S.pf[k]){S.pf[k].l=[];S.pf[k].esp=0;S.pf[k].ver=0}});
+  S.versMensuels=[];S.perfData=[];S.objectifs=[];S.watchlist=[];
+  /* Le budget repart du modèle de départ : un budget vide n'a rien à afficher, on garde des postes à ajuster */
+  S.budget=JSON.parse(JSON.stringify(BDEF));
+  delete S.exemple;snaps=[];
+  autoSave();majExemple();R(true);
 };
 async function loadData(){try{const doc=await db.collection('users').doc(uid).get();if(doc.exists){S=doc.data().patrimoine||JSON.parse(JSON.stringify(D));snaps=doc.data().snapshots||[]}else{let ls=localStorage.getItem('patrimoine_data');if(ls){S=JSON.parse(ls);snaps=JSON.parse(localStorage.getItem('patrimoine_snaps')||'[]');await saveData()}else{S=JSON.parse(JSON.stringify(D));snaps=[]}}/* Un compte créé avant ce réglage garde les noms qu'il avait */
 if(doc.exists&&doc.data().patrimoine&&!S.nomsComptes)S.nomsComptes={pea:'PEA',ctosb:'CTO Sa'+'xo',ctoibkr:'CTO IB'+'KR',avl:'AV Lin'+'xea'};
@@ -2497,7 +2535,7 @@ const avScpi=[...S.epLibre,...S.epBloq].filter(x=>/linxea|assurance.?vie|^av /i.
 snaps.push({date:lb,ts:Date.now(),immobilier:t.im,comptes:t.co,epargne:t.ep,bourse:t.bo,crypto:t.cr,dettes:t.de,brut:t.br,net:t.ne,
   pea:t.p.v,ctosb:t.s.v,ctoibkr:t.i.v,avl:t.a.v,avScpi:avScpi,pee:pee,immoNet:t.im-t.de});autoSave();const b=document.getElementById('sbtn');b.classList.add('btn-ok');b.textContent='✓';setTimeout(()=>{b.classList.remove('btn-ok');b.textContent='◉'},1500);R(true)};
 window.dS=ts=>{snaps=snaps.filter(s=>s.ts!==ts);autoSave();R(true)};
-window.doReset=async()=>{S=JSON.parse(JSON.stringify(D));snaps=[];majNomsComptes();await saveData();R(true)};
+window.doReset=async()=>{S=JSON.parse(JSON.stringify(D));snaps=[];majNomsComptes();await saveData();R(true);majExemple()};
 /* Un point d'historique peut venir des données de départ ("Juin 25") ou d'une
    sauvegarde manuelle ("20 avr. 2026"). On en déduit le mois sous forme AAAAMM. */
 const MOIS_FR={jan:1,fev:2,mar:3,avr:4,mai:5,juin:6,juil:7,aou:8,sep:9,oct:10,nov:11,dec:12};
@@ -3769,7 +3807,7 @@ window.impSauvegarde=function(input){
     if(!p||!p.patrimoine||p.format!=='patrimoine')return infoSauve('Ce fichier ne provient pas de cette application.','var(--red)');
     const d=p.date?new Date(p.date).toLocaleString('fr-FR'):'date inconnue';
     if(!confirm('Restaurer la sauvegarde du '+d+' ?\n\nToutes tes données actuelles seront remplacées.'))return;
-    S=p.patrimoine;snaps=p.snapshots||[];majNomsComptes();
+    S=p.patrimoine;snaps=p.snapshots||[];majNomsComptes();majExemple();
     saveData();
     infoSauve('✓ Sauvegarde du '+d+' restaurée.','var(--green)');
     R(true);
@@ -7414,7 +7452,7 @@ function initApp(){
 "use strict";
 const $=id=>document.getElementById('at-'+id);
 const C={},FONT="'Onest',system-ui,sans-serif",DAY=864e5,YEAR=365.25*DAY;
-const T={w:null,name:'',demo:false,period:'all',hover:null,hoverR:null,A:null,cur:'€',key:null,src:null,bench:null,pos:null,fond:null,synth:true};
+const T={w:null,name:'',demo:false,period:'all',hover:null,hoverR:null,A:null,cur:'€',key:null,src:null,bench:null,pos:null,fond:null,synth:true,onglet:'at-cPrix'};
 try{if(localStorage.getItem('at-mode')==='detail')T.synth=false}catch(e){}
 function cols(){const cs=getComputedStyle(document.body),g=n=>cs.getPropertyValue(n).trim();
   C.bg=g('--bg');C.panel=g('--card');C.line=g('--border');C.text=g('--text');C.muted=g('--muted');C.accent=g('--accent');C.up=g('--green');C.down=g('--red');C.price=g('--bourse');C.pru=g('--crypto');}
@@ -7513,7 +7551,7 @@ function tag(g,text,x,y,color,align){const c=g.c;c.font='500 11px '+FONT;const w
 const pe=v=>nf0.format(v)+' '+T.cur;
 function pfmt(A){return A.hi<20?(v=>nf1.format(v)+' '+T.cur):pe;}
 
-function drawPrice(){const A=T.A,cv=$('cvPrice'),H=T.synth?230:(cv.clientWidth<500?340:420);
+function drawPrice(){const A=T.A,cv=$('cvPrice'),H=T.synth?330:(cv.clientWidth<500?340:420);
   const pad=(A.hi-A.lo)*0.06,ymin=Math.max(0,A.lo-pad),ymax=A.hi+pad*1.6,g=base(cv,H,ymin,ymax,A.t,pfmt(A)),c=g.c;
   // prix les plus échangés
   const P=A.prof,bm=Math.max(...P.bins),bh=(g.Y(P.lo)-g.Y(P.hi))/P.bins.length;
@@ -7531,7 +7569,7 @@ function drawPrice(){const A=T.A,cv=$('cvPrice'),H=T.synth?230:(cv.clientWidth<5
   $('roPrice').innerHTML=`${dstr(A.t[i])} · cours <b>${eur(A.c[i])}</b>`+(A.ma50[i]!=null?` · moy. 50 sem. <b>${eur(A.ma50[i])}</b>`:'')+(A.ma200[i]!=null?` · moy. 200 sem. <b>${eur(A.ma200[i])}</b>`:'');
 }
 function drawDD(){const A=T.A,cv=$('cvDD'),lo=Math.min(-0.1,Math.floor(A.maxDD*10-0.5)/10),st=lo<-0.5?0.2:0.1,yt=[];for(let v=0;v>=lo-1e-9;v-=st)yt.push(v);
-  const g=base(cv,T.synth?230:170,lo,0.02,A.t,v=>pct(v),yt),c=g.c;
+  const g=base(cv,T.synth?330:170,lo,0.02,A.t,v=>pct(v),yt),c=g.c;
   const grd=c.createLinearGradient(0,g.Y(0),0,g.Y(lo));grd.addColorStop(0,'rgba(239,107,95,.05)');grd.addColorStop(1,'rgba(239,107,95,.45)');
   c.fillStyle=grd;c.beginPath();c.moveTo(g.X(0),g.Y(0));A.dd.forEach((v,i)=>c.lineTo(g.X(i),g.Y(v)));c.lineTo(g.X(A.n-1),g.Y(0));c.closePath();c.fill();
   line(g,A.dd,C.down,1.4);dot(g,A.n-1,A.ddNow,C.down);
@@ -7540,7 +7578,7 @@ function drawDD(){const A=T.A,cv=$('cvDD'),lo=Math.min(-0.1,Math.floor(A.maxDD*1
   const i=T.hover==null?A.n-1:T.hover;
   $('roDD').innerHTML=`${dstr(A.t[i])} · <b>${pct(A.dd[i],1)}</b> sous le plus haut · pire baisse de la période <b>${pct(A.maxDD)}</b> (${mstr(A.t[A.maxDDI])})`;
 }
-function drawReg(){const A=T.A,cv=$('cvReg'),H=T.synth?230:(cv.clientWidth<500?300:360),f=[-2,-1,0,1,2].map(k=>A.fit(k));
+function drawReg(){const A=T.A,cv=$('cvReg'),H=T.synth?330:(cv.clientWidth<500?300:360),f=[-2,-1,0,1,2].map(k=>A.fit(k));
   const lo=Math.min(A.lo,Math.min(...f[0])),hi=Math.max(A.hi,Math.max(...f[4])),pad=(hi-lo)*0.05,g=base(cv,H,Math.max(0,lo-pad),hi+pad,A.t,pfmt(A)),c=g.c;
   const band=(a,b,col)=>{c.fillStyle=col;c.beginPath();a.forEach((v,i)=>i?c.lineTo(g.X(i),g.Y(v)):c.moveTo(g.X(i),g.Y(v)));for(let i=b.length-1;i>=0;i--)c.lineTo(g.X(i),g.Y(b[i]));c.closePath();c.fill();};
   band(f[4],f[2],'rgba(239,107,95,.13)');band(f[2],f[0],'rgba(65,192,139,.13)');
@@ -7575,7 +7613,7 @@ function drawRsi(){const R=T.A.R,cv=$('cvRsi'),g=base(cv,220,0,100,R.t,v=>String
   if(T.hoverR!=null){cross(g,i);if(R.v[i]!=null)dot(g,i,R.v[i],C.price);}
   $('roRsi').innerHTML=R.v[i]==null?'Historique trop court pour calculer le RSI.':`${mstr(R.t[i])} · RSI sur 14 ${R.unit} : <b>${nf1.format(R.v[i])}</b>`;
 }
-function drawAll(){cols();drawPrice();drawDD();drawReg();drawFib();drawRsi();drawCmp();drawNote();drawSynth();}
+function drawAll(){cols();drawPrice();drawDD();drawReg();drawFib();drawRsi();drawCmp();drawNote();drawSynth();drawHist();}
 
 /* ---------- résumé ---------- */
 function renderSummary(){const A=T.A,n=A.n;
@@ -7603,7 +7641,7 @@ function renderSummary(){const A=T.A,n=A.n;
   li.push(['Paliers','muted','Prix à surveiller',(r1?`Prochain palier au-dessus : ${eur(r1)}. `:'Aucun palier repéré au-dessus du cours. ')+(s1?`Prochain palier en dessous : ${eur(s1)}. `:'Aucun palier repéré en dessous du cours. ')+`Prix le plus échangé de la période : autour de ${eur(A.prof.poc)}.`]);
   extraRead(A,li);$('read').innerHTML=li.map(x=>`<li><span class="tag ${x[1]}">${esc(x[0])}</span><span><span class="what">${x[2]}</span>${x[3]}</span></li>`).join('');
 }
-function refresh(){T.A=analyse();extras(T.A);T.hover=null;T.hoverR=null;renderSummary();renderNote();renderSynth();drawAll();}
+function refresh(){T.A=analyse();extras(T.A);T.hover=null;T.hoverR=null;renderSummary();renderNote();renderSynth();drawAll();planHist();}
 
 
 /* ---------- valeurs disponibles ---------- */
@@ -7724,54 +7762,50 @@ function note(A,F){const n=A.n,parts=[],cl=(x,a,b)=>Math.max(a,Math.min(b,x));
 function renderNote(){const A=T.A,N=A.note,z=$('parts');
   z.innerHTML=N.parts.map(p=>{const r=p.v==null?0:p.v/p.max,c=p.v==null?'--muted':r>=0.66?'--green':r>=0.33?'--accent':'--red';
     return '<div class="at-part"><span>'+esc(p.k)+' <span class="muted">· '+esc(p.q)+'</span></span><span class="p">'+(p.v==null?'—':p.v+' / '+p.max)+'</span><span class="b"><i style="width:'+Math.round(r*100)+'%;background:var('+c+')"></i></span></div>';}).join('');
+  $('noteNum').textContent=N.score==null?'—':N.score;$('regle').innerHTML=regle(N.score,[[45,'--red'],[70,'--accent'],[100,'--green']],100,null,['Peu favorable','Neutre','Favorable']);
   const lib=$('noteLib');lib.textContent=N.lib;lib.style.color=N.col==='muted'?'var(--muted)':'var(--'+({up:'green',accent:'accent',down:'red'})[N.col]+')';
   $('noteInfo').textContent=(N.plaf?'Tendance baissière : la note est plafonnée à 55. ':'')+(N.sur<100&&N.score!=null?'Note calculée sur '+N.sur+' points : un critère n’a pas pu être évalué.':'');}
-function drawNote(){const A=T.A;if(!A||!A.note)return;const N=A.note,cv=$('cvNote'),W=260,H=158,dpr=window.devicePixelRatio||1;
-  cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);
-  const cx=W/2,cy=134,r=104,ang=v=>Math.PI*(1+v/100),arc=(a,b,col,w,al)=>{c.beginPath();c.arc(cx,cy,r,ang(a),ang(b));c.strokeStyle=col;c.lineWidth=w;c.globalAlpha=al;c.lineCap='round';c.stroke();c.globalAlpha=1;};
-  arc(1,43,C.down,14,.22);arc(47,68,C.accent,14,.22);arc(72,99,C.up,14,.22);
-  c.font='11px '+FONT;c.fillStyle=C.muted;c.textAlign='center';c.textBaseline='middle';
-  [[0,'0'],[45,'45'],[70,'70'],[100,'100']].forEach(g=>{const a=ang(g[0]);c.fillText(g[1],cx+Math.cos(a)*(r-22),cy+Math.sin(a)*(r-22)+(g[0]===0||g[0]===100?-2:0));});
-  const col=N.col==='up'?C.up:N.col==='accent'?C.accent:N.col==='down'?C.down:C.muted;
-  if(N.score!=null){const s=Math.max(1,Math.min(99,N.score));arc(1,s,col,14,1);
-    const a=ang(s),px=cx+Math.cos(a)*r,py=cy+Math.sin(a)*r;c.beginPath();c.arc(px,py,10,0,7);c.fillStyle=C.panel;c.fill();c.lineWidth=4;c.strokeStyle=col;c.stroke();}
-  c.textBaseline='alphabetic';c.fillStyle=N.score==null?C.muted:C.text;c.font='600 50px '+FONT;const txt=N.score==null?'—':String(N.score),tw=c.measureText(txt).width;
-  c.textAlign='left';c.fillText(txt,cx-tw/2-(N.score==null?0:14),cy-4);
-  if(N.score!=null){c.font='500 14px '+FONT;c.fillStyle=C.muted;c.fillText('/100',cx+tw/2-12,cy-5);}}
+function drawNote(){}
 /* ---------- fiche synthétique : petits compteurs, valorisation, objectif des analystes ---------- */
-function jauge(cv,W,H,o){const dpr=window.devicePixelRatio||1;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';cv.style.margin='0 auto';
-  const c=cv.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,W,H);
-  const lw=o.lw||10,cx=W/2,cy=H-12,r=Math.min(W/2-lw,H-22),ang=f=>Math.PI*(1+f);
-  const arc=(a,b,col,al)=>{c.beginPath();c.arc(cx,cy,r,ang(a),ang(b));c.strokeStyle=col;c.lineWidth=lw;c.globalAlpha=al;c.lineCap='round';c.stroke();c.globalAlpha=1;};
-  o.zones.forEach(z=>arc(z[0]+0.02,z[1]-0.02,z[2],.24));
-  if(o.f!=null){const f=Math.max(0.02,Math.min(0.98,o.f));arc(0.02,f,o.col,1);
-    const a=ang(f);c.beginPath();c.arc(cx+Math.cos(a)*r,cy+Math.sin(a)*r,lw*0.72,0,7);c.fillStyle=C.panel;c.fill();c.lineWidth=3;c.strokeStyle=o.col;c.stroke();}
-  if(o.tick!=null){const a=ang(Math.max(0,Math.min(1,o.tick)));c.beginPath();c.moveTo(cx+Math.cos(a)*(r-lw),cy+Math.sin(a)*(r-lw));c.lineTo(cx+Math.cos(a)*(r+lw),cy+Math.sin(a)*(r+lw));c.strokeStyle=C.text;c.lineWidth=2;c.stroke();}
-  c.textAlign='center';c.textBaseline='alphabetic';c.fillStyle=o.f==null?C.muted:C.text;c.font='600 '+(o.fs||20)+'px '+FONT;c.fillText(o.txt,cx,cy-2);}
-function zoneCol(f,zones){for(const z of zones)if(f<=z[1])return z[2];return zones[zones.length-1][2];}
-function renderSynth(){const A=T.A,F=A.fond,n=A.n;
+/* Une règle horizontale : des zones de couleur, un repère pour la valeur, un trait de comparaison éventuel */
+function regle(v,zones,max,trait,noms){let h='<div class="at-rg">',a=0,col='--text';
+  zones.forEach((z,i)=>{h+='<i'+(i===zones.length-1?' class="fin"':'')+' style="left:'+(a/max*100)+'%;width:'+((z[0]-a)/max*100)+'%;background:var('+z[1]+')"></i>';if(v!=null&&v>=a)col=z[1];a=z[0];});
+  if(trait!=null&&trait>0)h+='<u style="left:'+Math.min(100,trait/max*100)+'%"></u>';
+  if(v!=null)h+='<b style="left:'+Math.max(0,Math.min(100,v/max*100))+'%;border-color:var('+col+')"></b>';
+  h+='</div>';a=0;
+  if(noms){h+='<div class="at-rgl" style="grid-template-columns:'+zones.map(z=>{const w=z[0]-a;a=z[0];return w+'fr'}).join(' ')+'">'+noms.map(x=>'<span>'+x+'</span>').join('')+'</div>';}
+  return h;}
+function majOnglet(){const ids=['at-cPrix','at-cReg','at-cDD','at-cmpCard','at-cHist'];if(ids.indexOf(T.onglet)<0)T.onglet='at-cPrix';
+  ids.forEach(id=>document.getElementById(id).classList.toggle('at-vu',id===T.onglet));
+  $('onglets').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.c===T.onglet));}
+function renderSynth(){const A=T.A,F=A.fond;
   $('body').classList.toggle('at-synth',!!T.synth);
-  const y=T.w.c.length>53?T.w.c[T.w.c.length-53]:null;
-  $('cours').innerHTML='<b>'+eur(A.last)+'</b>'+(A.mom!=null?' · <span class="'+(A.mom>=0?'up':'down')+'">'+pct(A.mom,1,true)+' sur 1 an</span>':'');
+  $('cours').innerHTML='<b>'+eur(A.last)+'</b>';
   $('regPills').innerHTML='<span class="at-pill">Tendance '+pct(A.trend,1,true)+'/an</span><span class="at-pill '+(A.z>1?'down':A.z<-1?'up':'')+'">Écart '+(A.z>0?'+':'−')+nf1.format(Math.abs(A.z))+' σ</span>';
-  $('perSub').textContent=F&&F.fpe>0?(F.pe>0?'sur les bénéfices passés : '+nf1.format(F.pe)+'x (trait)':''):(F&&F.vieux?'script Google à mettre à jour':'indisponible');
-  $('pfcfSub').textContent=F&&F.pfcf>0?'':(F&&F.vieux?'script Google à mettre à jour':'indisponible');
+  /* les quatre repères de la fiche */
+  const zt=A.z>1.5?'Très haut':A.z>0.5?'Plutôt haut':A.z<-1.5?'Très bas':A.z<-0.5?'Plutôt bas':'Dans la moyenne',d=F&&F.tm>0?F.tm/A.last-1:null;
+  const nd=F&&F.vieux?'script Google à mettre à jour':'indisponible';
+  $('reperes').innerHTML=[
+    ['Écart au plus haut',A.ddNow>-0.005?'0 %':pct(A.ddNow),'plus haut : '+eur(A.ath),A.ddNow<-0.005?'down':'up'],
+    ['Prix par rapport à son habitude',zt,'trajectoire moyenne : '+pct(A.trend,1,true)+' par an',A.z>0.5?'warn':A.z<-0.5?'up':''],
+    ['PER prévisionnel',F&&F.fpe>0?nf1.format(F.fpe)+'x':'—',F&&F.fpe>0?(F.pe>0?'sur les bénéfices passés : '+nf1.format(F.pe)+'x':'prix payé pour 1 € de bénéfice attendu'):nd,''],
+    ['Objectif des analystes',d==null?'—':pct(d,0,true),d==null?nd:'objectif moyen : '+eur(F.tm),d==null?'':d>=0?'up':'down']
+  ].map(t=>'<div class="kpi"><div class="kl">'+t[0]+'</div><div class="kv '+t[3]+'">'+t[1]+'</div><div class="ks">'+t[2]+'</div></div>').join('');
+  /* valorisation : deux règles */
+  const Zv=[[15,'--green'],[25,'--accent'],[40,'--red']],bloc=(titre,v,trait,sous)=>'<div><div class="t">'+titre+'</div><div class="v">'+(v>0?nf1.format(v)+'x':'—')+'</div>'+regle(v>0?v:null,Zv,40,trait,['Bas','Moyen','Élevé'])+'<div class="at-ro" style="margin:8px 0 0">'+sous+'</div></div>';
+  $('valo').innerHTML='<div class="at-vl">'+bloc('PER prévisionnel',F?F.fpe:null,F&&F.fpe>0?F.pe:null,F&&F.fpe>0?(F.pe>0?'Le trait marque le PER sur les bénéfices passés : '+nf1.format(F.pe)+'x':''):nd)+bloc('Prix / trésorerie dégagée (P/FCF)',F?F.pfcf:null,null,F&&F.pfcf>0?'':nd)+'</div>';
   const z=$('cible');
-  if(F&&F.tm>0){const lo=F.tl>0?F.tl:F.tm,hi=F.th>0?F.th:F.tm,a=Math.min(lo,A.last)*0.94,b=Math.max(hi,A.last)*1.06,X=v=>((v-a)/(b-a)*100).toFixed(1)+'%',d=F.tm/A.last-1;
+  if(F&&F.tm>0){const lo=F.tl>0?F.tl:F.tm,hi=F.th>0?F.th:F.tm,a=Math.min(lo,A.last)*0.94,b=Math.max(hi,A.last)*1.06,X=v=>((v-a)/(b-a)*100).toFixed(1)+'%';
     z.innerHTML='<div class="at-ct">Objectif moyen : <b>'+eur(F.tm)+'</b> <span class="'+(d>=0?'up':'down')+'">('+pct(d,1,true)+' par rapport au cours)</span></div>'+
       '<div class="at-cb"><div class="r" style="left:0;right:0"></div><div class="f" style="left:'+X(lo)+';width:'+((hi-lo)/(b-a)*100).toFixed(1)+'%"></div>'+
       '<div class="m" style="left:'+X(F.tm)+';background:var(--green)"></div><div class="l" style="left:'+X(F.tm)+';top:-10px;color:var(--green)">objectif '+eur(F.tm)+'</div>'+
       '<div class="m" style="left:'+X(A.last)+';background:var(--text)"></div><div class="l" style="left:'+X(A.last)+';top:40px">cours '+eur(A.last)+'</div></div>'+
       '<div class="at-ro">'+(lo<hi?'Du plus prudent au plus optimiste : '+eur(lo)+' à '+eur(hi)+' · ':'')+(F.na>0?nf0.format(F.na)+' analyste'+(F.na>1?'s':'')+' · ':'')+'source Yahoo Finance</div>';}
-  else z.innerHTML='<div class="at-ro">'+(F&&F.vieux?'Le script Google doit être mis à jour pour afficher cet objectif.':F&&F.ok?'Pas d’objectif d’analystes pour cette valeur.':'Objectif indisponible pour l’instant.')+'</div>';}
-function drawSynth(){const A=T.A;if(!A)return;const N=A.note,F=A.fond,Z3=[[0,.45,C.down],[.45,.7,C.accent],[.7,1,C.up]];
-  jauge($('cvG1'),132,86,{f:N.score==null?null:N.score/100,zones:Z3,col:N.score==null?C.muted:zoneCol(N.score/100,Z3),txt:N.score==null?'—':N.score+'/100',fs:19});
-  const Zm=[[0,.4,C.down],[.4,.6,C.accent],[.6,1,C.up]],fm=A.mom==null?null:Math.max(0,Math.min(1,A.mom+0.5));
-  jauge($('cvG2'),132,86,{f:fm,zones:Zm,col:fm==null?C.muted:zoneCol(fm,Zm),txt:A.mom==null?'—':pct(A.mom,1,true),fs:19});
-  const Zv=[[0,.375,C.up],[.375,.625,C.accent],[.625,1,C.down]],g=v=>v>0?Math.min(1,v/40):null;
-  const fp=F?g(F.fpe):null,ff=F?g(F.pfcf):null;
-  jauge($('cvPer'),170,104,{f:fp,zones:Zv,col:fp==null?C.muted:zoneCol(fp,Zv),txt:fp==null?'—':nf1.format(F.fpe)+'x',fs:24,lw:12,tick:F&&F.pe>0&&fp!=null?F.pe/40:null});
-  jauge($('cvPfcf'),170,104,{f:ff,zones:Zv,col:ff==null?C.muted:zoneCol(ff,Zv),txt:ff==null?'—':nf1.format(F.pfcf)+'x',fs:24,lw:12});}
+  else z.innerHTML='<div class="at-ro">'+(F&&F.vieux?'Le script Google doit être mis à jour pour afficher cet objectif.':F&&F.ok?'Pas d’objectif d’analystes pour cette valeur.':'Objectif indisponible pour l’instant.')+'</div>';
+  $('onglets').querySelector('[data-c="at-cmpCard"]').style.display=A.cmp?'':'none';
+  if(!A.cmp&&T.onglet==='at-cmpCard')T.onglet='at-cPrix';
+  majOnglet();}
+function drawSynth(){}
 function analyseDe(w,F){const g=[T.w,T.period,T.bench,T.pos,T.fond];T.w=w;T.period='all';T.bench=null;T.pos=null;T.fond=F||null;
   try{const A=analyse();extras(A);return A;}finally{T.w=g[0];T.period=g[1];T.bench=g[2];T.pos=g[3];T.fond=g[4];}}
 function extraTiles(A){const o=[],F=A.fond;
@@ -7800,18 +7834,62 @@ function overlayPos(g,A){const P=A.pos;if(!P)return;const c=g.c,haut=M.t,bas=g.h
   if(P.pru!=null){const y=g.Y(P.pru);if(y>=haut&&y<=bas){hline(g,P.pru,C.pru,[8,4],1.5);tag(g,'Ton prix de revient · '+eur(P.pru),x,Math.min(bas-10,y+12),C.pru,'left');}}}
 function drawCmp(){const A=T.A,card=document.getElementById('at-cmpCard');if(!A||!A.cmp){card.style.display='none';return;}card.style.display='';
   const cv=$('cvCmp'),K=A.cmp,tous=K.s.concat(K.m.filter(v=>v!=null)),lo=Math.min.apply(null,tous),hi=Math.max.apply(null,tous),pad=(hi-lo)*0.06;
-  const g=base(cv,T.synth?230:(cv.clientWidth<500?260:320),Math.max(0,lo-pad),hi+pad,A.t,v=>nf0.format(v)),e=A.n-1;
+  const g=base(cv,T.synth?330:(cv.clientWidth<500?260:320),Math.max(0,lo-pad),hi+pad,A.t,v=>nf0.format(v)),e=A.n-1;
   line(g,K.m,C.text,1.5);line(g,K.s,C.price,1.7);dot(g,e,K.s[e],C.price);
   chips(g,[{v:K.s[e],label:nf0.format(K.s[e]),color:C.price},{v:K.m[e],label:nf0.format(K.m[e]),color:C.text}]);
   cross(g,T.hover);const i=T.hover==null?e:T.hover,b=K.s[K.i1];
   $('cmpA').textContent=T.name;$('cmpB').textContent=K.nom;
   $('roCmp').innerHTML=`${dstr(A.t[i])} · ${esc(T.name)} <b>${i<K.i1?'—':pct(K.s[i]/b-1,0,true)}</b> · ${esc(K.nom)} <b>${K.m[i]==null?'—':pct(K.m[i]/b-1,0,true)}</b> depuis le début de la comparaison`;}
 
+/* ---------- historique de la note ----------
+   À chaque date passée, on recalcule la note avec les seules données connues ce jour-là,
+   puis on regarde le cours un an plus tard. Le PER n'a pas d'historique : il est laissé de côté. */
+function histNote(){const W=T.w,N=W.t.length;if(N<240)return null;
+  const pas=N>700?4:2,idx=[];for(let i=N-1;i>=210;i-=pas)idx.push(i);idx.reverse();
+  const pts=[];
+  idx.forEach(i=>{const sub={t:W.t.slice(0,i+1),c:W.c.slice(0,i+1),h:W.h.slice(0,i+1),l:W.l.slice(0,i+1),v:W.v.slice(0,i+1),a:W.a?W.a.slice(0,i+1):null};
+    let s=null;try{s=analyseDe(sub,null).note.score;}catch(e){}
+    if(s!=null)pts.push({t:W.t[i],s:s,c:W.c[i],f:i+52<N?W.c[i+52]/W.c[i]-1:null});});
+  if(pts.length<8)return null;
+  const G=[['Favorable (70 et plus)',70,101,'--green'],['Neutre (45 à 69)',45,70,'--accent'],['Peu favorable (moins de 45)',-1,45,'--red']].map(z=>{
+    const sel=pts.filter(p=>p.f!=null&&p.s>=z[1]&&p.s<z[2]),n=sel.length;
+    return{nom:z[0],col:z[3],n:n,m:n?sel.reduce((a,p)=>a+p.f,0)/n:null,h:n?sel.filter(p=>p.f>0).length/n:null};});
+  return{pts:pts,G:G,pas:pas};}
+let histJeton=0;
+function planHist(){const cle=T.key+':'+T.w.t.length;if(T.histCle===cle&&T.hist!==undefined){renderHist();drawHist();return;}
+  const j=++histJeton;T.hist=undefined;T.histCle=cle;T.hoverH=null;$('histTab').innerHTML='<div class="at-ro">Calcul de l’historique en cours…</div>';$('roHist').textContent='';
+  setTimeout(()=>{if(j!==histJeton)return;let h=null;try{h=histNote();}catch(e){h=null;}if(j!==histJeton)return;T.hist=h;renderHist();cols();drawHist();},80);}
+function renderHist(){const z=$('histTab'),Hh=T.hist;
+  if(Hh===undefined)return;
+  if(!Hh){z.innerHTML='<div class="at-ro">Il faut au moins cinq ans de cours pour reconstituer l’historique de la note.</div>';return;}
+  const fav=Hh.G[0],def=Hh.G[2];let verdict;
+  if(fav.n>=6&&def.n>=6){const d=fav.m-def.m;
+    verdict=d>0.05?'Sur cette action, les notes favorables ont été suivies de meilleures années que les notes peu favorables ('+pct(fav.m,0,true)+' contre '+pct(def.m,0,true)+' en moyenne).'
+      :d<-0.05?'Sur cette action, la note s’est trompée : les notes peu favorables ont été suivies de meilleures années que les notes favorables ('+pct(def.m,0,true)+' contre '+pct(fav.m,0,true)+').'
+      :'Sur cette action, la note n’a pas fait de différence nette entre les bonnes et les mauvaises périodes.';}
+  else verdict='Trop peu de relevés en zone favorable ou peu favorable pour dire si la note a été utile sur cette action.';
+  z.innerHTML='<div class="at-ct" style="margin-bottom:10px"><b>'+verdict+'</b></div><div class="tw"><table><thead><tr><th class="l">Quand la note était…</th><th>Relevés</th><th>Cours un an plus tard (moyenne)</th><th>En hausse un an plus tard</th></tr></thead><tbody>'+
+    Hh.G.map(g=>'<tr><td class="l" style="color:var('+g.col+')">'+g.nom+'</td><td>'+g.n+'</td><td>'+(g.m==null?'—':pct(g.m,0,true))+'</td><td>'+(g.h==null?'—':pct(g.h))+' des fois</td></tr>').join('')+
+    '</tbody></table></div><div class="at-ro" style="margin-top:10px">Un relevé toutes les '+Hh.pas+' semaines, calculé sans le PER (son historique n’est pas disponible). Les périodes d’un an se chevauchent et le passé ne garantit rien : c’est une indication, pas une preuve.</div>';}
+function drawHist(){const Hh=T.hist,cv=$('cvHist');if(!Hh){const g0=setup(cv,10);return;}
+  const P=Hh.pts,g=base(cv,T.synth?330:260,0,100,P.map(p=>p.t),v=>String(v),[0,45,70,100]),c=g.c;
+  [[70,100,C.up],[45,70,C.accent],[0,45,C.down]].forEach(z=>{c.fillStyle=z[2];c.globalAlpha=.08;c.fillRect(M.l,g.Y(z[1]),g.pw,g.Y(z[0])-g.Y(z[1]));c.globalAlpha=1;});
+  line(g,P.map(p=>p.s),C.text,1.8);const e=P.length-1;dot(g,e,P[e].s,C.text);chips(g,[{v:P[e].s,label:String(P[e].s),color:C.text}]);
+  const i=T.hoverH==null?e:Math.min(e,T.hoverH);if(T.hoverH!=null){cross(g,i);dot(g,i,P[i].s,C.text);}
+  $('roHist').innerHTML=dstr(P[i].t)+' · note <b>'+P[i].s+'</b> · cours <b>'+eur(P[i].c)+'</b>'+(P[i].f!=null?' · un an plus tard : <b>'+pct(P[i].f,0,true)+'</b>':' · suite pas encore connue');}
+
 /* ---------- vue d'ensemble de toutes les lignes ---------- */
+let vueTri={k:null,dir:-1};
+function enteteVue(){return [['cours','Cours'],['tr','Tendance de fond'],['dd','Écart au sommet'],['rs','RSI'],['z','Prix / habitude'],['vol','Agitation'],['note','Note /100']].map(c=>'<th data-k="'+c[0]+'" style="cursor:pointer;white-space:nowrap" title="Trier par '+c[1].toLowerCase()+'">'+c[1]+(vueTri.k===c[0]?(vueTri.dir<0?' ↓':' ↑'):'')+'</th>').join('');}
+function vueLignes(L,H){const rows=L.map(x=>{let A=null;const d=H[x.yt];if(d){try{A=analyseDe(versW(d),lisFond()[x.yt]);}catch(e){}}return{x:x,A:A};});
+  const k=vueTri.k;if(!k)return rows;
+  const val=o=>{const A=o.A;if(!A)return null;const m=A.ma200[A.n-1];
+    return k==='cours'?A.last:k==='tr'?(m!=null?A.last/m-1:null):k==='dd'?A.ddNow:k==='rs'?A.R.last:k==='z'?A.z:k==='vol'?A.vol:A.note.score;};
+  return rows.map((o,i)=>({o:o,v:val(o),i:i})).sort((a,b)=>a.v==null?(b.v==null?a.i-b.i:1):b.v==null?-1:((a.v-b.v)*vueTri.dir||a.i-b.i)).map(r=>r.o);}
 let vueOcc=false;
-function celluleVue(x,d,fini){const nomc='<td class="l"><b>'+esc(x.n)+'</b><div style="font-size:11px;color:var(--muted)">'+esc(x.g)+'</div></td>';
+function celluleVue(x,d,fini,A){const nomc='<td class="l"><b>'+esc(x.n)+'</b><div style="font-size:11px;color:var(--muted)">'+esc(x.g)+'</div></td>';
   if(!d)return nomc+'<td colspan="7" style="text-align:left;color:var(--muted)">'+(fini?'pas d’historique chez Yahoo':'historique non chargé')+'</td>';
-  let A,cur;try{A=analyseDe(versW(d),lisFond()[x.yt]);}catch(e){return nomc+'<td colspan="7" style="text-align:left;color:var(--muted)">historique trop court</td>';}
+  if(!A){return nomc+'<td colspan="7" style="text-align:left;color:var(--muted)">historique trop court</td>';}
   const n=A.n,m=A.ma200[n-1],tr=m!=null?A.last/m-1:null,z=A.z,rs=A.R.last;
   const zl=z>1.5?['Très haut','--red']:z>0.5?['Plutôt haut','--accent']:z<-1.5?['Très bas','--green']:z<-0.5?['Plutôt bas','--green']:['Dans la moyenne','--muted'];
   const dev=({EUR:'€',USD:'$',GBP:'£'})[d.cur]||d.cur||'';
@@ -7831,8 +7909,8 @@ async function vue(charger){const L=liste(),btn=$('vueBtn'),info=$('vueInfo');
     vueOcc=false;btn.disabled=false;}
   const nb=L.filter(x=>H[x.yt]).length;
   if(!nb&&!charger){$('vue').innerHTML='';info.textContent='Touche « Charger toutes mes lignes » pour comparer tes '+L.length+' valeurs d’un coup d’œil.';return;}
-  $('vue').innerHTML='<table><thead><tr><th class="l">Valeur</th><th>Cours</th><th>Tendance de fond</th><th>Écart au sommet</th><th>RSI</th><th>Prix / habitude</th><th>Agitation</th><th>Note /100</th></tr></thead><tbody>'+
-    L.map(x=>'<tr data-yt="'+esc(x.yt)+'" data-n="'+esc(x.n)+'">'+celluleVue(x,H[x.yt],charger&&!err)+'</tr>').join('')+'</tbody></table>';
+  $('vue').innerHTML='<table><thead><tr><th class="l">Valeur</th>'+enteteVue()+'</tr></thead><tbody>'+
+    vueLignes(L,H).map(o=>'<tr data-yt="'+esc(o.x.yt)+'" data-n="'+esc(o.x.n)+'">'+celluleVue(o.x,H[o.x.yt],charger&&!err,o.A)+'</tr>').join('')+'</tbody></table>';
   const manq=L.length-nb;btn.textContent=manq?'Charger toutes mes lignes':'Actualiser';
   info.className='tk'+(err?' err':'');
   info.textContent=err||(manq?(charger?manq+' valeur'+(manq>1?'s':'')+' sans historique chez Yahoo (fonds sans code de bourse, par exemple).':manq+' valeur'+(manq>1?'s':'')+' pas encore chargée'+(manq>1?'s':'')+' aujourd’hui.'):'Tendance de fond : écart du cours à sa moyenne 200 semaines. Prix / habitude : position par rapport à la trajectoire de long terme.');}
@@ -7842,9 +7920,11 @@ function hoverable(cv,getN,set){const mv=e=>{if(!T.A)return;const r=cv.getBoundi
   cv.addEventListener('pointermove',mv);cv.addEventListener('pointerdown',mv);cv.addEventListener('pointerleave',()=>{if(T.A)set(null)});}
 ['cvPrice','cvDD','cvReg','cvFib','cvCmp'].forEach(id=>hoverable($(id),()=>T.A.n,i=>{if(T.hover!==i){T.hover=i;cols();drawPrice();drawDD();drawReg();drawFib();drawCmp();}}));
 hoverable($('cvRsi'),()=>T.A.R.n,i=>{if(T.hoverR!==i){T.hoverR=i;cols();drawRsi();}});
+hoverable($('cvHist'),()=>T.hist?T.hist.pts.length:2,i=>{if(T.hist&&T.hoverH!==i){T.hoverH=i;cols();drawHist();}});
 $('mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;T.synth=b.dataset.m==='1';try{localStorage.setItem('at-mode',T.synth?'fiche':'detail')}catch(e2){}
   $('mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));$('body').classList.toggle('at-synth',T.synth);if(T.A)drawAll();});
 $('mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',(x.dataset.m==='1')===T.synth));$('body').classList.toggle('at-synth',T.synth);
+$('onglets').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;T.onglet=b.dataset.c;majOnglet();if(T.A)drawAll();});
 $('seg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;T.period=b.dataset.p;$('seg').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));if(T.w)refresh();});
 $('sel').addEventListener('change',()=>{const o=$('sel').selectedOptions[0];if(o&&o.value){$('q').value='';charge(o.value,o.textContent);}});
 function lance(){const q=$('q').value.trim();if(q){charge(q.toUpperCase(),null);return;}const o=$('sel').selectedOptions[0];if(o&&o.value)charge(o.value,o.textContent);else statut('Choisis une valeur dans la liste, ou tape un code Yahoo.',true);}
@@ -7852,7 +7932,8 @@ $('go').addEventListener('click',lance);
 $('q').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();lance();}});
 $('upd').addEventListener('click',()=>{if(T.key)charge(T.key,T.name,true);});
 $('vueBtn').addEventListener('click',()=>vue(true));
-$('vue').addEventListener('click',e=>{const r=e.target.closest('tr[data-yt]');if(r)charge(r.dataset.yt,r.dataset.n);});
+$('vue').addEventListener('click',e=>{const th=e.target.closest('th[data-k]');if(th){vueTri=vueTri.k===th.dataset.k?{k:th.dataset.k,dir:-vueTri.dir}:{k:th.dataset.k,dir:-1};vue(false);return;}
+  const r=e.target.closest('tr[data-yt]');if(r)charge(r.dataset.yt,r.dataset.n);});
 let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{if(T.A&&document.getElementById('page-techno').classList.contains('active'))drawAll();},150);});
 /* À l'ouverture de la page : la liste suit le portefeuille, et les graphiques se redessinent à la bonne largeur. */
 document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t||t.dataset.page!=='techno')return;
@@ -7866,9 +7947,9 @@ window.atOuvreYt=function(yt){const x=liste().find(o=>o.yt===yt);if(typeof goPag
 /* ---------- signaux pour les alertes de l'accueil ---------- */
 let sigMemo={cle:null,liste:[]};
 function signaux(){const L=liste();if(!L.length)return[];const cache=lisCache();
-  const cle=L.map(x=>x.yt+':'+((cache[x.yt]&&cache[x.yt].ts)||0)).join('|');
+  const fo=lisFond(),cle=L.map(x=>x.yt+':'+((cache[x.yt]&&cache[x.yt].ts)||0)+':'+((fo[x.yt]&&fo[x.yt].fpe)||0)).join('|');
   if(cle===sigMemo.cle)return sigMemo.liste;
-  const out=[];
+  const out=[],fav=[];
   L.forEach(x=>{const d=cache[x.yt];if(!d||!Array.isArray(d.t)||Date.now()-(d.ts||0)>8*DAY)return;
     let A;try{A=analyseDe(versW(d),lisFond()[x.yt]);}catch(e){return;}
     const n=A.n,m=A.ma200,detenue=x.g!=='Watchlist',dev=({EUR:'€',USD:'$',GBP:'£'})[d.cur]||d.cur||'';
@@ -7881,9 +7962,10 @@ function signaux(){const L=liste();if(!L.length)return[];const cache=lisCache();
     const rs=A.R.last;
     if(rs!=null&&rs>70&&detenue)out.push({icon:'▲',txt:lien('est en surchauffe (RSI '+nf0.format(rs)+')'),color:'var(--orange)'});
     if(rs!=null&&rs<30)out.push({icon:'▼',txt:lien('a beaucoup baissé récemment (RSI '+nf0.format(rs)+')'),color:'var(--bourse)'});
+    if(!detenue&&A.note&&A.note.score!=null&&A.note.score>=70)fav.push({icon:'★',txt:lien('est en fenêtre d’entrée favorable (note '+A.note.score+'/100)'),color:'var(--green)'});
     if(!detenue){const s=A.lev.sup[0];if(s&&A.last<=s*1.03)out.push({icon:'◆',txt:lien('approche d’un support ('+(s>=100?nf1.format(s):nf2.format(s))+' '+dev+')'),color:'var(--green)'});}
   });
-  sigMemo={cle:cle,liste:out.slice(0,8)};return sigMemo.liste;}
+  sigMemo={cle:cle,liste:fav.concat(out).slice(0,8)};return sigMemo.liste;}
 window.atSignaux=signaux;
 /* Une fois par jour, on charge en arrière-plan l'historique de toutes les lignes, pour que les signaux soient à jour. */
 let preOk=false,preEssais=0;
