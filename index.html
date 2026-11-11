@@ -532,7 +532,7 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 11/11 08h50</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 11/11 19h27</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -555,7 +555,7 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 <div class="page" id="page-bourse">
 <div id="rstat" class="rs" style="margin:0 0 8px"></div>
 <div class="stabs" id="bourseTabs"></div>
-<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:var(--text)">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div class="svue" id="bvue-pea" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="pea">PEA</span></div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div><div id="pb1"></div><div id="fiche-pea"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="pea">PEA</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('pea')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-pea" style="margin-top:8px"></div></div></div>
+<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="card" id="jrCard"><div class="fb" style="margin-bottom:10px;gap:10px"><div class="ct" style="margin:0">Évolution au jour le jour</div><div style="display:flex;gap:10px;flex-wrap:wrap"><div style="display:flex;gap:4px" id="jrMode"><button class="pb on" data-m="val">Valeur</button><button class="pb" data-m="pct">Évolution %</button></div><div style="display:flex;gap:4px;flex-wrap:wrap" id="jrPer"><button class="pb" data-p="7">1 sem.</button><button class="pb on" data-p="31">1 mois</button><button class="pb" data-p="92">3 mois</button><button class="pb" data-p="366">1 an</button><button class="pb" data-p="0">Tout</button></div></div></div><div id="jrSeries" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"></div><div id="jrInfo" style="font-size:12px;color:var(--muted);min-height:1.5em;margin-bottom:6px;font-variant-numeric:tabular-nums"></div><canvas id="jrCv" style="display:block;width:100%;touch-action:pan-y"></canvas><div id="jrBas" style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5"></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:var(--text)">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div class="svue" id="bvue-pea" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="pea">PEA</span></div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div><div id="pb1"></div><div id="fiche-pea"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="pea">PEA</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('pea')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-pea" style="margin-top:8px"></div></div></div>
 <div class="svue" id="bvue-ctosb" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="ctosb">CTO</span> <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div><div id="pb2"></div><div id="fiche-ctosb"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="ctosb">CTO</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('ctosb')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-ctosb" style="margin-top:8px"></div></div></div>
 <div class="svue" id="bvue-ctoibkr" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="ctoibkr">CTO 2</span></div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div><div id="pb3"></div><div id="fiche-ctoibkr"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="ctoibkr">CTO 2</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('ctoibkr')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-ctoibkr" style="margin-top:8px"></div></div></div>
 <div class="svue" id="bvue-avl" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="avl">Assurance-vie</span></div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div><div id="pb4"></div><div id="fiche-avl"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="avl">Assurance-vie</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('avl')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-avl" style="margin-top:8px"></div></div></div>
@@ -1597,6 +1597,8 @@ lotsC.forEach(lot=>jobs.push(
 await Promise.all(jobs);
 await pBase;
 if(ok>0){if(!S.histJour)S.histJour=[];const today=new Date().toISOString().slice(0,10);const t2=Tot();const dp=t2.p.dayPnl+t2.s.dayPnl+t2.i.dayPnl;const dpct=t2.bo>0?(dp/t2.bo*100):0;const ex=S.histJour.findIndex(h=>h.date===today);const ent={date:today,portf:Math.round(dpct*100)/100,pnl:Math.round(dp*100)/100,sp:spyDay,bourse:Math.round(t2.bo)};if(ex>=0)S.histJour[ex]=ent;else S.histJour.push(ent);if(S.histJour.length>30)S.histJour=S.histJour.slice(-30)}
+/* Un point par jour pour chaque compte de bourse, seulement si la plupart des cours ont répondu */
+try{if(ok>=total*0.7&&window.jrNote)window.jrNote()}catch(e){}
 if(ok>0)S.lastRefresh=Date.now();
 if(tim){clearTimeout(tim);tim=null}
 rStat=texteEtatCours(ok,total);
@@ -2330,7 +2332,7 @@ function blocHistBien(b){
    directement. On n y ajoute a la main que ce qui est apparu depuis. */
 const CLES_AJOUTEES=['allocCible','dernSauv','prelevDiv','avScpiHist','benchCours','benchIdx','bourseGoals',
  'cles','cryptoInvest','depReelles','divMois','envSel','etfGoals','fiscParams',
- 'histComptes','histJour','lastRefresh','loyersRecus','marches',
+ 'histComptes','histJour','journal','nomsComptes','lastRefresh','loyersRecus','marches',
  'moisReleveForce','netSel','notes','peeHist','projParams','projets','revSources',
  'simParams','simuBien','watchlist'];
 const CLES_UTILES=Object.keys(D).concat(CLES_AJOUTEES)
@@ -5293,6 +5295,7 @@ try{majDefil()}catch(e){}
 })();
 /* On note la valeur de chaque compte pour le mois en cours */
 try{if(releveComptes(t))autoSave()}catch(e){console.error('relevé des comptes :',e&&e.message)}
+try{window.jrMaj&&window.jrMaj()}catch(e){}
 ['pb1','pb2','pb3','pb4'].forEach((id,i)=>{
   const el=document.getElementById(id);if(!el)return;
   const c=[t.p,t.s,t.i,t.a][i], pk=['pea','ctosb','ctoibkr','avl'][i];
@@ -7995,6 +7998,71 @@ window.testGas=async function(){const z=document.getElementById('gasEtat');if(!z
   z.style.color=hist&&div?'var(--green)':'var(--orange)';
   z.textContent='✓ Cours du jour'+(hist?' · ✓ Historique'+(div?' · ✓ Dividendes':' · ✗ Dividendes (script à mettre à jour)'):' · ✗ Historique (script à mettre à jour)');};
 document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(t&&t.dataset.page==='reglages')majGas();});
+/* ---------- journal quotidien des comptes de bourse ----------
+   Chaque jour de semaine où les cours se chargent, on note la valeur de chaque compte et le total versé.
+   Le total versé sert à tracer une évolution « hors versements » : un dépôt ne fait pas monter la courbe. */
+const JR={mode:'val',per:31,vis:{tot:true,pea:true,ctosb:true,ctoibkr:true,avl:true},hover:null};
+const JRK=['pea','ctosb','ctoibkr','avl'],JRC=['--c1','--c3','--c4','--c6'];
+function jourLocal(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+window.jrNote=function(){const st=etat();if(!st||st.exemple||typeof Tot!=='function')return;
+  const now=new Date(),js=now.getDay();if(js===0||js===6)return;
+  const t=Tot(),v=[t.p.v,t.s.v,t.i.v,t.a.v].map(x=>Math.round(num(x)||0));
+  if(v.reduce((a,b)=>a+b,0)<=0)return;
+  const f=JRK.map(k=>Math.round(num(st.pf[k]&&st.pf[k].ver)||0)),d=jourLocal(now);
+  if(!Array.isArray(st.journal))st.journal=[];
+  const J=st.journal,der=J[J.length-1];
+  if(der&&der.d===d){if(der.v.join()===v.join()&&(der.f||[]).join()===f.join())return;der.v=v;der.f=f;}else J.push({d:d,v:v,f:f});
+  if(J.length>1500)st.journal=J.slice(-1500);
+  try{if(typeof autoSave==='function')autoSave();}catch(e){}
+  jrMaj();};
+function jrDonnees(){const st=etat();if(!st)return[];
+  let J=(Array.isArray(st.journal)?st.journal:[]).filter(e=>e&&e.d&&Array.isArray(e.v)).map(e=>({d:e.d,v:e.v,f:e.f||null}));
+  /* En valeur, les relevés mensuels prolongent la courbe vers le passé */
+  if(JR.mode==='val'&&st.histComptes){const prem=J.length?J[0].d:'9999';
+    const Mo=Object.keys(st.histComptes).sort().map(k=>{const h=st.histComptes[k]||{};return{d:h.maj||(k+'-28'),v:JRK.map(p=>Math.round(num(h[p])||0)),f:null};}).filter(e=>e.d<prem&&e.v.some(x=>x>0));
+    J=Mo.concat(J);}
+  if(JR.per){const lim=jourLocal(new Date(Date.now()-JR.per*DAY));J=J.filter(e=>e.d>=lim);}
+  return J;}
+function jrSeries(J){const out=[],mk=(k,nom,col,get,getF)=>{let vals;
+    if(JR.mode==='val')vals=J.map(e=>{const x=get(e);return x>0?x:null;});
+    else{const i0=J.findIndex(e=>get(e)>0);
+      if(i0<0)vals=J.map(()=>null);else{const v0=get(J[i0]),f0=getF(J[i0]);vals=J.map((e,i)=>i<i0||!(get(e)>0)?null:((get(e)-(getF(e)-f0))/v0-1)*100);}}
+    if(vals.some(x=>x!=null))out.push({k:k,nom:nom,col:col,vals:vals});};
+  mk('tot','Total',C.text,e=>e.v.reduce((a,b)=>a+b,0),e=>e.f?e.f.reduce((a,b)=>a+b,0):0);
+  JRK.forEach((k,i)=>mk(k,typeof nomCpt==='function'?nomCpt(k):k,C['j'+i],e=>e.v[i],e=>e.f?e.f[i]:0));
+  return out;}
+function jrMaj(){const cv=document.getElementById('jrCv');if(!cv||!cv.clientWidth)return;
+  cols();const cs=getComputedStyle(document.body);JRC.forEach((v,i)=>{C['j'+i]=cs.getPropertyValue(v).trim();});
+  const J=jrDonnees(),S2=jrSeries(J),info=document.getElementById('jrInfo'),st=etat(),nbJ=st&&Array.isArray(st.journal)?st.journal.length:0;
+  document.getElementById('jrSeries').innerHTML=S2.map(s=>'<button class="pb'+(JR.vis[s.k]?' on':'')+'" data-k="'+s.k+'" style="display:inline-flex;align-items:center;gap:6px"><i style="width:8px;height:8px;border-radius:50%;background:'+s.col+';display:inline-block"></i>'+esc(s.nom)+'</button>').join('');
+  document.getElementById('jrBas').textContent='Un point est noté chaque jour de semaine où tu ouvres l’application et où les cours se chargent. '+(JR.mode==='pct'?'L’évolution est calculée hors versements : un dépôt ne fait pas monter la courbe. ':'Les points plus anciens viennent de tes relevés mensuels. ')+(nbJ?nbJ+' jour'+(nbJ>1?'s notés':' noté')+' à ce jour.':'');
+  if(J.length<2){setup(cv,8);info.textContent=nbJ?'Premier point noté aujourd’hui. La courbe apparaîtra dès le prochain jour de bourse.':'Aucun point pour l’instant : la courbe se construira au fil de tes visites.';return;}
+  const vis=S2.filter(s=>JR.vis[s.k]),tous=[];vis.forEach(s=>s.vals.forEach(x=>{if(x!=null)tous.push(x);}));
+  if(!tous.length){setup(cv,8);info.textContent='Choisis au moins une courbe.';return;}
+  let lo=Math.min.apply(null,tous),hi=Math.max.apply(null,tous);if(hi-lo<1e-9){hi+=1;lo-=1;}const pad=(hi-lo)*0.08;lo-=pad;hi+=pad;if(JR.mode==='val')lo=Math.max(0,lo);
+  const T2=J.map(e=>Date.parse(e.d+'T12:00:00Z')),n=J.length,
+    fmt=JR.mode==='val'?(x=>nf0.format(x)+' €'):(x=>(x>0.05?'+':x<-0.05?'−':'')+nf1.format(Math.abs(x))+' %'),
+    court=JR.mode==='val'?(x=>x>=100000?nf0.format(x/1000)+' k€':nf0.format(x)+' €'):fmt;
+  const g=base(cv,cv.clientWidth<500?260:300,lo,hi,T2,court),c=g.c;
+  /* l'axe du bas porte des dates, pas des années */
+  c.clearRect(0,g.h-M.b+2,g.w,M.b-2);c.font='11px '+FONT;c.fillStyle=C.muted;c.textAlign='center';c.textBaseline='middle';
+  const nL=Math.max(2,Math.min(6,Math.floor(g.pw/95),n)),an=JR.per===0||JR.per>200;
+  for(let k=0;k<nL;k++){const i=Math.round(k*(n-1)/(nL-1)),d=new Date(T2[i]),x=Math.max(M.l+26,Math.min(M.l+g.pw-26,g.X(i)));
+    c.fillText(d.toLocaleDateString('fr-FR',{day:'numeric',month:'short',timeZone:'UTC'})+(an?' '+String(d.getUTCFullYear()).slice(2):''),x,g.h-M.b+13);}
+  if(JR.mode==='pct')hline(g,0,C.muted,[2,4]);
+  vis.forEach(s=>line(g,s.vals,s.col,s.k==='tot'?2.2:1.5));
+  const e=n-1;vis.forEach(s=>{if(s.vals[e]!=null)dot(g,e,s.vals[e],s.col);});
+  chips(g,vis.filter(s=>s.vals[e]!=null).map(s=>({v:s.vals[e],label:court(s.vals[e]),color:s.col})));
+  const i=JR.hover==null?e:Math.min(e,JR.hover);if(JR.hover!=null)cross(g,i);
+  info.innerHTML=new Date(T2[i]).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short',year:'numeric',timeZone:'UTC'})+' · '+vis.filter(s=>s.vals[i]!=null).map(s=>esc(s.nom)+' <b style="color:var(--text);font-weight:500">'+fmt(s.vals[i])+'</b>').join(' · ');}
+window.jrMaj=jrMaj;
+(function(){const q=id=>document.getElementById(id),bascule=(id,attr,fn)=>q(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;fn(b.dataset[attr]);q(id).querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));JR.hover=null;jrMaj();});
+  bascule('jrMode','m',v=>{JR.mode=v;});bascule('jrPer','p',v=>{JR.per=+v;});
+  q('jrSeries').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;JR.vis[b.dataset.k]=!JR.vis[b.dataset.k];jrMaj();});
+  const cv=q('jrCv'),mv=e=>{const J=jrDonnees(),n=J.length;if(n<2)return;const r=cv.getBoundingClientRect();let i=Math.round((e.clientX-r.left-M.l)/(r.width-M.l-M.r)*(n-1));i=Math.max(0,Math.min(n-1,i));if(JR.hover!==i){JR.hover=i;jrMaj();}};
+  cv.addEventListener('pointermove',mv);cv.addEventListener('pointerdown',mv);cv.addEventListener('pointerleave',()=>{if(JR.hover!=null){JR.hover=null;jrMaj();}});
+  document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(t&&t.dataset.page==='bourse')setTimeout(jrMaj,80);});
+  let rz2;window.addEventListener('resize',()=>{clearTimeout(rz2);rz2=setTimeout(jrMaj,160);});})();
 window.atAnalyse=function(yt,nom){if(typeof goPage==='function')goPage('techno');charge(yt,nom);};
 })();
 </script>
