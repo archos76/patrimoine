@@ -470,6 +470,15 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 #page-techno #at-body.at-synth>*{min-width:0}
 #page-techno #at-body.at-synth #at-tiles,#page-techno #at-body.at-synth .at-cFR,#page-techno #at-body.at-synth .at-g2v,#page-techno #at-body.at-synth .at-help,#page-techno #at-body.at-synth .at-legend{display:none}
 #page-techno #at-body.at-synth #at-cPrix:not(.at-vu),#page-techno #at-body.at-synth #at-cReg:not(.at-vu),#page-techno #at-body.at-synth #at-cDD:not(.at-vu),#page-techno #at-body.at-synth #at-cmpCard:not(.at-vu),#page-techno #at-body.at-synth #at-cHist:not(.at-vu){display:none!important}
+#page-techno #at-body.at-synth #at-cDiv:not(.at-vu){display:none!important}
+#page-techno .at-pjN{display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap}
+#page-techno .at-pjN .v{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+#page-techno .at-pjN .e{font-size:13.5px;font-weight:500}
+#page-techno .at-pjL{display:grid;gap:10px;margin:4px 0 12px}
+#page-techno .at-pjR{display:grid;grid-template-columns:1fr auto;gap:2px 12px;font-size:12.5px;line-height:1.45;align-items:baseline}
+#page-techno .at-pjR b{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13.5px}
+#page-techno .at-pjR small{grid-column:1/-1;color:var(--muted);font-size:12px}
+#page-techno #at-cvDiv{touch-action:pan-y;cursor:pointer}
 #page-techno #at-body.at-synth #at-cLect{order:2}
 #page-techno #at-body.at-synth>.tk{order:3}
 #page-techno #at-body.at-synth .at-read li:nth-child(n+5){display:none}
@@ -622,7 +631,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 <button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 12/11 13h02</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 12/11 13h43</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -808,17 +817,19 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <p class="at-help" style="margin:16px 0 0">Cette note est un calcul mécanique à partir du cours passé et du PER prévisionnel. Elle est haute quand une action en tendance haussière revient sur un prix bas pour elle, et plafonnée quand la tendance est baissière. Elle ne prévoit rien, ignore l’actualité et la santé de l’entreprise, et n’est pas un conseil d’investissement.</p><div class="at-ro" id="at-noteInfo" style="margin:10px 0 0"></div></div>
 <div class="kr" id="at-reperes"></div>
 <div class="kr" id="at-tiles"></div>
+<div class="card" id="at-cJuste"><div class="ct">Prix juste estimé</div><p class="at-help">Une estimation du prix « normal » de l’action, obtenue en croisant plusieurs méthodes simples. Si le cours est nettement en dessous, l’action paraît bon marché ; nettement au-dessus, elle paraît chère.</p><div id="at-juste"></div></div>
 <div class="g2 at-g2v"><div class="card" id="at-cValo"><div class="ct">Valorisation</div><p class="at-help">Combien le marché paie pour 1 € de bénéfice attendu (PER) et pour 1 € de trésorerie dégagée (P/FCF). Les zones de couleur sont des repères généraux, pas une comparaison avec le secteur.</p>
 <div id="at-valo"></div></div>
 <div class="card" id="at-cCible"><div class="ct">Objectif des analystes</div><p class="at-help">Le prix que les analystes financiers visent en moyenne d’ici un an. C’est une opinion, souvent trop optimiste, pas une promesse.</p><div id="at-cible"></div></div></div>
 <div class="card" id="at-cLect"><div class="ct">Lecture rapide</div><ul class="at-read" id="at-read"></ul></div>
-<div class="at-onglets" id="at-onglets"><button class="pb" data-c="at-cPrix">Cours et paliers</button><button class="pb" data-c="at-cReg">Trajectoire</button><button class="pb" data-c="at-cDD">Baisse depuis le sommet</button><button class="pb" data-c="at-cmpCard">Face au marché</button><button class="pb" data-c="at-cHist">Historique de la note</button></div>
+<div class="at-onglets" id="at-onglets"><button class="pb" data-c="at-cPrix">Cours et paliers</button><button class="pb" data-c="at-cReg">Trajectoire</button><button class="pb" data-c="at-cDD">Baisse depuis le sommet</button><button class="pb" data-c="at-cmpCard">Face au marché</button><button class="pb" data-c="at-cHist">Historique de la note</button><button class="pb" data-c="at-cDiv">Dividendes</button></div>
 <div class="card" id="at-cPrix"><div class="ct">Cours et paliers</div><p class="at-help">La courbe bleue est le prix de l’action. Les deux moyennes lissent le prix pour montrer la tendance. Les lignes rouges et vertes sont des prix où l’action a souvent buté ou rebondi par le passé.</p><div class="at-ro" id="at-roPrice"></div><canvas id="at-cvPrice"></canvas>
 <div class="at-legend"><span><i style="background:var(--bourse)"></i>Cours</span><span><i style="background:var(--orange)"></i>Moyenne 50 semaines</span><span><i style="background:var(--text)"></i>Moyenne 200 semaines</span><span><i style="background:var(--red)"></i>Palier au-dessus (résistance)</span><span><i style="background:var(--green)"></i>Palier en dessous (support)</span><span><i style="background:var(--muted);height:8px;opacity:.5"></i>Prix les plus échangés</span><span><i style="background:var(--green);width:8px;height:8px;border-radius:50%"></i>Croisement haussier des moyennes</span><span><i style="background:var(--red);width:8px;height:8px;border-radius:50%"></i>Croisement baissier</span><span><i style="background:var(--crypto)"></i>Ton prix de revient</span></div></div>
 <div class="card" id="at-cDD"><div class="ct">Baisse depuis le plus haut</div><p class="at-help">À 0 %, l’action est à son record. Plus la courbe descend, plus l’action est loin de son dernier sommet.</p><div class="at-ro" id="at-roDD"></div><canvas id="at-cvDD"></canvas></div>
 <div class="card" id="at-cReg"><div class="fb" style="margin-bottom:14px;gap:8px"><div class="ct" style="margin:0">Trajectoire de long terme</div><div class="at-pills" id="at-regPills"></div></div><p class="at-help">La ligne claire est la trajectoire moyenne de l’action sur la période. Zone rouge : le prix est haut par rapport à son habitude. Zone verte : il est bas par rapport à son habitude.</p><div class="at-ro" id="at-roReg"></div><canvas id="at-cvReg"></canvas></div>
 <div class="card" id="at-cmpCard" style="display:none"><div class="ct">Comparaison avec le marché</div><p class="at-help">Les deux courbes partent du même point au début de la période. Si la courbe bleue finit au-dessus de l’autre, l’action a fait mieux que son indice. Les dividendes ne sont comptés d’aucun côté.</p><div class="at-ro" id="at-roCmp"></div><canvas id="at-cvCmp"></canvas><div class="at-legend"><span><i style="background:var(--bourse)"></i><span id="at-cmpA"></span></span><span><i style="background:var(--text)"></i><span id="at-cmpB"></span></span></div></div>
 <div class="card" id="at-cHist"><div class="ct">Historique de la note</div><p class="at-help">La note que l’action aurait eue à chaque date, calculée avec les seules données connues à ce moment-là, puis ce que le cours a fait dans l’année suivante. C’est le moyen de vérifier si la note a été utile sur cette action.</p><div class="at-ro" id="at-roHist"></div><canvas id="at-cvHist"></canvas><div id="at-histTab" style="margin-top:14px"></div></div>
+<div class="card" id="at-cDiv"><div class="ct">Historique du dividende</div><p class="at-help">Ce que l’action a versé chaque année, par action. Un dividende qui monte régulièrement est le signe d’une entreprise solide ; un dividende coupé est un signal d’alerte.</p><div class="kr" id="at-divK"></div><div class="at-ro" id="at-roDiv"></div><canvas id="at-cvDiv"></canvas><div class="at-ro" id="at-divInfo" style="margin:10px 0 0"></div></div>
 <div class="g2 at-cFR"><div class="card"><div class="ct">Retracement Fibonacci</div><p class="at-help">On mesure la dernière grande hausse, du point bas au point haut. Les lignes indiquent quelle part de cette hausse serait effacée si le prix redescendait jusque-là.</p><div class="at-ro" id="at-roFib"></div><canvas id="at-cvFib"></canvas></div>
 <div class="card"><div class="ct">Élan récent (RSI)</div><p class="at-help">Le RSI va de 0 à 100. Au-dessus de 70, l’action a beaucoup monté récemment. En dessous de 30, elle a beaucoup baissé récemment.</p><div class="at-ro" id="at-roRsi"></div><canvas id="at-cvRsi"></canvas></div></div>
 <div class="tk" style="margin:4px 2px 24px;line-height:1.55">Lecture du passé du cours, à titre pédagogique. Ce n’est pas un conseil en investissement. Les performances passées ne préjugent pas des performances futures.</div>
@@ -7715,7 +7726,7 @@ function drawRsi(){const R=T.A.R,cv=$('cvRsi'),g=base(cv,220,0,100,R.t,v=>String
   if(T.hoverR!=null){cross(g,i);if(R.v[i]!=null)dot(g,i,R.v[i],C.price);}
   $('roRsi').innerHTML=R.v[i]==null?'Historique trop court pour calculer le RSI.':`${mstr(R.t[i])} · RSI sur 14 ${R.unit} : <b>${nf1.format(R.v[i])}</b>`;
 }
-function drawAll(){cols();drawPrice();drawDD();drawReg();drawFib();drawRsi();drawCmp();drawNote();drawSynth();drawHist();}
+function drawAll(){cols();drawPrice();drawDD();drawReg();drawFib();drawRsi();drawCmp();drawNote();drawSynth();drawHist();drawDiv();}
 
 /* ---------- résumé ---------- */
 function renderSummary(){const A=T.A,n=A.n;
@@ -7743,7 +7754,7 @@ function renderSummary(){const A=T.A,n=A.n;
   li.push(['Paliers','muted','Prix à surveiller',(r1?`Prochain palier au-dessus : ${eur(r1)}. `:'Aucun palier repéré au-dessus du cours. ')+(s1?`Prochain palier en dessous : ${eur(s1)}. `:'Aucun palier repéré en dessous du cours. ')+`Prix le plus échangé de la période : autour de ${eur(A.prof.poc)}.`]);
   extraRead(A,li);$('read').innerHTML=li.map(x=>`<li><span class="tag ${x[1]}">${esc(x[0])}</span><span><span class="what">${x[2]}</span>${x[3]}</span></li>`).join('');
 }
-function refresh(){T.A=analyse();extras(T.A);T.hover=null;T.hoverR=null;renderSummary();renderNote();renderSynth();drawAll();planHist();}
+function refresh(){T.A=analyse();extras(T.A);T.hover=null;T.hoverR=null;renderSummary();renderNote();renderSynth();T.div=dividendes(T.w);T.hoverD=null;renderDiv();renderJuste();drawAll();planHist();}
 
 
 /* ---------- valeurs disponibles ---------- */
@@ -7772,7 +7783,8 @@ function versW(d){const off=(d.off||0)*1000,pts=[];
   for(let i=0;i<d.t.length;i++){const c=+d.c[i],t=(+d.t[i])*1000+off;if(!isFinite(t)||!isFinite(c)||c<=0)continue;
     let h=d.h?+d.h[i]:c,l=d.l?+d.l[i]:c,v=d.v?+d.v[i]:0;if(!isFinite(h)||h<c)h=c;if(!isFinite(l)||l>c||l<=0)l=c;if(!isFinite(v)||v<0)v=0;
     pts.push({t:t,c:c,h:h,l:l,v:v,a:d.a?+d.a[i]:NaN});}
-  pts.sort((x,y)=>x.t-y.t);const W=toWeekly(pts);if(!d.a||W.a.some(x=>!isFinite(x)||x<=0))W.a=null;return W;}
+  pts.sort((x,y)=>x.t-y.t);const W=toWeekly(pts);if(!d.a||W.a.some(x=>!isFinite(x)||x<=0))W.a=null;
+  if(Array.isArray(d.d))W.dv=d.d.map(e=>[(+e[0])*1000+off,+e[1]]).filter(e=>isFinite(e[0])&&e[1]>0).sort((x,y)=>x[0]-y[0]);return W;}
 /* Rend les historiques demandés : ceux du jour viennent du cache, les autres du script Google, par lots de 4. */
 async function getHists(tks,force){const jour=new Date().toISOString().slice(0,10),cache=lisCache(),out={},manq=[];
   tks.forEach(t=>{const d=cache[t];if(!force&&d&&d.j===jour&&Array.isArray(d.t))out[t]=d;else manq.push(t);});
@@ -7877,7 +7889,7 @@ function regle(v,zones,max,trait,noms){let h='<div class="at-rg">',a=0,col='--te
   h+='</div>';a=0;
   if(noms){h+='<div class="at-rgl" style="grid-template-columns:'+zones.map(z=>{const w=z[0]-a;a=z[0];return w+'fr'}).join(' ')+'">'+noms.map(x=>'<span>'+x+'</span>').join('')+'</div>';}
   return h;}
-function majOnglet(){const ids=['at-cPrix','at-cReg','at-cDD','at-cmpCard','at-cHist'];if(ids.indexOf(T.onglet)<0)T.onglet='at-cPrix';
+function majOnglet(){const ids=['at-cPrix','at-cReg','at-cDD','at-cmpCard','at-cHist','at-cDiv'];if(ids.indexOf(T.onglet)<0)T.onglet='at-cPrix';
   ids.forEach(id=>document.getElementById(id).classList.toggle('at-vu',id===T.onglet));
   $('onglets').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.c===T.onglet));}
 function renderSynth(){const A=T.A,F=A.fond;
@@ -7973,6 +7985,82 @@ function renderHist(){const z=$('histTab'),Hh=T.hist;
   z.innerHTML='<div class="at-ct" style="margin-bottom:10px"><b>'+verdict+'</b></div><div class="tw"><table><thead><tr><th class="l">Quand la note était…</th><th>Relevés</th><th>Cours un an plus tard (moyenne)</th><th>En hausse un an plus tard</th></tr></thead><tbody>'+
     Hh.G.map(g=>'<tr><td class="l" style="color:var('+g.col+')">'+g.nom+'</td><td>'+g.n+'</td><td>'+(g.m==null?'—':pct(g.m,0,true))+'</td><td>'+(g.h==null?'—':pct(g.h))+' des fois</td></tr>').join('')+
     '</tbody></table></div><div class="at-ro" style="margin-top:10px">Un relevé toutes les '+Hh.pas+' semaines, calculé sans le PER (son historique n’est pas disponible). Les périodes d’un an se chevauchent et le passé ne garantit rien : c’est une indication, pas une preuve.</div>';}
+/* ---------- dividendes ----------
+   Montants exacts si le script Google les donne. Sinon on les retrouve dans l'écart entre le cours
+   et le cours « dividendes réinvestis » : une estimation, juste à quelques % près. */
+function dividendes(W){let ev=null,exact=false;
+  if(W.dv){ev=W.dv;exact=true;}
+  else if(W.a){ev=[];for(let i=1;i<W.t.length;i++){const r=1-(W.a[i-1]/W.c[i-1])/(W.a[i]/W.c[i]);if(r>0.0015&&r<0.2)ev.push([W.t[i],r*W.c[i-1]]);}}
+  if(!ev)return null;
+  const n=W.t.length,fin=W.t[n-1],an=t=>new Date(t).getUTCFullYear(),an0=an(W.t[0]),an1=an(fin),Y=[];
+  for(let y=an0;y<=an1;y++)Y.push({y:y,d:0,nb:0,sc:0,k:0});
+  ev.forEach(e=>{const o=Y[an(e[0])-an0];if(o){o.d+=e[1];o.nb++;}});
+  for(let i=0;i<n;i++){const o=Y[an(W.t[i])-an0];o.sc+=W.c[i];o.k++;}
+  Y.forEach(o=>{o.moy=o.k?o.sc/o.k:null;o.rdt=o.moy&&o.d>0?o.d/o.moy:0;o.ok=o.y<an1;});
+  if(Y.length>1&&new Date(W.t[0]).getUTCMonth()>0)Y.shift();          /* première année incomplète */
+  const D={exact:exact,Y:Y,aucun:!ev.length,ttm:0,rdt:null,hab:null,habN:0,g:null,gN:0,serie:0,freq:0};
+  if(!ev.length||!Y.length)return D;
+  /* combien de versements par an, d'habitude */
+  const nbs=Y.filter(o=>o.ok&&o.nb>0).slice(-3).map(o=>o.nb).sort((a,b)=>a-b);D.freq=nbs.length?nbs[nbs.length>>1]:Math.max(1,Y[Y.length-1].nb);
+  const der=Y[Y.length-1];if(der.y===an1&&D.freq>0&&der.nb>=D.freq)der.ok=true;   /* l'année en cours a déjà tout versé */
+  /* dividende des 12 derniers mois : les derniers versements, s'ils ne sont pas trop anciens */
+  if(fin-ev[ev.length-1][0]<1.3*YEAR)ev.slice(-D.freq).forEach(e=>{if(fin-e[0]<1.6*YEAR)D.ttm+=e[1];});
+  D.rdt=D.ttm>0?D.ttm/W.c[n-1]:0;
+  const F=Y.filter(o=>o.ok),L=F.length-1;
+  const r=F.filter(o=>o.rdt>0).slice(-10).map(o=>o.rdt).sort((a,b)=>a-b);
+  if(r.length>=5&&L>=0&&F[L].d>0){D.habN=r.length;D.hab=r.length%2?r[r.length>>1]:(r[r.length/2-1]+r[r.length/2])/2;}
+  for(const N of [5,4,3]){if(L-N>=0&&F[L].d>0&&F[L-N].d>0){D.g=Math.pow(F[L].d/F[L-N].d,1/N)-1;D.gN=N;break;}}
+  const tol=exact?0.999:0.97;for(let i=L;i>0;i--){if(F[i].d>0&&F[i-1].d>0&&F[i].d>=F[i-1].d*tol)D.serie++;else break;}
+  return D;}
+function mnt(v){return nf2.format(v)+' '+T.cur;}
+function divChoix(){const D=T.div,Y=D.Y.slice(-T.divNb);let i=T.hoverD;if(i==null||i>=Y.length){i=Y.length-1;if(!Y[i].ok&&i>0)i--;}return{Y:Y,i:i};}
+function renderDiv(){const D=T.div,k=$('divK'),inf=$('divInfo');
+  if(!D||D.aucun){k.innerHTML='';$('roDiv').textContent='';inf.textContent=!D?'L’historique des dividendes n’est pas disponible pour cette valeur.':'Aucun dividende versé sur la période : cette action n’en distribue pas.';return;}
+  k.innerHTML=[
+    ['Rendement actuel',D.ttm>0?pct(D.rdt,1):'—',D.ttm>0?(D.exact?'':'≈ ')+mnt(D.ttm)+' par action sur un an':'pas de versement récent',''],
+    ['Rendement habituel',D.hab?pct(D.hab,1):'—',D.hab?'valeur médiane sur '+D.habN+' ans':'pas assez de recul',D.hab&&D.ttm>0?(D.rdt>D.hab*1.1?'up':D.rdt<D.hab*0.9?'warn':''):''],
+    ['Progression',D.g!=null?pct(D.g,1,true)+' / an':'—',D.g!=null?'en moyenne sur '+D.gN+' ans':'pas assez de recul',D.g==null?'':D.g>0.005?'up':D.g<-0.005?'down':''],
+    ['Régularité',D.serie>0?D.serie+' an'+(D.serie>1?'s':''):'—',D.serie>0?'de suite sans baisse':'dividende en baisse ou interrompu',D.serie>=5?'up':'']
+  ].map(t=>'<div class="kpi"><div class="kl">'+t[0]+'</div><div class="kv '+t[3]+'">'+t[1]+'</div><div class="ks">'+t[2]+'</div></div>').join('');
+  inf.textContent=D.exact?'Montants par action, source Yahoo Finance. Touche une barre pour voir une année.':'Montants estimés à partir des cours, justes à quelques % près. Touche une barre pour voir une année.';}
+function drawDiv(){const D=T.div,cv=$('cvDiv');if(!D||D.aucun||!D.Y.length){setup(cv,2);return;}
+  const H=T.synth?300:240,g=setup(cv,H),c=g.c,ml=4,mr=4,mt=26,mb=24,pw=g.w-ml-mr,ph=H-mt-mb;
+  T.divNb=Math.max(4,Math.min(15,Math.floor(pw/24)));
+  const o=divChoix(),Y=o.Y,n=Y.length,slot=pw/n,bw=Math.min(48,slot*0.66),mx=Math.max.apply(null,Y.map(y=>y.d))||1,y0=mt+ph;
+  T.divGeo={ml:ml,pw:pw,n:n};
+  c.strokeStyle=C.line;c.lineWidth=1;c.beginPath();c.moveTo(ml,Math.round(y0)+.5);c.lineTo(ml+pw,Math.round(y0)+.5);c.stroke();
+  c.textAlign='center';c.textBaseline='middle';
+  Y.forEach((y,i)=>{const x=ml+slot*(i+.5),h=Math.max(y.d>0?2:0,y.d/mx*ph),sel=i===o.i;
+    c.globalAlpha=sel?1:y.ok?.55:.28;c.fillStyle=C.price;
+    if(h>0){const r=Math.min(4,bw/2,h);c.beginPath();c.moveTo(x-bw/2,y0);c.lineTo(x-bw/2,y0-h+r);c.quadraticCurveTo(x-bw/2,y0-h,x-bw/2+r,y0-h);c.lineTo(x+bw/2-r,y0-h);c.quadraticCurveTo(x+bw/2,y0-h,x+bw/2,y0-h+r);c.lineTo(x+bw/2,y0);c.closePath();c.fill();}
+    c.globalAlpha=1;
+    if(sel||slot>=46){c.font=(sel?'600 ':'')+'11px '+FONT;c.fillStyle=sel?C.text:C.muted;const tx=nf2.format(y.d),tw=c.measureText(tx).width/2+2;c.fillText(tx,Math.max(ml+tw,Math.min(ml+pw-tw,x)),y0-h-11);}
+    c.font=(sel?'600 ':'')+'11px '+FONT;c.fillStyle=sel?C.text:C.muted;c.fillText(slot>=34?String(y.y):'’'+String(y.y).slice(2),x,H-mb+13);});
+  const s=Y[o.i],p=o.i>0?Y[o.i-1]:null,ev=p&&p.d>0&&s.d>0&&s.ok&&p.ok?s.d/p.d-1:null;
+  $('roDiv').innerHTML='<b>'+s.y+'</b>'+(s.ok?'':' (année en cours)')+' · '+(s.d>0?(D.exact?'':'≈ ')+'<b>'+mnt(s.d)+'</b> par action'+(s.rdt>0?' · rendement '+pct(s.rdt,1):'')+(ev!=null?' · '+pct(ev,0,true)+' sur un an':''):'aucun dividende');}
+/* ---------- prix juste ----------
+   Trois façons simples d'estimer un prix « normal », puis la valeur du milieu. Ce n'est pas une prévision. */
+function prixJuste(A,F,D){const M=[],hors=v=>!(v>A.last*0.4&&v<A.last*2.5);
+  let v=A.years>=3?A.last*Math.exp(-A.z*A.sigma):null;
+  M.push({k:'Trajectoire de long terme',v:v,q:v?'là où serait le cours s’il suivait sa progression moyenne ('+pct(A.trend,1,true)+' par an)':'historique trop court'});
+  v=D&&D.hab&&D.ttm>0?D.ttm/D.hab:null;let q=v?'le prix auquel le dividende rapporterait son rendement habituel ('+pct(D.hab,1)+')':D&&D.aucun?'cette action ne verse pas de dividende':'pas assez d’années de dividende';
+  if(v&&hors(v)){v=null;q='dividende trop irrégulier pour être utilisé';}
+  M.push({k:'Rendement du dividende',v:v,q:q});
+  v=F&&F.tm>0?F.tm:null;M.push({k:'Objectif des analystes',v:v,q:v?'le prix visé en moyenne par les analystes d’ici un an':F&&F.vieux?'script Google à mettre à jour':'indisponible'});
+  const ok=M.filter(m=>m.v>0).map(m=>m.v).sort((a,b)=>a-b),n=ok.length;
+  if(!n)return{v:null,M:M,n:0};
+  const pj=n%2?ok[n>>1]:(ok[n/2-1]+ok[n/2])/2;
+  return{v:pj,lo:ok[0],hi:ok[n-1],n:n,M:M,e:A.last/pj-1};}
+function renderJuste(){const A=T.A,P=A.juste=prixJuste(A,A.fond,T.div),z=$('juste');
+  if(!P.n){z.innerHTML='<div class="at-ro">Pas assez de données pour estimer un prix juste sur cette valeur.</div>';return;}
+  const e=P.e,cls=e>0.1?'down':e<-0.1?'up':'',txt=e>0.1?'Le cours est '+pct(e)+' au-dessus : l’action paraît chère':e<-0.1?'Le cours est '+pct(-e)+' en dessous : l’action paraît bon marché':'Le cours est proche de ce prix ('+pct(e,0,true)+')';
+  const a=Math.min(P.lo,A.last)*0.94,b=Math.max(P.hi,A.last)*1.06,X=v=>((v-a)/(b-a)*100).toFixed(1)+'%';
+  z.innerHTML='<div class="at-pjN"><div class="v">'+eur(P.v)+'</div><div class="e '+cls+'">'+txt+'</div></div>'+
+    '<div class="at-cb"><div class="r" style="left:0;right:0"></div>'+(P.hi>P.lo?'<div class="f" style="left:'+X(P.lo)+';width:'+((P.hi-P.lo)/(b-a)*100).toFixed(1)+'%"></div>':'')+
+    '<div class="m" style="left:'+X(P.v)+';background:var(--green)"></div><div class="l" style="left:'+X(P.v)+';top:-10px;color:var(--green)">prix juste '+eur(P.v)+'</div>'+
+    '<div class="m" style="left:'+X(A.last)+';background:var(--text)"></div><div class="l" style="left:'+X(A.last)+';top:40px">cours '+eur(A.last)+'</div></div>'+
+    '<div class="at-pjL">'+P.M.map(m=>'<div class="at-pjR"><span>'+m.k+'</span><b>'+(m.v?eur(m.v):'—')+'</b><small>'+esc(m.q)+'</small></div>').join('')+'</div>'+
+    '<div class="at-ro" style="margin:0">'+(P.n>1?'Le prix juste est la valeur du milieu entre les '+P.n+' méthodes ; la zone verte va de la plus basse à la plus haute. ':'Une seule méthode disponible : à prendre avec prudence. ')+'Estimation mécanique, ni prévision ni conseil.</div>';}
 function drawHist(){const Hh=T.hist,cv=$('cvHist');if(!Hh){const g0=setup(cv,10);return;}
   const P=Hh.pts,g=base(cv,T.synth?330:260,0,100,P.map(p=>p.t),v=>String(v),[0,45,70,100]),c=g.c;
   [[70,100,C.up],[45,70,C.accent],[0,45,C.down]].forEach(z=>{c.fillStyle=z[2];c.globalAlpha=.08;c.fillRect(M.l,g.Y(z[1]),g.pw,g.Y(z[0])-g.Y(z[1]));c.globalAlpha=1;});
@@ -8022,6 +8110,8 @@ function hoverable(cv,getN,set){const mv=e=>{if(!T.A)return;const r=cv.getBoundi
   cv.addEventListener('pointermove',mv);cv.addEventListener('pointerdown',mv);cv.addEventListener('pointerleave',()=>{if(T.A)set(null)});}
 ['cvPrice','cvDD','cvReg','cvFib','cvCmp'].forEach(id=>hoverable($(id),()=>T.A.n,i=>{if(T.hover!==i){T.hover=i;cols();drawPrice();drawDD();drawReg();drawFib();drawCmp();}}));
 hoverable($('cvRsi'),()=>T.A.R.n,i=>{if(T.hoverR!==i){T.hoverR=i;cols();drawRsi();}});
+(function(){const cv=$('cvDiv'),mv=e=>{const G=T.divGeo;if(!G||!T.div)return;const r=cv.getBoundingClientRect(),i=Math.max(0,Math.min(G.n-1,Math.floor((e.clientX-r.left-G.ml)/G.pw*G.n)));if(T.hoverD!==i){T.hoverD=i;cols();drawDiv();}};
+  cv.addEventListener('pointermove',mv);cv.addEventListener('pointerdown',mv);cv.addEventListener('mouseleave',()=>{if(T.hoverD!=null){T.hoverD=null;cols();drawDiv();}});})();
 hoverable($('cvHist'),()=>T.hist?T.hist.pts.length:2,i=>{if(T.hist&&T.hoverH!==i){T.hoverH=i;cols();drawHist();}});
 $('mode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;T.synth=b.dataset.m==='1';try{localStorage.setItem('at-mode',T.synth?'fiche':'detail')}catch(e2){}
   $('mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));$('body').classList.toggle('at-synth',T.synth);if(T.A)drawAll();});
