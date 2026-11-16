@@ -651,7 +651,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 16/11 09h30</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 16/11 10h32</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -686,10 +686,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 <div class="page" id="page-bourse">
 <div id="rstat" class="rs" style="margin:0 0 8px"></div>
 <div class="stabs" id="bourseTabs"></div>
-<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="card" id="jrCard"><div class="fb" style="margin-bottom:10px;gap:10px"><div class="ct" style="margin:0">Évolution au jour le jour</div><div style="display:flex;gap:10px;flex-wrap:wrap"><div style="display:flex;gap:4px" id="jrMode"><button class="pb on" data-m="val">Valeur</button><button class="pb" data-m="pct">Évolution %</button></div><div style="display:flex;gap:4px;flex-wrap:wrap" id="jrPer"><button class="pb" data-p="7">1 sem.</button><button class="pb on" data-p="31">1 mois</button><button class="pb" data-p="92">3 mois</button><button class="pb" data-p="366">1 an</button><button class="pb" data-p="0">Tout</button></div></div></div><div id="jrSeries" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"></div><div id="jrInfo" style="font-size:12px;color:var(--muted);min-height:1.5em;margin-bottom:6px;font-variant-numeric:tabular-nums"></div><canvas id="jrCv" style="display:block;width:100%;touch-action:pan-y"></canvas><div id="jrBas" style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5"></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:var(--text)">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div id="opsBilan"></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div class="svue" id="bvue-pea" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="pea">PEA</span></div></div><div class="kr" id="pk1" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt1"></div><div id="pb1"></div><div id="fiche-pea"></div><div id="ops-pea"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="pea">PEA</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('pea')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-pea" style="margin-top:8px"></div></div></div>
-<div class="svue" id="bvue-ctosb" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="ctosb">CTO</span> <span style="font-size:11px;color:var(--muted)">(PRU $)</span></div></div><div class="kr" id="pk2" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt2"></div><div id="pb2"></div><div id="fiche-ctosb"></div><div id="ops-ctosb"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="ctosb">CTO</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('ctosb')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-ctosb" style="margin-top:8px"></div></div></div>
-<div class="svue" id="bvue-ctoibkr" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="ctoibkr">CTO 2</span></div></div><div class="kr" id="pk3" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt3"></div><div id="pb3"></div><div id="fiche-ctoibkr"></div><div id="ops-ctoibkr"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="ctoibkr">CTO 2</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('ctoibkr')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-ctoibkr" style="margin-top:8px"></div></div></div>
-<div class="svue" id="bvue-avl" style="display:none"><div class="card"><div class="fb"><div class="ct" style="margin:0"><span data-nc="avl">Assurance-vie</span></div></div><div class="kr" id="pk4" style="margin-bottom:8px"></div><div class="tw" style="margin-top:12px" id="pt4"></div><div id="pb4"></div><div id="fiche-avl"></div><div id="ops-avl"></div></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Watchlist <span data-nc="avl">Assurance-vie</span></div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addWatch('avl')">+ Suivre</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id="watch-avl" style="margin-top:8px"></div></div></div>
+<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="card" id="jrCard"><div class="fb" style="margin-bottom:10px;gap:10px"><div class="ct" style="margin:0">Évolution au jour le jour</div><div style="display:flex;gap:10px;flex-wrap:wrap"><div style="display:flex;gap:4px" id="jrMode"><button class="pb on" data-m="val">Valeur</button><button class="pb" data-m="pct">Évolution %</button></div><div style="display:flex;gap:4px;flex-wrap:wrap" id="jrPer"><button class="pb" data-p="7">1 sem.</button><button class="pb on" data-p="31">1 mois</button><button class="pb" data-p="92">3 mois</button><button class="pb" data-p="366">1 an</button><button class="pb" data-p="0">Tout</button></div></div></div><div id="jrSeries" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"></div><div id="jrInfo" style="font-size:12px;color:var(--muted);min-height:1.5em;margin-bottom:6px;font-variant-numeric:tabular-nums"></div><canvas id="jrCv" style="display:block;width:100%;touch-action:pan-y"></canvas><div id="jrBas" style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5"></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:var(--text)">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div id="opsBilan"></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div id="bvueComptes"></div>
 </div>
 <div class="page" id="page-epargne"><div class="kr" id="ek"></div><div class="g2"><div class="card"><div class="ct" id="ct1"></div><div id="cl1"></div><div id="af1"></div></div><div class="card"><div class="ct" id="ct2"></div><div id="cl2"></div><div id="af2"></div></div><div class="card sf"><div class="ct" id="ct3"></div><div id="cl3"></div><div id="af3"></div></div></div></div>
 <div class="page" id="page-immo">
@@ -762,12 +759,9 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 <div id="etatSauve" style="font-size:12px;color:var(--text2);margin-top:14px"></div><div id="sauveInfo" style="font-size:12px;margin-top:8px"></div></div><div class="card" style="margin-top:16px"><div class="ct">Prélèvements sur les dividendes</div><div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:14px">Ce que l’État retient au moment où le dividende est versé. Sur un compte-titres c’est 30 % (le prélèvement forfaitaire unique). Dans un PEA ou une assurance-vie, rien n’est retenu tant que tu ne retires pas : laisse 0. Change un taux si ta situation diffère, par exemple pour une retenue étrangère.</div><div id="prelevZone"></div></div>
 <div class="card"><div class="ct">Ménage dans les données</div>
 <div id="menageZone"></div></div>
-<div class="card"><div class="ct">Noms de mes comptes</div>
-<div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:14px">L’application suit quatre comptes de bourse. Donne à chacun le nom que tu veux, par exemple celui de ton courtier : il sera repris partout. Clique sur un nom pour le changer.</div>
-<div class="lr"><span>PEA</span><span class="ed" onclick="edNomCompte('pea')" id="ncAff-pea">—</span></div>
-<div class="lr"><span>Compte-titres en dollars</span><span class="ed" onclick="edNomCompte('ctosb')" id="ncAff-ctosb">—</span></div>
-<div class="lr"><span>Compte-titres en euros</span><span class="ed" onclick="edNomCompte('ctoibkr')" id="ncAff-ctoibkr">—</span></div>
-<div class="lr"><span>Assurance-vie</span><span class="ed" onclick="edNomCompte('avl')" id="ncAff-avl">—</span></div></div>
+<div class="card"><div class="ct">Mes comptes de bourse</div>
+<div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:14px">Ajoute autant de comptes que tu veux (PEA, compte-titres, assurance-vie…) et supprime ceux qui ne te servent pas. Clique sur un nom pour le changer : il sera repris partout.</div>
+<div id="cptReglages"></div><button class="ab" style="margin-top:10px" onclick="cptAjouter()">+ Ajouter un compte</button></div>
 <div class="card"><div class="ct">Source des cours</div>
 <div style="font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:14px">Les cours viennent de Yahoo Finance, par l’intermédiaire de ton script Google. Si tu redéploies le script et que Google te donne une nouvelle adresse, colle-la ici : plus besoin de toucher au fichier.</div>
 <div class="lr"><span>Adresse du script Google</span><span class="ed" onclick="edGas()" id="gasAff">—</span></div>
@@ -952,7 +946,7 @@ if(hiddenMode){document.getElementById('dmBtn').textContent='◍'}
 firebase.initializeApp({apiKey:"AIzaSyB1ngpW9j09gV2FrW6leTN5kf3JVi9j6-g",authDomain:"patrimoine-1e959.firebaseapp.com",projectId:"patrimoine-1e959",storageBucket:"patrimoine-1e959.firebasestorage.app",messagingSenderId:"77172547528",appId:"1:77172547528:web:2f15c6cdcda20a85fcaafd"});
 const auth=firebase.auth(),db=firebase.firestore();let uid=null;
 window.doLogin=async()=>{try{await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())}catch(e){document.getElementById('login-err').textContent=e.message}};
-auth.onAuthStateChanged(async u=>{if(u){uid=u.uid;document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';document.getElementById('userBar').innerHTML=(u.photoURL?'<img src="'+u.photoURL+'">':'')+'<span>'+(u.displayName||'')+'</span><span class="logout" onclick="auth.signOut()">Déco</span>';await loadData();majNomsComptes();initApp();majExemple()}else{uid=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none'}});
+auth.onAuthStateChanged(async u=>{if(u){uid=u.uid;document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';document.getElementById('userBar').innerHTML=(u.photoURL?'<img src="'+u.photoURL+'">':'')+'<span>'+(u.displayName||'')+'</span><span class="logout" onclick="auth.signOut()">Déco</span>';await loadData();majNomsComptes();try{S.ficheLigne=null}catch(e){}initApp();majExemple()}else{uid=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none'}});
 
 const SECTORS={"EPA:AI":"Chimie","EPA:DCAM":"ETF","EPA:PUST":"ETF","EPA:GTT":"Énergie","EPA:DG":"Industrie","EPA:EL":"Santé","EPA:SU":"Industrie","EPA:ALMIB":"Biotech","GOOGL":"Tech","AMBA":"Tech","NET":"Tech","DXCM":"Santé","ON":"Tech","NU":"Finance","RKLB":"Aérospatial","TOST":"Tech","AMZN":"Tech","SNOW":"Tech","SOFI":"Finance","SYM":"Tech","TER":"Tech","TTD":"Tech","TMDX":"Santé","CELH":"Conso","PATH":"Tech","VRT":"Industrie","ZS":"Tech","EPA:BNKE":"Finance","LON:HNSC":"ETF","XDGU":"Obligations","CS.PA":"Finance","SAN.PA":"Santé","TTE.PA":"Énergie","HO.PA":"Aérospatial","EPA:CS":"Finance","EPA:SAN":"Santé","EPA:TTE":"Énergie","EPA:HO":"Aérospatial"};
 /* Secteurs : dix-sept teintes espacees mais de meme intensite, assez
@@ -968,21 +962,84 @@ const SEED=[];/* plus d'historique dans le fichier : celui de chacun vit dans se
 /* ===== NOMS DES COMPTES =====
    Les quatre comptes de bourse portent le nom que leur donne l'utilisateur (Réglages).
    Sans réglage, ils prennent un nom neutre. */
+/* ===== COMPTES DE BOURSE LIBRES =====
+   S.pf garde un compte par clé. S.cptOrdre donne la liste des comptes et leur ordre.
+   Les quatre clés d'origine restent valables ; un nouveau compte reçoit une clé « c… ».
+   Tout le code passe par PKS() : plus aucun compte n'est écrit en dur. */
+const PK_HIST=['pea','ctosb','ctoibkr'].concat(['avl']);
+function PKS(){try{if(S&&S.pf){const o=Array.isArray(S.cptOrdre)?S.cptOrdre:PK_HIST;return o.filter((k,i)=>S.pf[k]&&o.indexOf(k)===i)}}catch(e){}return PK_HIST.slice()}
+const COUL_CPT=['--c1','--c3','--c4','--p6','--c5','--c2','--p2','--p4'];
+function coulCpt(pk){const i=PKS().indexOf(pk);return CV(COUL_CPT[(i<0?0:i)%COUL_CPT.length])}
+function nomsCpts(){const o={};PKS().forEach(k=>{o[k]=nomCpt(k)});return o}
+function cptVals(t){const o={};PKS().forEach(k=>{o[k]=t.cp[k]?t.cp[k].v:0});return o}
+function tSom(t,f){return PKS().reduce((x,k)=>x+nb(t.cp[k]&&t.cp[k][f]),0)}
+function estAV(pk){try{return pk==='avl'||!!(S.pf[pk]&&S.pf[pk].type==='av')}catch(e){return pk==='avl'}}
+function cptE(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function cptType(pk){const pf=S.pf[pk]||{};if(pf.type)return pf.type;return pk==='pea'?'pea':pk==='avl'?'av':'cto'}
+const CPT_TYPES={pea:'PEA',cto:'Compte-titres',av:'Assurance-vie',autre:'Autre'};
+function vueCompteHTML(pk){const usd=S.pf[pk]&&S.pf[pk].cur==='USD';return "<div class=\"svue\" id=\"bvue-"+pk+"\" style=\"display:none\"><div class=\"card\"><div class=\"fb\"><div class=\"ct\" style=\"margin:0\"><span data-nc=\""+pk+"\">"+cptE(nomCpt(pk))+"</span>"+(usd?' <span style=\"font-size:11px;color:var(--muted)\">(PRU $)</span>':'')+"</div></div><div class=\"kr\" id=\"pk-"+pk+"\" style=\"margin-bottom:8px\"></div><div class=\"tw\" style=\"margin-top:12px\" id=\"pt-"+pk+"\"></div><div id=\"pb-"+pk+"\"></div><div id=\"fiche-"+pk+"\"></div><div id=\"ops-"+pk+"\"></div></div><div class=\"card\" style=\"margin-top:16px\"><div class=\"fb\"><div class=\"ct\" style=\"margin:0\">Watchlist <span data-nc=\""+pk+"\">"+cptE(nomCpt(pk))+"</span></div><button class=\"ab\" style=\"width:auto;margin:0;padding:6px 12px;font-size:11px\" onclick=\"addWatch('"+pk+"')\">+ Suivre</button></div><div style=\"font-size:11px;color:var(--muted);margin:4px 0 8px\">Les titres que tu surveilles pour ce compte, avec leur fourchette d'achat.</div><div id=\"watch-"+pk+"\" style=\"margin-top:8px\"></div></div></div>"}
+function construitVuesComptes(){
+  const z=document.getElementById('bvueComptes');if(!z)return;
+  const cle=PKS().map(k=>k+':'+((S.pf[k]||{}).cur||'')).join('|');
+  if(z.dataset.cle===cle)return;z.dataset.cle=cle;z.innerHTML=PKS().map(vueCompteHTML).join('');
+}
+window.cptAjouter=async function(){
+  const v=await modale({titre:'Nouveau compte de bourse',valider:'Créer le compte',champs:[
+    {k:'nom',lib:'Nom',ph:'PEA Boursorama, CTO Degiro…',large:true},
+    {k:'type',lib:'Type',type:'choix',val:'cto',options:[['pea','PEA'],['cto','Compte-titres'],['av','Assurance-vie'],['autre','Autre']]},
+    {k:'cur',lib:'Devise des prix de revient',type:'choix',val:'EUR',options:[['EUR','Euros'],['USD','Dollars']],aide:'Dollars si tu y achètes surtout des actions américaines. Ne se change plus ensuite.'}],
+    verif:x=>!x.nom.replace(/[<>&"'`\\]/g,'').trim()?[0,'Donne un nom au compte.']:null});
+  if(!v)return;
+  const id='c'+nid(),nom=v.nom.replace(/[<>&"'`\\]/g,'').trim().slice(0,24);
+  if(!Array.isArray(S.cptOrdre))S.cptOrdre=PKS();
+  S.pf[id]={esp:0,ver:0,cur:v.cur==='USD'?'USD':'EUR',type:v.type,l:[]};
+  if(!S.nomsComptes)S.nomsComptes={};S.nomsComptes[id]=nom;S.cptOrdre.push(id);
+  if(S.envSel)S.envSel[id]=1;
+  majNomsComptes();autoSave();
+  try{goPage('bourse');setBourseVue(id)}catch(e){R(true)}
+};
+window.cptSupprimer=async function(pk){
+  const pf=S.pf[pk];if(!pf)return;
+  if(PKS().length<=1){await avis('Impossible de supprimer ce compte\n\nIl faut garder au moins un compte de bourse.');return;}
+  const nl=(pf.l||[]).length,no=(S.ops||[]).filter(o=>o.pk===pk).length,nw=(S.watchlist||[]).filter(w=>w.pk===pk).length;let val=0;try{val=cPf(pf).v}catch(e){}
+  if(!await confirme('Supprimer le compte « '+nomCpt(pk)+' » ?\n\n'+(nl||no||nw||val>0?
+      'Il contient '+nl+' ligne'+(nl>1?'s':'')+(val>0?' pour '+F(Math.round(val)):'')+(no?', '+no+' opération'+(no>1?'s':'')+' dans l’historique':'')+(nw?', '+nw+' titre'+(nw>1?'s':'')+' en watchlist':'')+'. Tout cela sera supprimé avec lui.'
+      :'Il est vide.')+'\n\nTu pourras annuler juste après.'))return;
+  const av={pf:pf,i:(S.cptOrdre||PKS()).indexOf(pk),nom:S.nomsComptes&&S.nomsComptes[pk],ops:(S.ops||[]).slice(),wl:(S.watchlist||[]).slice(),prel:S.prelevDiv&&S.prelevDiv[pk]};
+  if(!Array.isArray(S.cptOrdre))S.cptOrdre=PKS();
+  S.cptOrdre=S.cptOrdre.filter(k=>k!==pk);delete S.pf[pk];
+  if(S.ops)S.ops=S.ops.filter(o=>o.pk!==pk);
+  if(S.watchlist)S.watchlist=S.watchlist.filter(w=>w.pk!==pk);
+  if(S.ficheLigne&&S.ficheLigne.pk===pk)S.ficheLigne=null;
+  if(bourseVue===pk){bourseVue='ensemble';try{localStorage.setItem('bourseVue','ensemble')}catch(e){}}
+  majNomsComptes();
+  proposeAnnuler('Le compte « '+(av.nom||NOMS_DEF[pk]||pk)+' »',()=>{
+    S.pf[pk]=av.pf;S.cptOrdre.splice(Math.max(0,Math.min(av.i,S.cptOrdre.length)),0,pk);
+    S.ops=av.ops;S.watchlist=av.wl;majNomsComptes();});
+  autoSave();R(true);
+};
 const NOMS_DEF={pea:'PEA',ctosb:'CTO',ctoibkr:'CTO 2',avl:'Assurance-vie'};
 function nomCpt(pk){try{const n=S&&S.nomsComptes&&S.nomsComptes[pk];if(n)return n}catch(e){}return NOMS_DEF[pk]||pk}
 /* Version courte, pour les petits boutons */
 function nomCourt(pk){const n=nomCpt(pk);if(n.length<=6)return n;const m=n.split(' ');return m.length<2?n:(m[0]==='CTO'?m.slice(1).join(' '):m[0])}
 /* Les listes créées au chargement de la page et les titres fixes reprennent les noms à jour */
 function majNomsComptes(){
-  const pks=['pea','ctosb','ctoibkr','avl'];
+  /* première ouverture avec cette version : la liste des comptes est celle qui existait */
+  try{if(S&&S.pf&&!Array.isArray(S.cptOrdre))S.cptOrdre=PK_HIST.filter(k=>S.pf[k])}catch(e){}
+  const pks=PKS();
   try{
-    pks.forEach(k=>{PK_NOMS[k]=nomCpt(k);PFN[k]=nomCpt(k)});
-    BVUES.forEach(v=>{if(v.pf){v.l=nomCpt(v.pf);v.c=nomCourt(v.pf)}});
-    COMPTES_DIV.forEach(a=>{a[1]=nomCpt(a[0])});
-    perfLines.forEach(p=>{if(pks.indexOf(p.k)>=0)p.l=nomCpt(p.k)});
-  }catch(e){}
+    [PK_NOMS,PFN].forEach(o=>{Object.keys(o).forEach(k=>{delete o[k]});pks.forEach(k=>{o[k]=nomCpt(k)})});
+    PK_LISTE.length=0;pks.forEach(k=>PK_LISTE.push(k));
+    BVUES.length=2;pks.forEach(k=>BVUES.push({k:k,l:nomCpt(k),c:nomCourt(k),pf:k}));
+    COMPTES_DIV.length=0;pks.forEach(k=>COMPTES_DIV.push([k,nomCpt(k)]));
+    const gl=perfLines[0],sp=perfLines[perfLines.length-1],anc={};perfLines.forEach(p=>{anc[p.k]=p.on});
+    perfLines.length=0;perfLines.push(gl);pks.forEach(k=>perfLines.push({k:k,l:nomCpt(k),c:coulCpt(k),on:!!anc[k]}));perfLines.push(sp);
+    if(S.envSel)pks.forEach(k=>{if(S.envSel[k]===undefined)S.envSel[k]=1});
+    construitVuesComptes();
+  }catch(e){console.error('comptes :',e&&e.message)}
   document.querySelectorAll('[data-nc]').forEach(e=>{e.textContent=nomCpt(e.dataset.nc)});
-  pks.forEach(k=>{const z=document.getElementById('ncAff-'+k);if(z)z.textContent=nomCpt(k)});
+  const zr=document.getElementById('cptReglages');
+  if(zr)try{zr.innerHTML=pks.map(k=>'<div class="lr"><span>'+(CPT_TYPES[cptType(k)]||'Compte')+(S.pf[k].cur==='USD'?' en dollars':'')+'</span><span style="display:flex;gap:10px;align-items:center"><span class="ed" onclick="edNomCompte(\''+k+'\')">'+cptE(nomCpt(k))+'</span><button class="db" title="Supprimer ce compte" onclick="cptSupprimer(\''+k+'\')">✕</button></span></div>').join('')}catch(e){}
 }
 window.edNomCompte=async function(pk){
   if(!S.nomsComptes)S.nomsComptes={};
@@ -1004,7 +1061,7 @@ function majExemple(){
 window.exGarder=function(){delete S.exemple;autoSave();majExemple()};
 window.exVider=function(){
   S.comptes=[];S.epLibre=[];S.epBloq=[];S.immo=[];S.dettes=[];S.crypto=[];
-  ['pea','ctosb','ctoibkr','avl'].forEach(k=>{if(S.pf[k]){S.pf[k].l=[];S.pf[k].esp=0;S.pf[k].ver=0}});
+  PKS().forEach(k=>{if(S.pf[k]){S.pf[k].l=[];S.pf[k].esp=0;S.pf[k].ver=0}});
   S.versMensuels=[];S.perfData=[];S.objectifs=[];S.watchlist=[];S.ops=[];
   /* Le budget repart du modèle de départ : un budget vide n'a rien à afficher, on garde des postes à ajuster */
   S.budget=JSON.parse(JSON.stringify(BDEF));
@@ -1013,7 +1070,7 @@ window.exVider=function(){
 };
 async function loadData(){try{const doc=await db.collection('users').doc(uid).get();if(doc.exists){S=doc.data().patrimoine||JSON.parse(JSON.stringify(D));snaps=doc.data().snapshots||[]}else{let ls=localStorage.getItem('patrimoine_data');if(ls){S=JSON.parse(ls);snaps=JSON.parse(localStorage.getItem('patrimoine_snaps')||'[]');await saveData()}else{S=JSON.parse(JSON.stringify(D));snaps=[]}}/* Un compte créé avant ce réglage garde les noms qu'il avait */
 if(doc.exists&&doc.data().patrimoine&&!S.nomsComptes)S.nomsComptes={pea:'PEA',ctosb:'CTO Sa'+'xo',ctoibkr:'CTO IB'+'KR',avl:'AV Lin'+'xea'};
-if(!S.versMensuels)S.versMensuels=D.versMensuels.map(x=>({...x}));if(!S.objectifs)S.objectifs=D.objectifs.map(x=>({...x}));S.objectifs.forEach(o=>{if(o.actuel===undefined)o.actuel=0});if(!S.budget)S.budget=JSON.parse(JSON.stringify(BDEF));if(!S.pf.avl)S.pf.avl={esp:0,ver:0,cur:'EUR',l:[]};if(!S.simParams)S.simParams={age:30,dep:25000,rend:7,ep:500};if(!S.notes)S.notes={};if(!S.histJour)S.histJour=[];if(!S.bourseGoals)S.bourseGoals=[];if(!S.watchlist)S.watchlist=[];migreWatchlist();if(!S.revSources)S.revSources=[];if(!S.etfGoals)S.etfGoals={pea:60,ctosb:0,ctoibkr:0};if(!S.benchCours)S.benchCours={};if(!S.projets)S.projets=[];if(!S.divMois)S.divMois={};if(!S.fiscParams)S.fiscParams={tmi:30};if(!S.allocCible)S.allocCible={...ALLOC_DEF};['bloq','immo'].forEach(k=>delete S.allocCible[k])}catch(e){chargeKO=true;S=JSON.parse(JSON.stringify(D));snaps=[];try{document.body.insertAdjacentHTML('afterbegin','<div style="background:var(--red);color:#fff;padding:10px 16px;font-size:13px;text-align:center;line-height:1.5">Tes données n’ont pas pu être chargées : ce que tu vois est un exemple. Rien ne sera enregistré. Recharge la page.</div>')}catch(e2){}}}
+if(!S.versMensuels)S.versMensuels=D.versMensuels.map(x=>({...x}));if(!S.objectifs)S.objectifs=D.objectifs.map(x=>({...x}));S.objectifs.forEach(o=>{if(o.actuel===undefined)o.actuel=0});if(!S.budget)S.budget=JSON.parse(JSON.stringify(BDEF));if(!S.pf.avl&&!Array.isArray(S.cptOrdre))S.pf.avl={esp:0,ver:0,cur:'EUR',l:[]};if(!S.simParams)S.simParams={age:30,dep:25000,rend:7,ep:500};if(!S.notes)S.notes={};if(!S.histJour)S.histJour=[];if(!S.bourseGoals)S.bourseGoals=[];if(!S.watchlist)S.watchlist=[];migreWatchlist();if(!S.revSources)S.revSources=[];if(!S.etfGoals)S.etfGoals={pea:60,ctosb:0,ctoibkr:0};if(!S.benchCours)S.benchCours={};if(!S.projets)S.projets=[];if(!S.divMois)S.divMois={};if(!S.fiscParams)S.fiscParams={tmi:30};if(!S.allocCible)S.allocCible={...ALLOC_DEF};['bloq','immo'].forEach(k=>delete S.allocCible[k])}catch(e){chargeKO=true;S=JSON.parse(JSON.stringify(D));snaps=[];try{document.body.insertAdjacentHTML('afterbegin','<div style="background:var(--red);color:#fff;padding:10px 16px;font-size:13px;text-align:center;line-height:1.5">Tes données n’ont pas pu être chargées : ce que tu vois est un exemple. Rien ne sera enregistré. Recharge la page.</div>')}catch(e2){}}}
 /* Les lignes de watchlist d avant les comptes rejoignent le PEA. Celles
    deja rattachees a un compte gardent le leur. */
 function migreWatchlist(){
@@ -1028,7 +1085,7 @@ async function saveData(){if(!uid||chargeKO)return;try{
 /* Nettoyer les données avant sauvegarde */
 const clean=JSON.parse(JSON.stringify(S));
 /* Supprimer les champs temporaires des actions (spark, var) */
-['pea','ctosb','ctoibkr','avl'].forEach(pk=>{if(clean.pf[pk])clean.pf[pk].l.forEach(l=>{delete l.vaEur;delete l.g;delete l.gp;delete l.divAn;delete l.w})});
+PKS().forEach(pk=>{if(clean.pf[pk])clean.pf[pk].l.forEach(l=>{delete l.vaEur;delete l.g;delete l.gp;delete l.divAn;delete l.w})});
 /* Limiter l'historique jour à 30 entrées */
 if(clean.histJour&&clean.histJour.length>30)clean.histJour=clean.histJour.slice(-30);
 await db.collection('users').doc(uid).set({patrimoine:clean,snapshots:snaps,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true})}catch(e){}}
@@ -1179,6 +1236,7 @@ function bvuesVisibles(){return BVUES.slice()}
 let bourseVue=(function(){try{return localStorage.getItem('bourseVue')||'ensemble'}catch(e){return 'ensemble'}})();
 window.setBourseVue=function(k){
   bourseVue=k;try{localStorage.setItem('bourseVue',k)}catch(e){}
+  try{if(S&&S.ficheLigne&&S.ficheLigne.pk!==k)S.ficheLigne=null}catch(e){}
   BVUES.forEach(v=>{const el=document.getElementById('bvue-'+v.k);if(el)el.style.display=v.k===k?'':'none'});
   document.querySelectorAll('#bourseTabs .stab').forEach(b=>b.classList.toggle('on',b.dataset.v===k));
   R(true);
@@ -1594,7 +1652,7 @@ function nettoieNombres(){
   (S.epLibre||[]).forEach(c=>num(c,['montant']));
   (S.epBloq||[]).forEach(c=>num(c,['montant']));
   (S.crypto||[]).forEach(c=>num(c,['qte','pru','prix','montant']));
-  ['pea','ctosb','ctoibkr','avl'].forEach(k=>{
+  PKS().forEach(k=>{
     const pf=S.pf&&S.pf[k];if(!pf)return;
     num(pf,['esp','ver']);
     (pf.l||[]).forEach(l=>num(l,['p','pr','co','div','usd','dvr','al','ah']));
@@ -1621,10 +1679,10 @@ function cTWR(key){
 }
 function cPan(){const vm=S.versMensuels||[],ml=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"],mn=["Jan","Fév","Mar","Avr","Mai","Juin","Juil","Août","Sep","Oct","Nov","Déc"],ym=["2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09","2026-10","2026-11","2026-12"],r=[];for(let i=1;i<vm.length;i++){const m=vm[i].mois||'',p=m.split(' ');if(!p[1]||!p[1].startsWith('26'))continue;const mi=mn.indexOf(p[0]);if(mi<0)continue;const debut=vm[i-1].bourse||0;const fin=vm[i].bourse||0;const vers=vm[i].versement||0;const perf=debut>0?((fin-vers-debut)/debut)*100:0;r.push({l:ml[mi],perf:Math.round(perf*100)/100,pv:Math.round((fin-vers-debut)*100)/100,sp:spM[ym[mi]]!=null?Math.round(spM[ym[mi]]*100)/100:null})}return r}
 /* Une ligne compte comme ETF si son secteur le dit, si elle est dans l'AV, ou si son nom l'indique */
-const estETF=(l,pk)=>l.sec==='ETF'||(l.sec?false:((SECTORS[l.c]||'')==='ETF'||pk==='avl'||l._avl||/\betf\b|msci|world|nasdaq|s&p|stoxx|amundi|ishares|lyxor|vanguard|spdr|tracker/i.test(l.n||'')));
+const estETF=(l,pk)=>l.sec==='ETF'||(l.sec?false:((SECTORS[l.c]||'')==='ETF'||estAV(pk)||l._avl||/\betf\b|msci|world|nasdaq|s&p|stoxx|amundi|ishares|lyxor|vanguard|spdr|tracker/i.test(l.n||'')));
 /* Secteur d'un titre : choix manuel, puis liste connue, puis détection ETF */
 function secteurDe(l,pk){return l.sec||SECTORS[l.c]||(estETF(l,pk)?'ETF':'Autre')}
-function cSec(){const s={};['pea','ctosb','ctoibkr','avl'].forEach(pk=>{const pf=S.pf[pk];if(!pf)return;pf.l.forEach(l=>{const k=secteurDe(l,pk);s[k]=(s[k]||0)+l.co*l.p})});return Object.entries(s).sort((a,b)=>b[1]-a[1])}
+function cSec(){const s={};PKS().forEach(pk=>{const pf=S.pf[pk];if(!pf)return;pf.l.forEach(l=>{const k=secteurDe(l,pk);s[k]=(s[k]||0)+l.co*l.p})});return Object.entries(s).sort((a,b)=>b[1]-a[1])}
 
 /* Récupère un lot de cours, avec rattrapage individuel pour les manquants */
 async function yQLot(tickers){
@@ -1689,7 +1747,7 @@ async function doRef(){if(rL)return;rL=true;
 const b=document.getElementById('rbtn');b.disabled=true;b.innerHTML='◌';
 /* Ce qu'il faut interroger */
 const taskMap=[];
-['pea','ctosb','ctoibkr','avl'].forEach(pk=>{S.pf[pk].l.forEach(x=>{const yt=YM[x.c]||x.c;if(yt&&yt!=='—')taskMap.push({t:'s',pk,id:x.id,yt})})});
+PKS().forEach(pk=>{S.pf[pk].l.forEach(x=>{const yt=YM[x.c]||x.c;if(yt&&yt!=='—')taskMap.push({t:'s',pk,id:x.id,yt})})});
 if(S.watchlist)S.watchlist.forEach(w=>{if(w.ticker)taskMap.push({t:'w',id:w.id,yt:w.ticker})});
 const cryptoT=[];S.crypto.forEach(x=>{const yt=YM[x.symbol];if(yt)cryptoT.push({yt,id:x.id})});
 const total=taskMap.length+cryptoT.length;
@@ -1729,7 +1787,7 @@ lotsC.forEach(lot=>jobs.push(
 ));
 await Promise.all(jobs);
 await pBase;
-if(ok>0){if(!S.histJour)S.histJour=[];const today=new Date().toISOString().slice(0,10);const t2=Tot();const dp=t2.p.dayPnl+t2.s.dayPnl+t2.i.dayPnl;const dpct=t2.bo>0?(dp/t2.bo*100):0;const ex=S.histJour.findIndex(h=>h.date===today);const ent={date:today,portf:Math.round(dpct*100)/100,pnl:Math.round(dp*100)/100,sp:spyDay,bourse:Math.round(t2.bo)};if(ex>=0)S.histJour[ex]=ent;else S.histJour.push(ent);if(S.histJour.length>30)S.histJour=S.histJour.slice(-30)}
+if(ok>0){if(!S.histJour)S.histJour=[];const today=new Date().toISOString().slice(0,10);const t2=Tot();const dp=PKS().filter(k=>!estAV(k)).reduce((x,k)=>x+nb(t2.cp[k].dayPnl),0);const dpct=t2.bo>0?(dp/t2.bo*100):0;const ex=S.histJour.findIndex(h=>h.date===today);const ent={date:today,portf:Math.round(dpct*100)/100,pnl:Math.round(dp*100)/100,sp:spyDay,bourse:Math.round(t2.bo)};if(ex>=0)S.histJour[ex]=ent;else S.histJour.push(ent);if(S.histJour.length>30)S.histJour=S.histJour.slice(-30)}
 /* Un point par jour pour chaque compte de bourse, seulement si la plupart des cours ont répondu */
 try{if(ok>=total*0.7&&window.jrNote)window.jrNote()}catch(e){}
 if(ok>0)S.lastRefresh=Date.now();
@@ -1829,7 +1887,7 @@ window.exportCSV=function(){const t=Tot();const now=new Date().toISOString().sli
 c+="\nCOMPTES\nNom;Banque;Montant\n";S.comptes.forEach(x=>{c+=x.nom+";"+x.banque+";"+x.montant+"\n"});
 c+="\nEPARGNE LIBRE\nNom;Banque;Montant\n";S.epLibre.forEach(x=>{c+=x.nom+";"+x.banque+";"+x.montant+"\n"});
 c+="\nEPARGNE BLOQUEE\nNom;Banque;Montant\n";S.epBloq.forEach(x=>{c+=x.nom+";"+x.banque+";"+x.montant+"\n"});
-['pea','ctosb','ctoibkr','avl'].forEach(pk=>{c+="\n"+pk.toUpperCase()+"\nNom;Ticker;Qté;PRU;Cours;Div;Secteur;Valeur;+/-%;Poids%\n";const pf=cPf(S.pf[pk]);pf.l.forEach(l=>{c+=l.n+";"+l.c+";"+l.p+";"+l.pr+";"+l.co+";"+(l.div||0)+";"+(SECTORS[l.c]||'Autre')+";"+(l.vaEur).toFixed(2)+";"+l.gp.toFixed(2)+";"+l.w.toFixed(1)+"\n"})});
+PKS().forEach(pk=>{c+="\n"+nomCpt(pk)+"\nNom;Ticker;Qté;PRU;Cours;Div;Secteur;Valeur;+/-%;Poids%\n";const pf=cPf(S.pf[pk]);pf.l.forEach(l=>{c+=l.n+";"+l.c+";"+l.p+";"+l.pr+";"+l.co+";"+(l.div||0)+";"+(SECTORS[l.c]||'Autre')+";"+(l.vaEur).toFixed(2)+";"+l.gp.toFixed(2)+";"+l.w.toFixed(1)+"\n"})});
 c+="\nCRYPTO\nNom;Symbol;Qté;PRU;Prix;Valeur\n";S.crypto.forEach(x=>{c+=x.nom+";"+x.symbol+";"+x.qte+";"+x.pru+";"+(x.prix||0)+";"+(x.prix>0?x.prix*x.qte:(x.montant||0)).toFixed(2)+"\n"});
 c+="\nIMMOBILIER\nNom;Type;Achat;Valeur\n";S.immo.forEach(x=>{c+=x.nom+";"+x.type+";"+x.prixAchat+";"+x.valeur+"\n"});
 c+="\nDETTES\nNom;Emprunté;Restant;Taux;Durée\n";S.dettes.forEach(x=>{c+=x.nom+";"+x.emprunte+";"+x.restant+";"+(x.taux||0)+";"+(x.dureeMois||0)+"\n"});
@@ -2016,7 +2074,7 @@ const PRELEV_DEFAUT={pea:0,ctosb:30,ctoibkr:30,avl:0};
 function tauxPrelev(pk){
   const f=S.prelevDiv||{};
   const v=f[pk];
-  return (v===undefined||v===null||isNaN(nb(v)))?(PRELEV_DEFAUT[pk]||0):Math.max(0,Math.min(100,nb(v)));
+  return (v===undefined||v===null||isNaN(nb(v)))?(PRELEV_DEFAUT[pk]!==undefined?PRELEV_DEFAUT[pk]:(cptType(pk)==='cto'?30:0)):Math.max(0,Math.min(100,nb(v)));
 }
 function netDe(brut,pk){return brut*(1-tauxPrelev(pk)/100)}
 function lignesDuMois(m){
@@ -2058,7 +2116,7 @@ function calendrierDiv(nbMois){
 /* Combien de lignes sont renseignées, et combien restent à faire */
 function etatCalendrier(){
   let avec=0,sans=0,sansDiv=0;
-  ['pea','ctosb','ctoibkr','avl'].forEach(pk=>{
+  PKS().forEach(pk=>{
     const pf=S.pf&&S.pf[pk];if(!pf||!pf.l)return;
     pf.l.forEach(l=>{
       if(nb(l.div)<=0){sansDiv++;return}
@@ -2084,7 +2142,7 @@ function ancreLigne(pk,id){
   const f=S.ficheLigne;
   if(f&&f.pk===pk&&String(f.id)===String(id)&&document.getElementById('fiche-'+pk))
     return['fiche-'+pk,true];
-  return['pt'+({pea:1,ctosb:2,ctoibkr:3,avl:4}[pk]||1),false];
+  return['pt-'+pk,false];
 }
 /* Un champ par mois : on met un montant dans les mois ou la ligne verse et
    on laisse les autres vides. Un seul ecran, une seule validation, et des
@@ -2231,7 +2289,7 @@ function zoneDuPays(p){return PAYS_ZONE[p]||'Autres'}
    puis l indice devine, puis la place de cotation. */
 function expoGeo(){
   const parPays={},parZone={};let tot=0,dansIndices=0,lignes=0,devinees=0,brutes=0;
-  ['pea','ctosb','ctoibkr','avl'].forEach(pk=>{
+  PKS().forEach(pk=>{
     const pf=S.pf&&S.pf[pk];if(!pf||!pf.l)return;
     cPf(pf).l.forEach(l=>{
       const v=nb(l.vaEur);if(v<=0)return;
@@ -2468,7 +2526,7 @@ function blocHistBien(b){
    directement. On n y ajoute a la main que ce qui est apparu depuis. */
 const CLES_AJOUTEES=['allocCible','dernSauv','prelevDiv','avScpiHist','benchCours','benchIdx','bourseGoals',
  'cles','cryptoInvest','depReelles','divMois','envSel','etfGoals','fiscParams',
- 'histComptes','histJour','journal','nomsComptes','lastRefresh','loyersRecus','marches',
+ 'histComptes','histJour','journal','nomsComptes','ops','impNoms','cptOrdre','ficheLigne','lastRefresh','loyersRecus','marches',
  'moisReleveForce','netSel','notes','peeHist','projParams','projets','revSources',
  'simParams','simuBien','watchlist'];
 const CLES_UTILES=Object.keys(D).concat(CLES_AJOUTEES)
@@ -2533,14 +2591,13 @@ function barreFine(pct,coul){
    sa derniere valeur connue, et la courbe se construit d elle-meme. */
 function moisCle(d){const x=d||new Date();return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')}
 function releveComptes(t){
-  if(!t||!t.p)return false;
+  if(!t||!t.cp)return false;
   if(!S.histComptes)S.histComptes={};
   const k=moisCle();
-  const v={pea:Math.round(nb(t.p.v)),ctosb:Math.round(nb(t.s.v)),
-           ctoibkr:Math.round(nb(t.i.v)),avl:Math.round(nb(t.a.v))};
-  if(v.pea+v.ctosb+v.ctoibkr+v.avl<=0)return false;   /* rien a noter */
+  const v={};PKS().forEach(x=>{v[x]=Math.round(nb(t.cp[x].v))});
+  if(PKS().reduce((a,x)=>a+v[x],0)<=0)return false;   /* rien a noter */
   const av=S.histComptes[k];
-  const change=!av||['pea','ctosb','ctoibkr','avl'].some(x=>Math.abs(nb(av[x])-v[x])>1);
+  const change=!av||PKS().some(x=>Math.abs(nb(av[x])-v[x])>1);
   if(!change)return false;
   v.maj=new Date().toISOString().slice(0,10);
   S.histComptes[k]=v;
@@ -2661,15 +2718,15 @@ function cPf(pf){const isUSD=pf.cur==='USD';let tv=0,tp=0,dT=0,dTe=0,dayPnl=0;co
   const rdtCours=tv>0?dT/tv*100:null;
   const rdtPru=coutTotal>0?dT/coutTotal*100:null;
   return{l:e,v:tot,coutTotal,divTotEur:dTe,rdtCours,rdtPru,pv:tv-tp,pp:tp>0?((tv-tp)/tp)*100:0,pvVer:pv,ppVer:pf.ver>0?(pv/pf.ver)*100:0,divTot:dT,isUSD,dayPnl:Math.round(dayPnl*100)/100,dayPct:Math.round(dayPct*100)/100}}
-function Tot(){const p=cPf(S.pf.pea),s=cPf(S.pf.ctosb),i=cPf(S.pf.ctoibkr),a=cPf(S.pf.avl||{esp:0,ver:0,cur:'EUR',l:[]});const co=S.comptes.reduce((a,c)=>a+c.montant,0),eL=S.epLibre.reduce((a,c)=>a+c.montant,0),eB=S.epBloq.reduce((a,c)=>a+c.montant,0),ep=eL+eB,bo=p.v+s.v+i.v+a.v;S.crypto.forEach(c=>{if(c.prix>0)c.montant=Math.round(c.prix*c.qte*100)/100;else if(!c.montant&&c.pru>0)c.montant=Math.round(c.pru*c.qte*100)/100});const cr=S.crypto.reduce((a,c)=>a+(c.montant||0),0),crI=S.crypto.reduce((a,c)=>a+c.pru*c.qte,0),im=S.immo.reduce((a,x)=>a+x.valeur*((x.partsPct||100)/100),0);
+function Tot(){const cp={},vide=()=>cPf({esp:0,ver:0,cur:'EUR',l:[]});PKS().forEach(k=>{cp[k]=cPf(S.pf[k])});const p=cp.pea||vide(),s=cp.ctosb||vide(),i=cp.ctoibkr||vide(),a=cp.avl||vide();const co=S.comptes.reduce((a,c)=>a+c.montant,0),eL=S.epLibre.reduce((a,c)=>a+c.montant,0),eB=S.epBloq.reduce((a,c)=>a+c.montant,0),ep=eL+eB,bo=PKS().reduce((x,k)=>x+cp[k].v,0);S.crypto.forEach(c=>{if(c.prix>0)c.montant=Math.round(c.prix*c.qte*100)/100;else if(!c.montant&&c.pru>0)c.montant=Math.round(c.pru*c.qte*100)/100});const cr=S.crypto.reduce((a,c)=>a+(c.montant||0),0),crI=S.crypto.reduce((a,c)=>a+c.pru*c.qte,0),im=S.immo.reduce((a,x)=>a+x.valeur*((x.partsPct||100)/100),0);
 /* Dettes: appliquer le % de détention du bien associé */
 let de=0;S.dettes.forEach(d=>{const bienLie=S.immo.find(b=>b.creditId===d.id);const pct=(d.partsPct!=null?d.partsPct:(bienLie?(bienLie.partsPct||100):100))/100;de+=d.restant*pct});
-return{co,eL,eB,ep,bo,cr,crI,im,de,br:im+co+ep+bo+cr,ne:im+co+ep+bo+cr-de,lq:co+eL,p,s,i,a}}
+return{co,eL,eB,ep,bo,cr,crI,im,de,br:im+co+ep+bo+cr,ne:im+co+ep+bo+cr-de,lq:co+eL,p,s,i,a,cp}}
 
 window.doSave=function(){const t=Tot(),lb=new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});const pee=S.epBloq.filter(x=>/pee|pere|per\b|épargne salariale/i.test(x.nom||'')).reduce((a,x)=>a+x.montant,0);
 const avScpi=[...S.epLibre,...S.epBloq].filter(x=>/linxea|assurance.?vie|^av /i.test(x.nom||'')).reduce((a,x)=>a+x.montant,0);
 snaps.push({date:lb,ts:Date.now(),immobilier:t.im,comptes:t.co,epargne:t.ep,bourse:t.bo,crypto:t.cr,dettes:t.de,brut:t.br,net:t.ne,
-  pea:t.p.v,ctosb:t.s.v,ctoibkr:t.i.v,avl:t.a.v,avScpi:avScpi,pee:pee,immoNet:t.im-t.de});autoSave();const b=document.getElementById('sbtn');b.classList.add('btn-ok');b.textContent='✓';setTimeout(()=>{b.classList.remove('btn-ok');b.textContent='◉'},1500);R(true)};
+  ...cptVals(t),avScpi:avScpi,pee:pee,immoNet:t.im-t.de});autoSave();const b=document.getElementById('sbtn');b.classList.add('btn-ok');b.textContent='✓';setTimeout(()=>{b.classList.remove('btn-ok');b.textContent='◉'},1500);R(true)};
 window.dS=ts=>{snaps=snaps.filter(s=>s.ts!==ts);autoSave();R(true)};
 window.doReset=async()=>{S=JSON.parse(JSON.stringify(D));snaps=[];majNomsComptes();await saveData();R(true);majExemple()};
 /* Un point d'historique peut venir des données de départ ("Juin 25") ou d'une
@@ -2779,8 +2836,7 @@ window.addBourseGoal=function(){
       ['etf_pct','% ETF dans le portefeuille'],['valeur','Valeur du portefeuille (€)'],
       ['dividendes','Dividendes annuels (€)'],['nb_positions','Nombre de positions']]},
     {k:'pk',lib:'Sur quel compte',type:'choix',val:'all',options:[
-      ['all','Tous les comptes'],['pea',nomCpt('pea')],['ctosb',nomCpt('ctosb')],
-      ['ctoibkr',nomCpt('ctoibkr')],['avl',nomCpt('avl')]]},
+      ['all','Tous les comptes']].concat(PKS().map(k=>[k,nomCpt(k)]))},
     {k:'cible',lib:'Cible à atteindre',type:'nombre'},
     {k:'nom',lib:'Intitulé',opt:true,ph:'pour t y retrouver'},
     {k:'echeance',lib:'Échéance',opt:true,ph:'Déc 27'}
@@ -2800,7 +2856,7 @@ const PK_NOMS={pea:nomCpt('pea'),ctosb:nomCpt('ctosb'),ctoibkr:nomCpt('ctoibkr')
 const PK_LISTE=['pea','ctosb','avl','ctoibkr'];
 function nomCompte(pk){return PK_NOMS[pk]||'non rattachée'}
 window.addWatch=function(pk){
-  const cible=PK_NOMS[pk]?pk:'pea';
+  const cible=PK_NOMS[pk]?pk:(PKS()[0]||'pea');
   ouvreForm('watch-'+cible,'Suivre un titre dans le '+PK_NOMS[cible],[
     {k:'ticker',lib:'Ticker Yahoo',ph:'AAPL, LVMH.PA…'},
     {k:'nom',lib:'Nom',opt:true,ph:'laisse vide pour reprendre le ticker'},
@@ -3318,7 +3374,7 @@ function pieLeg(items,fmt){
 /* Nom lisible d'un titre à partir de son ticker Yahoo */
 function nomTitre(y){
   let r=null;
-  ['pea','ctosb','ctoibkr','avl'].forEach(pk=>{const pf=S.pf[pk];if(!pf||r)return;
+  PKS().forEach(pk=>{const pf=S.pf[pk];if(!pf||r)return;
     const l=pf.l.find(x=>(YM[x.c]||x.c)===y);if(l)r={n:l.n,q:l.p||0,src:PFN[pk]||pk}});
   if(r)return r;
   const w=(S.watchlist||[]).find(x=>x.ticker===y);
@@ -3978,8 +4034,8 @@ function infoSauve(msg,col){const e=document.getElementById('sauveInfo');if(e){e
 const ALLOC_DEF={actions:45,etf:45,crypto:5,liq:5};
 function allocCats(t){
   let actV=0,actI=0,nAct=0,etfV=0,etfI=0,nEtf=0,esp=0;
-  ['pea','ctosb','ctoibkr','avl'].forEach(pk=>{
-    const c=pk==='pea'?t.p:pk==='ctosb'?t.s:pk==='ctoibkr'?t.i:t.a;
+  PKS().forEach(pk=>{
+    const c=t.cp[pk];
     const pf=S.pf[pk];if(!pf)return;
     esp+=pf.esp||0;
     c.l.forEach(l=>{
@@ -4058,7 +4114,7 @@ async function fetchIntra(force){
   intraEnCours=true;
   /* Tickers détenus, avec leur quantité et leur enveloppe */
   const lignes=[];
-  ['pea','ctosb','ctoibkr','avl'].forEach(pk=>{const pf=S.pf[pk];if(!pf)return;
+  PKS().forEach(pk=>{const pf=S.pf[pk];if(!pf)return;
     pf.l.forEach(l=>{const y=YM[l.c]||l.c;if(y&&y!=='—'&&l.p>0)lignes.push({y,q:l.p,pk,val:(l.co||0)*l.p})})});
   if(!lignes.length){intraEnCours=false;return}
   const uniq=[...new Set(lignes.map(x=>x.y))];
@@ -4106,7 +4162,7 @@ async function fetchIntra(force){
   if(grille.length<2)return;
   const minutesParis=s=>infoParis(s).min;
   /* Valeur du portefeuille à chaque instant */
-  const esp=['pea','ctosb','ctoibkr','avl'].reduce((a,pk)=>a+((S.pf[pk]&&S.pf[pk].esp)||0),0);
+  const esp=PKS().reduce((a,pk)=>a+((S.pf[pk]&&S.pf[pk].esp)||0),0);
   const idx={};uniq.forEach(y=>idx[y]=0);
   const serie=grille.map(s=>{
     let tot=esp;
@@ -4138,7 +4194,7 @@ async function fetchIntra(force){
   (function(){
     const tt=Tot();
     const reelle=tt.bo;                                   /* valeur affichée en haut */
-    const jour=tt.p.dayPnl+tt.s.dayPnl+tt.i.dayPnl+tt.a.dayPnl;
+    const jour=tSom(tt,'dayPnl');
     const refReelle=reelle-jour;                          /* valeur de veille correspondante */
     const der=serie[serie.length-1];
     if(der>0&&ref>0){
@@ -4197,8 +4253,7 @@ window.validerReleve=async function(){
     const i=S.versMensuels.findIndex(v=>rg(v.mois)>rg(m));
     if(i>=0)S.versMensuels.splice(i,0,l);else S.versMensuels.push(l);
   }
-  l.bourse=Math.round(t.bo);l.pea=Math.round(t.p.v);l.ctosb=Math.round(t.s.v);
-  l.ctoibkr=Math.round(t.i.v);l.avl=Math.round(t.a.v);
+  l.bourse=Math.round(t.bo);PKS().forEach(k=>{l[k]=Math.round(t.cp[k].v)});
   /* Report du PEE et de la part SCPI */
   const mp=m.split(' ');
   const k=('20'+mp[1])+'-'+String(MOIS_AB.indexOf(mp[0])+1).padStart(2,'0');
@@ -4739,7 +4794,7 @@ const alertes=[];
   if(parts.length!==3)return;
   const target=new Date(parseInt(parts[2]),parseInt(parts[1])-1,parseInt(parts[0]));
   const jours=Math.ceil((target-new Date())/(1000*60*60*24));
-  const pkN={pea:nomCpt('pea'),ctosb:nomCpt('ctosb'),ctoibkr:nomCpt('ctoibkr'),avl:nomCpt('avl'),all:'Global'};
+  const pkN=Object.assign({all:'Global'},nomsCpts());
   if(jours<0)alertes.push({icon:'◷',txt:'Objectif <b>'+(pkN[g.pk]||g.pk)+'</b> : échéance dépassée ('+g.echeance+')',color:'var(--red)'});
   else if(jours<=30)alertes.push({icon:'◷',txt:'Objectif <b>'+(pkN[g.pk]||g.pk)+'</b> : '+jours+' jours restants',color:'var(--orange)'});
 });
@@ -4886,21 +4941,14 @@ _cPf=neufGraphe(document.getElementById('cPf'),{type:'line',data:{labels:twrGlob
 }/* end dc */
 
 /* VM table */
-let vmH='<div class="tw"><table class="vm-table"><thead><tr><th class="l">Mois</th><th colspan="2" style="text-align:center;color:var(--text)">Global</th><th colspan="2" style="text-align:center;color:'+CV('--c1')+'">'+nomCpt('pea')+'</th><th colspan="2" style="text-align:center;color:'+CV('--c3')+'">'+nomCpt('ctosb')+'</th><th colspan="2" style="text-align:center;color:'+CV('--c4')+'">'+nomCpt('ctoibkr')+'</th><th colspan="2" style="text-align:center;color:'+CV('--p6')+'">'+nomCpt('avl')+'</th><th colspan="2" style="text-align:center">Performance</th><th></th></tr><tr><th></th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Val.</th><th>Vers.</th><th>Du mois</th><th>Cumul</th><th></th></tr></thead><tbody>';
+let vmH='<div class="tw"><table class="vm-table"><thead><tr><th class="l">Mois</th><th colspan="2" style="text-align:center;color:var(--text)">Global</th>'+PKS().map(k=>'<th colspan="2" style="text-align:center;color:'+coulCpt(k)+'">'+cptE(nomCpt(k))+'</th>').join('')+'<th colspan="2" style="text-align:center">Performance</th><th></th></tr><tr><th></th><th>Val.</th><th>Vers.</th>'+PKS().map(()=>'<th>Val.</th><th>Vers.</th>').join('')+'<th>Du mois</th><th>Cumul</th><th></th></tr></thead><tbody>';
 const tw2=cTWR('bourse');const vmL=S.versMensuels||[];vmL.forEach((v,i)=>{const tw=tw2[i]?tw2[i].twr:0;
 /* Performance du mois seul : (valeur - versement - valeur du mois précédent) / valeur du mois précédent */
 let pm=0;if(i>0){const deb=vmL[i-1].bourse||0;if(deb>0)pm=((v.bourse||0)-(v.versement||0)-deb)/deb*100}
 vmH+='<tr><td class="l" style="font-weight:600">'+v.mois+'</td>';
 vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'bourse\')">'+F(v.bourse||0)+'</span></td>';
 vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'versement\')" style="color:var(--bourse)">'+F(v.versement||0)+'</span></td>';
-vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'pea\')">'+F(v.pea||0)+'</span></td>';
-vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'v_pea\')" style="color:'+CV('--c1')+'">'+F(v.v_pea||0)+'</span></td>';
-vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'ctosb\')">'+F(v.ctosb||0)+'</span></td>';
-vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'v_ctosb\')" style="color:'+CV('--c3')+'">'+F(v.v_ctosb||0)+'</span></td>';
-vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'ctoibkr\')">'+F(v.ctoibkr||0)+'</span></td>';
-vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'v_ctoibkr\')" style="color:'+CV('--c4')+'">'+F(v.v_ctoibkr||0)+'</span></td>';
-vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'avl\')">'+F(v.avl||0)+'</span></td>';
-vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\'v_avl\')" style="color:'+CV('--p6')+'">'+F(v.v_avl||0)+'</span></td>';
+PKS().forEach(k=>{vmH+='<td><span class="ed" onclick="edVM(this,'+i+',\''+k+'\')">'+F(v[k]||0)+'</span></td><td><span class="ed" onclick="edVM(this,'+i+',\'v_'+k+'\')" style="color:'+coulCpt(k)+'">'+F(v['v_'+k]||0)+'</span></td>'});
 vmH+='<td style="color:'+(pm>=0?'var(--green)':'var(--red)')+';font-weight:500">'+(i===0?'<span style="color:var(--muted)">—</span>':(pm>=0?'+':'')+pm.toFixed(2)+'%')+'</td>';
 vmH+='<td style="color:'+(tw>=0?'var(--green)':'var(--red)')+';font-weight:600;opacity:.85">'+(tw>=0?'+':'')+tw.toFixed(2)+'%</td>';
 vmH+='<td><button class="sd" onclick="delVM('+i+')">✕</button></td></tr>'});
@@ -5087,10 +5135,10 @@ document.getElementById('sl').innerHTML=sH;
 })();
 
 /* Bourse */
-const tB=t.bo,aDiv=t.p.divTotEur+t.s.divTotEur+t.i.divTotEur+t.a.divTotEur,tV=S.pf.pea.ver+S.pf.ctosb.ver+S.pf.ctoibkr.ver+(S.pf.avl?S.pf.avl.ver:0),tPV=tB-tV;
-const dayTotal=t.p.dayPnl+t.s.dayPnl+t.i.dayPnl+t.a.dayPnl,dayTotalPct=tB>0?(dayTotal/tB*100):0;
+const tB=t.bo,aDiv=tSom(t,'divTotEur'),tV=PKS().reduce((x,k)=>x+nb(S.pf[k].ver),0),tPV=tB-tV;
+const dayTotal=tSom(t,'dayPnl'),dayTotalPct=tB>0?(dayTotal/tB*100):0;
 document.getElementById('bk').innerHTML='<div class="kpi"><div class="kl">Bourse</div><div class="kv" style="color:var(--bourse)">'+F(tB)+'</div></div><div class="kpi"><div class="kl">Perf jour</div><div class="kv" style="color:'+(dayTotal>=0?'var(--green)':'var(--red)')+'">'+(dayTotal>=0?'+':'')+F2(dayTotal)+'</div><div class="ks">'+(dayTotalPct>=0?'+':'')+dayTotalPct.toFixed(2)+'%</div></div><div class="kpi"><div class="kl">Perf réelle</div><div class="kv" style="color:'+(tPV>=0?'var(--green)':'var(--red)')+'">'+F2(tPV)+'</div><div class="ks">'+FP(tV>0?(tPV/tV)*100:0)+'</div></div><div class="kpi"><div class="kl">Dividendes/an</div><div class="kv" style="color:var(--orange)">'+F2(aDiv)+'</div></div>';
-document.getElementById('bw').innerHTML='<div style="width:'+(t.p.v/tB*100)+'%;background:'+CV('--p5')+'"></div><div style="width:'+(t.s.v/tB*100)+'%;background:'+CV('--p1')+'"></div><div style="width:'+(t.i.v/tB*100)+'%;background:'+CV('--p2')+'"></div><div style="width:'+(t.a.v/tB*100)+'%;background:'+CV('--p6')+'"></div>';
+document.getElementById('bw').innerHTML=PKS().map(k=>'<div title="'+cptE(nomCpt(k))+'" style="width:'+(tB>0?t.cp[k].v/tB*100:0)+'%;background:'+coulCpt(k)+'"></div>').join('');
 
 /* Courbe du jour */
 if(document.getElementById('cIntra')){
@@ -5218,9 +5266,8 @@ return h};
 (function(){
   const z=document.getElementById('dvk');if(!z)return;
   const t=Tot();
-  const brutAn=nb(t.p.divTotEur)+nb(t.s.divTotEur)+nb(t.i.divTotEur)+nb(t.a.divTotEur);
-  const an=netDe(nb(t.p.divTotEur),'pea')+netDe(nb(t.s.divTotEur),'ctosb')+
-           netDe(nb(t.i.divTotEur),'ctoibkr')+netDe(nb(t.a.divTotEur),'avl');
+  const brutAn=tSom(t,'divTotEur');
+  const an=PKS().reduce((x,k)=>x+netDe(nb(t.cp[k].divTotEur),k),0);
   const prel=ilYADuPrelevement();
   const cal=calendrierDiv(12);
   const proch=cal.find(m=>m.totalNet>0);
@@ -5423,7 +5470,7 @@ try{majDefil()}catch(e){}
     return '<button class="stab '+(bourseVue===v.k?'on':'')+'" data-v="'+v.k+'" title="'+v.l+'" onclick="setBourseVue(\''+v.k+'\')">'+
       '<span class="slong">'+v.l+'</span><span class="scourt">'+v.c+'</span>'+
       (n?'<span class="sbadge">'+n+'</span>':'')+'</button>';
-  }).join('');
+  }).join('')+'<button class="stab" title="Ajouter un compte de bourse" onclick="cptAjouter()"><span class="slong">+ Compte</span><span class="scourt">+</span></button>';
   BVUES.forEach(v=>{const el=document.getElementById('bvue-'+v.k);
     if(el)el.style.display=(v.k===bourseVue&&vis.some(x=>x.k===v.k))?'':'none'});
 })();
@@ -5431,9 +5478,9 @@ try{majDefil()}catch(e){}
 try{if(releveComptes(t))autoSave()}catch(e){console.error('relevé des comptes :',e&&e.message)}
 try{window.jrMaj&&window.jrMaj()}catch(e){}
 try{window.dashMaj&&window.dashMaj()}catch(e){}
-['pb1','pb2','pb3','pb4'].forEach((id,i)=>{
-  const el=document.getElementById(id);if(!el)return;
-  const c=[t.p,t.s,t.i,t.a][i], pk=['pea','ctosb','ctoibkr','avl'][i];
+PKS().forEach(pk=>{
+  const el=document.getElementById('pb-'+pk);if(!el)return;
+  const c=t.cp[pk];
   /* Le texte d abord, le graphique ensuite : si le graphique échoue,
      il ne doit pas emporter le bloc déjà écrit. */
   try{el.innerHTML=blocCompte(pk,c)}
@@ -5447,20 +5494,20 @@ try{window.dashMaj&&window.dashMaj()}catch(e){}
   const zo=document.getElementById('ops-'+pk);
   if(zo)try{zo.innerHTML=opsHTML(pk)}catch(e){zo.innerHTML='';console.error('achats et ventes '+pk+' :',e&&e.message)}
 });
-document.getElementById('pk1').innerHTML=mk(t.p,S.pf.pea,'pea');document.getElementById('pk2').innerHTML=mk(t.s,S.pf.ctosb,'ctosb');document.getElementById('pk3').innerHTML=mk(t.i,S.pf.ctoibkr,'ctoibkr');document.getElementById('pk4').innerHTML=mk(t.a,S.pf.avl||{esp:0,ver:0,cur:'EUR',l:[]},'avl');
+PKS().forEach(pk=>{const z=document.getElementById('pk-'+pk);if(z)z.innerHTML=mk(t.cp[pk],S.pf[pk],pk)});
 {const zb=document.getElementById('opsBilan');if(zb)try{zb.innerHTML=opsBilanHTML()}catch(e){zb.innerHTML='';console.error('bilan des ventes :',e&&e.message)}}
-rPT('pt1',t.p,'pea');rPT('pt2',t.s,'ctosb');rPT('pt3',t.i,'ctoibkr');rPT('pt4',t.a,'avl');
+PKS().forEach(pk=>{if(document.getElementById('pt-'+pk))rPT('pt-'+pk,t.cp[pk],pk)});
 
 /* Objectifs Bourse */
 if(!S.bourseGoals)S.bourseGoals=[];
 let bgH='';
 const goalTypes={
-  'etf_pct':{label:'% ETF',calc:(g)=>{const er=etfRatio(g.pk==='pea'?t.p:g.pk==='ctosb'?t.s:g.pk==='ctoibkr'?t.i:g.pk==='avl'?t.a:{l:[...t.p.l,...t.s.l,...t.i.l,...t.a.l.map(x=>({...x,_avl:1}))]},g.pk);return{cur:er.pctEtf,unit:'%'}},fmt:v=>v+'%'},
-  'valeur':{label:'Valeur',calc:(g)=>{const pf=g.pk==='pea'?t.p:g.pk==='ctosb'?t.s:g.pk==='ctoibkr'?t.i:g.pk==='avl'?t.a:{v:t.bo};return{cur:Math.round(pf.v),unit:'€'}},fmt:v=>F(v)},
-  'dividendes':{label:'Dividendes/an',calc:(g)=>{const pf=g.pk==='pea'?t.p:g.pk==='ctosb'?t.s:g.pk==='ctoibkr'?t.i:g.pk==='avl'?t.a:{divTot:t.p.divTot+t.s.divTot+t.i.divTot+t.a.divTot};return{cur:Math.round(pf.divTot*100)/100,unit:'€'}},fmt:v=>F2(v)},
-  'nb_positions':{label:'Nb positions',calc:(g)=>{const l=g.pk==='pea'?S.pf.pea.l:g.pk==='ctosb'?S.pf.ctosb.l:g.pk==='ctoibkr'?S.pf.ctoibkr.l:g.pk==='avl'?(S.pf.avl?S.pf.avl.l:[]):[...S.pf.pea.l,...S.pf.ctosb.l,...S.pf.ctoibkr.l,...(S.pf.avl?S.pf.avl.l:[])];return{cur:l.length,unit:''}},fmt:v=>v}
+  'etf_pct':{label:'% ETF',calc:(g)=>{const er=etfRatio(t.cp[g.pk]||{l:[].concat(...PKS().map(k=>t.cp[k].l.map(x=>estAV(k)?({...x,_avl:1}):x)))},g.pk);return{cur:er.pctEtf,unit:'%'}},fmt:v=>v+'%'},
+  'valeur':{label:'Valeur',calc:(g)=>{const pf=t.cp[g.pk]||{v:t.bo};return{cur:Math.round(pf.v),unit:'€'}},fmt:v=>F(v)},
+  'dividendes':{label:'Dividendes/an',calc:(g)=>{const pf=t.cp[g.pk]||{divTot:tSom(t,'divTot')};return{cur:Math.round(pf.divTot*100)/100,unit:'€'}},fmt:v=>F2(v)},
+  'nb_positions':{label:'Nb positions',calc:(g)=>{const l=S.pf[g.pk]?S.pf[g.pk].l:[].concat(...PKS().map(k=>S.pf[k].l));return{cur:l.length,unit:''}},fmt:v=>v}
 };
-const pkNames={pea:nomCpt('pea'),ctosb:nomCpt('ctosb'),ctoibkr:nomCpt('ctoibkr'),avl:nomCpt('avl'),all:'Global'};
+const pkNames=Object.assign({all:'Global'},nomsCpts());
 
 S.bourseGoals.forEach((g,i)=>{
   const gt=goalTypes[g.type];if(!gt)return;
@@ -5540,7 +5587,7 @@ return wlH;
 }
 /* Une watchlist par compte. Chaque ligne porte le nom de son compte :
    un clic dessus la fait passer au suivant, sans quitter l onglet. */
-['pea','ctosb','ctoibkr','avl'].forEach(pk=>{
+PKS().forEach(pk=>{
   const z=document.getElementById('watch-'+pk);if(!z)return;
   z.innerHTML=tableauWatch(S.watchlist.filter(w=>w.pk===pk),true);
 });
@@ -5556,12 +5603,7 @@ return wlH;
 })();
 
 /* ====== COMPARATEUR BROKERS ====== */
-const brokers=[
-  {name:nomCpt('pea'),pk:'pea',calc:t.p,pf:S.pf.pea,color:CV('--c1')},
-  {name:nomCpt('ctosb'),pk:'ctosb',calc:t.s,pf:S.pf.ctosb,color:CV('--accent')},
-  {name:nomCpt('ctoibkr'),pk:'ctoibkr',calc:t.i,pf:S.pf.ctoibkr,color:CV('--c4')},
-  {name:nomCpt('avl'),pk:'avl',calc:t.a,pf:S.pf.avl||{esp:0,ver:0,cur:'EUR',l:[]},color:CV('--p6')}
-];
+const brokers=PKS().map(k=>({name:cptE(nomCpt(k)),pk:k,calc:t.cp[k],pf:S.pf[k],color:coulCpt(k)}));
 document.getElementById('brokersKpi').innerHTML=brokers.map(b=>'<div class="kpi"><div class="kl">'+b.name+'</div><div class="kv" style="color:'+b.color+'">'+F(b.calc.v)+'</div><div class="ks">'+b.calc.l.length+' positions</div></div>').join('');
 
 let btH='<table><thead><tr><th class="l">Critère</th>';
@@ -5583,7 +5625,7 @@ btH+='</tbody></table>';
 document.getElementById('brokersTable').innerHTML=btH;
 
 /* Suivi devises */
-const usVal=t.s.v;const usValUsd=S.pf.ctosb.l.reduce((a,l)=>a+(l.usd||l.co)*l.p,0);
+const pkUsd=PKS().filter(k=>S.pf[k].cur==='USD'),usVal=pkUsd.reduce((a,k)=>a+t.cp[k].v,0);const usValUsd=pkUsd.reduce((a,k)=>a+S.pf[k].l.reduce((a,l)=>a+(l.usd||l.co)*l.p,0),0);
 const eurUsdDisplay=eurUsd>0?eurUsd.toFixed(4):'—';
 const impactPct=eurUsd>0?((1/eurUsd-1.10)/1.10*100).toFixed(2):'—';/* vs taux de ref 1.10 */
 let dvH='<div class="g2"><div>';
@@ -6874,7 +6916,7 @@ if(document.getElementById('relEpargne')){
   document.getElementById('relEpargne').innerHTML=he;
 
   /* Enveloppes boursières, en lecture seule */
-  const env=[{n:nomCpt('pea'),v:t.p.v,d:t.p.dayPnl},{n:nomCpt('ctosb'),v:t.s.v,d:t.s.dayPnl},{n:nomCpt('ctoibkr'),v:t.i.v,d:t.i.dayPnl},{n:nomCpt('avl')+' (ETF)',v:t.a.v,d:t.a.dayPnl}];
+  const env=PKS().map(k=>({n:cptE(nomCpt(k))+(estAV(k)?' (ETF)':''),v:t.cp[k].v,d:t.cp[k].dayPnl}));
   let hb='<table><thead><tr><th class="l">Enveloppe</th><th>Valeur</th><th>Jour</th></tr></thead><tbody>';
   env.forEach(e=>{hb+='<tr><td class="l">'+e.n+'</td><td style="font-weight:600">'+F(e.v)+'</td><td style="color:'+(e.d>=0?'var(--green)':'var(--red)')+'">'+(e.d>=0?'+':'')+F2(e.d)+'</td></tr>'});
   hb+='<tr class="total-row"><td class="l">Total bourse</td><td>'+F(t.bo)+'</td><td></td></tr></tbody></table>';
@@ -6913,9 +6955,9 @@ document.getElementById('widgetResume').innerHTML=wH;
 (function(){
   const cases=document.getElementById('envCases');if(!cases)return;
   if(!S.envSel)S.envSel={pea:1,ctosb:1,ctoibkr:1,avl:1,pee:1,crypto:1,immoNet:1};
+  PKS().forEach(k=>{if(S.envSel[k]===undefined)S.envSel[k]=1});
   const POSTES=[
-    {k:'pea',n:nomCpt('pea'),c:CV('--p5')},{k:'ctosb',n:nomCpt('ctosb'),c:CV('--p1')},
-    {k:'ctoibkr',n:nomCpt('ctoibkr'),c:CV('--p6')},{k:'avl',n:nomCpt('avl'),c:CV('--p6')},
+    ...PKS().map(k=>({k:k,n:nomCpt(k),c:coulCpt(k)})),
     {k:'pee',n:'PEE',c:CV('--p7')},{k:'crypto',n:'Crypto',c:CV('--p4')},
     {k:'immoNet',n:'Immobilier net',c:CV('--p3')}
   ];
@@ -6923,7 +6965,7 @@ document.getElementById('widgetResume').innerHTML=wH;
   const peeAct=S.epBloq.filter(x=>/pee|pere|per\b|épargne salariale/i.test(x.nom||'')).reduce((a,x)=>a+x.montant,0);
   /* Part non boursière de l'assurance-vie (SCPI, fonds euros) */
   const avAct=[...S.epLibre,...S.epBloq].filter(x=>/linxea|assurance.?vie|^av /i.test(x.nom||'')).reduce((a,x)=>a+x.montant,0);
-  const actuel={pea:t.p.v,ctosb:t.s.v,ctoibkr:t.i.v,avl:t.a.v+avAct,pee:peeAct,crypto:t.cr,immoNet:t.im-t.de};
+  const actuel=Object.assign(cptVals(t),{pee:peeAct,crypto:t.cr,immoNet:t.im-t.de});if(actuel.avl!=null)actuel.avl+=avAct;
   /* Libellé "Mar 26" vers clé "2026-03" */
   const MAB={"Jan":"01","Fév":"02","Mar":"03","Avr":"04","Mai":"05","Juin":"06","Juil":"07","Août":"08","Sep":"09","Oct":"10","Nov":"11","Déc":"12"};
   const cleMoisEnv=lbl=>{const p=(lbl||'').split(' ');if(p.length<2)return null;const m=MAB[p[0]];return m?'20'+p[1]+'-'+m:null};
@@ -6933,11 +6975,8 @@ document.getElementById('widgetResume').innerHTML=wH;
   /* Base temporelle : les relevés, enrichis par les versements quand ils existent */
   let base=gH().map(h=>{
     const v=parMois[h.date]||{};
-    return{date:h.date,
-      pea:v.pea!=null&&v.pea>0?v.pea:(h.pea||0),
-      ctosb:v.ctosb!=null&&v.ctosb>0?v.ctosb:(h.ctosb||0),
-      ctoibkr:v.ctoibkr!=null&&v.ctoibkr>0?v.ctoibkr:(h.ctoibkr||0),
-      avl:v.avl!=null&&v.avl>0?v.avl:(h.avl||0),
+    const parCpt={};PKS().forEach(k=>{parCpt[k]=v[k]!=null&&v[k]>0?v[k]:(h[k]||0)});
+    return{...parCpt,date:h.date,
       pee:(function(){const k=cleMoisEnv(h.date);if(k&&S.peeHist){const dispo=Object.keys(S.peeHist).filter(x=>x<=k).sort();if(dispo.length)return S.peeHist[dispo[dispo.length-1]]}return h.pee||0})(),
       crypto:h.crypto||0,
       immoNet:h.immoNet!=null?h.immoNet:((h.immobilier||0)-(h.dettes||0)),
@@ -6945,7 +6984,7 @@ document.getElementById('widgetResume').innerHTML=wH;
   });
   /* Mois des versements absents des relevés */
   vm.forEach(v=>{if(v.mois&&!base.some(b=>b.date===v.mois)&&(v.bourse||0)>0)
-    base.push({date:v.mois,pea:v.pea||0,ctosb:v.ctosb||0,ctoibkr:v.ctoibkr||0,avl:v.avl||0,pee:0,crypto:null,immoNet:null,bourse:v.bourse||0})});
+    {const o={date:v.mois,pee:0,crypto:null,immoNet:null,bourse:v.bourse||0};PKS().forEach(k=>{o[k]=v[k]||0});base.push(o)}});
   /* Ordre chronologique */
   const MA={"Jan":1,"Fév":2,"Mar":3,"Avr":4,"Mai":5,"Juin":6,"Juil":7,"Août":8,"Sep":9,"Oct":10,"Nov":11,"Déc":12};
   const rang=d=>{const p=(d||'').split(' ');const m=MA[p[0]]||0;const a=parseInt(p[1])||0;return a*100+m};
@@ -6957,7 +6996,7 @@ document.getElementById('widgetResume').innerHTML=wH;
       const k=cleMoisEnv(b.date);
       let part=avAct;
       if(k&&cles.length){const av=cles.filter(x=>x<=k);part=av.length?h[av[av.length-1]]:0}
-      b.avl=(b.avl||0)+part;
+      if(S.pf.avl)b.avl=(b.avl||0)+part;
     });
   })();
   /* L'historique saisi à la main prime sur tout le reste */
@@ -7138,7 +7177,7 @@ if(projCanvas){
 /* ====== REVENUS PASSIFS (éditable) ====== */
 if(!S.revSources)S.revSources=[{id:'rs1',nom:'Dividendes actions',mensuel:0,auto:true,color:CV('--c1')},{id:'rs2',nom:'Intérêts épargne',mensuel:0,auto:true,color:CV('--accent')}];
 /* Auto-calc pour dividendes et intérêts */
-const divAn=t.p.divTotEur+t.s.divTotEur+t.i.divTotEur;
+const divAn=PKS().filter(k=>!estAV(k)).reduce((x,k)=>x+nb(t.cp[k].divTotEur),0);
 /* Loyers de SCPI réellement encaissés, moyenne des 12 derniers mois renseignés */
 const scpiMensuel=(function(){
   const ml=["Jan","Fév","Mar","Avr","Mai","Juin","Juil","Août","Sep","Oct","Nov","Déc"];
@@ -7192,7 +7231,7 @@ S.revSources.forEach(rs=>{
 rvH+='<button class="ab" onclick="addRev()">+ Source de revenu</button>';
 /* Top dividendes */
 rvH+='<div style="font-weight:500;margin-top:16px;margin-bottom:8px">Top dividendes par action</div>';
-const allStocks=[];['pea','ctosb','ctoibkr','avl'].forEach(pk=>{S.pf[pk].l.forEach(l=>{if(l.div>0)allStocks.push({n:l.n,div:l.div,p:l.p,total:l.div*l.p,co:l.co,yield:l.co>0?(l.div/l.co*100).toFixed(2):0})})});
+const allStocks=[];PKS().forEach(pk=>{S.pf[pk].l.forEach(l=>{if(l.div>0)allStocks.push({n:l.n,div:l.div,p:l.p,total:l.div*l.p,co:l.co,yield:l.co>0?(l.div/l.co*100).toFixed(2):0})})});
 allStocks.sort((a,b)=>b.total-a.total).forEach(s=>{rvH+='<div class="lr"><div><div class="ln">'+s.n+'</div><div class="ls">'+s.yield+'% yield</div></div><span style="font-weight:500;color:var(--orange)">'+F2(s.total)+'/an</span></div>'});
 document.getElementById('revDetail').innerHTML=rvH;
 /* Couverture des dépenses par les revenus passifs */
@@ -7252,7 +7291,7 @@ document.getElementById('revDetail').innerHTML=rvH;
 
 
 /* ====== HEATMAP + RÉSUMÉ MENSUEL ====== */
-const allPos=[];['pea','ctosb','ctoibkr','avl'].forEach(pk=>{const c=pk==='pea'?t.p:pk==='ctosb'?t.s:pk==='ctoibkr'?t.i:t.a;c.l.forEach(l=>{allPos.push({n:l.n,c:l.c,val:l.vaEur,gp:l.gp,var:l.var||0,pk})})});
+const allPos=[];PKS().forEach(pk=>{const c=t.cp[pk];c.l.forEach(l=>{allPos.push({n:l.n,c:l.c,val:l.vaEur,gp:l.gp,var:l.var||0,pk})})});
 allPos.sort((a,b)=>b.val-a.val);
 const maxVal=allPos.reduce((a,p)=>a+p.val,0);
 
@@ -7284,7 +7323,7 @@ leaf.append('title').text(d=>d.data.name+'\n'+(d.data.gp>=0?'+':'')+d.data.gp.to
 /* Résumé mensuel */
 const best3=allPos.filter(p=>p.var).sort((a,b)=>b.var-a.var).slice(0,3);
 const worst3=allPos.filter(p=>p.var).sort((a,b)=>a.var-b.var).slice(0,3);
-const dayT=t.p.dayPnl+t.s.dayPnl+t.i.dayPnl+t.a.dayPnl;
+const dayT=tSom(t,'dayPnl');
 
 const avgGp=allPos.length>0?(allPos.reduce((a,p)=>a+p.gp,0)/allPos.length).toFixed(1):0;
 document.getElementById('resumeKpi').innerHTML='<div class="kpi"><div class="kl">Patrimoine Net</div><div class="kv" style="color:var(--accent)">'+F(t.ne)+'</div></div><div class="kpi"><div class="kl">Perf jour bourse</div><div class="kv" style="color:'+(dayT>=0?'var(--green)':'var(--red)')+'">'+(dayT>=0?'+':'')+F2(dayT)+'</div></div><div class="kpi"><div class="kl">Positions</div><div class="kv">'+allPos.length+'</div></div><div class="kpi"><div class="kl">Perf moy. vs PRU</div><div class="kv" style="color:'+(avgGp>=0?'var(--green)':'var(--red)')+'">'+(avgGp>=0?'+':'')+avgGp+'%</div></div>';
@@ -7326,7 +7365,7 @@ if(hj.length>0){
 
 /* Répartition par broker */
 rmH+='<div style="font-weight:500;margin-top:20px;margin-bottom:8px">Répartition par broker</div>';
-[{n:nomCpt('pea'),v:t.p.v,c:CV('--c1')},{n:nomCpt('ctosb'),v:t.s.v,c:CV('--c1')},{n:nomCpt('ctoibkr'),v:t.i.v,c:CV('--c5')},{n:nomCpt('avl'),v:t.a.v,c:CV('--green')}].forEach(b=>{
+PKS().map(k=>({n:cptE(nomCpt(k)),v:t.cp[k].v,c:coulCpt(k)})).forEach(b=>{
   const pct=t.bo>0?(b.v/t.bo*100).toFixed(1):0;
   rmH+='<div class="lr"><span>'+b.n+'</span><div style="display:flex;gap:12px;align-items:center"><span style="font-weight:500">'+F(b.v)+'</span><span style="color:var(--muted)">'+pct+'%</span></div></div>';
 });
@@ -7351,7 +7390,7 @@ const progression=netMaintenant-(netDebut||0);
 const progPct=netDebut>0?(progression/netDebut*100):0;
 
 /* Versements de l'année */
-const versAnnee=(S.versMensuels||[]).filter(v=>{const p=v.mois.split(' ');return p[1]===String(anneeBilan%100)}).reduce((a,v)=>a+(v.versement||0)+(v.v_pea||0)+(v.v_ctosb||0)+(v.v_ctoibkr||0)+(v.v_avl||0),0);
+const versAnnee=(S.versMensuels||[]).filter(v=>{const p=v.mois.split(' ');return p[1]===String(anneeBilan%100)}).reduce((a,v)=>a+(v.versement||0)+PKS().reduce((x,k)=>x+(v['v_'+k]||0),0),0);
 
 /* TWR YTD */
 const twrBilan=cTWR('bourse');
@@ -7360,7 +7399,7 @@ const jIdx=twrBilan.findIndex(d=>d.mois&&d.mois.includes('Jan '+String(anneeBila
 if(jIdx>=0&&twrBilan.length>0){const base=twrBilan[jIdx].twr;twrYtd=twrBilan[twrBilan.length-1].twr-base}
 
 /* Meilleure et pire action (vs PRU) */
-const allPosB=[];['pea','ctosb','ctoibkr','avl'].forEach(pk=>{const c=pk==='pea'?t.p:pk==='ctosb'?t.s:pk==='ctoibkr'?t.i:t.a;c.l.forEach(l=>{if(l.pr>0)allPosB.push({n:l.n,gp:l.gp})})});
+const allPosB=[];PKS().forEach(pk=>{const c=t.cp[pk];c.l.forEach(l=>{if(l.pr>0)allPosB.push({n:l.n,gp:l.gp})})});
 const bestAction=allPosB.length>0?allPosB.reduce((a,b)=>a.gp>b.gp?a:b):null;
 const worstAction=allPosB.length>0?allPosB.reduce((a,b)=>a.gp<b.gp?a:b):null;
 
@@ -7373,7 +7412,7 @@ S.immo.forEach(b=>{
 });
 
 /* Dividendes annuels courants */
-const divAnBilan=t.p.divTotEur+t.s.divTotEur+t.i.divTotEur+t.a.divTotEur;
+const divAnBilan=tSom(t,'divTotEur');
 
 document.getElementById('bilanKpi').innerHTML='<div class="kpi"><div class="kl">Patrimoine net actuel</div><div class="kv" style="color:var(--accent)">'+F(netMaintenant)+'</div></div><div class="kpi"><div class="kl">Progression '+anneeBilan+'</div><div class="kv" style="color:'+(progression>=0?'var(--green)':'var(--red)')+'">'+(progression>=0?'+':'')+F(Math.round(progression))+'</div><div class="ks">'+(progPct>=0?'+':'')+progPct.toFixed(1)+'%</div></div><div class="kpi"><div class="kl">Versé en bourse cette année</div><div class="kv" style="color:var(--bourse)">'+F(Math.round(versAnnee))+'</div></div><div class="kpi"><div class="kl">Perf bourse YTD</div><div class="kv" style="color:'+(twrYtd>=0?'var(--green)':'var(--red)')+'">'+(twrYtd>=0?'+':'')+twrYtd.toFixed(1)+'%</div></div>';
 
@@ -7855,7 +7894,7 @@ window.opAlerte=async function(pk,id){
   autoSave();R(true);
 };
 function alertesSeuil(){const out=[];
-  ['pea','ctosb','ctoibkr','avl'].forEach(pk=>{const pf=S&&S.pf&&S.pf[pk];((pf&&pf.l)||[]).forEach(l=>{
+  PKS().forEach(pk=>{const pf=S&&S.pf&&S.pf[pk];((pf&&pf.l)||[]).forEach(l=>{
     const c=opCours(pk,l),al=nb(l.al),ah=nb(l.ah);if(!(c>0))return;
     const lien=t=>'<span style="cursor:pointer" title="Ouvrir la ligne" onclick="goPage(\'bourse\');ouvreLigneDepuisDiv(\''+pk+'\',\''+l.id+'\')"><b>'+opE(l.n||l.c)+'</b> '+t+'</span>';
     if(al>0&&c<=al)out.push({icon:'●',txt:lien('est passée sous ton seuil de '+opMt(pk,al)+' (cours '+opMt(pk,c)+')'),color:'var(--red)'});
@@ -7865,7 +7904,7 @@ function alertesSeuil(){const out=[];
 /* Bilan des ventes, année par année (vue d'ensemble de la bourse) */
 function opsBilanHTML(){
   const L=opsTous().filter(o=>(o.t==='v'&&o.g!=null)||o.t==='d');if(!L.length)return '';
-  const Y={},PK=['pea','ctosb','ctoibkr','avl'];let approx=false;
+  const Y={},PK=PKS();let approx=false;
   L.forEach(o=>{const y=String(o.d).slice(0,4),exact=o.t==='v'&&o.ge!=null,tx=o.cur==='EUR'?1:opDev(o.pk)==='$'?nb(eurUsd)||1:1;if(tx!==1&&!exact)approx=true;
     const a=Y[y]||(Y[y]={n:0,g:0,p:0,d:0,pk:{}});
     if(o.t==='d'){a.d+=nb(o.m)*tx;return;}
@@ -7898,8 +7937,8 @@ function opsListeHTML(pk){
   return h;
 }
 function opsHTML(pk){
-  const n=opsTous().filter(o=>o.pk===pk).length,imp='<div class="tk" style="margin-top:12px"><span class="ed" onclick="opImport(\''+pk+'\')">Importer un relevé d’opérations (Fortuneo ou Saxo)</span></div>';
-  if(!n)return '<div style="margin-top:14px">'+imp+'</div>';
+  const n=opsTous().filter(o=>o.pk===pk).length,imp='';
+  if(!n)return '';
   const e=opsEtat(pk),F=[['','Tout'],['a','Achats'],['v','Ventes'],['d','Dividendes']];
   return '<div style="margin-top:22px;border-top:1px solid var(--border);padding-top:16px"><div class="fb" style="gap:10px;flex-wrap:wrap"><div class="ct" style="margin:0">Achats et ventes <span style="font-size:11px;color:var(--muted);font-weight:400">('+n+')</span></div>'+
     '<div class="opF">'+F.map(f=>'<button class="pb'+(e.t===f[0]?' active':'')+'" data-t="'+f[0]+'" onclick="opsFiltre(\''+pk+'\',\'t\',\''+f[0]+'\')">'+f[1]+'</button>').join('')+'</div></div>'+
@@ -8169,7 +8208,7 @@ function refresh(){T.A=analyse();extras(T.A);T.hover=null;T.hoverR=null;renderSu
 function etat(){try{return (typeof S!=='undefined'&&S)?S:null}catch(e){return null}}
 function ytDe(c){try{return (typeof YM!=='undefined'&&YM[c])||c}catch(e){return c}}
 function liste(){const out=[],vu={},st=etat();if(!st)return out;
-  [['pea',nomCpt('pea')],['ctosb',nomCpt('ctosb')],['ctoibkr',nomCpt('ctoibkr')],['avl',nomCpt('avl')]].forEach(g=>{
+  PKS().map(k=>[k,nomCpt(k)]).forEach(g=>{
     const p=st.pf&&st.pf[g[0]];((p&&p.l)||[]).forEach(x=>{const yt=ytDe(x.c);if(!yt||yt==='—'||vu[yt])return;vu[yt]=1;out.push({yt:yt,n:x.n||x.c,g:g[1]});});});
   (st.watchlist||[]).forEach(w=>{if(w.ticker&&!vu[w.ticker]){vu[w.ticker]=1;out.push({yt:w.ticker,n:w.nom||w.ticker,g:'Watchlist'});}});
   return out;}
@@ -8212,7 +8251,7 @@ function indiceDe(yt){const s=String(yt).toUpperCase();if(s.charAt(0)==='^')retu
   if(!/[.\-=]/.test(s))return['^GSPC','S&P 500'];return null;}
 /* Ce que tu détiens sur cette valeur : prix de revient moyen, et fourchette d'achat de la watchlist. */
 function position(yt){const st=etat(),o={pru:null,net:null,q:0,zmin:null,zmax:null,ops:[]};if(!st)return o;let q=0,cout=0,dv=0;
-  ['pea','ctosb','ctoibkr','avl'].forEach(pk=>{const p=st.pf&&st.pf[pk];((p&&p.l)||[]).forEach(x=>{if(ytDe(x.c)!==yt)return;const n=num(x.p),pr=num(x.pr);if(n>0&&pr>0){q+=n;cout+=n*pr;const d=num(x.dvr);if(d>0)dv+=d;}});});
+  PKS().forEach(pk=>{const p=st.pf&&st.pf[pk];((p&&p.l)||[]).forEach(x=>{if(ytDe(x.c)!==yt)return;const n=num(x.p),pr=num(x.pr);if(n>0&&pr>0){q+=n;cout+=n*pr;const d=num(x.dvr);if(d>0)dv+=d;}});});
   if(q>0){o.pru=cout/q;o.q=q;if(dv>0)o.net=Math.max(0,(cout-dv)/q);}
   (Array.isArray(st.ops)?st.ops:[]).forEach(x=>{if((x.t==='a'||x.t==='v')&&ytDe(x.c)===yt){const t=Date.parse(x.d+'T12:00:00Z');if(isFinite(t)&&num(x.q)>0&&num(x.px)>0)o.ops.push({t:t,a:x.t==='a',q:num(x.q),px:num(x.px),g:x.g,pru:x.pru});}});
   o.ops.sort((a,b)=>a.t-b.t);
@@ -8614,25 +8653,28 @@ document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.cl
 /* ---------- journal quotidien des comptes de bourse ----------
    Chaque jour de semaine où les cours se chargent, on note la valeur de chaque compte et le total versé.
    Le total versé sert à tracer une évolution « hors versements » : un dépôt ne fait pas monter la courbe. */
-const JR={mode:'val',per:31,vis:{tot:true,pea:true,ctosb:true,ctoibkr:true,avl:true},hover:null};
-const JRK=['pea','ctosb','ctoibkr','avl'],JRC=['--c1','--c3','--c4','--c6'];
+const JR={mode:'val',per:31,vis:{},hover:null};
+const JRH=['pea','ctosb','ctoibkr'].concat(['avl']),JRC=['--c1','--c3','--c4','--c6','--c5','--c2','--p2','--p4'];
+function JRK(){return PKS()}
+function jrObj(x){if(Array.isArray(x)){const o={};JRH.forEach((k,i)=>{o[k]=num(x[i])||0});return o}return (x&&typeof x==='object')?x:{}}
+function jrTot(o){let s=0;for(const k in o)s+=num(o[k])||0;return s}
 function jourLocal(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 window.jrNote=function(){const st=etat();if(!st||st.exemple||typeof Tot!=='function')return;
   const now=new Date(),js=now.getDay();if(js===0||js===6)return;
-  const t=Tot(),v=[t.p.v,t.s.v,t.i.v,t.a.v].map(x=>Math.round(num(x)||0));
-  if(v.reduce((a,b)=>a+b,0)<=0)return;
-  const f=JRK.map(k=>Math.round(num(st.pf[k]&&st.pf[k].ver)||0)),d=jourLocal(now);
+  const t=Tot(),v={},f={};JRK().forEach(k=>{v[k]=Math.round(num(t.cp[k]&&t.cp[k].v)||0);f[k]=Math.round(num(st.pf[k]&&st.pf[k].ver)||0)});
+  if(jrTot(v)<=0)return;
+  const d=jourLocal(now);
   if(!Array.isArray(st.journal))st.journal=[];
   const J=st.journal,der=J[J.length-1];
-  if(der&&der.d===d){if(der.v.join()===v.join()&&(der.f||[]).join()===f.join())return;der.v=v;der.f=f;}else J.push({d:d,v:v,f:f});
+  if(der&&der.d===d){if(JSON.stringify(der.v)===JSON.stringify(v)&&JSON.stringify(der.f||null)===JSON.stringify(f))return;der.v=v;der.f=f;}else J.push({d:d,v:v,f:f});
   if(J.length>1500)st.journal=J.slice(-1500);
   try{if(typeof autoSave==='function')autoSave();}catch(e){}
   jrMaj();};
 function jrDonnees(){const st=etat();if(!st)return[];
-  let J=(Array.isArray(st.journal)?st.journal:[]).filter(e=>e&&e.d&&Array.isArray(e.v)).map(e=>({d:e.d,v:e.v,f:e.f||null}));
+  let J=(Array.isArray(st.journal)?st.journal:[]).filter(e=>e&&e.d&&e.v&&typeof e.v==='object').map(e=>({d:e.d,v:jrObj(e.v),f:e.f?jrObj(e.f):null}));
   /* En valeur, les relevés mensuels prolongent la courbe vers le passé */
   if(JR.mode==='val'&&st.histComptes){const prem=J.length?J[0].d:'9999';
-    const Mo=Object.keys(st.histComptes).sort().map(k=>{const h=st.histComptes[k]||{};return{d:h.maj||(k+'-28'),v:JRK.map(p=>Math.round(num(h[p])||0)),f:null};}).filter(e=>e.d<prem&&e.v.some(x=>x>0));
+    const Mo=Object.keys(st.histComptes).sort().map(k=>{const h=st.histComptes[k]||{};const o={};Object.keys(h).forEach(p=>{if(p!=='maj')o[p]=Math.round(num(h[p])||0)});return{d:h.maj||(k+'-28'),v:o,f:null};}).filter(e=>e.d<prem&&jrTot(e.v)>0);
     J=Mo.concat(J);}
   if(JR.per){const lim=jourLocal(new Date(Date.now()-JR.per*DAY));J=J.filter(e=>e.d>=lim);}
   return J;}
@@ -8641,16 +8683,16 @@ function jrSeries(J){const out=[],mk=(k,nom,col,get,getF)=>{let vals;
     else{const i0=J.findIndex(e=>get(e)>0);
       if(i0<0)vals=J.map(()=>null);else{const v0=get(J[i0]),f0=getF(J[i0]);vals=J.map((e,i)=>i<i0||!(get(e)>0)?null:((get(e)-(getF(e)-f0))/v0-1)*100);}}
     if(vals.some(x=>x!=null))out.push({k:k,nom:nom,col:col,vals:vals});};
-  mk('tot','Total',C.text,e=>e.v.reduce((a,b)=>a+b,0),e=>e.f?e.f.reduce((a,b)=>a+b,0):0);
-  JRK.forEach((k,i)=>mk(k,typeof nomCpt==='function'?nomCpt(k):k,C['j'+i],e=>e.v[i],e=>e.f?e.f[i]:0));
+  mk('tot','Total',C.text,e=>jrTot(e.v),e=>e.f?jrTot(e.f):0);
+  JRK().forEach((k,i)=>mk(k,typeof nomCpt==='function'?nomCpt(k):k,C['j'+(i%JRC.length)],e=>num(e.v[k])||0,e=>e.f?(num(e.f[k])||0):0));
   return out;}
 function jrMaj(){const cv=document.getElementById('jrCv');if(!cv||!cv.clientWidth)return;
   cols();const cs=getComputedStyle(document.body);JRC.forEach((v,i)=>{C['j'+i]=cs.getPropertyValue(v).trim();});
   const J=jrDonnees(),S2=jrSeries(J),info=document.getElementById('jrInfo'),st=etat(),nbJ=st&&Array.isArray(st.journal)?st.journal.length:0;
-  document.getElementById('jrSeries').innerHTML=S2.map(s=>'<button class="pb'+(JR.vis[s.k]?' on':'')+'" data-k="'+s.k+'" style="display:inline-flex;align-items:center;gap:6px"><i style="width:8px;height:8px;border-radius:50%;background:'+s.col+';display:inline-block"></i>'+esc(s.nom)+'</button>').join('');
+  document.getElementById('jrSeries').innerHTML=S2.map(s=>'<button class="pb'+(JR.vis[s.k]!==false?' on':'')+'" data-k="'+s.k+'" style="display:inline-flex;align-items:center;gap:6px"><i style="width:8px;height:8px;border-radius:50%;background:'+s.col+';display:inline-block"></i>'+esc(s.nom)+'</button>').join('');
   document.getElementById('jrBas').textContent='Un point est noté chaque jour de semaine où tu ouvres l’application et où les cours se chargent. '+(JR.mode==='pct'?'L’évolution est calculée hors versements : un dépôt ne fait pas monter la courbe. ':'Les points plus anciens viennent de tes relevés mensuels. ')+(nbJ?nbJ+' jour'+(nbJ>1?'s notés':' noté')+' à ce jour.':'');
   if(J.length<2){setup(cv,8);info.textContent=nbJ?'Premier point noté aujourd’hui. La courbe apparaîtra dès le prochain jour de bourse.':'Aucun point pour l’instant : la courbe se construira au fil de tes visites.';return;}
-  const vis=S2.filter(s=>JR.vis[s.k]),tous=[];vis.forEach(s=>s.vals.forEach(x=>{if(x!=null)tous.push(x);}));
+  const vis=S2.filter(s=>JR.vis[s.k]!==false),tous=[];vis.forEach(s=>s.vals.forEach(x=>{if(x!=null)tous.push(x);}));
   if(!tous.length){setup(cv,8);info.textContent='Choisis au moins une courbe.';return;}
   let lo=Math.min.apply(null,tous),hi=Math.max.apply(null,tous);if(hi-lo<1e-9){hi+=1;lo-=1;}const pad=(hi-lo)*0.08;lo-=pad;hi+=pad;if(JR.mode==='val')lo=Math.max(0,lo);
   const T2=J.map(e=>Date.parse(e.d+'T12:00:00Z')),n=J.length,
@@ -8671,7 +8713,7 @@ function jrMaj(){const cv=document.getElementById('jrCv');if(!cv||!cv.clientWidt
 window.jrMaj=jrMaj;
 (function(){const q=id=>document.getElementById(id),bascule=(id,attr,fn)=>q(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;fn(b.dataset[attr]);q(id).querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));JR.hover=null;jrMaj();});
   bascule('jrMode','m',v=>{JR.mode=v;});bascule('jrPer','p',v=>{JR.per=+v;});
-  q('jrSeries').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;JR.vis[b.dataset.k]=!JR.vis[b.dataset.k];jrMaj();});
+  q('jrSeries').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;JR.vis[b.dataset.k]=JR.vis[b.dataset.k]===false;jrMaj();});
   const cv=q('jrCv'),mv=e=>{const J=jrDonnees(),n=J.length;if(n<2)return;const r=cv.getBoundingClientRect();let i=Math.round((e.clientX-r.left-M.l)/(r.width-M.l-M.r)*(n-1));i=Math.max(0,Math.min(n-1,i));if(JR.hover!==i){JR.hover=i;jrMaj();}};
   cv.addEventListener('pointermove',mv);cv.addEventListener('pointerdown',mv);cv.addEventListener('pointerleave',()=>{if(JR.hover!=null){JR.hover=null;jrMaj();}});
   document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(t&&t.dataset.page==='bourse')setTimeout(jrMaj,80);});
@@ -8681,7 +8723,7 @@ function dashMaj(){const zt=document.getElementById('dTuiles'),zb=document.getEl
   const st=etat();if(!st)return;let t;try{t=Tot();}catch(e){return;}
   let masque=false;try{masque=!!hiddenMode;}catch(e){}
   const eu=v=>masque?'***':F(v),CC=window.COUL_CLASSE||{};
-  const jour=(num(t.p.dayPnl)||0)+(num(t.s.dayPnl)||0)+(num(t.i.dayPnl)||0)+((t.a&&num(t.a.dayPnl))||0),avant=t.bo-jour,pj=avant>0?jour/avant:0;
+  const jour=PKS().reduce((x,k)=>x+(num(t.cp[k]&&t.cp[k].dayPnl)||0),0),avant=t.bo-jour,pj=avant>0?jour/avant:0;
   const immoD=(st.dettes||[]).filter(d=>d.type==='Immo').reduce((a,d)=>a+(num(d.restant)||0),0);
   let cap=0;try{(st.dettes||[]).forEach(d=>{const a=avancePret(d);if(a)cap+=num(a.capMois)||0;});}catch(e){}
   const part=v=>t.br>0?pct(v/t.br)+' du patrimoine brut':'',sg=v=>(v>=0?'+':'−');
@@ -8691,7 +8733,7 @@ function dashMaj(){const zt=document.getElementById('dTuiles'),zb=document.getEl
     tu('epargne','Épargne et comptes',CC['Épargne']||'var(--c4)',eu(t.ep+t.co),masque?'':'dont '+F(t.lq)+' disponibles tout de suite')+
     tu('immo','Immobilier',CC['Immobilier']||'var(--c2)',eu(t.im),masque?'':(immoD>0?'prêts immobiliers restants : '+F(immoD):part(t.im)))+
     tu('dettes','Dettes','var(--red)',t.de>0?'− '+eu(t.de):eu(0),masque?'':(cap>0?F2(cap)+' remboursés ce mois':t.de>0?'capital restant dû':'aucune dette'));
-  const L=[];JRK.forEach(k=>{((st.pf[k]&&st.pf[k].l)||[]).forEach(x=>{const v=num(x.var);if(isFinite(v)&&v!==0&&num(x.p)>0)L.push({n:x.n||x.c,v:v,pk:k,id:x.id});});});
+  const L=[];JRK().forEach(k=>{((st.pf[k]&&st.pf[k].l)||[]).forEach(x=>{const v=num(x.var);if(isFinite(v)&&v!==0&&num(x.p)>0)L.push({n:x.n||x.c,v:v,pk:k,id:x.id});});});
   L.sort((a,b)=>b.v-a.v);const haut=L.filter(x=>x.v>0).slice(0,3),bas=L.filter(x=>x.v<0).slice(-3).reverse();
   const li=x=>'<div class="dM" title="Ouvrir l’analyse technique" onclick="atOuvre(\''+x.pk+'\',\''+x.id+'\')"><span>'+esc(x.n)+'</span><b class="'+(x.v>=0?'dUp':'dDown')+'">'+sg(x.v)+nf2.format(Math.abs(x.v))+' %</b></div>';
   zb.innerHTML='<div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Bourse aujourd’hui</div>'+(jour&&!masque?'<span class="'+(jour>=0?'dUp':'dDown')+'" style="font-size:13px;font-variant-numeric:tabular-nums">'+sg(jour)+F2(Math.abs(jour))+'</span>':'')+'</div>'+
