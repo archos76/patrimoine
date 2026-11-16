@@ -101,6 +101,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .tab-grp.ouvert .chev{transform:rotate(90deg)}
 .sous{display:none;flex-direction:column;gap:1px;padding-left:9px;margin-left:11px;border-left:1px solid var(--border)}
 .sous.ouvert{display:flex}
+.sousT{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);opacity:.8;padding:12px 10px 4px;flex:none}
+.sousT:first-child{padding-top:6px}
+.tab-regl{margin-top:10px}
 .sous .tab{font-size:13px;padding:7px 10px}
 .side-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:39}
 .side-ov.on{display:block}
@@ -629,22 +632,26 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 <button class="tab" data-page="dettes"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 1 9 9"/><path d="M3 12h4"/><path d="M12 7v5l3 2"/></svg></span>Dettes</button>
 <button class="tab tab-grp" id="btnOutils" onclick="toggleOutils()"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></svg></span>Outils<span class="chev" id="chevOutils">▸</span></button>
 <div class="sous" id="sousOutils">
+<div class="sousT">Au quotidien</div>
 <button class="tab" data-page="releve"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4"/><path d="M9 13h6"/><path d="M9 17h4"/></svg></span>Relevé du mois</button>
 <button class="tab" data-page="budget"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 10h18"/><path d="M8 5V3"/><path d="M16 5V3"/></svg></span>Budget</button>
-<button class="tab" data-page="objectifs"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/></svg></span>Objectifs</button>
-<button class="tab" data-page="alloc"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v8.5h8.5"/></svg></span>Allocation cible</button>
 <button class="tab" data-page="revenus"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 10 11l4 3.5L20 7"/><path d="M14 7h6v6"/></svg></span>Revenus</button>
-<button class="tab" data-page="analyse"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 15v-4"/><path d="M12 15V9"/><path d="M16 15v-2"/></svg></span>Analyse</button>
+<div class="sousT">Bilans</div>
+<button class="tab" data-page="resume"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M9 9v11"/></svg></span>Résumé du mois</button>
+<button class="tab" data-page="bilan"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v16H5z"/><path d="M9 9h6"/><path d="M9 13h6"/><path d="M9 17h3"/></svg></span>Bilan annuel</button>
+<button class="tab" data-page="analyse"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 15v-4"/><path d="M12 15V9"/><path d="M16 15v-2"/></svg></span>Évolution</button>
+<div class="sousT">Bourse</div>
 <button class="tab" data-page="techno"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v3"/><rect x="5" y="7" width="4" height="8" rx="1"/><path d="M7 15v5"/><path d="M17 4v6"/><rect x="15" y="10" width="4" height="6" rx="1"/><path d="M17 16v4"/></svg></span>Analyse technique</button>
-<button class="tab" data-page="resume"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M9 9v11"/></svg></span>Résumé</button>
 <button class="tab" data-page="marches"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5a13 13 0 0 1 0 17a13 13 0 0 1 0-17"/></svg></span>Revue de marchés</button>
 <button class="tab" data-page="brokers"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M9 4v16"/></svg></span>Brokers</button>
-<button class="tab" data-page="bilan"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14v16H5z"/><path d="M9 9h6"/><path d="M9 13h6"/><path d="M9 17h3"/></svg></span>Bilan annuel</button>
+<div class="sousT">Projets</div>
+<button class="tab" data-page="objectifs"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/></svg></span>Objectifs</button>
+<button class="tab" data-page="alloc"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v8.5h8.5"/></svg></span>Allocation cible</button>
 <button class="tab" data-page="simulator"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg></span>Simulateur</button>
-<button class="tab" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
+<button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 16/11 08h22</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 16/11 08h32</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
