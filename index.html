@@ -651,7 +651,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 16/11 11h14</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 16/11 12h08</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -686,7 +686,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 <div class="page" id="page-bourse">
 <div id="rstat" class="rs" style="margin:0 0 8px"></div>
 <div class="stabs" id="bourseTabs"></div>
-<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="card" id="jrCard"><div class="fb" style="margin-bottom:10px;gap:10px"><div class="ct" style="margin:0">Évolution au jour le jour</div><div style="display:flex;gap:10px;flex-wrap:wrap"><div style="display:flex;gap:4px" id="jrMode"><button class="pb on" data-m="val">Valeur</button><button class="pb" data-m="pct">Évolution %</button></div><div style="display:flex;gap:4px;flex-wrap:wrap" id="jrPer"><button class="pb" data-p="7">1 sem.</button><button class="pb on" data-p="31">1 mois</button><button class="pb" data-p="92">3 mois</button><button class="pb" data-p="366">1 an</button><button class="pb" data-p="0">Tout</button></div></div></div><div id="jrSeries" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"></div><div id="jrInfo" style="font-size:12px;color:var(--muted);min-height:1.5em;margin-bottom:6px;font-variant-numeric:tabular-nums"></div><canvas id="jrCv" style="display:block;width:100%;touch-action:pan-y"></canvas><div id="jrBas" style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5"></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:var(--text)">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div id="opsBilan"></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div id="bvueComptes"></div>
+<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="card" id="jrCard"><div class="fb" style="margin-bottom:10px;gap:10px"><div class="ct" style="margin:0">Évolution au jour le jour</div><div style="display:flex;gap:10px;flex-wrap:wrap"><div style="display:flex;gap:4px" id="jrMode"><button class="pb on" data-m="val">Valeur</button><button class="pb" data-m="pct">Évolution %</button></div><div style="display:flex;gap:4px;flex-wrap:wrap" id="jrPer"><button class="pb" data-p="7">1 sem.</button><button class="pb on" data-p="31">1 mois</button><button class="pb" data-p="92">3 mois</button><button class="pb" data-p="366">1 an</button><button class="pb" data-p="0">Tout</button></div></div></div><div id="jrSeries" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"></div><div id="jrInfo" style="font-size:12px;color:var(--muted);min-height:1.5em;margin-bottom:6px;font-variant-numeric:tabular-nums"></div><canvas id="jrCv" style="display:block;width:100%;touch-action:pan-y"></canvas><div id="jrBas" style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5"></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:var(--text)">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div id="opsBilan"></div><div id="cmpIdx"></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div><button class="ab" id="divAutoBtn" style="margin-top:12px" onclick="divAuto()">Remplir le calendrier d’après les dividendes passés (Yahoo)</button></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div id="bvueComptes"></div>
 </div>
 <div class="page" id="page-epargne"><div class="kr" id="ek"></div><div class="g2"><div class="card"><div class="ct" id="ct1"></div><div id="cl1"></div><div id="af1"></div></div><div class="card"><div class="ct" id="ct2"></div><div id="cl2"></div><div id="af2"></div></div><div class="card sf"><div class="ct" id="ct3"></div><div id="cl3"></div><div id="af3"></div></div></div></div>
 <div class="page" id="page-immo">
@@ -998,6 +998,13 @@ window.cptAjouter=async function(){
   majNomsComptes();autoSave();
   try{goPage('bourse');setBourseVue(id)}catch(e){R(true)}
 };
+window.cptBouger=function(pk,sens){
+  if(!Array.isArray(S.cptOrdre))S.cptOrdre=PKS();
+  const o=PKS(),i=o.indexOf(pk),j=i+sens;if(i<0||j<0||j>=o.length)return;
+  o.splice(i,1);o.splice(j,0,pk);S.cptOrdre=o;
+  const z=document.getElementById('bvueComptes');if(z)delete z.dataset.cle;
+  majNomsComptes();autoSave();R(true);
+};
 window.cptSupprimer=async function(pk){
   const pf=S.pf[pk];if(!pf)return;
   if(PKS().length<=1){await avis('Impossible de supprimer ce compte\n\nIl faut garder au moins un compte de bourse.');return;}
@@ -1039,7 +1046,7 @@ function majNomsComptes(){
   }catch(e){console.error('comptes :',e&&e.message)}
   document.querySelectorAll('[data-nc]').forEach(e=>{e.textContent=nomCpt(e.dataset.nc)});
   const zr=document.getElementById('cptReglages');
-  if(zr)try{zr.innerHTML=pks.map(k=>'<div class="lr"><span>'+(CPT_TYPES[cptType(k)]||'Compte')+(S.pf[k].cur==='USD'?' en dollars':'')+'</span><span style="display:flex;gap:10px;align-items:center"><span class="ed" onclick="edNomCompte(\''+k+'\')">'+cptE(nomCpt(k))+'</span><button class="db" title="Supprimer ce compte" onclick="cptSupprimer(\''+k+'\')">✕</button></span></div>').join('')}catch(e){}
+  if(zr)try{zr.innerHTML=pks.map(k=>'<div class="lr"><span>'+(CPT_TYPES[cptType(k)]||'Compte')+(S.pf[k].cur==='USD'?' en dollars':'')+'</span><span style="display:flex;gap:10px;align-items:center"><span class="ed" onclick="edNomCompte(\''+k+'\')">'+cptE(nomCpt(k))+'</span><button class="db" title="Monter" aria-label="Monter ce compte" onclick="cptBouger(\''+k+'\',-1)"'+(pks.indexOf(k)===0?' disabled style="opacity:.3"':'')+'>↑</button><button class="db" title="Descendre" aria-label="Descendre ce compte" onclick="cptBouger(\''+k+'\',1)"'+(pks.indexOf(k)===pks.length-1?' disabled style="opacity:.3"':'')+'>↓</button><button class="db" title="Supprimer ce compte" onclick="cptSupprimer(\''+k+'\')">✕</button></span></div>').join('')}catch(e){}
 }
 window.edNomCompte=async function(pk){
   if(!S.nomsComptes)S.nomsComptes={};
@@ -1085,7 +1092,7 @@ async function saveData(){if(!uid||chargeKO)return;try{
 /* Nettoyer les données avant sauvegarde */
 const clean=JSON.parse(JSON.stringify(S));
 /* Supprimer les champs temporaires des actions (spark, var) */
-PKS().forEach(pk=>{if(clean.pf[pk])clean.pf[pk].l.forEach(l=>{delete l.vaEur;delete l.g;delete l.gp;delete l.divAn;delete l.w})});
+PKS().forEach(pk=>{if(clean.pf[pk])clean.pf[pk].l.forEach(l=>{delete l.usdL;delete l.vaEur;delete l.g;delete l.gp;delete l.divAn;delete l.w})});
 /* Limiter l'historique jour à 30 entrées */
 if(clean.histJour&&clean.histJour.length>30)clean.histJour=clean.histJour.slice(-30);
 await db.collection('users').doc(uid).set({patrimoine:clean,snapshots:snaps,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true})}catch(e){}}
@@ -1918,7 +1925,7 @@ function ficheLigneHTML(pk,c){
   if(!f||f.pk!==pk)return '';
   const l=(c.l||[]).find(x=>String(x.id)===String(f.id));
   if(!l)return '';
-  const u=c.isUSD, mt=v=>u?('$'+nb(v).toFixed(2)):F2(v);
+  const u=!!l.usdL, mt=v=>u?('$'+nb(v).toFixed(2)):F2(v);
   const pays=paysLigne(l);
   const vrs=versLigne(l), ind=indiceLigne(l);
   const partTot=(function(){const t=Tot();return t&&t.brut>0?nb(l.vaEur)/t.brut*100:null})();
@@ -1937,7 +1944,7 @@ function ficheLigneHTML(pk,c){
      '<div class="ks">'+mt(l.co)+' le titre</div></div>';
   h+='<div class="kpi"><div class="kl">Prix de revient</div><div class="kv">'+
      (l.pr==null||!isFinite(nb(l.pr))?'—':mt(l.pr))+'</div>'+
-     '<div class="ks">'+(nb(l.pr)>0?'soit '+mt(nb(l.pr)*nb(l.p))+' investis':'à renseigner')+'</div></div>';
+     '<div class="ks">'+(nb(l.pr)>0?'soit '+mt(nb(l.pr)*nb(l.p))+' investis':'à renseigner')+' · <span class="ed" title="Changer la devise du prix de revient" onclick="edDevLigne(\''+pk+'\',\''+l.id+'\')">en '+(u?'dollars':'euros')+'</span></div></div>';
   if(pruNet(l)!=null)h+='<div class="kpi"><div class="kl">Dividendes déduits</div><div class="kv">'+mt(pruNet(l))+'</div>'+
      '<div class="ks">'+mt(nb(l.dvr))+' de dividendes reçus</div></div>';
   h+='<div class="kpi"><div class="kl">Performance</div><div class="kv" style="color:'+
@@ -2083,10 +2090,9 @@ function lignesDuMois(m){
     const pf=S.pf&&S.pf[pk];if(!pf||!pf.l)return;
     /* un compte en dollars verse en dollars : le calendrier, lui, additionne
        tous les comptes, donc il compte en euros */
-    const chg=pf.cur==='USD'?eurUsd:1;
     pf.l.forEach(l=>{
       if(moisVersement(l).indexOf(m)<0)return;
-      const brut=montantDuMois(l,m)*chg;
+      const brut=montantDuMois(l,m)*(devL(pk,l)==='USD'?eurUsd:1);
       if(brut<=0)return;
       lignes.push({pk,compte:nom,n:l.n||l.c,c:l.c,montant:brut,net:netDe(brut,pk)});
     });
@@ -2150,7 +2156,7 @@ function ancreLigne(pk,id){
 window.edFreqLigne=function(pk,id){
   const l=(S.pf[pk]&&S.pf[pk].l||[]).find(x=>String(x.id)===String(id));if(!l)return;
   const dejaa={};versLigne(l).forEach(v=>{dejaa[v.m]=(dejaa[v.m]||0)+v.a});
-  const u=(S.pf[pk]&&S.pf[pk].cur==='USD');
+  const u=devL(pk,l)==='USD';
   const champs=MOIS_COURTS.map((m,i)=>({k:'m'+(i+1),lib:m,type:'nombre',opt:true,muet:true,
     val:dejaa[i+1]?String(arrondiSaisie(dejaa[i+1])).replace('.',','):'',ph:'—'}));
   const an=ancreLigne(pk,id);
@@ -2645,7 +2651,7 @@ function blocCompte(pk,c){
     const ligne=x=>'<div style="display:flex;align-items:center;gap:10px;padding:5px 0">'+
       '<span style="flex:0 0 38%;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+x.n+'</span>'+
       barreFine(Math.abs(x.g)/max*100,x.g>=0?'var(--green)':'var(--red)')+
-      '<span style="flex:0 0 76px;text-align:right;font-size:12px;font-weight:500;color:'+(x.g>=0?'var(--green)':'var(--red)')+'">'+(x.g>=0?'+':'')+mt(x.g)+'</span></div>';
+      '<span style="flex:0 0 76px;text-align:right;font-size:12px;font-weight:500;color:'+(x.g>=0?'var(--green)':'var(--red)')+'">'+(x.g>=0?'+':'')+(x.usdL?'$'+x.g.toFixed(2):F2(x.g))+'</span></div>';
     gagne='<div class="sect">Ce qui porte le compte</div>';
     if(tri.length<=6){
       /* Assez peu de lignes pour les montrer toutes, de la meilleure a la pire */
@@ -2707,12 +2713,12 @@ function blocCompte(pk,c){
          '<div>'+(gagne||'<div class="tk">Pas encore de prix de revient saisi : les plus-values ne peuvent pas être calculées.</div>')+'</div>'+
          '<div>'+secH+'</div></div>'+conc;
 }
-function cPf(pf){const isUSD=pf.cur==='USD';let tv=0,tp=0,dT=0,dTe=0,dayPnl=0;const e=pf.l.map(x=>{const va=x.co*x.p;let cp=isUSD?(x.usd||x.co):x.co;const vp=x.pr*x.p,vap=cp*x.p,g=vap-vp,gp=vp>0?(g/vp)*100:0,da=(x.div||0)*x.p,daE=isUSD?da*eurUsd:da;dT+=da;dTe+=daE;tv+=va;tp+=x.pr*x.p*(isUSD?eurUsd:1);if(x.var&&x.co){const prevCo=x.co/(1+x.var/100);dayPnl+=(x.co-prevCo)*x.p}/* Deux rendements, et ils ne disent pas la meme chose : sur le cours du
+function cPf(pf){const isUSD=pf.cur==='USD';let tv=0,tp=0,dT=0,dTe=0,dayPnl=0;const e=pf.l.map(x=>{const u=x.dev?x.dev==='USD':isUSD;const va=x.co*x.p;let cp=u?(x.usd||x.co):x.co;const vp=x.pr*x.p,vap=cp*x.p,g=vap-vp,gp=vp>0?(g/vp)*100:0,da=(x.div||0)*x.p,daE=u?da*eurUsd:da;dT+=da;dTe+=daE;tv+=va;tp+=x.pr*x.p*(u?eurUsd:1);if(x.var&&x.co){const prevCo=x.co/(1+x.var/100);dayPnl+=(x.co-prevCo)*x.p}/* Deux rendements, et ils ne disent pas la meme chose : sur le cours du
      jour, et sur ce que tu as reellement paye. Le second grandit avec le
      temps, c est lui qui dit ce que ton argent te rapporte. */
   const rdtCours=nb(x.co)>0?(nb(x.div)/nb(x.co))*100:null;
   const rdtPru=nb(x.pr)>0?(nb(x.div)/nb(x.pr))*100:null;
-  return{...x,vaEur:va,g,gp,divAn:da,divAnEur:daE,rdtCours,rdtPru}});const tot=tv+(pf.esp||0);e.forEach(x=>x.w=tot>0?(x.vaEur/tot)*100:0);const pv=tot-pf.ver;const dayPct=tv>0?(dayPnl/tv*100):0;
+  return{...x,usdL:u,vaEur:va,g,gp,divAn:da,divAnEur:daE,rdtCours,rdtPru}});const tot=tv+(pf.esp||0);e.forEach(x=>x.w=tot>0?(x.vaEur/tot)*100:0);const pv=tot-pf.ver;const dayPct=tv>0?(dayPnl/tv*100):0;
   /* Rendements du compte : sur sa valeur, et sur ce qu il a coûté */
   const coutTotal=e.reduce((a,x)=>a+nb(x.pr)*nb(x.p),0);
   const rdtCours=tv>0?dT/tv*100:null;
@@ -4040,7 +4046,7 @@ function allocCats(t){
     esp+=pf.esp||0;
     c.l.forEach(l=>{
       const val=l.vaEur||0;
-      const inv=(l.pr||0)*(l.p||0)*(c.isUSD?eurUsd:1);
+      const inv=(l.pr||0)*(l.p||0)*(l.usdL?eurUsd:1);
       if(estETF(l,pk)){etfV+=val;etfI+=inv;nEtf++}
       else{actV+=val;actI+=inv;nAct++}
     });
@@ -5495,6 +5501,7 @@ PKS().forEach(pk=>{
   if(zo)try{zo.innerHTML=opsHTML(pk)}catch(e){zo.innerHTML='';console.error('achats et ventes '+pk+' :',e&&e.message)}
 });
 PKS().forEach(pk=>{const z=document.getElementById('pk-'+pk);if(z)z.innerHTML=mk(t.cp[pk],S.pf[pk],pk)});
+try{cmpMaj()}catch(e){}
 {const zb=document.getElementById('opsBilan');if(zb)try{zb.innerHTML=opsBilanHTML()}catch(e){zb.innerHTML='';console.error('bilan des ventes :',e&&e.message)}}
 PKS().forEach(pk=>{if(document.getElementById('pt-'+pk))rPT('pt-'+pk,t.cp[pk],pk)});
 
@@ -7543,7 +7550,7 @@ if(activeSort){
   });
 }
 
-sorted.forEach(l=>{const u=calc.isUSD;
+sorted.forEach(l=>{const u=!!l.usdL;
 /* Mini sparkline SVG */
 let sparkSvg='';
 if(l.spark&&l.spark.length>=2){
@@ -7565,7 +7572,7 @@ if(l.spark&&l.spark.length>=2){
   }
 }
 const ouverte=S.ficheLigne&&S.ficheLigne.pk===pk&&String(S.ficheLigne.id)===String(l.id);
-h+='<tr'+(ouverte?' style="background:var(--abg)"':'')+'><td class="l"><b style="font-size:12px;cursor:pointer;border-bottom:1px dotted var(--border)" onclick="ouvreFicheLigne(\''+pk+'\',\''+l.id+'\')" title="Voir la fiche">'+l.n+'</b><div class="tk">'+l.c+' · <a href="'+lienNews(YM[l.c]||l.c)+'" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--border)">actus</a> · <a onclick="atOuvre(\''+pk+'\',\''+l.id+'\')" title="Ouvrir l’analyse technique"'+' style="color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent);cursor:pointer"'+'>analyse</a> · <a onclick="opNouveau(\''+pk+'\',\''+l.id+'\')" title="Noter un achat, une vente ou un dividende reçu" style="color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent);cursor:pointer;white-space:nowrap">achat / vente</a></div></td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'p\')">'+l.p+'</span></td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'pr\')">'+(l.pr==null||!isFinite(nb(l.pr))?'—':(u?'$'+nb(l.pr).toFixed(2):F2(nb(l.pr))))+'</span>'+(pruNet(l)!=null?'<div class="tk" title="Prix de revient une fois les dividendes reçus déduits" style="white-space:nowrap">div. déduits '+opMt(pk,pruNet(l))+'</div>':'')+'</td><td>'+F2(l.co)+(u&&l.usd?'<div class="tk">$'+l.usd.toFixed(2)+'</div>':'')+'</td><td>'+VC(l.var)+'</td><td style="font-weight:500">'+F2(l.vaEur)+'</td><td style="color:'+(!isFinite(l.g)?'var(--muted)':l.g>=0?'var(--green)':'var(--red)')+';font-weight:600">'+(!isFinite(l.g)?'—':(l.g>=0?'+':'')+(u?'$'+l.g.toFixed(2):F2(l.g)))+'</td><td>'+(isFinite(l.gp)?BG(l.gp):'<span style="color:var(--muted)">—</span>')+'</td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'div\')" style="color:var(--orange)">'+(l.div||0).toFixed(2)+'€</span></td><td style="color:var(--muted);font-size:11px">'+l.w.toFixed(1)+'%</td><td>'+sparkSvg+'</td><td class="l"><span class="ed" onclick="edSecteur(\''+pk+'\','+l.id+')" style="font-size:11px;color:'+(SC[secteurDe(l,pk)]||CV('--muted'))+'">'+secteurDe(l,pk)+'</span></td><td><button class="db" onclick="dPf(\''+pk+'\','+l.id+')">✕</button></td></tr>'});
+h+='<tr'+(ouverte?' style="background:var(--abg)"':'')+'><td class="l"><b style="font-size:12px;cursor:pointer;border-bottom:1px dotted var(--border)" onclick="ouvreFicheLigne(\''+pk+'\',\''+l.id+'\')" title="Voir la fiche">'+l.n+'</b><div class="tk">'+l.c+' · <a href="'+lienNews(YM[l.c]||l.c)+'" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--border)">actus</a> · <a onclick="atOuvre(\''+pk+'\',\''+l.id+'\')" title="Ouvrir l’analyse technique"'+' style="color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent);cursor:pointer"'+'>analyse</a> · <a onclick="opNouveau(\''+pk+'\',\''+l.id+'\')" title="Noter un achat, une vente ou un dividende reçu" style="color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent);cursor:pointer;white-space:nowrap">achat / vente</a></div></td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'p\')">'+l.p+'</span></td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'pr\')">'+(l.pr==null||!isFinite(nb(l.pr))?'—':(u?'$'+nb(l.pr).toFixed(2):F2(nb(l.pr))))+'</span>'+(pruNet(l)!=null?'<div class="tk" title="Prix de revient une fois les dividendes reçus déduits" style="white-space:nowrap">div. déduits '+opMtL(pk,l,pruNet(l))+'</div>':'')+'</td><td>'+F2(l.co)+(u&&l.usd?'<div class="tk">$'+l.usd.toFixed(2)+'</div>':'')+'</td><td>'+VC(l.var)+'</td><td style="font-weight:500">'+F2(l.vaEur)+'</td><td style="color:'+(!isFinite(l.g)?'var(--muted)':l.g>=0?'var(--green)':'var(--red)')+';font-weight:600">'+(!isFinite(l.g)?'—':(l.g>=0?'+':'')+(u?'$'+l.g.toFixed(2):F2(l.g)))+'</td><td>'+(isFinite(l.gp)?BG(l.gp):'<span style="color:var(--muted)">—</span>')+'</td><td><span class="ed" onclick="ePf(this,\''+pk+'\','+l.id+',\'div\')" style="color:var(--orange)">'+(l.div||0).toFixed(2)+'€</span></td><td style="color:var(--muted);font-size:11px">'+l.w.toFixed(1)+'%</td><td>'+sparkSvg+'</td><td class="l"><span class="ed" onclick="edSecteur(\''+pk+'\','+l.id+')" style="font-size:11px;color:'+(SC[secteurDe(l,pk)]||CV('--muted'))+'">'+secteurDe(l,pk)+'</span></td><td><button class="db" onclick="dPf(\''+pk+'\','+l.id+')">✕</button></td></tr>'});
 h+='</tbody></table><div id="add-'+pk+'"><button class="ab" onclick="sA(\''+pk+'\')">+ Ajouter</button></div><button class="ab" style="margin-top:8px" onclick="opImport(\''+pk+'\')">⤒ Importer un relevé (Fortuneo ou Saxo)</button>';document.getElementById(cid).innerHTML=h}
 
 /* ===== ACHATS, VENTES ET DIVIDENDES REÇUS =====
@@ -7582,7 +7589,19 @@ function opLitDate(s){s=String(s||'').trim();let m=/^(\d{4})-(\d{1,2})-(\d{1,2})
   if(!m)return null;const y=+m[1],mo=+m[2],d=+m[3];if(y<1970||y>2100||mo<1||mo>12||d<1||d>31)return null;
   const r=y+'-'+('0'+mo).slice(-2)+'-'+('0'+d).slice(-2);return r>opJour()?null:r}
 function opDateFr(s){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?m[3]+'/'+m[2]+'/'+m[1]:'—'}
-function opDev(pk){return S.pf[pk]&&S.pf[pk].cur==='USD'?'$':'€'}
+/* La devise du prix de revient : celle du compte, sauf si la ligne en a une à elle */
+function devL(pk,l){if(l&&(l.dev==='USD'||l.dev==='EUR'))return l.dev;return S.pf[pk]&&S.pf[pk].cur==='USD'?'USD':'EUR'}
+function opDev(pk,l){return devL(pk,l)==='USD'?'$':'€'}
+function opMtL(pk,l,v){return opDev(pk,l)==='$'?'$'+nb(v).toFixed(2):F2(nb(v))}
+window.edDevLigne=async function(pk,id){
+  const l=S.pf[pk]&&S.pf[pk].l.find(x=>String(x.id)===String(id));if(!l)return;const act=devL(pk,l);
+  const v=await modale({titre:'Devise du prix de revient',sous:l.n||l.c,valider:'Enregistrer',
+    texte:'Choisis la devise dans laquelle tu notes le prix de revient de cette ligne. Rien n’est converti : si tu changes, vérifie le prix de revient dans le tableau.',
+    champs:[{k:'d',lib:'Devise',type:'choix',large:true,val:act,options:[['EUR','Euros (€)'],['USD','Dollars ($)']]}]});
+  if(!v||v.d===act)return;
+  if(v.d===(S.pf[pk].cur==='USD'?'USD':'EUR'))delete l.dev;else l.dev=v.d;
+  autoSave();R(true);
+};
 function opMt(pk,v){return opDev(pk)==='$'?'$'+nb(v).toFixed(2):F2(nb(v))}
 window.opMtBase=opMt;
 function opQ(v){return String(Math.round(nb(v)*1e6)/1e6).replace('.',',')}
@@ -7597,7 +7616,7 @@ function opAnnulable(texte,retour){
 window.opNouveau=async function(pk,id,type){
   const pf=S.pf[pk];if(!pf)return;
   const l=pf.l.find(x=>String(x.id)===String(id));if(!l)return;
-  const nom=l.n||l.c||'cette ligne',dev=opDev(pk),p0=nb(l.p),pr0=nb(l.pr),dv0=nb(l.dvr);
+  const nom=l.n||l.c||'cette ligne',dev=opDev(pk,l),p0=nb(l.p),pr0=nb(l.pr),dv0=nb(l.dvr),curOp=devL(pk,l)!==devL(pk,null)?devL(pk,l):null;
   if(!type){type=await modale({titre:nom,sous:'Que veux-tu noter ?',boutons:[['a','J’ai acheté'],['v','J’ai vendu'],['d','J’ai reçu un dividende']]});if(!type)return;}
   const avant={p:l.p,pr:l.pr,dvr:l.dvr,esp:pf.esp},tx=dev==='$'?nb(eurUsd)||1:1,c2=x=>Math.round(x*100)/100;let op=null,retiree=-1,copie=null;
   if(type==='d'){
@@ -7637,9 +7656,10 @@ window.opNouveau=async function(pk,id,type){
       }
     }
   }
+  if(curOp)op.cur=curOp;
   opsTous().push(op);
   const idOp=op.id;
-  opAnnulable((type==='a'?'Achat':type==='v'?'Vente':'Dividende')+' enregistré'+(type==='d'||op.maj?(type==='a'?' : prix de revient '+opMt(pk,l.pr):type==='v'&&op.g!=null?' : '+(op.g>=0?'gain':'perte')+' de '+opMt(pk,Math.abs(op.g)):''):'')+((type==='d'?op.dm:op.maj)?' · espèces : '+F2(nb(pf.esp)):'')+'.',()=>{
+  opAnnulable((type==='a'?'Achat':type==='v'?'Vente':'Dividende')+' enregistré'+(type==='d'||op.maj?(type==='a'?' : prix de revient '+opMtL(pk,l,l.pr):type==='v'&&op.g!=null?' : '+(op.g>=0?'gain':'perte')+' de '+opMtL(pk,l,Math.abs(op.g)):''):'')+((type==='d'?op.dm:op.maj)?' · espèces : '+F2(nb(pf.esp)):'')+'.',()=>{
     S.ops=opsTous().filter(x=>x.id!==idOp);pf.esp=avant.esp;if(op.dm)divAjoute(op.d,-op.dm);
     if(retiree>=0){copie.p=avant.p;copie.pr=avant.pr;if(avant.dvr===undefined)delete copie.dvr;else copie.dvr=avant.dvr;pf.l.splice(Math.min(retiree,pf.l.length),0,copie);}
     else{l.p=avant.p;l.pr=avant.pr;if(avant.dvr===undefined)delete l.dvr;else l.dvr=avant.dvr;}
@@ -7672,7 +7692,7 @@ window.opSuppr=async function(idOp){
 };
 function opTitre(o){return o.t==='a'?'Achat':o.t==='v'?'Vente':'Dividende'}
 function opLigneHTML(o,avecNom){
-  const pk=o.pk,opMt=o.cur?((k,v)=>(o.cur==='EUR'?F2(nb(v)):nb(v).toFixed(2).replace('.',',')+' '+o.cur)):window.opMtBase,col=o.t==='a'?'var(--green)':o.t==='v'?'var(--red)':'var(--orange)';
+  const pk=o.pk,opMt=o.cur?((k,v)=>(o.cur==='EUR'?F2(nb(v)):o.cur==='USD'?'$'+nb(v).toFixed(2):nb(v).toFixed(2).replace('.',',')+' '+o.cur)):window.opMtBase,col=o.t==='a'?'var(--green)':o.t==='v'?'var(--red)':'var(--orange)';
   let det,droite='';
   if(o.t==='d'){det='reçu';droite='<b>+'+opMt(pk,o.m)+'</b>';}
   else{det=opQ(o.q)+' × '+opMt(pk,o.px)+(nb(o.fr)>0?' · frais '+opMt(pk,o.fr):'');
@@ -7687,7 +7707,7 @@ function opsLigneHTML(pk,l){
   const al=nb(l.al),ah=nb(l.ah),V=L.filter(o=>o.t==='v'&&o.g!=null),Dv=L.filter(o=>o.t==='d');
   let h='';
   if(V.length||Dv.length){
-    const lat=isFinite(l.g)?l.g:0,rea=V.reduce((a,o)=>a+o.g,0),dv=Dv.reduce((a,o)=>a+nb(o.m),0),tot=lat+rea+dv,sg=v=>(v>=0?'+':'−')+opMt(pk,Math.abs(v)),co=v=>v>=0?'var(--green)':'var(--red)';
+    const lat=isFinite(l.g)?l.g:0,rea=V.reduce((a,o)=>a+o.g,0),dv=Dv.reduce((a,o)=>a+nb(o.m),0),tot=lat+rea+dv,sg=v=>(v>=0?'+':'−')+opMtL(pk,l,Math.abs(v)),co=v=>v>=0?'var(--green)':'var(--red)';
     h+='<div class="sect" style="margin-top:16px">Ce qu’elle t’a vraiment rapporté</div>'+
       '<div class="lr"><span>Gain en attente <span style="color:var(--muted)">(titres encore détenus)</span></span><span style="color:'+co(lat)+'">'+sg(lat)+'</span></div>'+
       '<div class="lr"><span>Gain des ventes <span style="color:var(--muted)">('+V.length+')</span></span><span style="color:'+co(rea)+'">'+sg(rea)+'</span></div>'+
@@ -7696,7 +7716,7 @@ function opsLigneHTML(pk,l){
       '<div class="tk" style="margin-top:4px">D’après les opérations que tu as notées sur cette ligne.</div>';
   }
   h+='<div class="sect" style="margin-top:16px">Alerte de prix</div><div class="lr"><span>'+
-    (al>0||ah>0?'Te prévenir si le cours '+(al>0?'passe sous <b>'+opMt(pk,al)+'</b>':'')+(al>0&&ah>0?' ou ':'')+(ah>0?'dépasse <b>'+opMt(pk,ah)+'</b>':''):'Aucune alerte sur cette ligne')+
+    (al>0||ah>0?'Te prévenir si le cours '+(al>0?'passe sous <b>'+opMtL(pk,l,al)+'</b>':'')+(al>0&&ah>0?' ou ':'')+(ah>0?'dépasse <b>'+opMtL(pk,l,ah)+'</b>':''):'Aucune alerte sur cette ligne')+
     '</span><span class="ed" onclick="opAlerte(\''+pk+'\',\''+l.id+'\')">'+(al>0||ah>0?'Modifier':'En poser une')+'</span></div>';
   h+='<div class="sect" style="margin-top:16px">Achats et ventes</div><div class="opB">'+
     '<button class="pb" onclick="opNouveau(\''+pk+'\',\''+l.id+'\',\'a\')">+ Achat</button>'+
@@ -7775,7 +7795,7 @@ function impSaxo(rows,devCompte){
       const fr=Math.max(0,Math.round((achat?Math.abs(mt)/tx-q*px:q*px-mt/tx)*100)/100);
       E.push({lib:lib,d:d,rang:rang,t:achat?'a':'v',q:q,px:px,fr:fr<q*px*0.05?fr:0,cur:cur,sym:sym,me:Math.round(Math.abs(mt)*100)/100});}
     else if(/^(Dividende|Cash dividend)/i.test(ev)){const k=lib+'|'+d,x=D[k]||(D[k]={lib:lib,d:d,rang:rang,t:'d',m:0,cur:cur,sym:sym});
-      x.m+=(cur===devCompte&&devCompte!=='EUR')?mt/tx:mt;if(!(cur===devCompte&&devCompte!=='EUR'))x.cur='EUR';}
+      x.m+=cur==='USD'?mt/tx:mt;x.cur=cur==='USD'?'USD':'EUR';}
   });
   /* les corrections de dividende (montant négatif) viennent en déduction du dividende précédent du même titre */
   Object.keys(D).map(k=>D[k]).sort((a,b)=>a.d<b.d?-1:1).forEach(x=>{x.m=Math.round(x.m*100)/100;
@@ -7828,14 +7848,14 @@ async function opImportSuite(pk,E){
   const v=await modale({titre:'Importer '+N.length+' opération'+(N.length>1?'s':''),sous:nomCpt(pk)+(ignores?' · '+ignores+' déjà présentes, ignorées':''),valider:'Continuer',
     texte:'Vérifie à quelle ligne de ton tableau correspond chaque titre du fichier. Ceux que tu détiens encore sont en haut de la liste ; ceux que tu n’as plus restent dans l’historique.',
     champs:libs.map((lib,i)=>{const l=(mem[lib]&&pf.l.find(x=>x.c===mem[lib]))||(mem[lib]===''?null:(parCode(lib)||impDevine(lib,pf.l)));
-      const q=Math.round((reste[lib]||0)*1e6)/1e6,creable=info[lib].code&&(!info[lib].cur||info[lib].cur===dev)&&q>0;
+      const q=Math.round((reste[lib]||0)*1e6)/1e6,creable=info[lib].code&&(!info[lib].cur||info[lib].cur==='EUR'||info[lib].cur==='USD')&&q>0;
       return{k:'l'+i,lib:impNomJoli(lib)+(q>0?' · il en reste '+opQ(q)+' d’après le fichier':' · tout vendu'),type:'choix',large:true,opt:true,muet:true,val:l?String(l.id):(creable&&mem[lib]===undefined?'+':''),options:creable?opts.concat([['+','Créer la ligne ('+info[lib].code+')']]):opts};})});
   if(!v)return;
   const cible={},creer={};libs.forEach((lib,i)=>{const l=pf.l.find(x=>String(x.id)===String(v['l'+i]))||null;cible[lib]=l;if(v['l'+i]==='+')creer[lib]=1;else mem[lib]=l?l.c:'';});
   /* on rejoue tout dans l'ordre, titre par titre, avec ce qui était déjà importé */
   const anciens=opsTous().filter(o=>o.pk===pk&&o.lib&&libs.indexOf(o.lib)>=0),tous=anciens.map(o=>({o:o,old:1})).concat(N.map(e=>({o:e}))).sort((a,b)=>a.o.d<b.o.d?-1:a.o.d>b.o.d?1:(a.o.t==='a')!==(b.o.t==='a')?(a.o.t==='a'?-1:1):(a.old?-1:1));
   const RJ={},cleR=lib=>cible[lib]?'#'+cible[lib].id:lib;libs.forEach(lib=>{RJ[cleR(lib)]=RJ[cleR(lib)]||{q:0,cout:0,dv:0,inc:false,ventes:[]};});
-  tous.forEach(x=>{const o=x.o,r=RJ[cleR(o.lib)];if(!r)return;if(o.cur&&o.cur!==dev&&o.t!=='d')r.autre=true;
+  tous.forEach(x=>{const o=x.o,r=RJ[cleR(o.lib)];if(!r)return;if(o.t!=='d'){const cu=o.cur||dev;if(cu!=='EUR'&&cu!=='USD')r.autre=true;else r.cur=cu;}
     if(o.t==='a'){r.q+=nb(o.q);r.cout+=nb(o.q)*nb(o.px)+nb(o.fr);r.coutE=(r.coutE||0)+nb(o.me);}
     else if(o.t==='v'){const q=nb(o.q);
       if(q>r.q+1e-6){r.inc=true;r.ventes.forEach(w=>{delete w.pru;delete w.g;delete w.ge;});delete o.pru;delete o.g;delete o.ge;r.q=0;r.cout=0;r.coutE=0;r.dv=0;}
@@ -7847,44 +7867,132 @@ async function opImportSuite(pk,E){
   /* ce que le relevé permettrait de corriger */
   const lignes=[];libs.forEach(lib=>{const l=cible[lib],r=RJ[cleR(lib)];if(!l||lignes.some(x=>x.l===l))return;
     const q=Math.round(r.q*1e6)/1e6,pru=q>0?Math.round(r.cout/q*1e4)/1e4:0;
-    lignes.push({l:l,q:q,pru:pru,dv:Math.round(r.dv*100)/100,inc:r.inc||!!r.autre,autre:!!r.autre,meme:Math.abs(q-nb(l.p))<1e-6&&q>0});});
+    lignes.push({l:l,cur:r.cur||dev,q:q,pru:pru,dv:Math.round(r.dv*100)/100,inc:r.inc||!!r.autre,autre:!!r.autre,meme:Math.abs(q-nb(l.p))<1e-6&&q>0});});
   /* les lignes à créer : seulement si le relevé est complet et qu'il reste des titres */
-  const nouvelles=[];Object.keys(creer).forEach(lib=>{const r=RJ[lib],q=r?Math.round(r.q*1e6)/1e6:0;if(r&&!r.inc&&!r.autre&&q>0)nouvelles.push({lib:lib,code:info[lib].code,q:q,pru:Math.round(r.cout/q*1e4)/1e4,dv:Math.round(r.dv*100)/100});});
-  const ok1=lignes.filter(x=>x.meme&&!x.inc),ko=lignes.filter(x=>!x.meme&&!x.inc),inc=lignes.filter(x=>x.inc&&!x.autre),aut=lignes.filter(x=>x.autre),ok2=lignes.filter(x=>!x.inc),na=N.filter(e=>e.t==='a').length,nv=N.filter(e=>e.t==='v').length,nd=N.filter(e=>e.t==='d').length;
+  const nouvelles=[];Object.keys(creer).forEach(lib=>{const r=RJ[lib],q=r?Math.round(r.q*1e6)/1e6:0;if(r&&!r.inc&&!r.autre&&q>0)nouvelles.push({lib:lib,cur:r.cur||dev,code:info[lib].code,q:q,pru:Math.round(r.cout/q*1e4)/1e4,dv:Math.round(r.dv*100)/100});});
+  const mtC=(cu,v)=>cu==='USD'?'$'+nb(v).toFixed(2):F2(nb(v));
+  const ok1=lignes.filter(x=>x.meme&&!x.inc),ko=lignes.filter(x=>!x.meme&&!x.inc&&Math.abs(x.q-nb(x.l.p))>1e-6),inc=lignes.filter(x=>x.inc&&!x.autre),aut=lignes.filter(x=>x.autre),ok2=lignes.filter(x=>!x.inc),na=N.filter(e=>e.t==='a').length,nv=N.filter(e=>e.t==='v').length,nd=N.filter(e=>e.t==='d').length;
   let txt=na+' achat'+(na>1?'s':'')+', '+nv+' vente'+(nv>1?'s':'')+' et '+nd+' dividende'+(nd>1?'s':'')+' vont entrer dans l’historique.';
-  if(ok1.length)txt+='\n\nMême quantité dans le relevé et dans ton tableau ('+ok1.length+') :\n'+ok1.map(x=>'• '+(x.l.n||x.l.c)+' : prix de revient '+opMt(pk,x.pru)+' d’après le relevé, '+(nb(x.l.pr)>0?opMt(pk,x.l.pr):'rien')+' dans le tableau').join('\n');
+  if(ok1.length)txt+='\n\nMême quantité dans le relevé et dans ton tableau ('+ok1.length+') :\n'+ok1.map(x=>'• '+(x.l.n||x.l.c)+' : prix de revient '+mtC(x.cur,x.pru)+' d’après le relevé, '+(nb(x.l.pr)>0?opMtL(pk,x.l,x.l.pr):'rien')+' dans le tableau').join('\n');
   if(ko.length)txt+='\n\nQuantité différente ('+ko.length+') :\n'+ko.map(x=>'• '+(x.l.n||x.l.c)+' : '+opQ(x.q)+' d’après le relevé, '+opQ(nb(x.l.p))+' dans le tableau').join('\n')+'\nSouvent, c’est que le relevé ne remonte pas jusqu’à tes premiers achats.';
   if(inc.length)txt+='\n\nRelevé incomplet, lignes laissées telles quelles ('+inc.length+') :\n'+inc.map(x=>'• '+(x.l.n||x.l.c)).join('\n')+'\nTu avais déjà ces titres avant le début du fichier : importe aussi un fichier plus ancien pour les recalculer.';
-  if(aut.length)txt+='\n\nCotées dans une autre devise que le compte, laissées telles quelles ('+aut.length+') :\n'+aut.map(x=>'• '+(x.l.n||x.l.c)).join('\n');
-  if(nouvelles.length)txt+='\n\nLignes créées ('+nouvelles.length+') :\n'+nouvelles.map(x=>'• '+impNomJoli(x.lib)+' : '+opQ(x.q)+' à '+opMt(pk,x.pru)).join('\n');
+  if(aut.length)txt+='\n\nCotées dans une devise autre que l’euro ou le dollar, laissées telles quelles ('+aut.length+') :\n'+aut.map(x=>'• '+(x.l.n||x.l.c)).join('\n');
+  if(nouvelles.length)txt+='\n\nLignes créées ('+nouvelles.length+') :\n'+nouvelles.map(x=>'• '+impNomJoli(x.lib)+' : '+opQ(x.q)+' à '+mtC(x.cur,x.pru)).join('\n');
   const choix=[['0',nouvelles.length?'Ne pas toucher aux lignes existantes':'Ne rien changer : historique seulement']];
   if(ok1.length)choix.push(['1',ok1.length>1?'Corriger le prix de revient des '+ok1.length+' lignes qui concordent':'Corriger le prix de revient de la ligne qui concorde']);
   if(ok2.length)choix.push(['2',ok2.length>1?'Recalculer quantités et prix de revient des '+ok2.length+' lignes au relevé complet':'Recalculer quantité et prix de revient de la ligne au relevé complet']);
   const v2=await modale({titre:'Quantités et prix de revient',texte:txt,valider:'Importer',champs:[{k:'m',lib:'Que faire de ton tableau ?',type:'choix',large:true,val:'0',options:choix,
     aide:'Tu pourras annuler juste après l’import.'}]});
   if(!v2)return;
-  const mode=v2.m,avantOps=opsTous().slice(),avantListe=pf.l.slice(),avantL=pf.l.map(l=>({l:l,p:l.p,pr:l.pr,dvr:l.dvr})),avantG=anciens.map(o=>({o:o,pru:o.pru,g:o.g,ge:o.ge}));
-  nouvelles.forEach(x=>{const l={id:nid(),c:x.code,n:impNomJoli(x.lib),co:0,p:x.q,pr:x.pru,div:0,var:0};if(dev==='USD')l.usd=0;if(x.dv>0)l.dvr=x.dv;
+  const mode=v2.m,avantOps=opsTous().slice(),avantListe=pf.l.slice(),avantL=pf.l.map(l=>({l:l,p:l.p,pr:l.pr,dvr:l.dvr,dev:l.dev})),avantG=anciens.map(o=>({o:o,pru:o.pru,g:o.g,ge:o.ge}));
+  nouvelles.forEach(x=>{const l={id:nid(),c:x.code,n:impNomJoli(x.lib),co:0,p:x.q,pr:x.pru,div:0,var:0};if(x.cur==='USD')l.usd=0;if(x.cur!==dev)l.dev=x.cur;if(x.dv>0)l.dvr=x.dv;
     try{if(typeof YM!=='undefined')YM[x.code]=x.code}catch(e){}pf.l.push(l);cible[x.lib]=l;mem[x.lib]=l.c;});
-  N.forEach(e=>{const l=cible[e.lib],o={id:nid(),pk:pk,c:l?l.c:impNomJoli(e.lib),n:l?l.n:impNomJoli(e.lib),t:e.t,d:e.d,maj:0,lib:e.lib};if(e.cur&&e.cur!==dev)o.cur=e.cur;
+  N.forEach(e=>{const l=cible[e.lib],o={id:nid(),pk:pk,c:l?l.c:impNomJoli(e.lib),n:l?l.n:impNomJoli(e.lib),t:e.t,d:e.d,maj:0,lib:e.lib};if(e.cur&&e.cur!==dev)o.cur=e.cur;if(info[e.lib]&&info[e.lib].code)o.yt=info[e.lib].code;
     if(e.t==='d'){o.m=e.m;if(e.qd)o.qd=e.qd;}else{o.q=e.q;o.px=e.px;o.fr=e.fr;if(e.me!=null)o.me=e.me;if(e.pru!=null){o.pru=e.pru;o.g=e.g;if(e.ge!=null)o.ge=e.ge;}}
     opsTous().push(o);});
   anciens.forEach(o=>{const l=cible[o.lib];if(l){o.c=l.c;o.n=l.n;}});
   let maj=nouvelles.length;
   if(mode!=='0')lignes.forEach(x=>{if(x.inc)return;if(mode==='1'&&!x.meme)return;
     if(mode==='2')x.l.p=x.q;
-    if(x.q>0){x.l.pr=x.pru;if(x.dv>0)x.l.dvr=x.dv;else delete x.l.dvr;}
+    if(x.q>0){x.l.pr=x.pru;if(x.dv>0)x.l.dvr=x.dv;else delete x.l.dvr;if(x.cur!==devL(pk,x.l)){if(x.cur===dev)delete x.l.dev;else x.l.dev=x.cur;}}
     maj++;});
   opAnnulable(N.length+' opération'+(N.length>1?'s importées':' importée')+(maj?' · '+maj+' ligne'+(maj>1?'s':'')+' mise'+(maj>1?'s':'')+' à jour':'')+'.',()=>{
-    S.ops=avantOps;pf.l=avantListe;avantL.forEach(a=>{a.l.p=a.p;a.l.pr=a.pr;if(a.dvr===undefined)delete a.l.dvr;else a.l.dvr=a.dvr;});
+    S.ops=avantOps;pf.l=avantListe;avantL.forEach(a=>{a.l.p=a.p;a.l.pr=a.pr;if(a.dvr===undefined)delete a.l.dvr;else a.l.dvr=a.dvr;if(a.dev===undefined)delete a.l.dev;else a.l.dev=a.dev;});
     avantG.forEach(a=>{if(a.pru===undefined)delete a.o.pru;else a.o.pru=a.pru;if(a.g===undefined)delete a.o.g;else a.o.g=a.g;if(a.ge===undefined)delete a.o.ge;else a.o.ge=a.ge;});});
   autoSave();R(true);
 }
+/* ===== CALENDRIER DES DIVIDENDES, REMPLI TOUT SEUL =====
+   On lit les dividendes des douze derniers mois dans l'historique Yahoo : mêmes mois, mêmes montants
+   par action. Le calendrier existant fait le reste (quantités, prélèvements, total par mois). */
+window.divAuto=async function(){
+  if(typeof window.atDivAuto!=='function')return;
+  const L=[];PKS().forEach(pk=>{(S.pf[pk].l||[]).forEach(l=>{const yt=YM[l.c]||l.c;if(yt&&yt!=='—'&&nb(l.p)>0)L.push({pk:pk,l:l,yt:yt});});});
+  if(!L.length){await avis('Aucune ligne à remplir\n\nAjoute d’abord des lignes avec leur code Yahoo.');return;}
+  const b=document.getElementById('divAutoBtn'),txt=b?b.textContent:'';if(b){b.disabled=true;b.textContent='Lecture des dividendes passés…';}
+  let R0;try{R0=await window.atDivAuto(L.map(x=>x.yt).filter((y,i,t)=>t.indexOf(y)===i));}
+  catch(e){if(b){b.disabled=false;b.textContent=txt;}await avis('Lecture impossible\n\n'+(e&&e.message||'Le script Google n’a pas répondu.'));return;}
+  if(b){b.disabled=false;b.textContent=txt;}
+  const prop=[],sans=[];
+  L.forEach(x=>{const r=R0[x.yt];if(!r||!r.ev||!r.ev.length||(r.cur!=='EUR'&&r.cur!=='USD')){sans.push(x);return;}
+    const E=r.ev.filter(e=>e[0]>r.fin-370*864e5&&e[1]>0);if(!E.length){sans.push(x);return;}
+    const dl=devL(x.pk,x.l),tx=r.cur===dl?1:(r.cur==='USD'?(nb(eurUsd)||1):1/(nb(eurUsd)||1)),M={};
+    E.forEach(e=>{const m=new Date(e[0]).getUTCMonth()+1;M[m]=(M[m]||0)+e[1]*tx;});
+    x.vers=Object.keys(M).map(Number).sort((a,b)=>a-b).map(m=>({m:m,a:Math.round(M[m]*10000)/10000}));x.exact=r.exact;x.dev=dl;prop.push(x);});
+  if(!prop.length){await avis('Aucun dividende trouvé\n\nL’historique ne montre aucun dividende sur les douze derniers mois pour tes lignes.');return;}
+  const deja=prop.filter(x=>saitQuandElleVerse(x.l)).length,mt=x=>v=>x.dev==='USD'?'$'+v.toFixed(2):F2(v);
+  const v=await modale({titre:'Calendrier des dividendes',valider:'Remplir',
+    texte:prop.length+' ligne'+(prop.length>1?'s versent':' verse')+' un dividende d’après les douze derniers mois :\n'+
+      prop.slice(0,14).map(x=>'• '+(x.l.n||x.l.c)+' : '+x.vers.map(w=>MOIS_COURTS[w.m-1]).join(', ')+' · '+(x.exact?'':'≈ ')+mt(x)(x.vers.reduce((a,w)=>a+w.a,0))+' par action et par an').join('\n')+
+      (prop.length>14?'\n… et '+(prop.length-14)+' autres':'')+
+      (sans.length?'\n\nSans dividende trouvé ('+sans.length+') : '+sans.slice(0,8).map(x=>x.l.n||x.l.c).join(', ')+(sans.length>8?'…':'')+'.':'')+
+      '\n\nLe mois est celui du détachement : l’argent arrive parfois le mois suivant. Les montants sont ceux de l’an passé, pas une promesse.',
+    champs:deja?[{k:'m',lib:'Lignes déjà renseignées ('+deja+')',type:'choix',large:true,val:'0',options:[['0','Les garder telles quelles'],['1','Les remplacer aussi']]}]:[]});
+  if(!v)return;
+  const tout=v!==true&&v.m==='1',av=[];let n=0;
+  prop.forEach(x=>{if(saitQuandElleVerse(x.l)&&!tout)return;const l=x.l;av.push({l:l,vers:l.vers,div:l.div,freq:l.freq,moisDiv:l.moisDiv});
+    l.vers=x.vers;l.div=Math.round(divAnnuelSaisi({vers:x.vers})*10000)/10000;delete l.freq;delete l.moisDiv;n++;});
+  if(!n){await avis('Rien à remplir\n\nToutes ces lignes étaient déjà renseignées.');return;}
+  opAnnulable(n+' ligne'+(n>1?'s remplies':' remplie')+' dans le calendrier.',()=>{av.forEach(a=>{['vers','div','freq','moisDiv'].forEach(k=>{if(a[k]===undefined)delete a.l[k];else a.l[k]=a[k];});});});
+  autoSave();R(true);
+};
+/* ===== MES CHOIX FACE À UN INDICE =====
+   Chaque achat et chaque vente est rejoué sur un fonds indiciel (en euros, dividendes réinvestis) :
+   même argent, mêmes dates. On compare ce que cela vaudrait à ce que valent réellement les titres. */
+const CMP_IDX=[['CW8.PA','MSCI World'],['ESE.PA','S&P 500'],['CAC.PA','CAC 40']];
+const cmpE={idx:'CW8.PA',pk:'',res:null,enCours:false,err:''};
+function cmpEur(o,l){const cu=o.cur||devL(o.pk,l);return cu==='USD'?(nb(eurUsd)||1):1}
+window.cmpChoix=function(k,v){cmpE[k]=v;cmpE.res=null;cmpE.err='';cmpMaj();};
+function cmpMaj(){const z=document.getElementById('cmpIdx');if(z)try{z.innerHTML=cmpHTML()}catch(e){z.innerHTML=''}}
+window.cmpCalcule=async function(){
+  if(cmpE.enCours||typeof window.atHist!=='function')return;cmpE.enCours=true;cmpE.err='';cmpE.res=null;cmpMaj();
+  try{
+    const H=await window.atHist([cmpE.idx]),X=H[cmpE.idx];if(!X||!X.t.length)throw new Error('Cours de l’indice introuvables.');
+    const P=X.a||X.c,prix=iso=>{const t=Date.parse(iso+'T12:00:00Z');let i=X.t.findIndex(x=>x>=t-3*864e5);if(i<0)i=X.t.length-1;return P[i];};
+    const pks=cmpE.pk?[cmpE.pk]:PKS(),t=Tot(),G={};
+    opsTous().filter(o=>pks.indexOf(o.pk)>=0).forEach(o=>{const k=o.pk+'|'+(o.lib||o.c);(G[k]=G[k]||{pk:o.pk,n:o.n||o.c,ops:[]}).ops.push(o);});
+    let investi=0,vendu=0,div=0,valeur=0,parts=0,nA=0,d0=null;const exclus=[];
+    Object.keys(G).forEach(k=>{const g=G[k],L=g.ops.slice().sort((a,b)=>a.d<b.d?-1:a.d>b.d?1:(a.t==='a'?-1:1));
+      const l=(t.cp[g.pk].l||[]).find(x=>L.some(o=>o.c===x.c));let q=0,ok=true;
+      L.forEach(o=>{if(o.t==='a')q+=nb(o.q);else if(o.t==='v'){if(nb(o.q)>q+1e-6)ok=false;q-=nb(o.q);}});
+      if(!L.some(o=>o.t==='a'))return;
+      if(!ok||Math.abs(q-(l?nb(l.p):0))>1e-6||L[0].d<new Date(X.t[0]).toISOString().slice(0,10)){exclus.push(g.n);return;}
+      L.forEach(o=>{const tx=cmpEur(o,l);
+        if(o.t==='a'){const f=o.me!=null?nb(o.me):(nb(o.q)*nb(o.px)+nb(o.fr))*tx;investi+=f;parts+=f/prix(o.d);nA++;if(!d0||o.d<d0)d0=o.d;}
+        else if(o.t==='v'){const f=o.me!=null?nb(o.me):(nb(o.q)*nb(o.px)-nb(o.fr))*tx;vendu+=f;parts-=f/prix(o.d);}
+        else if(o.t==='d')div+=nb(o.m)*tx;});
+      if(l)valeur+=nb(l.vaEur);});
+    if(!nA)throw new Error(exclus.length?'Aucun titre n’a un historique d’achats complet'+(cmpE.pk?' dans ce compte':'')+'. Importe tes relevés pour pouvoir comparer.':'Aucun achat noté'+(cmpE.pk?' dans ce compte':'')+' pour l’instant.');
+    const moi=valeur+vendu+div,ind=parts*P[P.length-1]+vendu;
+    cmpE.res={investi:investi,moi:moi,ind:ind,gMoi:moi-investi,gInd:ind-investi,nA:nA,d0:d0,exclus:exclus,nom:(CMP_IDX.find(x=>x[0]===cmpE.idx)||[])[1]};
+  }catch(e){cmpE.err=(e&&e.message)||'Le calcul a échoué.';}
+  cmpE.enCours=false;cmpMaj();
+};
+function cmpHTML(){
+  if(!opsTous().some(o=>o.t==='a'))return '';
+  const avec=PKS().filter(k=>opsTous().some(o=>o.pk===k&&o.t==='a')),r=cmpE.res,ca=v=>hiddenMode?'•••':v;
+  let h='<div class="card" style="margin-top:16px"><div class="ct">Mes choix face à un indice</div>'+
+    '<div style="font-size:11px;color:var(--muted);margin:-4px 0 12px;line-height:1.5">Et si chaque euro investi était allé dans un fonds qui suit un indice, aux mêmes dates ? Le calcul part de tes achats et de tes ventes notés.</div>'+
+    '<div class="opF" style="margin-bottom:8px">'+CMP_IDX.map(x=>'<button class="pb'+(cmpE.idx===x[0]?' on':'')+'" onclick="cmpChoix(\'idx\',\''+x[0]+'\')">'+x[1]+'</button>').join('')+'</div>'+
+    (avec.length>1?'<div class="opF" style="margin-bottom:12px"><button class="pb'+(cmpE.pk===''?' on':'')+'" onclick="cmpChoix(\'pk\',\'\')">Tous les comptes</button>'+avec.map(k=>'<button class="pb'+(cmpE.pk===k?' on':'')+'" onclick="cmpChoix(\'pk\',\''+k+'\')">'+cptE(nomCpt(k))+'</button>').join('')+'</div>':'');
+  if(cmpE.enCours)h+='<div class="tk">Calcul en cours…</div>';
+  else if(cmpE.err)h+='<div class="tk" style="color:var(--red)">'+cptE(cmpE.err)+'</div><button class="ab" style="margin-top:10px" onclick="cmpCalcule()">Réessayer</button>';
+  else if(!r)h+='<button class="ab" onclick="cmpCalcule()">Comparer</button>';
+  else{
+    const p=v=>(v>=0?'+':'−')+Math.abs(v/r.investi*100).toFixed(1).replace('.',',')+' %',sg=v=>(v>=0?'+':'−')+F2(Math.abs(v)),co=v=>v>=0?'var(--green)':'var(--red)',ec=r.gMoi-r.gInd;
+    h+='<div class="kr"><div class="kpi"><div class="kl">Tes choix</div><div class="kv" style="color:'+co(r.gMoi)+'">'+ca(sg(r.gMoi))+'</div><div class="ks">'+p(r.gMoi)+' sur '+ca(F(Math.round(r.investi)))+' investis</div></div>'+
+      '<div class="kpi"><div class="kl">Même argent sur '+r.nom+'</div><div class="kv" style="color:'+co(r.gInd)+'">'+ca(sg(r.gInd))+'</div><div class="ks">'+p(r.gInd)+'</div></div>'+
+      '<div class="kpi"><div class="kl">Écart</div><div class="kv" style="color:'+co(ec)+'">'+ca(sg(ec))+'</div><div class="ks">'+(ec>=0?'tu fais mieux que l’indice':'l’indice fait mieux')+'</div></div></div>'+
+      '<div class="tk" style="margin-top:10px;line-height:1.6">'+r.nA+' achat'+(r.nA>1?'s':'')+' depuis le '+opDateFr(r.d0)+'. Le gain compte la valeur actuelle des titres, les ventes et les dividendes notés. L’indice est suivi par un fonds en euros, dividendes réinvestis.'+
+      (r.exclus.length?' Non comptés, faute d’historique complet : '+r.exclus.slice(0,6).map(cptE).join(', ')+(r.exclus.length>6?'…':'')+'.':'')+
+      ' Les montants en dollars notés à la main sont convertis au taux du jour.</div>';
+  }
+  return h+'</div>';
+}
 /* Alerte de prix : deux seuils par ligne, dans la devise du compte */
-function opCours(pk,l){return S.pf[pk]&&S.pf[pk].cur==='USD'?nb(l.usd):nb(l.co)}
+function opCours(pk,l){return devL(pk,l)==='USD'?(nb(l.usd)||nb(l.co)):nb(l.co)}
 window.opAlerte=async function(pk,id){
   const l=S.pf[pk]&&S.pf[pk].l.find(x=>String(x.id)===String(id));if(!l)return;const dev=opDev(pk),c=opCours(pk,l);
-  const v=await modale({titre:'Alerte de prix',sous:(l.n||l.c)+(c>0?' · cours actuel '+opMt(pk,c):''),valider:'Enregistrer',texte:'L’alerte s’affiche sur la page d’accueil tant que le cours est au-delà du seuil. Laisse une case vide pour ne pas l’utiliser.',champs:[
+  const v=await modale({titre:'Alerte de prix',sous:(l.n||l.c)+(c>0?' · cours actuel '+opMtL(pk,l,c):''),valider:'Enregistrer',texte:'L’alerte s’affiche sur la page d’accueil tant que le cours est au-delà du seuil. Laisse une case vide pour ne pas l’utiliser.',champs:[
     {k:'al',lib:'Me prévenir sous ('+dev+')',type:'nombre',opt:true,val:nb(l.al)>0?String(l.al).replace('.',','):''},
     {k:'ah',lib:'Me prévenir au-dessus de ('+dev+')',type:'nombre',opt:true,val:nb(l.ah)>0?String(l.ah).replace('.',','):''}],
     verif:x=>x.al<0||x.ah<0?[x.al<0?0:1,'Un seuil ne peut pas être négatif.']:(x.al>0&&x.ah>0&&x.al>=x.ah)?[1,'Le seuil haut doit être plus grand que le seuil bas.']:null});
@@ -7897,15 +8005,15 @@ function alertesSeuil(){const out=[];
   PKS().forEach(pk=>{const pf=S&&S.pf&&S.pf[pk];((pf&&pf.l)||[]).forEach(l=>{
     const c=opCours(pk,l),al=nb(l.al),ah=nb(l.ah);if(!(c>0))return;
     const lien=t=>'<span style="cursor:pointer" title="Ouvrir la ligne" onclick="goPage(\'bourse\');ouvreLigneDepuisDiv(\''+pk+'\',\''+l.id+'\')"><b>'+opE(l.n||l.c)+'</b> '+t+'</span>';
-    if(al>0&&c<=al)out.push({icon:'●',txt:lien('est passée sous ton seuil de '+opMt(pk,al)+' (cours '+opMt(pk,c)+')'),color:'var(--red)'});
-    if(ah>0&&c>=ah)out.push({icon:'●',txt:lien('a dépassé ton seuil de '+opMt(pk,ah)+' (cours '+opMt(pk,c)+')'),color:'var(--green)'});
+    if(al>0&&c<=al)out.push({icon:'●',txt:lien('est passée sous ton seuil de '+opMtL(pk,l,al)+' (cours '+opMtL(pk,l,c)+')'),color:'var(--red)'});
+    if(ah>0&&c>=ah)out.push({icon:'●',txt:lien('a dépassé ton seuil de '+opMtL(pk,l,ah)+' (cours '+opMtL(pk,l,c)+')'),color:'var(--green)'});
   });});
   return out;}
 /* Bilan des ventes, année par année (vue d'ensemble de la bourse) */
 function opsBilanHTML(){
   const L=opsTous().filter(o=>(o.t==='v'&&o.g!=null)||o.t==='d');if(!L.length)return '';
   const Y={},PK=PKS();let approx=false;
-  L.forEach(o=>{const y=String(o.d).slice(0,4),exact=o.t==='v'&&o.ge!=null,tx=o.cur==='EUR'?1:opDev(o.pk)==='$'?nb(eurUsd)||1:1;if(tx!==1&&!exact)approx=true;
+  L.forEach(o=>{const y=String(o.d).slice(0,4),exact=o.t==='v'&&o.ge!=null,tx=o.cur?(o.cur==='USD'?(nb(eurUsd)||1):1):(opDev(o.pk)==='$'?nb(eurUsd)||1:1);if(tx!==1&&!exact)approx=true;
     const a=Y[y]||(Y[y]={n:0,g:0,p:0,d:0,pk:{}});
     if(o.t==='d'){a.d+=nb(o.m)*tx;return;}
     const g=exact?o.ge:o.g*tx;a.n++;if(g>=0)a.g+=g;else a.p+=g;a.pk[o.pk]=(a.pk[o.pk]||0)+g;});
@@ -7933,7 +8041,7 @@ function opsListeHTML(pk){
   const V=L.filter(o=>o.t==='v'&&o.g!=null),g=V.reduce((s,o)=>s+o.g,0),vus=e.tout?L:L.slice(0,8);
   let h=vus.map(o=>opLigneHTML(o,true)).join('');
   if(L.length>8)h+='<div class="tk" style="margin-top:8px"><span class="ed" onclick="opsFiltre(\''+pk+'\',\'tout\','+(e.tout?'false':'true')+')">'+(e.tout?'Réduire la liste':'Voir les '+L.length+' opérations')+'</span></div>';
-  if(V.length)h+='<div class="tk" style="margin-top:8px">Sur '+(V.length>1?'ces '+V.length+' ventes':'cette vente')+' : <b style="color:'+(g>=0?'var(--green)':'var(--red)')+'">'+(hiddenMode?'•••':(g>=0?'+':'−')+opMt(pk,Math.abs(g)))+'</b> de '+(g>=0?'gain':'perte')+', frais compris.</div>';
+  if(V.length&&V.every(o=>(o.cur||'')===(V[0].cur||'')))h+='<div class="tk" style="margin-top:8px">Sur '+(V.length>1?'ces '+V.length+' ventes':'cette vente')+' : <b style="color:'+(g>=0?'var(--green)':'var(--red)')+'">'+(hiddenMode?'•••':(g>=0?'+':'−')+(V[0].cur?(V[0].cur==='EUR'?F2(Math.abs(g)):V[0].cur==='USD'?'$'+Math.abs(g).toFixed(2):Math.abs(g).toFixed(2).replace('.',',')+' '+V[0].cur):opMt(pk,Math.abs(g))))+'</b> de '+(g>=0?'gain':'perte')+', frais compris.</div>';
   return h;
 }
 function opsHTML(pk){
@@ -7941,14 +8049,54 @@ function opsHTML(pk){
   if(!n)return '';
   const e=opsEtat(pk),F=[['','Tout'],['a','Achats'],['v','Ventes'],['d','Dividendes']];
   return '<div style="margin-top:22px;border-top:1px solid var(--border);padding-top:16px"><div class="fb" style="gap:10px;flex-wrap:wrap"><div class="ct" style="margin:0">Achats et ventes <span style="font-size:11px;color:var(--muted);font-weight:400">('+n+')</span></div>'+
-    '<div class="opF">'+F.map(f=>'<button class="pb'+(e.t===f[0]?' active':'')+'" data-t="'+f[0]+'" onclick="opsFiltre(\''+pk+'\',\'t\',\''+f[0]+'\')">'+f[1]+'</button>').join('')+'</div></div>'+
+    '<div class="opF">'+F.map(f=>'<button class="pb'+(e.t===f[0]?' on':'')+'" data-t="'+f[0]+'" onclick="opsFiltre(\''+pk+'\',\'t\',\''+f[0]+'\')">'+f[1]+'</button>').join('')+'</div></div>'+
     '<input class="ai" id="opsQ-'+pk+'" type="search" placeholder="Chercher un titre ou une date…" aria-label="Chercher dans l’historique" value="'+opE(e.q)+'" oninput="opsFiltre(\''+pk+'\',\'q\',this.value)" style="width:100%;margin-top:10px;box-sizing:border-box">'+
-    '<div id="opsL-'+pk+'">'+opsListeHTML(pk)+'</div>'+imp+'</div>';
+    '<div id="opsL-'+pk+'">'+opsListeHTML(pk)+'</div>'+imp+'</div>'+opsVenduesHTML(pk);
 }
+/* Les titres que tu n'as plus : ce qu'ils ont coûté, rapporté, et leurs opérations */
+function opsVendues(pk){
+  const G={},pf=S.pf[pk];if(!pf)return[];
+  opsTous().filter(o=>o.pk===pk).forEach(o=>{const k=o.lib||o.c;(G[k]=G[k]||{k:k,n:o.n||o.c,ops:[]}).ops.push(o);});
+  const out=[];
+  Object.keys(G).forEach(k=>{const g=G[k],L=g.ops,V=L.filter(o=>o.t==='v');if(!V.length)return;
+    const der=opsTri(L)[0],l=pf.l.find(x=>L.some(o=>o.c===x.c));if(l&&nb(l.p)>0)return;
+    const A=L.filter(o=>o.t==='a'),D=L.filter(o=>o.t==='d'),som=(T,f)=>T.reduce((a,o)=>a+f(o),0);
+    g.n=der.n||g.n;g.cur=(L.find(o=>o.cur)||{}).cur||null;g.yt=(L.find(o=>o.yt)||{}).yt||(l?(YM[l.c]||l.c):null)||(function(){const c=String(der.c||'');return /^[A-Z0-9^][A-Z0-9.:=\-]{0,14}$/.test(c)&&/[A-Z]/.test(c)&&(!der.lib||der.c!==impNomJoli(der.lib))?(YM[c]||c):null})();
+    g.achete=som(A,o=>nb(o.q)*nb(o.px)+nb(o.fr));g.vendu=som(V,o=>nb(o.q)*nb(o.px)-nb(o.fr));g.div=som(D,o=>nb(o.m));
+    g.complet=V.every(o=>o.g!=null);g.gain=som(V,o=>nb(o.g));
+    const dts=L.filter(o=>o.t!=='d').map(o=>o.d).sort();g.d0=dts[0];g.d1=V.map(o=>o.d).sort().pop();
+    out.push(g);});
+  return out.sort((a,b)=>a.d1<b.d1?1:-1);
+}
+function opsVenduesHTML(pk){
+  const L=opsVendues(pk);if(!L.length)return '';
+  const e=opsEtat(pk);
+  let h='<div style="margin-top:22px;border-top:1px solid var(--border);padding-top:16px"><div class="ct" style="margin:0 0 4px">Actions vendues <span style="font-size:11px;color:var(--muted);font-weight:400">('+L.length+')</span></div>'+
+    '<div class="tk" style="margin-bottom:6px">Les titres que tu n’as plus dans ce compte. Touche un nom pour revoir son histoire.</div>';
+  L.forEach((g,i)=>{
+    const mt=v=>g.cur?(g.cur==='EUR'?F2(v):g.cur==='USD'?'$'+nb(v).toFixed(2):nb(v).toFixed(2).replace('.',',')+' '+g.cur):opMt(pk,v);
+    const tot=g.gain+g.div,ouv=e.ouv===g.k,co=v=>v>=0?'var(--green)':'var(--red)',sg=v=>(v>=0?'+':'−')+mt(Math.abs(v));
+    h+='<div class="opR" style="cursor:pointer" onclick="opsOuvre(\''+pk+'\','+i+')"><i style="background:var(--muted)"></i><div class="opG"><div><b>'+opE(g.n)+'</b></div><div class="tk">'+(g.d0?opDateFr(g.d0)+' → ':'')+opDateFr(g.d1)+'</div></div>'+
+      '<div class="opD">'+(hiddenMode?'<b>•••</b>':g.complet?'<b style="color:'+co(tot)+'">'+sg(tot)+'</b><span>'+(g.div>0?'dont '+mt(g.div)+' de dividendes':'gain total')+'</span>':'<b>'+mt(g.vendu)+'</b><span>vendu · gain inconnu</span>')+'</div><span style="color:var(--muted);width:14px;text-align:center">'+(ouv?'▾':'▸')+'</span></div>';
+    if(ouv){
+      h+='<div style="padding:10px 0 14px 14px;border-bottom:1px solid var(--border)">'+
+        '<div class="lr"><span>Acheté</span><span>'+(g.achete>0?mt(g.achete):'—')+'</span></div>'+
+        '<div class="lr"><span>Vendu</span><span>'+mt(g.vendu)+'</span></div>'+
+        '<div class="lr"><span>Gain des ventes</span><span>'+(g.complet?'<b style="color:'+co(g.gain)+'">'+sg(g.gain)+'</b>':'inconnu')+'</span></div>'+
+        (g.div>0?'<div class="lr"><span>Dividendes reçus</span><span style="color:var(--green)">+'+mt(g.div)+'</span></div>':'')+
+        (g.complet?'':'<div class="tk" style="margin:6px 0">Le gain est inconnu parce que les achats de ce titre sont plus anciens que ton historique.</div>')+
+        (g.yt?'<div style="margin:10px 0 4px"><button class="pb" onclick="event.stopPropagation();atAnalyse(\''+String(g.yt).replace(/[^A-Za-z0-9.^=\-]/g,'')+'\',\''+opE(g.n).replace(/[\'\\]/g,'')+'\')">Voir la courbe avec mes achats et mes ventes</button></div>':'')+
+        opsTri(g.ops).map(o=>opLigneHTML(o,false)).join('')+'</div>';
+    }
+  });
+  return h+'</div>';
+}
+window.opsOuvre=function(pk,i){const L=opsVendues(pk),g=L[i],e=opsEtat(pk);if(!g)return;e.ouv=e.ouv===g.k?null:g.k;
+  const z=document.getElementById('ops-'+pk);if(z)z.innerHTML=opsHTML(pk);};
 window.opsFiltre=function(pk,champ,val){
   const e=opsEtat(pk);e[champ]=val;if(champ!=='tout')e.tout=false;
   const z=document.getElementById('opsL-'+pk);if(z)z.innerHTML=opsListeHTML(pk);
-  if(champ==='t'){const zo=document.getElementById('ops-'+pk);if(zo)zo.querySelectorAll('.opF .pb').forEach(b=>b.classList.toggle('active',b.dataset.t===val));}
+  if(champ==='t'){const zo=document.getElementById('ops-'+pk);if(zo)zo.querySelectorAll('.opF .pb').forEach(b=>b.classList.toggle('on',b.dataset.t===val));}
 };
 window.ePf=function(el,pk,id,f){const c=el.textContent.replace(/[^\d.,-]/g,'').replace(',','.');el.outerHTML='<input class="ci" aria-label="Nouvelle valeur" value="'+c+'" onkeydown="if(event.key===\'Enter\')cPf2(this,\''+pk+'\','+id+',\''+f+'\');if(event.key===\'Escape\')R()" onblur="cPf2(this,\''+pk+'\','+id+',\''+f+'\')" autofocus>'};
 window.cPf2=function(i,pk,id,f){const v=parseFloat(i.value.replace(',','.'));const l=S.pf[pk].l.find(x=>x.id===id);if(l&&!isNaN(v))l[f]=v;autoSave();R()};
@@ -8253,7 +8401,7 @@ function indiceDe(yt){const s=String(yt).toUpperCase();if(s.charAt(0)==='^')retu
 function position(yt){const st=etat(),o={pru:null,net:null,q:0,zmin:null,zmax:null,ops:[]};if(!st)return o;let q=0,cout=0,dv=0;
   PKS().forEach(pk=>{const p=st.pf&&st.pf[pk];((p&&p.l)||[]).forEach(x=>{if(ytDe(x.c)!==yt)return;const n=num(x.p),pr=num(x.pr);if(n>0&&pr>0){q+=n;cout+=n*pr;const d=num(x.dvr);if(d>0)dv+=d;}});});
   if(q>0){o.pru=cout/q;o.q=q;if(dv>0)o.net=Math.max(0,(cout-dv)/q);}
-  (Array.isArray(st.ops)?st.ops:[]).forEach(x=>{if((x.t==='a'||x.t==='v')&&ytDe(x.c)===yt){const t=Date.parse(x.d+'T12:00:00Z');if(isFinite(t)&&num(x.q)>0&&num(x.px)>0)o.ops.push({t:t,a:x.t==='a',q:num(x.q),px:num(x.px),g:x.g,pru:x.pru});}});
+  (Array.isArray(st.ops)?st.ops:[]).forEach(x=>{if((x.t==='a'||x.t==='v')&&(ytDe(x.c)===yt||x.yt===yt)){const t=Date.parse(x.d+'T12:00:00Z');if(isFinite(t)&&num(x.q)>0&&num(x.px)>0)o.ops.push({t:t,a:x.t==='a',q:num(x.q),px:num(x.px),g:x.g,pru:x.pru});}});
   o.ops.sort((a,b)=>a.t-b.t);
   (st.watchlist||[]).forEach(w=>{if(w.ticker===yt){const a=num(w.zoneMin),b=num(w.zoneMax);if(a>0&&b>0){o.zmin=Math.min(a,b);o.zmax=Math.max(a,b);}}});
   return o;}
@@ -8458,7 +8606,7 @@ function dividendes(W){let ev=null,exact=false;
   for(let i=0;i<n;i++){const o=Y[an(W.t[i])-an0];o.sc+=W.c[i];o.k++;}
   Y.forEach(o=>{o.moy=o.k?o.sc/o.k:null;o.rdt=o.moy&&o.d>0?o.d/o.moy:0;o.ok=o.y<an1;});
   if(Y.length>1&&new Date(W.t[0]).getUTCMonth()>0)Y.shift();          /* première année incomplète */
-  const D={exact:exact,Y:Y,aucun:!ev.length,ttm:0,rdt:null,hab:null,habN:0,g:null,gN:0,serie:0,freq:0};
+  const D={exact:exact,ev:ev,Y:Y,aucun:!ev.length,ttm:0,rdt:null,hab:null,habN:0,g:null,gN:0,serie:0,freq:0};
   if(!ev.length||!Y.length)return D;
   /* combien de versements par an, d'habitude */
   const nbs=Y.filter(o=>o.ok&&o.nb>0).slice(-3).map(o=>o.nb).sort((a,b)=>a-b);D.freq=nbs.length?nbs[nbs.length>>1]:Math.max(1,Y[Y.length-1].nb);
@@ -8819,6 +8967,9 @@ window.sAF=function(cid,sk,fields,b64){const fs=typeof fields==='string'?JSON.pa
   .then(v=>{if(!v)return;const z=document.getElementById(cid);if(!z)return;
     z.innerHTML=fs.map(f=>'<input type="hidden" id="nf_'+cid+'_'+f.k+'" value="'+esc(f.num?(v[f.k]?String(v[f.k]):''):String(v[f.k]==null?'':v[f.k]))+'">').join('');
     cAF(cid,sk,fs,b64);});};
+/* pour le reste de l'application : l'historique des cours et des dividendes d'une liste de titres */
+window.atHist=async function(liste){const H=await getHists(liste),out={};liste.forEach(yt=>{const d=H[yt];if(!d)return;try{const W=versW(d);out[yt]={t:W.t,c:W.c,a:W.a&&W.a.some(x=>x>0)?W.a:null,cur:d.cur};}catch(e){}});return out;};
+window.atDivAuto=async function(liste){const H=await getHists(liste),out={};liste.forEach(yt=>{const d=H[yt];if(!d)return;try{const W=versW(d),D=dividendes(W);out[yt]=D?{exact:D.exact,cur:d.cur,fin:W.t[W.t.length-1],ev:D.ev||[]}:null;}catch(e){}});return out;};
 window.atAnalyse=function(yt,nom){if(typeof goPage==='function')goPage('techno');charge(yt,nom);};
 })();
 </script>
