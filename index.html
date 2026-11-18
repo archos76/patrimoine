@@ -442,6 +442,10 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 #page-techno .at-part .b{grid-column:1/-1;height:6px;border-radius:3px;background:var(--border);overflow:hidden}
 #page-techno .at-part .b i{display:block;height:100%;border-radius:3px}
 #page-techno .at-head{align-items:center}
+#page-techno .at-star{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:21px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s,color .15s,border-color .15s}
+#page-techno .at-star:hover{border-color:var(--accent);color:var(--accent)}
+#page-techno .at-star.on{color:#d2a85c;border-color:#d2a85c}
+#page-techno .at-star:active{transform:scale(.88)}
 #page-techno .at-hl{flex:1 1 280px;min-width:0}
 #page-techno .at-hg{flex:0 0 auto}
 #page-techno .at-cours{font-size:15px;color:var(--text2);margin:2px 0 8px;font-variant-numeric:tabular-nums}
@@ -659,7 +663,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 17/11 10h50</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 18/11 08h38</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -694,7 +698,9 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 <div class="page" id="page-bourse">
 <div id="rstat" class="rs" style="margin:0 0 8px"></div>
 <div class="stabs" id="bourseTabs"></div>
-<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="card" id="jrCard"><div class="fb" style="margin-bottom:10px;gap:10px"><div class="ct" style="margin:0">Évolution au jour le jour</div><div style="display:flex;gap:10px;flex-wrap:wrap"><div style="display:flex;gap:4px" id="jrMode"><button class="pb on" data-m="val">Valeur</button><button class="pb" data-m="pct">Évolution %</button></div><div style="display:flex;gap:4px;flex-wrap:wrap" id="jrPer"><button class="pb" data-p="7">1 sem.</button><button class="pb on" data-p="31">1 mois</button><button class="pb" data-p="92">3 mois</button><button class="pb" data-p="366">1 an</button><button class="pb" data-p="0">Tout</button></div></div></div><div id="jrSeries" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"></div><div id="jrInfo" style="font-size:12px;color:var(--muted);min-height:1.5em;margin-bottom:6px;font-variant-numeric:tabular-nums"></div><canvas id="jrCv" style="display:block;width:100%;touch-action:pan-y"></canvas><div id="jrBas" style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5"></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:var(--text)">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div id="opsBilan"></div><div id="cmpIdx"></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div><button class="ab" id="divAutoBtn" style="margin-top:12px" onclick="divAuto()">Remplir le calendrier d’après les dividendes passés (Yahoo)</button></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div id="bvueComptes"></div>
+<div class="svue" id="bvue-ensemble"><div class="kr" id="bk"></div><div class="card"><div class="fb" style="margin-bottom:4px"><div><div class="kl">Portefeuille · aujourd'hui</div><div id="intraTitre" style="display:flex;align-items:baseline;gap:12px;margin-top:4px"></div></div><div id="intraInfo" style="font-size:11.5px;color:var(--muted);text-align:right"></div></div><div class="cb" style="height:190px"><canvas id="cIntra"></canvas></div></div><div class="card" id="jrCard"><div class="fb" style="margin-bottom:10px;gap:10px"><div class="ct" style="margin:0">Évolution au jour le jour</div><div style="display:flex;gap:10px;flex-wrap:wrap"><div style="display:flex;gap:4px" id="jrMode"><button class="pb on" data-m="val">Valeur</button><button class="pb" data-m="pct">Évolution %</button></div><div style="display:flex;gap:4px;flex-wrap:wrap" id="jrPer"><button class="pb" data-p="7">1 sem.</button><button class="pb on" data-p="31">1 mois</button><button class="pb" data-p="92">3 mois</button><button class="pb" data-p="366">1 an</button><button class="pb" data-p="0">Tout</button></div></div></div><div id="jrSeries" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"></div><div id="jrInfo" style="font-size:12px;color:var(--muted);min-height:1.5em;margin-bottom:6px;font-variant-numeric:tabular-nums"></div><canvas id="jrCv" style="display:block;width:100%;touch-action:pan-y"></canvas><div id="jrBas" style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5"></div></div><div class="wb" id="bw"></div><div class="g2" style="margin:16px 0"><div class="card"><div class="ct">Panorama 2026</div><div id="ptw"></div><div class="ss" id="sps"></div></div><div class="card"><div class="ct">Répartition secteur</div><div class="cbs" style="height:230px"><canvas id="cSec"></canvas></div><div id="secLeg" style="padding:8px 12px 0"></div></div></div><div class="card" style="margin-top:16px"><div class="ct">Où investit ton portefeuille</div><div id="geoPf"></div></div><div class="card"><div class="fb" style="margin-bottom:8px"><div class="ct" style="margin:0">Perf cumulée TWR vs S&P</div><div style="display:flex;gap:4px" id="ps"></div></div><div class="cb"><canvas id="cPf"></canvas></div><div class="cl"><span style="color:var(--c5)">● Portf.</span><span style="color:var(--text)">- - S&P</span></div></div><div class="card"><div class="fb"><div class="ct" style="margin:0">Versements mensuels</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addVM()">+ Mois</button></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Valeur = relevée au 1er du mois suivant. Versement = viré pendant le mois.</div><div id="vmList"></div></div><div id="opsBilan"></div><div id="cmpIdx"></div></div><div class="svue" id="bvue-dividendes" style="display:none"><div class="kr" id="dvk"></div><div class="card" style="margin-top:16px"><div class="ct">Calendrier des dividendes</div><div id="calDiv"></div><button class="ab" id="divAutoBtn" style="margin-top:12px" onclick="divAuto()">Remplir le calendrier d’après les dividendes passés (Yahoo)</button></div><div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Dividendes perçus</div><div style="display:flex;gap:4px" id="divVueBtns"></div></div><div style="font-size:11px;color:var(--muted);margin:4px 0 8px">Note ici ce que tu encaisses réellement chaque mois. Les dividendes d'actions et les loyers de SCPI sont comptés séparément : choisis d'abord lequel tu saisis, puis clique sur un montant pour le modifier.</div><div class="tw" id="divMoisTable"></div><div class="cbs" style="margin-top:16px"><canvas id="cDivMois"></canvas></div></div><div class="card" style="margin-top:16px"><div class="ct">D’où viennent tes dividendes</div><div id="divClasse"></div></div></div><div class="svue" id="bvue-watch" style="display:none"><div class="card"><div class="fb" style="gap:10px;flex-wrap:wrap"><div class="ct" style="margin:0">Ma watchlist</div><button class="ab" style="width:auto;margin:0;padding:8px 14px" onclick="addWatchLibre()">+ Suivre un titre</button></div>
+<div style="font-size:12px;color:var(--muted);margin:6px 0 12px;line-height:1.5">Les actions qui t’intéressent, tous comptes confondus. Pour en ajouter une, touche l’étoile ☆ en haut d’une analyse technique. Touche « analyse » pour la rouvrir.</div>
+<div class="tw" id="watchTous"></div></div></div><div id="bvueComptes"></div>
 </div>
 <div class="page" id="page-epargne"><div class="kr" id="ek"></div><div class="g2"><div class="card"><div class="ct" id="ct1"></div><div id="cl1"></div><div id="af1"></div></div><div class="card"><div class="ct" id="ct2"></div><div id="cl2"></div><div id="af2"></div></div><div class="card sf"><div class="ct" id="ct3"></div><div id="cl3"></div><div id="af3"></div></div></div></div>
 <div class="page" id="page-immo">
@@ -833,7 +839,7 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="at-pick"><select id="at-sel" aria-label="Valeur à analyser"></select><input type="text" id="at-q" placeholder="ou un code Yahoo (ex. RMS.PA)" aria-label="Code Yahoo Finance" autocomplete="off"><button class="pb" id="at-go">Analyser</button><button class="pb" id="at-upd" hidden>Mettre à jour</button></div>
 <div class="tk" id="at-status" role="status"></div></div>
 <div id="at-body" style="display:none">
-<div class="at-head"><div class="at-hl"><div class="at-title" id="at-title"></div><div class="at-cours" id="at-cours"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div></div>
+<div class="at-head"><div class="at-hl"><div style="display:flex;align-items:center;gap:10px"><div class="at-title" id="at-title"></div><button type="button" class="at-star" id="at-star" hidden aria-pressed="false" onclick="atEtoileClic()">☆</button></div><div class="at-cours" id="at-cours"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div></div>
 <div class="card" id="at-cNote"><div class="ct">Fenêtre d’entrée</div>
 <div class="at-note"><div class="at-score"><div class="at-sn"><span id="at-noteNum"></span><small>/100</small></div><div class="at-noteLib" id="at-noteLib"></div><div id="at-regle"></div></div><div class="at-parts" id="at-parts"></div></div>
 <p class="at-help" style="margin:16px 0 0">Cette note est un calcul mécanique à partir du cours passé et du PER prévisionnel. Elle est haute quand une action en tendance haussière revient sur un prix bas pour elle, et plafonnée quand la tendance est baissière. Elle ne prévoit rien, ignore l’actualité et la santé de l’entreprise, et n’est pas un conseil d’investissement.</p><div class="at-ro" id="at-noteInfo" style="margin:10px 0 0"></div></div>
@@ -1045,7 +1051,7 @@ function majNomsComptes(){
   try{
     [PK_NOMS,PFN].forEach(o=>{Object.keys(o).forEach(k=>{delete o[k]});pks.forEach(k=>{o[k]=nomCpt(k)})});
     PK_LISTE.length=0;pks.forEach(k=>PK_LISTE.push(k));
-    BVUES.length=2;pks.forEach(k=>BVUES.push({k:k,l:nomCpt(k),c:nomCourt(k),pf:k}));
+    BVUES.length=3;pks.forEach(k=>BVUES.push({k:k,l:nomCpt(k),c:nomCourt(k),pf:k}));
     COMPTES_DIV.length=0;pks.forEach(k=>COMPTES_DIV.push([k,nomCpt(k)]));
     const gl=perfLines[0],sp=perfLines[perfLines.length-1],anc={};perfLines.forEach(p=>{anc[p.k]=p.on});
     perfLines.length=0;perfLines.push(gl);pks.forEach(k=>perfLines.push({k:k,l:nomCpt(k),c:coulCpt(k),on:!!anc[k]}));perfLines.push(sp);
@@ -1241,6 +1247,7 @@ let immoVue=(function(){try{return localStorage.getItem('immoVue')||'mensuel'}ca
    onglet par compte. Les comptes vides ne prennent pas de place. */
 const BVUES=[{k:'ensemble',l:'Ensemble',c:'Tout'},
              {k:'dividendes',l:'Dividendes',c:'Div.'},
+             {k:'watch',l:'Watchlist',c:'★'},
              {k:'pea',l:nomCpt('pea'),c:'PEA',pf:'pea'},
              {k:'ctosb',l:nomCpt('ctosb'),c:'CTO',pf:'ctosb'},
              {k:'avl',l:nomCpt('avl'),c:'AV',pf:'avl'},
@@ -2916,7 +2923,34 @@ window.delBourseGoal=function(i){S.bourseGoals.splice(i,1);autoSave();R(true)};
 /* Les comptes, pour la watchlist. Une ligne sans compte reste « non rattachée ». */
 const PK_NOMS={pea:nomCpt('pea'),ctosb:nomCpt('ctosb'),ctoibkr:nomCpt('ctoibkr'),avl:nomCpt('avl')};
 const PK_LISTE=['pea','ctosb','avl','ctoibkr'];
-function nomCompte(pk){return PK_NOMS[pk]||'non rattachée'}
+function nomCompte(pk){return PK_NOMS[pk]||'aucun compte'}
+/* ===== WATCHLIST ===== */
+function wlTrouve(yt){yt=String(yt||'').toUpperCase();return (S.watchlist||[]).find(w=>String(w.ticker||'').toUpperCase()===yt)||null}
+window.wlA=function(yt){return !!wlTrouve(yt)};
+/* L'étoile de l'analyse : ajoute le titre, ou le retire (avec un bouton pour revenir en arrière) */
+window.wlBascule=function(yt,nom,prix,cur){
+  if(!yt)return false;if(!S.watchlist)S.watchlist=[];
+  const w=wlTrouve(yt);
+  if(w){const i=S.watchlist.indexOf(w);S.watchlist.splice(i,1);
+    if(typeof opAnnulable==='function')opAnnulable('« '+cptE(w.nom||w.ticker)+' » retiré de la watchlist.',()=>{S.watchlist.splice(Math.min(i,S.watchlist.length),0,w);if(typeof window.atEtoile==='function')window.atEtoile();});
+    autoSave();R(true);return false;}
+  S.watchlist.push({id:'w'+nid(),ticker:yt,nom:String(nom||yt).replace(/[<>&"]/g,'').slice(0,60),prix:nb(prix),prev:0,var:0,cur:cur==='$'?'USD':cur==='€'?'EUR':'',zoneMin:0,zoneMax:0,pk:''});
+  autoSave();R(true);return true;
+};
+window.addWatchLibre=function(){
+  ouvreForm('watchTous','Suivre un titre',[
+    {k:'ticker',lib:'Code Yahoo',ph:'AAPL, MC.PA…'},
+    {k:'nom',lib:'Nom',opt:true,ph:'laisse vide pour reprendre le code'},
+    {k:'zoneMin',lib:'Prix d’achat min',type:'nombre',opt:true},
+    {k:'zoneMax',lib:'Prix d’achat max',type:'nombre',opt:true}
+  ],v=>{
+    const yt=String(v.ticker||'').trim().toUpperCase();if(!yt)return;
+    if(wlTrouve(yt)){avis('Déjà suivi\n\n« '+yt+' » est déjà dans ta watchlist.');return;}
+    if(!S.watchlist)S.watchlist=[];
+    S.watchlist.push({id:'w'+nid(),ticker:yt,nom:v.nom||yt,prix:0,prev:0,var:0,cur:'',zoneMin:v.zoneMin,zoneMax:v.zoneMax,pk:''});
+    autoSave();R(true);
+  });
+};
 window.addWatch=function(pk){
   const cible=PK_NOMS[pk]?pk:(PKS()[0]||'pea');
   ouvreForm('watch-'+cible,'Suivre un titre dans le '+PK_NOMS[cible],[
@@ -5687,7 +5721,7 @@ if(liste.length>0){
       zoneBar='<span class="ed" onclick="edWatchZone(this,\''+w.id+'\',\'min\')" style="color:var(--muted);font-size:11.5px">définir une fourchette</span>';
     }
     wlH+='<tr>';
-    wlH+='<td class="l"><b style="font-size:12.5px">'+(inZone?'● ':'')+w.nom+'</b><div class="tk">'+w.ticker+' · <a href="'+lienNews(w.ticker)+'" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--border)">actus</a> · <a onclick="atOuvreW(\''+w.id+'\')" title="Ouvrir l’analyse technique"'+' style="color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent);cursor:pointer"'+'>analyse</a></div></td>';
+    wlH+='<td class="l"><b style="font-size:12.5px">'+(inZone?'● ':'')+cptE(w.nom||w.ticker)+'</b><div class="tk">'+w.ticker+' · <a href="'+lienNews(w.ticker)+'" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--border)">actus</a> · <a onclick="atOuvreW(\''+w.id+'\')" title="Ouvrir l’analyse technique"'+' style="color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent);cursor:pointer"'+'>analyse</a></div></td>';
     wlH+='<td style="font-weight:600">'+(w.prix>0?(w.cur==='USD'?'$':'')+w.prix.toFixed(2)+(w.cur==='EUR'?' €':''):'—')+'</td>';
     wlH+='<td>'+VC(w.var)+'</td>';
     wlH+='<td>'+zoneBar+'</td>';
@@ -5695,7 +5729,7 @@ if(liste.length>0){
     wlH+='<td><button class="db" onclick="delWatch(\''+w.id+'\')">✕</button></td></tr>';
   });
   wlH+='</tbody></table>';
-}else wlH='<div style="color:var(--muted);font-size:12px">Aucune action suivie. Clique + Suivre pour ajouter un ticker.</div>';
+}else wlH='<div style="color:var(--muted);font-size:12px">Aucune action suivie. Touche l’étoile ☆ en haut d’une analyse technique, ou « + Suivre un titre ».</div>';
 return wlH;
 }
 /* Une watchlist par compte. Chaque ligne porte le nom de son compte :
@@ -5704,16 +5738,9 @@ PKS().forEach(pk=>{
   const z=document.getElementById('watch-'+pk);if(!z)return;
   z.innerHTML=tableauWatch(S.watchlist.filter(w=>w.pk===pk),true);
 });
-/* Une ligne rattachée à rien ne doit pas disparaître sans bruit */
-(function(){
-  const orphelines=S.watchlist.filter(w=>!PK_NOMS[w.pk]);
-  const z=document.getElementById('watch-pea');
-  if(z&&orphelines.length)
-    z.innerHTML+='<div style="font-size:11.5px;color:var(--accent);margin-top:10px">'+
-      orphelines.length+' ligne'+(orphelines.length>1?'s':'')+' sans compte : '+
-      orphelines.map(w=>w.nom||w.ticker).join(', ')+'. Elles sont listées ici en attendant.</div>'+
-      tableauWatch(orphelines,true);
-})();
+/* Toute la watchlist, comptes confondus : les titres suivis depuis l'analyse n'ont pas de compte */
+try{if(typeof window.atEtoile==='function')window.atEtoile()}catch(e){}
+{const z=document.getElementById('watchTous');if(z)z.innerHTML=tableauWatch(S.watchlist.slice().sort((a,b)=>String(a.nom||a.ticker).localeCompare(String(b.nom||b.ticker),'fr')),true);}
 
 /* ====== COMPARATEUR BROKERS ====== */
 const brokers=PKS().map(k=>({name:cptE(nomCpt(k)),pk:k,calc:t.cp[k],pf:S.pf[k],color:coulCpt(k)}));
@@ -8503,7 +8530,7 @@ async function charge(yt,nom,force){
     T.fond=(await pF)[yt]||lisFond()[yt]||null;
     if(T.pos.pru!=null){const lo=Math.min.apply(null,T.w.l),hi=Math.max.apply(null,T.w.h);if(T.pos.pru>hi*6||T.pos.pru<lo/6)T.pos.pru=null;}
     T.src='Cours Yahoo Finance, chargés le '+new Date(d.ts||Date.now()).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
-    $('body').style.display='';refresh();statut('');
+    $('body').style.display='';refresh();statut('');try{window.atEtoile()}catch(e){}
     const sel=$('sel');if([].some.call(sel.options,o=>o.value===yt))sel.value=yt;else sel.value='';
     try{$('body').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
   }catch(e){statut(e.message||'Une erreur est survenue. Réessaie.',true);}
@@ -9056,6 +9083,12 @@ window.sAF=function(cid,sk,fields,b64){const fs=typeof fields==='string'?JSON.pa
 /* pour le reste de l'application : l'historique des cours et des dividendes d'une liste de titres */
 window.atHist=async function(liste){const H=await getHists(liste),out={};liste.forEach(yt=>{const d=H[yt];if(!d)return;try{const W=versW(d);out[yt]={t:W.t,c:W.c,a:W.a&&W.a.some(x=>x>0)?W.a:null,cur:d.cur};}catch(e){}});return out;};
 window.atDivAuto=async function(liste){const H=await getHists(liste),out={};liste.forEach(yt=>{const d=H[yt];if(!d)return;try{const W=versW(d),D=dividendes(W);out[yt]=D?{exact:D.exact,cur:d.cur,fin:W.t[W.t.length-1],ev:D.ev||[]}:null;}catch(e){}});return out;};
+/* l'étoile : pleine si le titre est suivi */
+window.atEtoile=function(){const b=$('star');if(!b)return;if(!T.key){b.hidden=true;return}
+  const on=typeof window.wlA==='function'&&window.wlA(T.key);b.hidden=false;b.textContent=on?'★':'☆';b.classList.toggle('on',on);
+  b.setAttribute('aria-pressed',on?'true':'false');b.title=on?'Dans ta watchlist : touche pour la retirer':'Ajouter à ma watchlist';b.setAttribute('aria-label',b.title);};
+window.atEtoileClic=function(){if(!T.key||typeof window.wlBascule!=='function')return;
+  const W=T.w,last=W&&W.c?W.c[W.c.length-1]:0;window.wlBascule(T.key,T.name,last,T.cur);window.atEtoile();};
 window.atAnalyse=function(yt,nom){if(typeof goPage==='function')goPage('techno');charge(yt,nom);};
 })();
 </script>
