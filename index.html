@@ -221,7 +221,7 @@ tr:hover{background:var(--card2)}
 .stab .scourt{display:none}
 @media(max-width:620px){
   .stabs{padding:3px;gap:2px}
-  .stab{min-width:0;padding:9px 4px;font-size:12px;gap:4px}
+  .stab{flex:0 0 auto;min-width:44px;padding:9px 10px;font-size:12px;gap:4px}
   .stab .slong{display:none}
   .stab .scourt{display:inline}
   .stab .sico{display:none}
@@ -497,7 +497,15 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 #page-techno .at-pick{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 #page-techno .at-pick select,#page-techno .at-pick input{font-family:var(--font);font-size:14px;color:var(--text);background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;min-width:0}
 #page-techno .at-pick select{flex:1 1 220px}
-#page-techno .at-pick input{flex:1 1 150px}
+#page-techno .at-pick .at-qw{flex:1 1 200px;position:relative;min-width:0;display:flex}
+#page-techno .at-pick .at-qw input{flex:1 1 auto;width:100%}
+#page-techno .at-sug{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:60;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.35);max-height:340px;overflow-y:auto;padding:4px}
+#page-techno .at-sug button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;border:0;border-radius:7px;padding:9px 10px;color:var(--text);font:inherit;font-size:13.5px;cursor:pointer;min-height:44px}
+#page-techno .at-sug button:hover,#page-techno .at-sug button.on{background:var(--card2)}
+#page-techno .at-sug .sn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#page-techno .at-sug .sc{font-size:12px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+#page-techno .at-sug .sx{font-size:10.5px;color:var(--muted);border:1px solid var(--border);border-radius:5px;padding:1px 5px;white-space:nowrap}
+#page-techno .at-sug .st{font-size:11px;color:var(--muted);padding:8px 10px 4px}
 #page-techno .at-pick .pb{padding:8px 14px;font-size:13px}
 #page-techno .at-seg{display:flex;gap:4px;flex-wrap:wrap}
 #page-techno #at-status{margin-top:10px;min-height:1.3em;line-height:1.5}
@@ -663,7 +671,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 18/11 08h38</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 18/11 09h16</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -836,7 +844,7 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="page" id="page-analyse"><div class="card"><div class="fb" style="margin-bottom:12px"><div class="ct" style="margin:0">Évolution par poste</div><div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap"><button class="pb" onclick="edHistPoste()">Historique</button><span id="envPs" style="display:flex;gap:4px"></span></div></div><div class="cto" id="envCases"></div><div class="cb" style="height:310px"><canvas id="cEnv"></canvas></div><div id="envLeg" style="margin-top:14px"></div></div><div class="card"><div class="ct">Rendement par poche</div><div id="rdtPoches"></div></div></div>
 <div class="page" id="page-techno">
 <div class="card"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">Analyse technique</div><div style="display:flex;gap:10px;flex-wrap:wrap"><div class="at-seg" id="at-mode"><button class="pb on" data-m="1">Fiche</button><button class="pb" data-m="0">Détail</button></div><div class="at-seg" id="at-seg"><button class="pb" data-p="5">5 ans</button><button class="pb" data-p="10">10 ans</button><button class="pb" data-p="20">20 ans</button><button class="pb on" data-p="all">Tout</button></div></div></div>
-<div class="at-pick"><select id="at-sel" aria-label="Valeur à analyser"></select><input type="text" id="at-q" placeholder="ou un code Yahoo (ex. RMS.PA)" aria-label="Code Yahoo Finance" autocomplete="off"><button class="pb" id="at-go">Analyser</button><button class="pb" id="at-upd" hidden>Mettre à jour</button></div>
+<div class="at-pick"><select id="at-sel" aria-label="Valeur à analyser"></select><div class="at-qw"><input type="search" id="at-q" placeholder="Nom de l’action ou code Yahoo" aria-label="Chercher une action par son nom ou son code" autocomplete="off" autocapitalize="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="at-sug"><div class="at-sug" id="at-sug" role="listbox" hidden></div></div><button class="pb" id="at-go">Analyser</button><button class="pb" id="at-upd" hidden>Mettre à jour</button></div>
 <div class="tk" id="at-status" role="status"></div></div>
 <div id="at-body" style="display:none">
 <div class="at-head"><div class="at-hl"><div style="display:flex;align-items:center;gap:10px"><div class="at-title" id="at-title"></div><button type="button" class="at-star" id="at-star" hidden aria-pressed="false" onclick="atEtoileClic()">☆</button></div><div class="at-cours" id="at-cours"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div></div>
@@ -862,7 +870,7 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="card"><div class="ct">Élan récent (RSI)</div><p class="at-help">Le RSI va de 0 à 100. Au-dessus de 70, l’action a beaucoup monté récemment. En dessous de 30, elle a beaucoup baissé récemment.</p><div class="at-ro" id="at-roRsi"></div><canvas id="at-cvRsi"></canvas></div></div>
 <div class="tk" style="margin:4px 2px 24px;line-height:1.55">Lecture du passé du cours, à titre pédagogique. Ce n’est pas un conseil en investissement. Les performances passées ne préjugent pas des performances futures.</div>
 </div>
-<div class="card" style="margin-top:16px"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Vue d’ensemble de mes lignes</div><button class="pb" id="at-vueBtn">Charger toutes mes lignes</button></div><p class="at-help" style="margin:0 0 10px">Les mêmes indicateurs pour chaque ligne, calculés sur tout l’historique chargé (20 ans au plus). Touche une ligne pour ouvrir son analyse, ou un titre de colonne pour trier.</p><div class="tw" id="at-vue"></div><div class="tk" id="at-vueInfo" style="margin-top:8px;line-height:1.5"></div></div></div>
+<div class="card" style="margin-top:16px;display:none" aria-hidden="true"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Vue d’ensemble de mes lignes</div><button class="pb" id="at-vueBtn">Charger toutes mes lignes</button></div><p class="at-help" style="margin:0 0 10px">Les mêmes indicateurs pour chaque ligne, calculés sur tout l’historique chargé (20 ans au plus). Touche une ligne pour ouvrir son analyse, ou un titre de colonne pour trier.</p><div class="tw" id="at-vue"></div><div class="tk" id="at-vueInfo" style="margin-top:8px;line-height:1.5"></div></div></div>
 <div class="page" id="page-resume"><div class="kr" id="resumeKpi"></div><div class="card"><div class="ct">Heatmap portefeuille</div><div id="heatmap" class="tw" style="width:100%"></div></div><div class="card"><div class="ct">Résumé du mois</div><div id="resumeDetail"></div></div></div>
 <div class="page" id="page-simulator"><div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Où j'en serai</div><div style="display:flex;gap:4px" id="projAgeBtns"></div></div><div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;line-height:1.6">Ton patrimoine d'aujourd'hui, prolongé avec ce que tu rembourses chaque mois, ce que tes biens rapportent et ce que tu épargnes.</div><div class="kr" id="projKpi" style="margin-bottom:14px"></div><div class="cb"><canvas id="cProjPat"></canvas></div><div id="projReglages" style="margin-top:16px"></div><div id="projNote" style="font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.6"></div></div><div id="simContent"></div></div>
 </main></div></div>
@@ -1042,7 +1050,7 @@ window.cptSupprimer=async function(pk){
 const NOMS_DEF={pea:'PEA',ctosb:'CTO',ctoibkr:'CTO 2',avl:'Assurance-vie'};
 function nomCpt(pk){try{const n=S&&S.nomsComptes&&S.nomsComptes[pk];if(n)return n}catch(e){}return NOMS_DEF[pk]||pk}
 /* Version courte, pour les petits boutons */
-function nomCourt(pk){const n=nomCpt(pk);if(n.length<=6)return n;const m=n.split(' ');return m.length<2?n:(m[0]==='CTO'?m.slice(1).join(' '):m[0])}
+function nomCourt(pk){const n=nomCpt(pk);if(n.length<=6)return n;if(/^assurance[- ]vie/i.test(n))return 'AV'+n.slice(13).replace(/^\s*/,' ').replace(/^ $/,'');const m=n.split(' ');const c=m.length<2?n:(m[0]==='CTO'?m.slice(1).join(' '):m[0]);return c.length>10?c.slice(0,9)+'…':c}
 /* Les listes créées au chargement de la page et les titres fixes reprennent les noms à jour */
 function majNomsComptes(){
   /* première ouverture avec cette version : la liste des comptes est celle qui existait */
@@ -1051,7 +1059,8 @@ function majNomsComptes(){
   try{
     [PK_NOMS,PFN].forEach(o=>{Object.keys(o).forEach(k=>{delete o[k]});pks.forEach(k=>{o[k]=nomCpt(k)})});
     PK_LISTE.length=0;pks.forEach(k=>PK_LISTE.push(k));
-    BVUES.length=3;pks.forEach(k=>BVUES.push({k:k,l:nomCpt(k),c:nomCourt(k),pf:k}));
+    {const fixes=BVUES.filter(v=>!v.pf),deb=fixes.filter(v=>v.k==='ensemble'),fin=fixes.filter(v=>v.k!=='ensemble');
+    BVUES.length=0;deb.forEach(v=>BVUES.push(v));pks.forEach(k=>BVUES.push({k:k,l:nomCpt(k),c:nomCourt(k),pf:k}));fin.forEach(v=>BVUES.push(v));}
     COMPTES_DIV.length=0;pks.forEach(k=>COMPTES_DIV.push([k,nomCpt(k)]));
     const gl=perfLines[0],sp=perfLines[perfLines.length-1],anc={};perfLines.forEach(p=>{anc[p.k]=p.on});
     perfLines.length=0;perfLines.push(gl);pks.forEach(k=>perfLines.push({k:k,l:nomCpt(k),c:coulCpt(k),on:!!anc[k]}));perfLines.push(sp);
@@ -1246,8 +1255,8 @@ let immoVue=(function(){try{return localStorage.getItem('immoVue')||'mensuel'}ca
 /* La page Bourse se range comme la page Immo : une vue d ensemble, puis un
    onglet par compte. Les comptes vides ne prennent pas de place. */
 const BVUES=[{k:'ensemble',l:'Ensemble',c:'Tout'},
-             {k:'dividendes',l:'Dividendes',c:'Div.'},
              {k:'watch',l:'Watchlist',c:'★'},
+             {k:'dividendes',l:'Dividendes',c:'Div.'},
              {k:'pea',l:nomCpt('pea'),c:'PEA',pf:'pea'},
              {k:'ctosb',l:nomCpt('ctosb'),c:'CTO',pf:'ctosb'},
              {k:'avl',l:nomCpt('avl'),c:'AV',pf:'avl'},
@@ -5611,12 +5620,14 @@ try{majDefil()}catch(e){}
   const vis=bvuesVisibles();
   /* Si l onglet ouvert correspond a un compte devenu vide, on revient a l ensemble */
   if(!vis.some(v=>v.k===bourseVue))bourseVue='ensemble';
-  tb.innerHTML=vis.map(v=>{
+  const dernierCpt=vis.map(v=>!!v.pf).lastIndexOf(true),plus='<button class="stab" title="Ajouter un compte de bourse" onclick="cptAjouter()"><span class="slong">+ Compte</span><span class="scourt">+</span></button>';
+  tb.innerHTML=vis.map((v,i)=>{
     const n=v.pf&&S.pf[v.pf]&&S.pf[v.pf].l?S.pf[v.pf].l.length:0;
+    if(i===dernierCpt+1&&dernierCpt>=0){}
     return '<button class="stab '+(bourseVue===v.k?'on':'')+'" data-v="'+v.k+'" title="'+v.l+'" onclick="setBourseVue(\''+v.k+'\')">'+
       '<span class="slong">'+v.l+'</span><span class="scourt">'+v.c+'</span>'+
-      (n?'<span class="sbadge">'+n+'</span>':'')+'</button>';
-  }).join('')+'<button class="stab" title="Ajouter un compte de bourse" onclick="cptAjouter()"><span class="slong">+ Compte</span><span class="scourt">+</span></button>';
+      (n?'<span class="sbadge">'+n+'</span>':'')+'</button>'+(i===dernierCpt?plus:'');
+  }).join('')+(dernierCpt<0?plus:'');
   BVUES.forEach(v=>{const el=document.getElementById('bvue-'+v.k);
     if(el)el.style.display=(v.k===bourseVue&&vis.some(x=>x.k===v.k))?'':'none'});
 })();
@@ -8840,9 +8851,59 @@ $('mode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',(x.datas
 $('onglets').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;T.onglet=b.dataset.c;majOnglet();if(T.A)drawAll();});
 $('seg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;T.period=b.dataset.p;$('seg').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));if(T.w)refresh();});
 $('sel').addEventListener('change',()=>{const o=$('sel').selectedOptions[0];if(o&&o.value){$('q').value='';charge(o.value,o.textContent);}});
-function lance(){const q=$('q').value.trim();if(q){charge(q.toUpperCase(),null);return;}const o=$('sel').selectedOptions[0];if(o&&o.value)charge(o.value,o.textContent);else statut('Choisis une valeur dans la liste, ou tape un code Yahoo.',true);}
+function lance(){const q=$('q').value.trim();if(q){const ex=(sugL||[]).findIndex(x=>String(x.s).toUpperCase()===q.toUpperCase());if(ex>=0){sugChoisit(ex);return;}if(sugL&&sugL.length){sugChoisit(Math.max(0,sugSel));return;}sugFerme();charge(q.toUpperCase(),null);return;}const o=$('sel').selectedOptions[0];if(o&&o.value)charge(o.value,o.textContent);else statut('Choisis une valeur dans la liste, ou tape un code Yahoo.',true);}
 $('go').addEventListener('click',lance);
-$('q').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();lance();}});
+/* ===== RECHERCHE PAR NOM =====
+   Dès 3 lettres : d'abord tes lignes, ta watchlist et les grandes valeurs connues (tout de suite),
+   puis les résultats de Yahoo Finance, via le script Google (qui doit avoir la fonction « q »). */
+const SUG_BASE=[['AI.PA','Air Liquide'],['AIR.PA','Airbus'],['ALO.PA','Alstom'],['MT.AS','ArcelorMittal'],['CS.PA','AXA'],['BNP.PA','BNP Paribas'],['EN.PA','Bouygues'],['BVI.PA','Bureau Veritas'],
+  ['CAP.PA','Capgemini'],['CA.PA','Carrefour'],['ACA.PA','Crédit Agricole'],['BN.PA','Danone'],['DSY.PA','Dassault Systèmes'],['AM.PA','Dassault Aviation'],['EDEN.PA','Edenred'],['ENGI.PA','Engie'],
+  ['EL.PA','EssilorLuxottica'],['ERF.PA','Eurofins Scientific'],['GTT.PA','GTT (Gaztransport & Technigaz)'],['RMS.PA','Hermès'],['KER.PA','Kering'],['OR.PA','L’Oréal'],['LR.PA','Legrand'],['MC.PA','LVMH'],
+  ['ML.PA','Michelin'],['ORA.PA','Orange'],['RI.PA','Pernod Ricard'],['PUB.PA','Publicis'],['RNO.PA','Renault'],['SAF.PA','Safran'],['SGO.PA','Saint-Gobain'],['SAN.PA','Sanofi'],
+  ['SU.PA','Schneider Electric'],['GLE.PA','Société Générale'],['STMPA.PA','STMicroelectronics'],['TEP.PA','Teleperformance'],['HO.PA','Thales'],['TTE.PA','TotalEnergies'],['URW.PA','Unibail-Rodamco-Westfield'],
+  ['VIE.PA','Veolia'],['DG.PA','Vinci'],['AC.PA','Accor'],['AMUN.PA','Amundi'],['SW.PA','Sodexo'],['VK.PA','Vallourec'],['RCO.PA','Rémy Cointreau'],['SOI.PA','Soitec'],['UBI.PA','Ubisoft'],
+  ['CW8.PA','Amundi MSCI World (ETF)'],['DCAM.PA','Amundi PEA Monde MSCI World (ETF)'],['PUST.PA','Amundi PEA Nasdaq-100 (ETF)'],['ESE.PA','BNP Paribas Easy S&P 500 (ETF)'],['PAEEM.PA','Amundi PEA Emergents (ETF)'],
+  ['AAPL','Apple'],['MSFT','Microsoft'],['GOOGL','Alphabet (Google)'],['AMZN','Amazon'],['NVDA','Nvidia'],['META','Meta (Facebook)'],['TSLA','Tesla'],['ASML.AS','ASML'],['NOVO-B.CO','Novo Nordisk'],
+  ['^FCHI','CAC 40 (indice)'],['^GSPC','S&P 500 (indice)']];
+const sugCache={};let sugTimer=null,sugReq=0,sugSel=-1,sugL=[],sugAvert=false;
+const sugNorm=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[’']/g,' ');
+function sugLocaux(q){const n=sugNorm(q),vu={},out=[];
+  liste().map(x=>[x.yt,x.n,x.g]).concat(SUG_BASE.map(x=>[x[0],x[1],''])).forEach(x=>{const k=String(x[0]).toUpperCase();if(vu[k])return;
+    const nm=sugNorm(x[1]),tk=sugNorm(x[0]);
+    const ok=tk.indexOf(n)===0||nm.indexOf(n)===0||nm.split(/[\s\-()&]+/).some(w=>w.indexOf(n)===0);
+    if(ok){vu[k]=1;out.push({s:x[0],n:x[1],x:x[2]||'',loc:true});}});
+  return out.slice(0,8);}
+function sugEsc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function sugAffiche(L,attente,note){const z=$('sug'),q=$('q');sugL=L;sugSel=L.length?0:-1;
+  if(!L.length&&!attente&&!note){z.hidden=true;q.setAttribute('aria-expanded','false');return;}
+  z.innerHTML=L.map((x,i)=>'<button type="button" role="option" id="at-sug'+i+'" data-i="'+i+'"'+(i===0?' class="on" aria-selected="true"':'')+'><span class="sn">'+sugEsc(x.n)+'</span><span class="sc">'+sugEsc(x.s)+'</span>'+(x.x?'<span class="sx">'+sugEsc(x.x)+'</span>':'')+'</button>').join('')+
+    (attente?'<div class="st">Recherche sur Yahoo Finance…</div>':'')+(note?'<div class="st">'+note+'</div>':'');
+  z.hidden=false;q.setAttribute('aria-expanded','true');q.setAttribute('aria-activedescendant',L.length?'at-sug0':'');}
+function sugFerme(){clearTimeout(sugTimer);sugReq++;const z=$('sug');if(z){z.hidden=true;z.innerHTML='';}sugL=[];sugSel=-1;const q=$('q');if(q){q.setAttribute('aria-expanded','false');q.removeAttribute('aria-activedescendant');}}
+function sugChoisit(i){const x=sugL[i];if(!x)return;sugFerme();$('q').value='';$('q').blur();charge(String(x.s).toUpperCase(),x.n);}
+async function sugCherche(q){
+  const loc=sugLocaux(q),id=++sugReq,cle=sugNorm(q);
+  if(sugCache[cle]){sugAffiche(sugFusion(loc,sugCache[cle]),false);return;}
+  sugAffiche(loc,true);
+  let r=null;try{const rep=await fetch(GAS+'?q='+encodeURIComponent(q));r=await rep.json();}catch(e){r=null}
+  if(id!==sugReq||$('q').value.trim().length<3)return;
+  if(r&&Array.isArray(r.r)){sugCache[cle]=r.r;sugAffiche(sugFusion(loc,r.r),false,!loc.length&&!r.r.length?'Aucune action trouvée. Essaie un autre nom, ou tape directement le code Yahoo.':'');return;}
+  /* l'ancien script répond « no ticker » : la recherche Yahoo n'est pas encore installée */
+  sugAffiche(loc,false,!sugAvert||!loc.length?'Pour chercher parmi toutes les actions, mets à jour le script Google (fichier script-google.txt).':'');sugAvert=true;
+}
+function sugFusion(loc,yh){const vu={},out=[];loc.concat(yh.map(x=>({s:x.s,n:x.n,x:x.x}))).forEach(x=>{const k=String(x.s).toUpperCase();if(vu[k])return;vu[k]=1;out.push(x);});return out.slice(0,10);}
+$('q').addEventListener('input',()=>{const q=$('q').value.trim();clearTimeout(sugTimer);
+  if(q.length<3){sugReq++;sugFerme();return;}
+  sugAffiche(sugLocaux(q),true);sugTimer=setTimeout(()=>sugCherche(q),300);});
+$('q').addEventListener('keydown',e=>{const z=$('sug'),ouvert=z&&!z.hidden&&sugL.length;
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){if(!ouvert)return;e.preventDefault();sugSel=(sugSel+(e.key==='ArrowDown'?1:-1)+sugL.length)%sugL.length;
+    z.querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('on',i===sugSel);b.setAttribute('aria-selected',i===sugSel?'true':'false')});
+    $('q').setAttribute('aria-activedescendant','at-sug'+sugSel);const b=z.querySelector('button.on');if(b)b.scrollIntoView({block:'nearest'});return;}
+  if(e.key==='Escape'){sugFerme();return;}
+  if(e.key==='Enter'){e.preventDefault();if(ouvert&&sugSel>=0){sugChoisit(sugSel);return;}sugFerme();lance();}});
+$('sug').addEventListener('mousedown',e=>e.preventDefault());
+$('sug').addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(b)sugChoisit(+b.dataset.i);});
+$('q').addEventListener('blur',()=>setTimeout(sugFerme,150));
 $('upd').addEventListener('click',()=>{if(T.key)charge(T.key,T.name,true);});
 $('vueBtn').addEventListener('click',()=>vue(true));
 $('vue').addEventListener('click',e=>{const th=e.target.closest('th[data-k]');if(th){vueTri=vueTri.k===th.dataset.k?{k:th.dataset.k,dir:-vueTri.dir}:{k:th.dataset.k,dir:-1};vue(false);return;}
