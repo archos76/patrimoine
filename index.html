@@ -7,6 +7,10 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22 width=%2264%22 height=%2264%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23123329%22/%3E%3Cpath d=%22M12 50 H52%22 stroke=%22%23e9e2cf%22 stroke-width=%223%22 stroke-linecap=%22round%22 opacity=%22.35%22/%3E%3Cpath d=%22M12 42 L22 34 L29 39 L39 24 L45 29 L52 14%22 fill=%22none%22 stroke=%22%23e9e2cf%22 stroke-width=%224.5%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3Ccircle cx=%2252%22 cy=%2214%22 r=%224.6%22 fill=%22%23d2a85c%22/%3E%3C/svg%3E">
 <link rel="icon" type="image/png" sizes="512x512" href="icone.png">
 <link rel="apple-touch-icon" href="icone.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Patrimoine">
 <meta name="theme-color" content="#0b1311">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -600,6 +604,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 .mdlG{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .mdlG.un{grid-template-columns:1fr}
 .mdlC{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--text2);min-width:0}
+#horsLigne{position:sticky;top:0;z-index:900;background:var(--orange);color:#1a1206;font-size:12.5px;font-weight:500;text-align:center;padding:8px 14px;line-height:1.4}
 .sugBox{grid-column:1/-1;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:4px;margin-top:-4px;max-height:260px;overflow-y:auto}
 .sugBox button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;border:0;border-radius:7px;padding:9px 10px;color:var(--text);font:inherit;font-size:13.5px;cursor:pointer;min-height:44px}
 .sugBox button:hover,.sugBox button.on{background:var(--card)}
@@ -647,7 +652,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </head>
 <body>
 <div id="login-screen"><div class="login-box"><div class="login-icon" style="background:none;padding:0;overflow:hidden"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%" aria-hidden="true"><rect width="100%" height="100%" aria-hidden="true" rx="14" fill="#123329"/><path d="M12 50 H52" stroke="#e9e2cf" stroke-width="3" stroke-linecap="round" opacity=".35"/><path d="M12 42 L22 34 L29 39 L39 24 L45 29 L52 14" fill="none" stroke="#e9e2cf" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="52" cy="14" r="4.6" fill="#d2a85c"/></svg></div><h1>Mon Patrimoine</h1><p>Connecte-toi pour accéder à ton dashboard</p><button class="g-btn" onclick="doLogin()"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">Se connecter avec Google</button><div id="login-err"></div></div></div>
-<div id="app">
+<div id="app"><div id="horsLigne" role="status" hidden>Hors connexion : tu vois tes derniers chiffres enregistrés. Tes modifications seront envoyées au retour du réseau.</div>
 <aside class="side" id="side">
 <div class="side-head"><div class="li" style="background:none;padding:0;overflow:hidden"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%" aria-hidden="true"><rect width="100%" height="100%" aria-hidden="true" rx="14" fill="#123329"/><path d="M12 50 H52" stroke="#e9e2cf" stroke-width="3" stroke-linecap="round" opacity=".35"/><path d="M12 42 L22 34 L29 39 L39 24 L45 29 L52 14" fill="none" stroke="#e9e2cf" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="52" cy="14" r="4.6" fill="#d2a85c"/></svg></div><span class="lt">Mon Patrimoine</span></div>
 <div class="tabs" id="tabs">
@@ -678,7 +683,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 18/11 09h39</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 18/11 09h49</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -838,7 +843,10 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="page" id="page-budget"><div class="kr" id="budgetKpi"></div><div class="card"><div class="ct">Flux mensuel</div><div id="sankeyDiv" style="width:100%;overflow-x:auto"><svg id="sankeySvg"></svg></div></div><div class="card"><div class="ct">Détail du budget</div><div id="budgetDetail"></div></div></div>
 <div class="page" id="page-alloc"><div class="card"><div class="fb" style="margin-bottom:16px"><div class="ct" style="margin:0">Allocation du patrimoine</div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="allocSum" style="font-size:12px;color:var(--muted)"></span><button class="pb" onclick="cibleEgalActuel()">Cible = actuel</button><button class="pb" onclick="resetCibles()">Réinitialiser</button></div></div><div class="g21"><div class="tw" id="allocTable"></div><div><div class="cbs" style="height:230px"><canvas id="cAlloc"></canvas></div><div id="allocLeg" style="padding:10px 4px 0"></div></div></div><div style="font-size:11px;color:var(--muted);margin-top:14px">Clique sur une cible en % pour la modifier. Les écarts et les montants à ajuster se recalculent aussitôt.</div></div></div>
 <div class="page" id="page-objectifs"><div id="objContent"></div><div class="card" style="margin-top:16px"><div class="fb"><div class="ct" style="margin:0">Objectifs Bourse</div><button class="ab" style="width:auto;margin:0;padding:6px 12px;font-size:11px" onclick="addBourseGoal()">+ Objectif</button></div><div id="bourseGoals" style="margin-top:12px"></div></div></div>
-<div class="page" id="page-revenus"><div class="kr" id="revKpi"></div><div class="g2"><div class="card"><div class="ct">Revenus passifs mensuels</div><div class="cbs" style="height:230px"><canvas id="cRevPie"></canvas></div><div id="revLeg" style="padding:8px 12px 0"></div></div><div class="card"><div class="ct">Projection revenus passifs</div><div class="cbs"><canvas id="cRevProj"></canvas></div></div></div><div class="card"><div class="ct">Couverture de tes dépenses</div><div id="couvKpi"></div><div id="couvDetail" style="margin-top:16px"></div></div><div class="card"><div class="ct">Détail des sources</div><div id="revDetail"></div></div></div>
+<div class="page" id="page-revenus"><div class="card" id="rpmCard"><div class="ct">Ce que ton patrimoine t’a versé, mois par mois</div>
+<div style="font-size:12px;color:var(--muted);margin:-4px 0 12px;line-height:1.5">Loyers encaissés moins les charges des biens, dividendes reçus, intérêts de l’épargne. La ligne rouge, ce sont tes dépenses du budget : quand les barres la dépassent, ton patrimoine paie ta vie.</div>
+<div class="kr" id="rpmKpi"></div><div class="cb" style="height:260px;margin-top:8px"><canvas id="cRpm"></canvas></div><div id="rpmNote" class="tk" style="margin-top:10px;line-height:1.55"></div></div>
+<div class="kr" id="revKpi"></div><div class="g2"><div class="card"><div class="ct">Revenus passifs mensuels</div><div class="cbs" style="height:230px"><canvas id="cRevPie"></canvas></div><div id="revLeg" style="padding:8px 12px 0"></div></div><div class="card"><div class="ct">Projection revenus passifs</div><div class="cbs"><canvas id="cRevProj"></canvas></div></div></div><div class="card"><div class="ct">Couverture de tes dépenses</div><div id="couvKpi"></div><div id="couvDetail" style="margin-top:16px"></div></div><div class="card"><div class="ct">Détail des sources</div><div id="revDetail"></div></div></div>
 <div class="page" id="page-marches">
 <div class="card"><div class="fb" style="margin-bottom:6px"><div class="ct" style="margin:0">Revue de marchés</div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="marPs" style="display:flex;gap:4px"></span><span id="marchesMaj" style="font-size:11px;color:var(--muted)"></span><button class="pb" onclick="fetchMarches(true);chargeCac(true)">Actualiser</button></div></div><div style="font-size:11.5px;color:var(--muted)" id="marLegende"></div></div>
 <div class="card"><div class="fb" style="margin-bottom:14px"><div class="ct" style="margin:0">CAC 40 aujourd’hui</div><button class="pb" onclick="chargeCac(true)">Actualiser</button></div><div id="cacJour"></div></div>
@@ -974,7 +982,16 @@ function toggleHide(){hiddenMode=!hiddenMode;localStorage.setItem('hideAmounts',
 if(hiddenMode){document.getElementById('dmBtn').textContent='◍'}
 firebase.initializeApp({apiKey:"AIzaSyB1ngpW9j09gV2FrW6leTN5kf3JVi9j6-g",authDomain:"patrimoine-1e959.firebaseapp.com",projectId:"patrimoine-1e959",storageBucket:"patrimoine-1e959.firebasestorage.app",messagingSenderId:"77172547528",appId:"1:77172547528:web:2f15c6cdcda20a85fcaafd"});
 const auth=firebase.auth(),db=firebase.firestore();let uid=null;
-window.doLogin=async()=>{try{await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())}catch(e){document.getElementById('login-err').textContent=e.message}};
+/* Firebase garde une copie de tes données sur l'appareil : l'application s'ouvre même sans réseau,
+   et ce que tu modifies hors connexion part dès que le réseau revient. */
+try{const p=db.enablePersistence&&db.enablePersistence({synchronizeTabs:true});if(p&&p.catch)p.catch(e=>console.warn('copie locale indisponible :',e&&e.code))}catch(e){}
+window.doLogin=async()=>{const pr=new firebase.auth.GoogleAuthProvider();
+  try{await auth.signInWithPopup(pr)}
+  catch(e){
+    /* dans l'application installée, la fenêtre de connexion peut être bloquée : on passe par une redirection */
+    if(e&&['auth/popup-blocked','auth/operation-not-supported-in-this-environment','auth/web-storage-unsupported'].indexOf(e.code)>=0){try{await auth.signInWithRedirect(pr);return}catch(e2){e=e2}}
+    if(e&&e.code==='auth/popup-closed-by-user')return;
+    document.getElementById('login-err').textContent=e&&e.code==='auth/network-request-failed'?'Pas de connexion : la première connexion demande du réseau.':(e&&e.message)||'Connexion impossible.'}};
 auth.onAuthStateChanged(async u=>{if(u){uid=u.uid;document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';document.getElementById('userBar').innerHTML=(u.photoURL?'<img src="'+u.photoURL+'">':'')+'<span>'+(u.displayName||'')+'</span><span class="logout" onclick="auth.signOut()">Déco</span>';await loadData();majNomsComptes();try{S.ficheLigne=null}catch(e){}initApp();majExemple()}else{uid=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none'}});
 
 const SECTORS={"EPA:AI":"Chimie","EPA:DCAM":"ETF","EPA:PUST":"ETF","EPA:GTT":"Énergie","EPA:DG":"Industrie","EPA:EL":"Santé","EPA:SU":"Industrie","EPA:ALMIB":"Biotech","GOOGL":"Tech","AMBA":"Tech","NET":"Tech","DXCM":"Santé","ON":"Tech","NU":"Finance","RKLB":"Aérospatial","TOST":"Tech","AMZN":"Tech","SNOW":"Tech","SOFI":"Finance","SYM":"Tech","TER":"Tech","TTD":"Tech","TMDX":"Santé","CELH":"Conso","PATH":"Tech","VRT":"Industrie","ZS":"Tech","EPA:BNKE":"Finance","LON:HNSC":"ETF","XDGU":"Obligations","CS.PA":"Finance","SAN.PA":"Santé","TTE.PA":"Énergie","HO.PA":"Aérospatial","EPA:CS":"Finance","EPA:SAN":"Santé","EPA:TTE":"Énergie","EPA:HO":"Aérospatial"};
@@ -1829,6 +1846,12 @@ function texteEtatCours(ok,total){
   if(total>0&&ok<total*0.7){const m=total-ok;return texteCours()+' · <span style="color:var(--orange)">'+m+' valeur'+(m>1?'s':'')+' sans cours</span>';}
   return texteCours();
 }
+/* Bandeau « hors connexion », et cours rafraîchis au retour du réseau */
+function majHorsLigne(){const z=document.getElementById('horsLigne');if(z)z.hidden=navigator.onLine!==false}
+window.addEventListener('offline',majHorsLigne);
+window.addEventListener('online',()=>{majHorsLigne();try{if(uid)doRef()}catch(e){}});
+majHorsLigne();
+if('serviceWorker' in navigator&&location.protocol==='https:')window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(e=>console.warn('mode hors connexion indisponible :',e&&e.message))});
 async function doRef(){if(rL)return;rL=true;
 const b=document.getElementById('rbtn');b.disabled=true;b.innerHTML='◌';
 /* Ce qu'il faut interroger */
@@ -3405,6 +3428,56 @@ function divCase(annee,mois){
   if(v==null)return{a:0,s:0};
   if(typeof v==='number')return{a:v,s:0};
   return{a:nb(v.a),s:nb(v.s)};
+}
+/* ===== REVENUS PASSIFS, MOIS PAR MOIS =====
+   Loyers : ceux notés dans la fiche du bien ; une année sans aucune note est estimée avec le loyer prévu.
+   Les charges courantes du bien (charges, taxe foncière, assurance, gestion) sont retirées ; pas les mensualités
+   de crédit, qui remboursent du capital que tu gardes. Dividendes : ceux notés dans le suivi mensuel.
+   Intérêts : estimation à partir des soldes d'épargne. */
+function revMois(t,nbMois){
+  const auj=new Date(),out=[];
+  const B=S.budget,dep=B?B.categories.reduce((a,c)=>a+c.postes.reduce((b,p)=>b+nb(p.montant),0),0):0;
+  const inv=B?B.categories.filter(c=>/invest/i.test(c.nom||'')).reduce((a,c)=>a+c.postes.reduce((b,p)=>b+nb(p.montant),0),0):0;
+  const depM=Math.max(0,dep-inv),intM=Math.round((nb(t.eL)*0.03+nb(t.eB)*0.02)/12*100)/100;
+  const biens=(S.immo||[]).filter(b=>!estRP(b));
+  for(let i=nbMois-1;i>=0;i--){
+    const d=new Date(auj.getFullYear(),auj.getMonth()-i,1),y=d.getFullYear(),m=d.getMonth(),an=String(y);
+    let loy=0,estime=false;
+    biens.forEach(b=>{const part=(b.partsPct!=null?nb(b.partsPct):100)/100,o=(b.revenusMois||{})[an];
+      const ch=nb(b.charges)+nb(b.taxeFonciere)/12+nb(b.assurance)/12+nb(b.gestion);
+      const noteAn=o&&Object.keys(o).some(k=>nb(o[k])>0);
+      let l;if(noteAn)l=nb(o[MOIS_REV[m]]);else{l=nb(typeof loyerBien==='function'?loyerBien(b):b.loyer);if(l>0)estime=true;}
+      loy+=(l-ch)*part;});
+    const div=divPart(an,MOIS_COURTS[m]);
+    out.push({y:y,m:m,lib:MOIS_COURTS[m]+(m===0||i===nbMois-1?' '+String(y).slice(2):''),loy:Math.round(loy*100)/100,div:Math.round(nb(div)*100)/100,int:intM,dep:depM,estime:estime,encours:i===0});
+  }
+  return out;
+}
+function dessineRevMois(t){
+  const L=revMois(t,12),tot=x=>x.loy+x.div+x.int,clos=L.filter(x=>!x.encours),moy=clos.length?clos.reduce((a,x)=>a+tot(x),0)/clos.length:0,dep=L[0]?L[0].dep:0;
+  const der=clos[clos.length-1],meilleur=clos.reduce((a,x)=>!a||tot(x)>tot(a)?x:a,null),ca=v=>hiddenMode?'•••':v;
+  const zk=document.getElementById('rpmKpi');
+  if(zk)zk.innerHTML='<div class="kpi"><div class="kl">Moyenne par mois</div><div class="kv" style="color:'+(moy>=0?'var(--green)':'var(--red)')+'">'+ca(F(Math.round(moy)))+'</div><div class="ks">sur les 11 derniers mois</div></div>'+
+    (der?'<div class="kpi"><div class="kl">'+MOIS_COURTS[der.m]+' '+der.y+'</div><div class="kv">'+ca(F(Math.round(tot(der))))+'</div><div class="ks">dernier mois complet</div></div>':'')+
+    '<div class="kpi"><div class="kl">Part de tes dépenses</div><div class="kv" style="color:var(--accent)">'+(dep>0?Math.max(0,Math.round(moy/dep*100))+' %':'—')+'</div><div class="ks">'+(dep>0?'dépenses : '+ca(F(Math.round(dep)))+'/mois':'remplis ton budget')+'</div></div>';
+  const zn=document.getElementById('rpmNote');
+  if(zn){const est=L.filter(x=>x.estime).length,sansDiv=L.every(x=>!x.div);
+    zn.innerHTML=(meilleur&&tot(meilleur)>0?'Meilleur mois : '+MOIS_COURTS[meilleur.m]+' '+meilleur.y+' ('+ca(F(Math.round(tot(meilleur))))+'). ':'')+
+      (est?'Loyers estimés pour les années sans loyer noté : note-les dans la fiche de chaque bien pour avoir les vrais chiffres. ':'')+
+      (sansDiv?'Aucun dividende noté sur la période : ils s’ajoutent en notant un dividende reçu sur une ligne, ou dans Bourse → Dividendes. ':'')+
+      'Les intérêts de l’épargne sont estimés (3 % sur l’épargne disponible, 2 % sur la bloquée). Le mois en cours n’est pas terminé.';}
+  const el=document.getElementById('cRpm');if(!el)return;
+  const c=(v,a)=>hexA(CV(v),a);
+  neufGraphe(el,{type:'bar',data:{labels:L.map(x=>x.lib),datasets:[
+      {label:'Loyers nets',data:L.map(x=>x.loy),backgroundColor:L.map(x=>c('--green',x.encours||x.estime?.45:.85)),borderRadius:4,stack:'r',borderWidth:0},
+      {label:'Dividendes',data:L.map(x=>x.div),backgroundColor:L.map(x=>c('--orange',x.encours?.45:.85)),borderRadius:4,stack:'r',borderWidth:0},
+      {label:'Intérêts (estimés)',data:L.map(x=>x.int),backgroundColor:c('--accent',.55),borderRadius:4,stack:'r',borderWidth:0},
+      {label:'Dépenses',type:'line',data:L.map(x=>x.dep),borderColor:CV('--red'),borderDash:[6,4],borderWidth:2,pointRadius:0,fill:false,order:-1}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:animConf,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true,position:'bottom',labels:{color:CV('--muted'),boxWidth:10,boxHeight:10,font:{size:11}}},
+        tooltip:(()=>{const tp=tipOpts(x=>x.dataset.label+' : '+(hiddenMode?'•••':F(Math.round(x.raw))));tp.callbacks=Object.assign({},tp.callbacks,{footer:it=>{const o=L[it[0].dataIndex];return 'Total versé : '+(hiddenMode?'•••':F(Math.round(tot(o))))+(o.estime?' (loyers estimés)':'')+(o.encours?' · mois en cours':'')}});return tp})()},
+      scales:{x:{stacked:true,grid:{display:false},ticks:{color:CV('--muted'),font:{size:10},maxRotation:0,autoSkip:true}},
+        y:{stacked:true,grid:{color:hexA(CV('--border'),.5)},ticks:{color:CV('--muted'),font:{size:11},callback:v=>hiddenMode?'':F(v)}}}}});
 }
 function divPart(annee,mois,champ){const c=divCase(annee,mois);return champ==='s'?c.s:champ==='a'?c.a:c.a+c.s}
 window.edDivMois=function(el,annee,mois,champ){
@@ -7351,6 +7424,8 @@ if(rProjEl){
   window._cRPr=neufGraphe(rProjEl,{type:'bar',data:{labels:rpData.map(d=>'+'+d.y+'a'),datasets:[{label:'Rev./mois',data:rpData.map(d=>d.rev),backgroundColor:CV('--green'),borderRadius:5,borderSkipped:false,barPercentage:.7,categoryPercentage:.75,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},animation:animConf,plugins:{legend:{display:false},tooltip:{callbacks:{label:tipSafe(c=>F(c.raw)+'/mois')}}},scales:axeOpts(v=>F(v))}})
 }}
 
+/* Mois par mois : ce qui a vraiment été versé */
+try{dessineRevMois(t)}catch(e){console.error('revenus mois par mois :',e&&e.message)}
 /* Détail éditable */
 let rvH='';
 S.revSources.forEach(rs=>{
