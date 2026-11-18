@@ -600,6 +600,13 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 .mdlG{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .mdlG.un{grid-template-columns:1fr}
 .mdlC{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--text2);min-width:0}
+.sugBox{grid-column:1/-1;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:4px;margin-top:-4px;max-height:260px;overflow-y:auto}
+.sugBox button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;border:0;border-radius:7px;padding:9px 10px;color:var(--text);font:inherit;font-size:13.5px;cursor:pointer;min-height:44px}
+.sugBox button:hover,.sugBox button.on{background:var(--card)}
+.sugBox .sn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sugBox .sc{font-size:12px;color:var(--muted);white-space:nowrap}
+.sugBox .sx{font-size:10.5px;color:var(--muted);border:1px solid var(--border);border-radius:5px;padding:1px 5px;white-space:nowrap}
+.sugBox .st{font-size:11px;color:var(--muted);padding:8px 10px 4px}
 .mdlC.large{grid-column:1/-1}
 .mdlC em{font-style:normal;color:var(--muted);font-size:11px;margin-left:4px}
 .mdlC input,.mdlC select{font-family:var(--font);font-size:15px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:9px 11px;width:100%;outline:none}
@@ -671,7 +678,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 18/11 09h16</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 18/11 09h39</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -8902,6 +8909,41 @@ $('q').addEventListener('keydown',e=>{const z=$('sug'),ouvert=z&&!z.hidden&&sugL
   if(e.key==='Escape'){sugFerme();return;}
   if(e.key==='Enter'){e.preventDefault();if(ouvert&&sugSel>=0){sugChoisit(sugSel);return;}sugFerme();lance();}});
 $('sug').addEventListener('mousedown',e=>e.preventDefault());
+/* Branche la recherche sur n'importe quel champ de saisie. La liste s'affiche sous le champ, sur toute la largeur. */
+window.sugAttache=function(inp,surChoix){
+  if(!inp||inp.dataset.sug)return;inp.dataset.sug='1';inp.setAttribute('autocomplete','off');inp.setAttribute('role','combobox');inp.setAttribute('aria-autocomplete','list');inp.setAttribute('aria-expanded','false');
+  const hote=inp.closest('.mdlC')||inp,box=document.createElement('div');box.className='sugBox';box.setAttribute('role','listbox');box.hidden=true;box.id='sugB'+Math.random().toString(36).slice(2,8);
+  inp.setAttribute('aria-controls',box.id);hote.insertAdjacentElement('afterend',box);
+  let L=[],sel=-1,req=0,tm=null;
+  const ferme=()=>{clearTimeout(tm);req++;box.hidden=true;box.innerHTML='';L=[];sel=-1;inp.setAttribute('aria-expanded','false');};
+  const montre=(liste,attente,note)=>{L=liste;sel=L.length?0:-1;
+    if(!L.length&&!attente&&!note){ferme();return;}
+    box.innerHTML=L.map((x,i)=>'<button type="button" role="option" data-i="'+i+'"'+(i===0?' class="on" aria-selected="true"':'')+'><span class="sn">'+sugEsc(x.n)+'</span><span class="sc">'+sugEsc(x.s)+'</span>'+(x.x?'<span class="sx">'+sugEsc(x.x)+'</span>':'')+'</button>').join('')+
+      (attente?'<div class="st">Recherche sur Yahoo Finance…</div>':'')+(note?'<div class="st">'+note+'</div>':'');
+    box.hidden=false;inp.setAttribute('aria-expanded','true');};
+  const choisit=i=>{const x=L[i];if(!x)return;ferme();try{surChoix(x)}catch(e){}};
+  const cherche=async q=>{const loc=sugLocaux(q),id=++req,cle=sugNorm(q);
+    if(sugCache[cle]){montre(sugFusion(loc,sugCache[cle]),false);return;}
+    montre(loc,true);let r=null;try{r=await (await fetch(GAS+'?q='+encodeURIComponent(q))).json();}catch(e){}
+    if(id!==req||inp.value.trim().length<3)return;
+    if(r&&Array.isArray(r.r)){sugCache[cle]=r.r;const T=sugFusion(loc,r.r);montre(T,false,T.length?'':'Aucune action trouvée. Tu peux taper le code Yahoo à la main.');return;}
+    montre(loc,false,loc.length?'':'Pour chercher parmi toutes les actions, mets à jour le script Google.');};
+  inp.addEventListener('input',()=>{const q=inp.value.trim();clearTimeout(tm);if(q.length<3){ferme();return;}montre(sugLocaux(q),true);tm=setTimeout(()=>cherche(q),300);});
+  inp.addEventListener('keydown',e=>{const ouvert=!box.hidden&&L.length;
+    if((e.key==='ArrowDown'||e.key==='ArrowUp')&&ouvert){e.preventDefault();e.stopPropagation();sel=(sel+(e.key==='ArrowDown'?1:-1)+L.length)%L.length;
+      box.querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('on',i===sel);b.setAttribute('aria-selected',i===sel?'true':'false')});return;}
+    if(e.key==='Enter'&&ouvert&&sel>=0){e.preventDefault();e.stopPropagation();choisit(sel);return;}
+    if(e.key==='Escape'&&!box.hidden){e.preventDefault();e.stopPropagation();ferme();}},true);
+  inp.addEventListener('blur',()=>setTimeout(ferme,150));
+  box.addEventListener('mousedown',e=>e.preventDefault());
+  box.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(b)choisit(+b.dataset.i);});
+};
+/* Les fenêtres « nom + code Yahoo » : choisir dans la liste remplit les deux */
+window.sugFenetre=function(champNom,champCode,suivant){setTimeout(()=>{
+  const n=champNom!=null?document.getElementById('mdl'+champNom):null,c=document.getElementById('mdl'+champCode);
+  const remplit=x=>{if(n)n.value=String(x.n||'').replace(/\s+(SE|SA|S\.A\.|Inc\.?|N\.V\.|plc|AG)$/i,'');if(c)c.value=String(x.s).toUpperCase();
+    const z=suivant!=null?document.getElementById('mdl'+suivant):null;if(z)try{z.focus()}catch(e){}};
+  if(n)window.sugAttache(n,remplit);if(c)window.sugAttache(c,remplit);},0)};
 $('sug').addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(b)sugChoisit(+b.dataset.i);});
 $('q').addEventListener('blur',()=>setTimeout(sugFerme,150));
 $('upd').addEventListener('click',()=>{if(T.key)charge(T.key,T.name,true);});
@@ -9099,7 +9141,8 @@ window.modale=function(o){if(mdlCourante)mdlFerme(null);
       if(o.verif&&champs.length){const pb=o.verif(v);if(pb)return erreur(el.querySelector('#mdl'+pb[0]),pb[1]);}
       mdlFerme(champs.length?v:true);};
     el.addEventListener('click',e=>{if(e.target===el||e.target.closest('.mdlX')||e.target.closest('.mdlA'))mdlFerme(null);else if(e.target.closest('.mdlV'))valide();else{const ob=e.target.closest('.mdlO');if(ob)mdlFerme(o.boutons[+ob.dataset.i][0]);}});
-    const kd=e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();mdlFerme(null);}
+    const kd=e=>{if((e.key==='Enter'||e.key==='Escape'||e.key==='ArrowDown'||e.key==='ArrowUp')&&e.target&&e.target.getAttribute&&e.target.getAttribute('aria-expanded')==='true')return;
+      if(e.key==='Escape'){e.preventDefault();e.stopPropagation();mdlFerme(null);}
       else if(e.key==='Enter'&&!o.boutons&&!(e.target.classList&&(e.target.classList.contains('mdlA')||e.target.classList.contains('mdlX')))){e.preventDefault();e.stopPropagation();valide();}
       else if(e.key==='Tab'){const f=[].slice.call(el.querySelectorAll('input,select,button'));if(!f.length)return;const i=f.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus();}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus();}}};
     document.addEventListener('keydown',kd,true);
@@ -9120,12 +9163,13 @@ window.confirme=function(msg){const d=mdlDecoupe(msg),dur=/supprim|effac|irr[ée
 window.avis=function(msg){const d=mdlDecoupe(msg);return modale({titre:d.titre||'À savoir',texte:d.reste.join('\n').trim(),sansAnnuler:true,valider:'OK'}).then(()=>undefined);};
 /* Les formulaires qui s'ouvraient dans la page passent par la même fenêtre */
 window.ouvreForm=function(ancre,titre,champs,surValider){
+  {const iT=(champs||[]).findIndex(c=>c.k==='ticker'),iN=(champs||[]).findIndex(c=>c.k==='nom');if(iT>=0)window.sugFenetre(iN>=0?iN:null,iT,(champs||[]).findIndex((c,i)=>i>Math.max(iT,iN)));}
   modale({titre:titre,champs:(champs||[]).map(c=>({k:c.k,lib:c.lib,type:c.type==='nombre'?'nombre':c.type==='choix'?'choix':'texte',val:c.val,ph:c.ph,opt:c.opt,muet:c.muet,options:c.options}))})
     .then(v=>{if(!v||!surValider)return;try{surValider(v);}catch(e){try{signalePanne('ajout',e);}catch(e2){}}});};
 window.sA=function(pk){const st=etat(),usd=!!(st&&st.pf[pk]&&st.pf[pk].cur==='USD');
   modale({titre:'Ajouter une ligne',sous:typeof nomCpt==='function'?nomCpt(pk):'',valider:'Ajouter la ligne',champs:[
-    {k:'n',lib:'Nom',ph:'Air Liquide'},
-    {k:'c',lib:'Code Yahoo',ph:'AI.PA, GOOGL…',opt:true,aide:'Sert à récupérer le cours tout seul.'},
+    {k:'n',lib:'Nom',ph:'Tape 3 lettres : air liq…'},
+    {k:'c',lib:'Code Yahoo',ph:'AI.PA, GOOGL…',opt:true,aide:'Rempli tout seul si tu choisis dans la liste.'},
     {k:'p',lib:'Quantité',type:'nombre'},
     {k:'pr',lib:'Prix de revient'+(usd?' ($)':' (€)'),type:'nombre',opt:true,aide:'Ton prix d’achat moyen, par action.'},
     {k:'co',lib:'Cours actuel (€)',type:'nombre',opt:true,aide:'Laisse vide si tu as mis le code Yahoo.'},
@@ -9133,7 +9177,8 @@ window.sA=function(pk){const st=etat(),usd=!!(st&&st.pf[pk]&&st.pf[pk].cur==='US
   .then(v=>{if(!v)return;const z=document.getElementById('add-'+pk);if(!z)return;
     const ch=(id,val)=>'<input type="hidden" id="'+id+'-'+pk+'" value="'+esc(val?String(val):'')+'">';
     z.innerHTML=ch('an',v.n)+ch('ac',v.c)+ch('ao',v.co)+ch('ap',v.p)+ch('ar',v.pr)+ch('ad',v.div);
-    cA(pk);});};
+    cA(pk);});
+  window.sugFenetre(0,1,2);};
 window.sAF=function(cid,sk,fields,b64){const fs=typeof fields==='string'?JSON.parse(fields):fields;
   const TI={comptes:'Ajouter un compte',epLibre:'Ajouter une épargne disponible',epBloq:'Ajouter une épargne bloquée',crypto:'Ajouter une crypto',dettes:'Ajouter un prêt'},
     LB={nom:'Nom',banque:'Banque',montant:'Montant (€)',symbol:'Symbole (BTC, ETH…)',qte:'Quantité',pru:'Prix de revient (€)',emprunte:'Montant emprunté (€)',taux:'Taux (% par an)',dureeMois:'Durée (mois)',differe:'Différé (mois)',dateDebut:'Début (AAAA-MM)',fin:'Fin (ex. Jan 2048)'};
