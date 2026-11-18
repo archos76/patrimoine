@@ -1,0 +1,17 @@
+{
+  "name": "Mon Patrimoine",
+  "short_name": "Patrimoine",
+  "description": "Le suivi de mon patrimoine : bourse, immobilier, épargne, budget.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b1311",
+  "theme_color": "#0b1311",
+  "icons": [
+    {"src": "icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icone.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icone.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
