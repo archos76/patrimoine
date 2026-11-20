@@ -683,7 +683,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 20/11 16h02</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 20/11 16h31</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -9012,6 +9012,13 @@ const SUG_BASE=[['AI.PA','Air Liquide'],['AIR.PA','Airbus'],['ALO.PA','Alstom'],
   ['NET','Cloudflare'],['SHOP','Shopify'],['RACE','Ferrari (New York)'],['RACE.MI','Ferrari (Milan)'],['SAP.DE','SAP'],['SIE.DE','Siemens'],['ALV.DE','Allianz'],['NESN.SW','Nestlé'],
   ['ROG.SW','Roche'],['NOVN.SW','Novartis'],['ADYEN.AS','Adyen'],['ENEL.MI','Enel'],['ITX.MC','Inditex (Zara)'],['ULVR.L','Unilever'],['SHEL.L','Shell'],['AZN.L','AstraZeneca'],
   ['^FCHI','CAC 40 (indice)'],['^GSPC','S&P 500 (indice)']];
+/* actions.json : actions françaises (toutes sauf les plus petites), américaines et grandes européennes,
+   ETF cotés à Paris. Chargé la première fois qu'on touche un champ de recherche, puis gardé. */
+const BOURSES={PAR:'Paris',NYQ:'NYSE',NMS:'Nasdaq',NGM:'Nasdaq',NCM:'Nasdaq',ASE:'NYSE American',PCX:'NYSE Arca',BTS:'Cboe',AMS:'Amsterdam',BRU:'Bruxelles',MIL:'Milan',MCE:'Madrid',GER:'Xetra',EBS:'Zurich',LSE:'Londres',CPH:'Copenhague',STO:'Stockholm',HEL:'Helsinki',OSL:'Oslo',LIS:'Lisbonne',TOR:'Toronto',DUB:'Dublin'};
+let ACTIONS=null,_actP=null;
+function actionsCharge(){if(ACTIONS)return Promise.resolve(ACTIONS);if(_actP)return _actP;
+  _actP=fetch('actions.json').then(r=>r.ok?r.json():[]).then(L=>{ACTIONS=(Array.isArray(L)?L:[]).map(x=>({s:x[0],n:x[1],x:BOURSES[x[2]]||x[2]||'',k:sugNorm(x[1]),t:sugNorm(x[0]),p:x[2]==='PAR'?0:/^(NYQ|NMS)$/.test(x[2])?1:2}));return ACTIONS}).catch(()=>{_actP=null;return []});
+  return _actP;}
 const sugCache={};let sugTimer=null,sugReq=0,sugSel=-1,sugL=[],sugAvert=false;
 const sugNorm=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[’']/g,' ');
 function sugLocaux(q){const n=sugNorm(q),vu={},out=[];
@@ -9019,7 +9026,13 @@ function sugLocaux(q){const n=sugNorm(q),vu={},out=[];
     const nm=sugNorm(x[1]),tk=sugNorm(x[0]);
     const ok=tk.indexOf(n)===0||nm.indexOf(n)===0||nm.split(/[\s\-()&]+/).some(w=>w.indexOf(n)===0);
     if(ok){vu[k]=1;out.push({s:x[0],n:x[1],x:x[2]||'',loc:true});}});
-  return out.slice(0,8);}
+  /* puis la grande liste : code qui commence pareil, ou un mot du nom */
+  if(ACTIONS&&out.length<10){const S2=[];
+    ACTIONS.forEach(a=>{const k=a.s.toUpperCase();if(vu[k])return;let sc=-1;
+      if(a.t===n||a.t.split('.')[0]===n)sc=0;else if(a.k.indexOf(n)===0)sc=1;else if(a.t.indexOf(n)===0)sc=2;else if(a.k.split(/[\s\-()&,.'/]+/).some(w=>w.indexOf(n)===0))sc=3;
+      if(sc>=0)S2.push([sc,a.p,a.n.length,a]);});
+    S2.sort((x,y)=>x[0]-y[0]||x[1]-y[1]||x[2]-y[2]).slice(0,10-out.length).forEach(z=>{const a=z[3];vu[a.s.toUpperCase()]=1;out.push({s:a.s,n:a.n,x:a.x,loc:true});});}
+  return out.slice(0,10);}
 function sugEsc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function sugAffiche(L,attente,note){const z=$('sug'),q=$('q');sugL=L;sugSel=L.length?0:-1;
   if(!L.length&&!attente&&!note){z.hidden=true;q.setAttribute('aria-expanded','false');return;}
@@ -9039,7 +9052,8 @@ async function sugCherche(q){
   sugAffiche(loc,false,!sugAvert||!loc.length?'Pour chercher parmi toutes les actions, mets à jour le script Google (fichier script-google.txt).':'');sugAvert=true;
 }
 function sugFusion(loc,yh){const vu={},out=[];loc.concat(yh.map(x=>({s:x.s,n:x.n,x:x.x}))).forEach(x=>{const k=String(x.s).toUpperCase();if(vu[k])return;vu[k]=1;out.push(x);});return out.slice(0,10);}
-$('q').addEventListener('input',()=>{const q=$('q').value.trim();clearTimeout(sugTimer);
+$('q').addEventListener('focus',()=>{actionsCharge()});
+$('q').addEventListener('input',()=>{const q=$('q').value.trim();clearTimeout(sugTimer);if(q.length>=3&&!ACTIONS)actionsCharge().then(()=>{if($('q').value.trim()===q&&!$('sug').hidden)sugAffiche(sugLocaux(q),true)});
   if(q.length<3){sugReq++;sugFerme();return;}
   sugAffiche(sugLocaux(q),true);sugTimer=setTimeout(()=>sugCherche(q),300);});
 $('q').addEventListener('keydown',e=>{const z=$('sug'),ouvert=z&&!z.hidden&&sugL.length;
@@ -9068,7 +9082,10 @@ window.sugAttache=function(inp,surChoix){
     if(id!==req||inp.value.trim().length<3)return;
     if(r&&Array.isArray(r.r)){sugCache[cle]=r.r;const T=sugFusion(loc,r.r);montre(T,false,T.length?'':'Aucune action trouvée. Tu peux taper le code Yahoo à la main.');return;}
     montre(loc,false,loc.length?'':'Pas trouvée dans la liste de l’app. Pour chercher parmi toutes les actions, mets à jour le script Google (Réglages). Tu peux aussi taper le code Yahoo à la main.');};
-  inp.addEventListener('input',()=>{const q=inp.value.trim();clearTimeout(tm);if(q.length<3){ferme();return;}montre(sugLocaux(q),true);tm=setTimeout(()=>cherche(q),300);});
+  inp.addEventListener('focus',()=>{actionsCharge()});
+  inp.addEventListener('input',()=>{const q=inp.value.trim();clearTimeout(tm);if(q.length<3){ferme();return;}
+    if(!ACTIONS)actionsCharge().then(()=>{if(inp.value.trim()===q&&!box.hidden)montre(sugLocaux(q),true)});
+    montre(sugLocaux(q),true);tm=setTimeout(()=>cherche(q),300);});
   inp.addEventListener('keydown',e=>{const ouvert=!box.hidden&&L.length;
     if((e.key==='ArrowDown'||e.key==='ArrowUp')&&ouvert){e.preventDefault();e.stopPropagation();sel=(sel+(e.key==='ArrowDown'?1:-1)+L.length)%L.length;
       box.querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('on',i===sel);b.setAttribute('aria-selected',i===sel?'true':'false')});return;}
