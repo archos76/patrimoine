@@ -683,7 +683,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 18/11 13h20</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 20/11 16h02</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -9003,6 +9003,14 @@ const SUG_BASE=[['AI.PA','Air Liquide'],['AIR.PA','Airbus'],['ALO.PA','Alstom'],
   ['VIE.PA','Veolia'],['DG.PA','Vinci'],['AC.PA','Accor'],['AMUN.PA','Amundi'],['SW.PA','Sodexo'],['VK.PA','Vallourec'],['RCO.PA','Rémy Cointreau'],['SOI.PA','Soitec'],['UBI.PA','Ubisoft'],
   ['CW8.PA','Amundi MSCI World (ETF)'],['DCAM.PA','Amundi PEA Monde MSCI World (ETF)'],['PUST.PA','Amundi PEA Nasdaq-100 (ETF)'],['ESE.PA','BNP Paribas Easy S&P 500 (ETF)'],['PAEEM.PA','Amundi PEA Emergents (ETF)'],
   ['AAPL','Apple'],['MSFT','Microsoft'],['GOOGL','Alphabet (Google)'],['AMZN','Amazon'],['NVDA','Nvidia'],['META','Meta (Facebook)'],['TSLA','Tesla'],['ASML.AS','ASML'],['NOVO-B.CO','Novo Nordisk'],
+  ['CAT','Caterpillar'],['DE','Deere (John Deere)'],['JNJ','Johnson & Johnson'],['JPM','JPMorgan Chase'],['V','Visa'],['MA','Mastercard'],['KO','Coca-Cola'],['PEP','PepsiCo'],
+  ['MCD','McDonald’s'],['DIS','Disney'],['NFLX','Netflix'],['AMD','AMD'],['INTC','Intel'],['IBM','IBM'],['ORCL','Oracle'],['CSCO','Cisco'],['ADBE','Adobe'],['CRM','Salesforce'],
+  ['PYPL','PayPal'],['BRK-B','Berkshire Hathaway'],['XOM','ExxonMobil'],['CVX','Chevron'],['PG','Procter & Gamble'],['WMT','Walmart'],['COST','Costco'],['HD','Home Depot'],
+  ['NKE','Nike'],['SBUX','Starbucks'],['BA','Boeing'],['GE','GE Aerospace'],['MMM','3M'],['HON','Honeywell'],['LMT','Lockheed Martin'],['RTX','RTX (Raytheon)'],['UNH','UnitedHealth'],
+  ['PFE','Pfizer'],['MRK','Merck'],['ABBV','AbbVie'],['LLY','Eli Lilly'],['AVGO','Broadcom'],['QCOM','Qualcomm'],['TXN','Texas Instruments'],['UBER','Uber'],['ABNB','Airbnb'],
+  ['PLTR','Palantir'],['COIN','Coinbase'],['O','Realty Income'],['T','AT&T'],['VZ','Verizon'],['GS','Goldman Sachs'],['MS','Morgan Stanley'],['BAC','Bank of America'],['BLK','BlackRock'],
+  ['NET','Cloudflare'],['SHOP','Shopify'],['RACE','Ferrari (New York)'],['RACE.MI','Ferrari (Milan)'],['SAP.DE','SAP'],['SIE.DE','Siemens'],['ALV.DE','Allianz'],['NESN.SW','Nestlé'],
+  ['ROG.SW','Roche'],['NOVN.SW','Novartis'],['ADYEN.AS','Adyen'],['ENEL.MI','Enel'],['ITX.MC','Inditex (Zara)'],['ULVR.L','Unilever'],['SHEL.L','Shell'],['AZN.L','AstraZeneca'],
   ['^FCHI','CAC 40 (indice)'],['^GSPC','S&P 500 (indice)']];
 const sugCache={};let sugTimer=null,sugReq=0,sugSel=-1,sugL=[],sugAvert=false;
 const sugNorm=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[’']/g,' ');
@@ -9059,7 +9067,7 @@ window.sugAttache=function(inp,surChoix){
     montre(loc,true);let r=null;try{r=await (await fetch(GAS+'?q='+encodeURIComponent(q))).json();}catch(e){}
     if(id!==req||inp.value.trim().length<3)return;
     if(r&&Array.isArray(r.r)){sugCache[cle]=r.r;const T=sugFusion(loc,r.r);montre(T,false,T.length?'':'Aucune action trouvée. Tu peux taper le code Yahoo à la main.');return;}
-    montre(loc,false,loc.length?'':'Pour chercher parmi toutes les actions, mets à jour le script Google.');};
+    montre(loc,false,loc.length?'':'Pas trouvée dans la liste de l’app. Pour chercher parmi toutes les actions, mets à jour le script Google (Réglages). Tu peux aussi taper le code Yahoo à la main.');};
   inp.addEventListener('input',()=>{const q=inp.value.trim();clearTimeout(tm);if(q.length<3){ferme();return;}montre(sugLocaux(q),true);tm=setTimeout(()=>cherche(q),300);});
   inp.addEventListener('keydown',e=>{const ouvert=!box.hidden&&L.length;
     if((e.key==='ArrowDown'||e.key==='ArrowUp')&&ouvert){e.preventDefault();e.stopPropagation();sel=(sel+(e.key==='ArrowDown'?1:-1)+L.length)%L.length;
