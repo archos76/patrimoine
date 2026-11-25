@@ -703,7 +703,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 10h52</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 11h04</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -9471,9 +9471,11 @@ function chargeScript(u){return new Promise((ok,ko)=>{if(document.querySelector(
 async function libsPdf(){if(!window.html2canvas)await chargeScript(LIBS_PDF[0]);if(!(window.jspdf&&window.jspdf.jsPDF))await chargeScript(LIBS_PDF[1]);}
 const HZ=[['','Pas d’horizon précis'],['c','Moins d’un an'],['m','1 à 3 ans'],['l','3 à 5 ans'],['tl','Plus de 5 ans']];
 function thesesDe(){const st=etat();if(!st)return{};if(!st.theses)st.theses={};return st.theses}
-async function finDe(yt){try{const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),9000);
-  const r=await (await fetch(GAS+'?fin=1&t='+encodeURIComponent(yt),{signal:ctl.signal})).json();clearTimeout(t);
-  return r&&Array.isArray(r.an)&&r.an.length?r:null}catch(e){return null}}
+async function finDe(yt){try{const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),30000);
+  const r=await (await fetch(GAS+'?fin=1&t='+encodeURIComponent(yt)+'&_='+Date.now(),{signal:ctl.signal,cache:'no-store'})).json();clearTimeout(t);
+  if(r&&Array.isArray(r.an)&&r.an.length)return r;
+  return {an:[],err:!r?'réponse vide':r.v!==4?'le script Google utilisé est une ancienne version'+(r.error?' ('+r.error+')':''):(r.error||'Yahoo n’a renvoyé aucun chiffre pour '+yt)}}
+  catch(e){return {an:[],err:e&&e.name==='AbortError'?'le script Google n’a pas répondu à temps':'pas de réponse du script Google ('+((e&&e.message)||'erreur')+')'}}}
 const UE=['FR','DE','NL','BE','IT','ES','PT','IE','LU','AT','FI','SE','DK','NO','IS','LI','GR','CY','MT','EE','LT','LV','PL','CZ','SK','SI','HU','RO','BG','HR'];
 function pdfE(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function pdfTxt(s){return pdfE(s).replace(/\n/g,'<br>')}
@@ -9513,7 +9515,9 @@ window.atFiche=async function(){
   statut('Création de la fiche PDF…');
   try{
     await libsPdf();
+    statut('Lecture des comptes de l’entreprise…');
     const F=await finDe(yt);
+    if(F&&F.err)console.warn('comptes :',F.err);
     const pages=await fichePages(yt,th[yt],F,A0);
     const pdf=new window.jspdf.jsPDF({unit:'mm',format:'a4',orientation:'portrait',compress:true});
     for(let i=0;i<pages.length;i++){
@@ -9525,7 +9529,7 @@ window.atFiche=async function(){
     let partage=false;
     if(navigator.canShare&&/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){try{if(navigator.canShare({files:[fic]})){await navigator.share({files:[fic],title:nom});partage=true}}catch(e){if(e&&e.name==='AbortError')partage=true}}
     if(!partage)pdf.save(nom);
-    statut('');
+    statut(F&&F.err&&!/\b(ETF|UCITS)\b/i.test(T.name||'')?'Fiche créée, mais sans les comptes de l’entreprise : '+F.err+'.':'',!!(F&&F.err));
   }catch(e){console.error('fiche PDF :',e);statut('La fiche n’a pas pu être créée : '+((e&&e.message)||'erreur inconnue'),true);}
   finally{if(b){b.disabled=false;b.textContent=lib0;}document.querySelectorAll('.pdfZone').forEach(z=>z.remove());}
 };
@@ -9620,7 +9624,7 @@ async function fichePages(yt,TH,F,A0){
   const planH='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:4px">'+plan.map(x=>'<div><div style="font-size:10px;color:'+P.muted+'">'+x[0]+'</div><div style="font-size:13px;font-weight:600">'+x[1]+'</div></div>').join('')+'</div>';
   h+='<div style="display:grid;grid-template-columns:1.15fr 1fr;gap:14px;margin-top:16px">'+carte('Mes raisons',raisons)+carte('Mon plan',planH)+'</div>';
   /* comptes de l'entreprise */
-  const an=F?F.an.filter(x=>x.ca>0).slice(-6):[];let finH='',indH='';
+  const an=F&&F.an?F.an.filter(x=>x.ca>0).slice(-6):[];let finH='',indH='';
   if(an.length>=2){
     const img=await chartImg(420,200,{type:'bar',data:{labels:an.map(x=>"'"+String(x.y).slice(2)),datasets:[
         {type:'line',label:'Marge nette',data:an.map(x=>x.rn!=null&&x.ca?x.rn/x.ca*100:null),borderColor:P.up,backgroundColor:P.up,yAxisID:'m',pointRadius:3,borderWidth:2,tension:.3},
@@ -9654,7 +9658,7 @@ async function fichePages(yt,TH,F,A0){
       '<div style="position:absolute;left:'+X(A.last)+';top:62px;transform:translateX(-50%);font-size:10px;white-space:nowrap;color:'+P.price+'">cours <b>'+fe(A.last)+'</b></div></div>'+
       '<div style="font-size:10px;color:'+P.muted+'">Valeur du milieu de '+PJ.n+' méthode'+(PJ.n>1?'s':'')+' : '+PJ.M.filter(m=>m.v>0).map(m=>pdfE(m.k)+' '+fe(m.v)).join(' · ')+'.</div>');}
   h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">'+[valoH,pjH].filter(Boolean).join('')+'</div>';
-  if(!an.length&&!etf)h+='<div style="margin-top:10px;font-size:10.5px;color:'+P.muted+'">Comptes de l’entreprise indisponibles : mets à jour le script Google pour les ajouter à la fiche.</div>';
+  if(an.length<2&&!etf)h+='<div style="margin-top:10px;font-size:10.5px;color:'+P.down+'">Comptes de l’entreprise indisponibles : '+pdfE((F&&F.err)||'moins de 2 années reçues')+'.</div>';
   h='<div class="pdfFlux">'+h+'</div>';
   h+='<div style="position:absolute;left:36px;right:36px;bottom:24px;display:flex;justify-content:space-between;font-size:9.5px;color:'+P.muted+'"><span>Mon Patrimoine · fiche du '+auj.toLocaleDateString('fr-FR')+'</span><span>Sources : Yahoo Finance, Wikipédia, mes notes. Ce n’est pas un conseil d’investissement.</span><span class="pdfNo"></span></div>';
   const net=x=>x.replace(/[\u202f\u00a0]/g,' ');
