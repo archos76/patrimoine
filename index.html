@@ -446,6 +446,20 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 #page-techno .at-part .b{grid-column:1/-1;height:6px;border-radius:3px;background:var(--border);overflow:hidden}
 #page-techno .at-part .b i{display:block;height:100%;border-radius:3px}
 #page-techno .at-head{align-items:center}
+#page-techno .at-back{display:inline-flex;align-items:center;gap:8px;margin:0 0 10px;padding:8px 14px 8px 10px;min-height:40px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);font:inherit;font-size:13px;font-weight:500;cursor:pointer;max-width:100%}
+#page-techno .at-back[hidden]{display:none}
+#page-techno .at-ent{margin:14px 0 4px;padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:var(--card)}
+#page-techno .at-ent[hidden]{display:none}
+#page-techno .at-entH{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+#page-techno .at-entH h3{margin:0;font-size:13px;font-weight:600;letter-spacing:.02em}
+#page-techno .at-entM{font-size:12px;color:var(--muted)}
+#page-techno .at-ent p{margin:0;font-size:13.5px;line-height:1.6;color:var(--text2);max-width:72ch}
+#page-techno .at-ent p.vide{color:var(--muted);font-size:12.5px}
+#page-techno .at-entS{margin-top:8px;font-size:11.5px;color:var(--muted)}
+#page-techno .at-entS a{color:var(--accent)}
+#at-body{scroll-margin-top:80px}
+#page-techno .at-back span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#page-techno .at-back:hover{border-color:var(--accent);color:var(--accent)}
 #page-techno .at-star{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:21px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s,color .15s,border-color .15s}
 #page-techno .at-star:hover{border-color:var(--accent);color:var(--accent)}
 #page-techno .at-star.on{color:#d2a85c;border-color:#d2a85c}
@@ -683,7 +697,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 20/11 16h31</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 08h26</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -862,7 +876,7 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="at-pick"><select id="at-sel" aria-label="Valeur à analyser"></select><div class="at-qw"><input type="search" id="at-q" placeholder="Nom de l’action ou code Yahoo" aria-label="Chercher une action par son nom ou son code" autocomplete="off" autocapitalize="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="at-sug"><div class="at-sug" id="at-sug" role="listbox" hidden></div></div><button class="pb" id="at-go">Analyser</button><button class="pb" id="at-upd" hidden>Mettre à jour</button></div>
 <div class="tk" id="at-status" role="status"></div></div>
 <div id="at-body" style="display:none">
-<div class="at-head"><div class="at-hl"><div style="display:flex;align-items:center;gap:10px"><div class="at-title" id="at-title"></div><button type="button" class="at-star" id="at-star" hidden aria-pressed="false" onclick="atEtoileClic()">☆</button></div><div class="at-cours" id="at-cours"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div></div>
+<div class="at-head"><div class="at-hl"><button type="button" class="at-back" id="at-back" hidden onclick="atRevient()">←<span id="at-backL">Retour</span></button><div style="display:flex;align-items:center;gap:10px"><div class="at-title" id="at-title"></div><button type="button" class="at-star" id="at-star" hidden aria-pressed="false" onclick="atEtoileClic()">☆</button></div><div class="at-cours" id="at-cours"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div></div><section class="at-ent" id="at-ent" hidden aria-labelledby="at-entT"><div class="at-entH"><h3 id="at-entT">L’entreprise</h3><span class="at-entM" id="at-entM"></span></div><p id="at-entTx"></p><div class="at-entS" id="at-entS"></div></section>
 <div class="card" id="at-cNote"><div class="ct">Fenêtre d’entrée</div>
 <div class="at-note"><div class="at-score"><div class="at-sn"><span id="at-noteNum"></span><small>/100</small></div><div class="at-noteLib" id="at-noteLib"></div><div id="at-regle"></div></div><div class="at-parts" id="at-parts"></div></div>
 <p class="at-help" style="margin:16px 0 0">Cette note est un calcul mécanique à partir du cours passé et du PER prévisionnel. Elle est haute quand une action en tendance haussière revient sur un prix bas pour elle, et plafonnée quand la tendance est baissière. Elle ne prévoit rien, ignore l’actualité et la santé de l’entreprise, et n’est pas un conseil d’investissement.</p><div class="at-ro" id="at-noteInfo" style="margin:10px 0 0"></div></div>
@@ -8681,6 +8695,7 @@ async function charge(yt,nom,force){
     if(T.pos.pru!=null){const lo=Math.min.apply(null,T.w.l),hi=Math.max.apply(null,T.w.h);if(T.pos.pru>hi*6||T.pos.pru<lo/6)T.pos.pru=null;}
     T.src='Cours Yahoo Finance, chargés le '+new Date(d.ts||Date.now()).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
     $('body').style.display='';refresh();statut('');try{window.atEtoile()}catch(e){}
+    try{atEntreprise(yt,T.name)}catch(e){}
     const sel=$('sel');if([].some.call(sel.options,o=>o.value===yt))sel.value=yt;else sel.value='';
     try{$('body').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
   }catch(e){statut(e.message||'Une erreur est survenue. Réessaie.',true);}
@@ -9014,10 +9029,12 @@ const SUG_BASE=[['AI.PA','Air Liquide'],['AIR.PA','Airbus'],['ALO.PA','Alstom'],
   ['^FCHI','CAC 40 (indice)'],['^GSPC','S&P 500 (indice)']];
 /* actions.json : actions françaises (toutes sauf les plus petites), américaines et grandes européennes,
    ETF cotés à Paris. Chargé la première fois qu'on touche un champ de recherche, puis gardé. */
+const SECTEURS=['Industrie','Matériaux','Finance','Technologie','Santé','Consommation (biens durables, loisirs)','Consommation courante','Immobilier','Communication et médias','Énergie','Services aux collectivités'];
+const PAYS={US:'États-Unis',FR:'France',DE:'Allemagne',GB:'Royaume-Uni',NL:'Pays-Bas',CH:'Suisse',IT:'Italie',ES:'Espagne',BE:'Belgique',SE:'Suède',DK:'Danemark',NO:'Norvège',FI:'Finlande',IE:'Irlande',LU:'Luxembourg',CA:'Canada',PT:'Portugal',AT:'Autriche',JP:'Japon',CN:'Chine',IL:'Israël',BM:'Bermudes',JE:'Jersey',KY:'Îles Caïmans',BR:'Brésil',AU:'Australie',IN:'Inde',TW:'Taïwan',KR:'Corée du Sud',MX:'Mexique',GR:'Grèce',PL:'Pologne',MC:'Monaco',GG:'Guernesey',SG:'Singapour',HK:'Hong Kong',AR:'Argentine',CL:'Chili',CO:'Colombie',ZA:'Afrique du Sud',PE:'Pérou',UY:'Uruguay',PR:'Porto Rico',PA:'Panama',CY:'Chypre',CZ:'Tchéquie',IS:'Islande',MT:'Malte',IM:'Île de Man',GI:'Gibraltar',LI:'Liechtenstein',EE:'Estonie',LT:'Lituanie',TR:'Turquie',AE:'Émirats arabes unis',KZ:'Kazakhstan',RU:'Russie',ID:'Indonésie',PH:'Philippines',TH:'Thaïlande',VN:'Viêt Nam',MY:'Malaisie',NZ:'Nouvelle-Zélande',MO:'Macao',VG:'Îles Vierges britanniques',BS:'Bahamas',MH:'Îles Marshall',CW:'Curaçao'};
 const BOURSES={PAR:'Paris',NYQ:'NYSE',NMS:'Nasdaq',NGM:'Nasdaq',NCM:'Nasdaq',ASE:'NYSE American',PCX:'NYSE Arca',BTS:'Cboe',AMS:'Amsterdam',BRU:'Bruxelles',MIL:'Milan',MCE:'Madrid',GER:'Xetra',EBS:'Zurich',LSE:'Londres',CPH:'Copenhague',STO:'Stockholm',HEL:'Helsinki',OSL:'Oslo',LIS:'Lisbonne',TOR:'Toronto',DUB:'Dublin'};
 let ACTIONS=null,_actP=null;
 function actionsCharge(){if(ACTIONS)return Promise.resolve(ACTIONS);if(_actP)return _actP;
-  _actP=fetch('actions.json').then(r=>r.ok?r.json():[]).then(L=>{ACTIONS=(Array.isArray(L)?L:[]).map(x=>({s:x[0],n:x[1],x:BOURSES[x[2]]||x[2]||'',k:sugNorm(x[1]),t:sugNorm(x[0]),p:x[2]==='PAR'?0:/^(NYQ|NMS)$/.test(x[2])?1:2}));return ACTIONS}).catch(()=>{_actP=null;return []});
+  _actP=fetch('actions.json').then(r=>r.ok?r.json():[]).then(L=>{ACTIONS=(Array.isArray(L)?L:[]).map(x=>({s:x[0],n:x[1],x:BOURSES[x[2]]||x[2]||'',k:sugNorm(x[1]),t:sugNorm(x[0]),p:x[2]==='PAR'?0:/^(NYQ|NMS)$/.test(x[2])?1:2,sec:x[3]!=null&&x[3]>=0?SECTEURS[x[3]]:'',pays:x[4]?(PAYS[x[4]]||x[4]):''}));return ACTIONS}).catch(()=>{_actP=null;return []});
   return _actP;}
 const sugCache={};let sugTimer=null,sugReq=0,sugSel=-1,sugL=[],sugAvert=false;
 const sugNorm=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[’']/g,' ');
@@ -9112,10 +9129,42 @@ let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>
 document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t||t.dataset.page!=='techno')return;
   remplitSel();vue(false);if(!T.A)statut('Choisis une valeur pour afficher son analyse.');setTimeout(()=>{if(T.A)drawAll();},60);});
 /* Depuis la fiche d'une ligne */
+/* ===== RETOUR =====
+   En ouvrant une analyse depuis une autre page, on note d'où l'on vient (page, onglet, position dans la page).
+   Le bouton « ← … » en haut de l'analyse, ou le geste retour du téléphone, y ramène. */
+let atOrigine=null;
+function atNomOrigine(o){
+  if(o.page==='bourse'){try{const v=BVUES.find(x=>x.k===o.vue);if(v)return v.k==='ensemble'?'Bourse':v.k==='watch'?'Watchlist':v.k==='dividendes'?'Dividendes':v.l}catch(e){}return 'Bourse'}
+  const b=document.querySelector('#tabs .tab[data-page="'+o.page+'"]');return b?b.textContent.replace(/\s+/g,' ').trim():'Retour';}
+function atMajRetour(){const b=$('back');if(!b)return;if(!atOrigine){b.hidden=true;return}
+  b.hidden=false;const n=atNomOrigine(atOrigine);$('backL').textContent=n;b.title='Revenir à : '+n;b.setAttribute('aria-label','Revenir à '+n);}
+function atVa(){
+  const p=document.querySelector('.page.active'),id=p?p.id.replace('page-',''):'';
+  if(id&&id!=='techno'){
+    let vue=null;try{vue=bourseVue}catch(e){}
+    atOrigine={page:id,vue:vue,y:window.scrollY||document.documentElement.scrollTop||0};
+    try{if(!(history.state&&history.state.at))history.pushState({at:1},'')}catch(e){}
+  }
+  if(typeof goPage==='function')goPage('techno');
+  atMajRetour();requestAnimationFrame(()=>window.scrollTo(0,0));
+}
+function atRestaure(){const o=atOrigine;if(!o)return;atOrigine=null;atMajRetour();
+  if(typeof goPage==='function')goPage(o.page);
+  if(o.page==='bourse'&&o.vue&&typeof setBourseVue==='function')try{setBourseVue(o.vue)}catch(e){}
+  /* la page se redessine : on attend un instant avant de retrouver sa place */
+  const va=()=>window.scrollTo(0,o.y||0);requestAnimationFrame(()=>{setTimeout(va,60);setTimeout(va,300);setTimeout(va,700);setTimeout(va,1200)});}
+window.atRevient=function(){
+  if(history.state&&history.state.at){history.back();return}   /* le geste retour fera le reste */
+  atRestaure();};
+window.addEventListener('popstate',()=>{
+  const p=document.querySelector('.page.active');
+  if(atOrigine&&p&&p.id==='page-techno')atRestaure();});
+/* on quitte l'analyse par le menu : le bouton retour n'a plus de sens */
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('#tabs .tab');if(t&&t.dataset.page!=='techno'&&atOrigine){atOrigine=null;atMajRetour();}},true);
 window.atOuvre=function(pk,id){const st=etat(),p=st&&st.pf&&st.pf[pk],l=p&&(p.l||[]).find(x=>String(x.id)===String(id));if(!l)return;
-  const yt=ytDe(l.c);if(typeof goPage==='function')goPage('techno');charge(yt,l.n||l.c);};
-window.atOuvreW=function(id){const st=etat(),w=st&&(st.watchlist||[]).find(x=>String(x.id)===String(id));if(!w||!w.ticker)return;if(typeof goPage==='function')goPage('techno');charge(w.ticker,w.nom||w.ticker);};
-window.atOuvreYt=function(yt){const x=liste().find(o=>o.yt===yt);if(typeof goPage==='function')goPage('techno');charge(yt,x?x.n:null);};
+  const yt=ytDe(l.c);atVa();charge(yt,l.n||l.c);};
+window.atOuvreW=function(id){const st=etat(),w=st&&(st.watchlist||[]).find(x=>String(x.id)===String(id));if(!w||!w.ticker)return;atVa();charge(w.ticker,w.nom||w.ticker);};
+window.atOuvreYt=function(yt){const x=liste().find(o=>o.yt===yt);atVa();charge(yt,x?x.n:null);};
 
 /* ---------- signaux pour les alertes de l'accueil ---------- */
 let sigMemo={cle:null,liste:[]};
@@ -9347,12 +9396,54 @@ window.sAF=function(cid,sk,fields,b64){const fs=typeof fields==='string'?JSON.pa
 window.atHist=async function(liste){const H=await getHists(liste),out={};liste.forEach(yt=>{const d=H[yt];if(!d)return;try{const W=versW(d);out[yt]={t:W.t,c:W.c,a:W.a&&W.a.some(x=>x>0)?W.a:null,cur:d.cur};}catch(e){}});return out;};
 window.atDivAuto=async function(liste){const H=await getHists(liste),out={};liste.forEach(yt=>{const d=H[yt];if(!d)return;try{const W=versW(d),D=dividendes(W);out[yt]=D?{exact:D.exact,cur:d.cur,fin:W.t[W.t.length-1],ev:D.ev||[]}:null;}catch(e){}});return out;};
 /* l'étoile : pleine si le titre est suivi */
+/* ===== L'ENTREPRISE EN QUELQUES LIGNES =====
+   Secteur et pays : la liste d'actions de l'application. Présentation : le début de l'article Wikipédia
+   en français, cherché par le nom de l'entreprise, et gardé 30 jours sur l'appareil. */
+const ENT_MOTS=/(entreprise|soci[ée]t[ée]|groupe|multinationale|constructeur|fabricant|banque|compagnie|conglom[ée]rat|assureur|laboratoire|holding|firme|cha[iî]ne|op[ée]rateur|[ée]diteur|[ée]quipementier|distributeur|producteur|fonci[eè]re|exploitant|transporteur|p[ée]troli[eè]re|brasseur|maison de|g[ée]ant|leader|sp[ée]cialiste|n[ée]obanque|plateforme|cotée)/i;
+const ENT_VIDES=['le','la','les','l','de','du','des','et','the','of','group','groupe','holding','holdings','sa','se','inc','corp','corporation','company','co','plc','ag','nv','ltd','international','ucits','etf','acc'];
+function entMots(s){return sugNorm(s).replace(/[^a-z0-9 ]+/g,' ').split(' ').filter(w=>w.length>=3&&ENT_VIDES.indexOf(w)<0)}
+function entNom(n){return String(n||'').replace(/\s*\((ETF|indice)\)\s*$/i,'').replace(/^L['’]/,'').replace(/,?\s+(S\.?A\.?|SE|N\.?V\.?|Inc\.?|Corp\.?|plc|AG|Ltd\.?|Holdings?|Group|Groupe)$/i,'').trim()}
+async function entWiki(nom){
+  const M=entMots(nom);if(!M.length)return null;
+  const u='https://fr.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&origin=*&generator=search&gsrlimit=5&gsrsearch='+encodeURIComponent(nom+' entreprise')+
+    '&prop=extracts%7Cdescription%7Cinfo&inprop=url&exintro=1&explaintext=1&exsentences=3&exlimit=5';
+  const j=await (await fetch(u)).json(),P=((j&&j.query&&j.query.pages)||[]).slice().sort((a,b)=>(a.index||0)-(b.index||0));
+  for(const p of P){const T=entMots(p.title),ex=String(p.extract||'').trim();
+    if(!ex||!M.some(w=>T.indexOf(w)>=0))continue;
+    if(!ENT_MOTS.test((p.description||'')+' '+ex.slice(0,260)))continue;
+    return{ti:p.title,e:ex.replace(/\s*\([^()]*\)/g,'').replace(/\s{2,}/g,' ').replace(/\s+([,.])/g,'$1'),u:p.fullurl||('https://fr.wikipedia.org/wiki/'+encodeURIComponent(p.title.replace(/ /g,'_')))};}
+  return null;}
+let entJeton=0;
+window.atEntreprise=atEntreprise;
+async function atEntreprise(yt,nomAff){
+  const z=$('ent');if(!z)return;const jeton=++entJeton;
+  let A=null;try{await actionsCharge();A=(ACTIONS||[]).find(a=>a.s.toUpperCase()===String(yt).toUpperCase())||null}catch(e){}
+  if(jeton!==entJeton)return;
+  const nom=A?A.n:(nomAff||''),etf=/\b(ETF|UCITS|Tracker|Index Fund)\b/i.test(nom)||(A&&!A.sec&&/ETF/i.test(nom));
+  $('entM').textContent=[A&&A.sec,A&&A.pays].filter(Boolean).join(' · ');
+  if(/^\^/.test(yt)){$('entT').textContent='L’indice';$('entTx').className='';$('entTx').textContent='Un indice boursier mesure l’évolution d’un panier d’actions : il ne s’achète pas directement, mais des ETF permettent de le suivre.';$('entS').textContent='';z.hidden=false;return;}
+  if(etf){$('entT').textContent='Le fonds';$('entTx').className='';$('entTx').textContent='Fonds indiciel coté (ETF) : il suit un indice plutôt que de choisir ses actions. Sa composition est détaillée sur le site de la société de gestion.';$('entS').textContent='';z.hidden=false;return;}
+  $('entT').textContent='L’entreprise';
+  if(!nom){z.hidden=true;return;}
+  const cle='atEnt:'+yt;let c=null;try{c=JSON.parse(localStorage.getItem(cle)||'null')}catch(e){}
+  if(!c||!(c.t>Date.now()-30*864e5)){
+    $('entTx').className='vide';$('entTx').textContent='Recherche de la présentation…';$('entS').textContent='';z.hidden=false;
+    let w=null,ok=true;try{w=await entWiki(entNom(nom))}catch(e){ok=false}
+    if(jeton!==entJeton)return;
+    c={t:Date.now(),w:w};if(ok)try{localStorage.setItem(cle,JSON.stringify(c))}catch(e){}
+    if(!ok)c.horsLigne=true;}
+  if(c.w){$('entTx').className='';$('entTx').textContent=c.w.e;
+    $('entS').innerHTML='Source : <a href="'+String(c.w.u).replace(/"/g,'%22')+'" target="_blank" rel="noopener">Wikipédia, « '+sugEsc(c.w.ti)+' »</a> · résumé automatique, à vérifier';}
+  else{$('entTx').className='vide';$('entTx').textContent=c.horsLigne?'Présentation indisponible pour le moment (connexion ?).':'Pas de présentation trouvée pour cette entreprise.';
+    $('entS').innerHTML='<a href="https://fr.wikipedia.org/w/index.php?search='+encodeURIComponent(entNom(nom))+'" target="_blank" rel="noopener">Chercher sur Wikipédia</a>';}
+  z.hidden=!($('entM').textContent||c.w||nom);
+}
 window.atEtoile=function(){const b=$('star');if(!b)return;if(!T.key){b.hidden=true;return}
   const on=typeof window.wlA==='function'&&window.wlA(T.key);b.hidden=false;b.textContent=on?'★':'☆';b.classList.toggle('on',on);
   b.setAttribute('aria-pressed',on?'true':'false');b.title=on?'Dans ta watchlist : touche pour la retirer':'Ajouter à ma watchlist';b.setAttribute('aria-label',b.title);};
 window.atEtoileClic=function(){if(!T.key||typeof window.wlBascule!=='function')return;
   const W=T.w,last=W&&W.c?W.c[W.c.length-1]:0;window.wlBascule(T.key,T.name,last,T.cur);window.atEtoile();};
-window.atAnalyse=function(yt,nom){if(typeof goPage==='function')goPage('techno');charge(yt,nom);};
+window.atAnalyse=function(yt,nom){atVa();charge(yt,nom);};
 })();
 </script>
 </body>
