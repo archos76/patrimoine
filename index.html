@@ -504,7 +504,15 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 #page-techno #at-body.at-synth>*{min-width:0}
 #page-techno #at-body.at-synth #at-tiles,#page-techno #at-body.at-synth .at-cFR,#page-techno #at-body.at-synth .at-g2v,#page-techno #at-body.at-synth .at-help,#page-techno #at-body.at-synth .at-legend{display:none}
 #page-techno #at-body.at-synth #at-cPrix:not(.at-vu),#page-techno #at-body.at-synth #at-cReg:not(.at-vu),#page-techno #at-body.at-synth #at-cDD:not(.at-vu),#page-techno #at-body.at-synth #at-cmpCard:not(.at-vu),#page-techno #at-body.at-synth #at-cHist:not(.at-vu){display:none!important}
-#page-techno #at-body.at-synth #at-cDiv:not(.at-vu){display:none!important}
+#page-techno #at-body.at-synth #at-cDiv:not(.at-vu),#page-techno #at-body.at-synth #at-cFin:not(.at-vu){display:none!important}
+#page-techno .at-finG{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:10px}
+#page-techno .at-finC{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--card2)}
+#page-techno .at-finT{font-size:13px;font-weight:600;margin-bottom:6px}
+#page-techno .at-finV{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+#page-techno .at-finV b{font-size:18px}#page-techno .at-finV small{font-size:11px;color:var(--muted)}
+#page-techno .at-finCv{position:relative;height:140px}
+#page-techno .at-finS{font-size:11.5px;color:var(--text2);margin-top:4px}
+#page-techno .at-finR{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.45}
 #page-techno .at-pjN{display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap}
 #page-techno .at-pjN .v{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 #page-techno .at-pjN .e{font-size:13.5px;font-weight:500}
@@ -703,7 +711,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 11h26</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 12h00</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -893,7 +901,7 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div id="at-valo"></div></div>
 <div class="card" id="at-cCible"><div class="ct">Objectif des analystes</div><p class="at-help">Le prix que les analystes financiers visent en moyenne d’ici un an. C’est une opinion, souvent trop optimiste, pas une promesse.</p><div id="at-cible"></div></div></div>
 <div class="card" id="at-cLect"><div class="ct">Lecture rapide</div><ul class="at-read" id="at-read"></ul></div>
-<div class="at-onglets" id="at-onglets"><button class="pb" data-c="at-cPrix">Cours et paliers</button><button class="pb" data-c="at-cReg">Trajectoire</button><button class="pb" data-c="at-cDD">Baisse depuis le sommet</button><button class="pb" data-c="at-cmpCard">Face au marché</button><button class="pb" data-c="at-cHist">Historique de la note</button><button class="pb" data-c="at-cDiv">Dividendes</button></div>
+<div class="at-onglets" id="at-onglets"><button class="pb" data-c="at-cPrix">Cours et paliers</button><button class="pb" data-c="at-cReg">Trajectoire</button><button class="pb" data-c="at-cDD">Baisse depuis le sommet</button><button class="pb" data-c="at-cmpCard">Face au marché</button><button class="pb" data-c="at-cHist">Historique de la note</button><button class="pb" data-c="at-cDiv">Dividendes</button><button class="pb" data-c="at-cFin">Comptes</button></div>
 <div class="card" id="at-cPrix"><div class="ct">Cours et paliers</div><p class="at-help">La courbe bleue est le prix de l’action. Les deux moyennes lissent le prix pour montrer la tendance. Les lignes rouges et vertes sont des prix où l’action a souvent buté ou rebondi par le passé.</p><div class="at-ro" id="at-roPrice"></div><canvas id="at-cvPrice"></canvas>
 <div class="at-legend"><span><i style="background:var(--bourse)"></i>Cours</span><span><i style="background:var(--orange)"></i>Moyenne 50 semaines</span><span><i style="background:var(--text)"></i>Moyenne 200 semaines</span><span><i style="background:var(--red)"></i>Palier au-dessus (résistance)</span><span><i style="background:var(--green)"></i>Palier en dessous (support)</span><span><i style="background:var(--muted);height:8px;opacity:.5"></i>Prix les plus échangés</span><span><i style="background:var(--green);width:8px;height:8px;border-radius:50%"></i>Croisement haussier des moyennes</span><span><i style="background:var(--red);width:8px;height:8px;border-radius:50%"></i>Croisement baissier</span><span><i style="background:var(--crypto)"></i>Ton prix de revient</span><span id="at-lgOps" hidden><b style="color:var(--green)">▲</b> Tes achats &nbsp;<b style="color:var(--red)">▼</b> Tes ventes</span></div></div>
 <div class="card" id="at-cDD"><div class="ct">Baisse depuis le plus haut</div><p class="at-help">À 0 %, l’action est à son record. Plus la courbe descend, plus l’action est loin de son dernier sommet.</p><div class="at-ro" id="at-roDD"></div><canvas id="at-cvDD"></canvas></div>
@@ -901,6 +909,7 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="card" id="at-cmpCard" style="display:none"><div class="ct">Comparaison avec le marché</div><p class="at-help">Les deux courbes partent du même point au début de la période. Si la courbe bleue finit au-dessus de l’autre, l’action a fait mieux que son indice. Les dividendes ne sont comptés d’aucun côté.</p><div class="at-ro" id="at-roCmp"></div><canvas id="at-cvCmp"></canvas><div class="at-legend"><span><i style="background:var(--bourse)"></i><span id="at-cmpA"></span></span><span><i style="background:var(--text)"></i><span id="at-cmpB"></span></span></div></div>
 <div class="card" id="at-cHist"><div class="ct">Historique de la note</div><p class="at-help">La note que l’action aurait eue à chaque date, calculée avec les seules données connues à ce moment-là, puis ce que le cours a fait dans l’année suivante. C’est le moyen de vérifier si la note a été utile sur cette action.</p><div class="at-ro" id="at-roHist"></div><canvas id="at-cvHist"></canvas><div id="at-histTab" style="margin-top:14px"></div></div>
 <div class="card" id="at-cDiv"><div class="ct">Historique du dividende</div><p class="at-help">Ce que l’action a versé chaque année, par action. Un dividende qui monte régulièrement est le signe d’une entreprise solide ; un dividende coupé est un signal d’alerte.</p><div class="kr" id="at-divK"></div><div class="at-ro" id="at-roDiv"></div><canvas id="at-cvDiv"></canvas><div class="at-ro" id="at-divInfo" style="margin:10px 0 0"></div></div>
+<div class="card" id="at-cFin"><div class="ct">Les comptes de l’entreprise</div><div id="at-finZ"></div></div>
 <div class="g2 at-cFR"><div class="card"><div class="ct">Retracement Fibonacci</div><p class="at-help">On mesure la dernière grande hausse, du point bas au point haut. Les lignes indiquent quelle part de cette hausse serait effacée si le prix redescendait jusque-là.</p><div class="at-ro" id="at-roFib"></div><canvas id="at-cvFib"></canvas></div>
 <div class="card"><div class="ct">Élan récent (RSI)</div><p class="at-help">Le RSI va de 0 à 100. Au-dessus de 70, l’action a beaucoup monté récemment. En dessous de 30, elle a beaucoup baissé récemment.</p><div class="at-ro" id="at-roRsi"></div><canvas id="at-cvRsi"></canvas></div></div>
 <div class="tk" style="margin:4px 2px 24px;line-height:1.55">Lecture du passé du cours, à titre pédagogique. Ce n’est pas un conseil en investissement. Les performances passées ne préjugent pas des performances futures.</div>
@@ -8786,9 +8795,10 @@ function regle(v,zones,max,trait,noms){let h='<div class="at-rg">',a=0,col='--te
   h+='</div>';a=0;
   if(noms){h+='<div class="at-rgl" style="grid-template-columns:'+zones.map(z=>{const w=z[0]-a;a=z[0];return w+'fr'}).join(' ')+'">'+noms.map(x=>'<span>'+x+'</span>').join('')+'</div>';}
   return h;}
-function majOnglet(){const ids=['at-cPrix','at-cReg','at-cDD','at-cmpCard','at-cHist','at-cDiv'];if(ids.indexOf(T.onglet)<0)T.onglet='at-cPrix';
+function majOnglet(){const ids=['at-cPrix','at-cReg','at-cDD','at-cmpCard','at-cHist','at-cDiv','at-cFin'];if(ids.indexOf(T.onglet)<0)T.onglet='at-cPrix';
   ids.forEach(id=>document.getElementById(id).classList.toggle('at-vu',id===T.onglet));
-  $('onglets').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.c===T.onglet));}
+  $('onglets').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.c===T.onglet));
+  if(T.onglet==='at-cFin'&&!window.__pdfCapture)setTimeout(()=>{try{atComptes()}catch(e){}},0);}
 function renderSynth(){const A=T.A,F=A.fond;
   $('body').classList.toggle('at-synth',!!T.synth);
   $('cours').innerHTML='<b>'+eur(A.last)+'</b>';
@@ -9396,7 +9406,10 @@ window.ouvreForm=function(ancre,titre,champs,surValider){
   {const iT=(champs||[]).findIndex(c=>c.k==='ticker'),iN=(champs||[]).findIndex(c=>c.k==='nom');if(iT>=0)window.sugFenetre(iN>=0?iN:null,iT,(champs||[]).findIndex((c,i)=>i>Math.max(iT,iN)));}
   modale({titre:titre,champs:(champs||[]).map(c=>({k:c.k,lib:c.lib,type:c.type==='nombre'?'nombre':c.type==='choix'?'choix':'texte',val:c.val,ph:c.ph,opt:c.opt,muet:c.muet,options:c.options}))})
     .then(v=>{if(!v||!surValider)return;try{surValider(v);}catch(e){try{signalePanne('ajout',e);}catch(e2){}}});};
-window.sA=function(pk){const st=etat(),usd=!!(st&&st.pf[pk]&&st.pf[pk].cur==='USD');
+window.sA=async function(pk){const st=etat(),usd=!!(st&&st.pf[pk]&&st.pf[pk].cur==='USD');
+  const genre=await modale({titre:'Ajouter une action',sous:typeof nomCpt==='function'?nomCpt(pk):'',boutons:[['a','J’ai acheté une nouvelle action'],['x','J’ajoute une action que j’avais déjà']]});
+  if(!genre)return;
+  if(genre==='a'){window.sAchatNeuf(pk,usd);return;}
   modale({titre:'Ajouter une ligne',sous:typeof nomCpt==='function'?nomCpt(pk):'',valider:'Ajouter la ligne',champs:[
     {k:'n',lib:'Nom',ph:'Tape 3 lettres : air liq…'},
     {k:'c',lib:'Code Yahoo',ph:'AI.PA, GOOGL…',opt:true,aide:'Rempli tout seul si tu choisis dans la liste.'},
@@ -9409,6 +9422,33 @@ window.sA=function(pk){const st=etat(),usd=!!(st&&st.pf[pk]&&st.pf[pk].cur==='US
     z.innerHTML=ch('an',v.n)+ch('ac',v.c)+ch('ao',v.co)+ch('ap',v.p)+ch('ar',v.pr)+ch('ad',v.div);
     cA(pk);});
   window.sugFenetre(0,1,2);};
+/* Un achat d'une action qu'on n'avait pas : la ligne, le journal et les espèces en une fois */
+window.sAchatNeuf=function(pk,usd){const dv=usd?'$':'€';
+  modale({titre:'Nouvel achat',sous:typeof nomCpt==='function'?nomCpt(pk):'',valider:'Enregistrer l’achat',champs:[
+    {k:'n',lib:'Nom',ph:'Tape 3 lettres : air liq…'},
+    {k:'c',lib:'Code Yahoo',ph:'AI.PA, GOOGL…',opt:true,aide:'Rempli tout seul si tu choisis dans la liste.'},
+    {k:'d',lib:'Date',type:'date',val:opJour()},
+    {k:'q',lib:'Quantité',type:'nombre'},
+    {k:'px',lib:'Prix par action ('+dv+')',type:'nombre'},
+    {k:'fr',lib:'Frais ('+dv+')',type:'nombre',opt:true},
+    {k:'div',lib:'Dividende par action',type:'nombre',opt:true}],
+    verif:x=>!String(x.n||'').trim()?[0,'Indique le nom de l’action.']:!opLitDate(x.d)?[2,'La date n’est pas valable (elle ne peut pas être dans le futur).']:!(x.q>0)?[3,'La quantité doit être plus grande que zéro.']:!(x.px>0)?[4,'Le prix doit être plus grand que zéro.']:x.fr<0?[5,'Les frais ne peuvent pas être négatifs.']:null})
+  .then(async v=>{if(!v)return;const z=document.getElementById('add-'+pk);if(!z)return;
+    const q=v.q,px=v.px,fr=nb(v.fr),pru=Math.round((q*px+fr)/q*1e4)/1e4;
+    const ch=(id,val)=>'<input type="hidden" id="'+id+'-'+pk+'" value="'+esc(val?String(val):'')+'">';
+    z.innerHTML=ch('an',v.n)+ch('ac',v.c)+ch('ao','')+ch('ap',q)+ch('ar',pru)+ch('ad',v.div);
+    const pf=S.pf[pk],avant=pf.l.length,esp0=pf.esp;
+    await cA(pk);
+    const l=pf.l.length>avant?pf.l[pf.l.length-1]:null;if(!l)return;
+    const tx=opDev(pk,l)==='$'?nb(eurUsd)||1:1,c2=x=>Math.round(x*100)/100;
+    const op={id:nid(),pk:pk,c:l.c,n:l.n,t:'a',d:opLitDate(v.d),q:q,px:px,fr:fr,maj:1};
+    const cu=devL(pk,l);if(cu!==devL(pk,null))op.cur=cu;
+    pf.esp=Math.max(0,c2(nb(pf.esp)-(q*px+fr)*tx));
+    opsTous().push(op);const idOp=op.id,idL=l.id;
+    opAnnulable('Achat enregistré : '+(l.n||l.c)+' ajoutée, noté dans le journal · espèces : '+F2(nb(pf.esp))+'.',()=>{
+      S.ops=opsTous().filter(x=>x.id!==idOp);pf.esp=esp0;pf.l=pf.l.filter(x=>x.id!==idL);});
+    autoSave();R(true);});
+  window.sugFenetre(0,1,3);};
 window.sAF=function(cid,sk,fields,b64){const fs=typeof fields==='string'?JSON.parse(fields):fields;
   const TI={comptes:'Ajouter un compte',epLibre:'Ajouter une épargne disponible',epBloq:'Ajouter une épargne bloquée',crypto:'Ajouter une crypto',dettes:'Ajouter un prêt'},
     LB={nom:'Nom',banque:'Banque',montant:'Montant (€)',symbol:'Symbole (BTC, ETH…)',qte:'Quantité',pru:'Prix de revient (€)',emprunte:'Montant emprunté (€)',taux:'Taux (% par an)',dureeMois:'Durée (mois)',differe:'Différé (mois)',dateDebut:'Début (AAAA-MM)',fin:'Fin (ex. Jan 2048)'};
@@ -9516,7 +9556,7 @@ window.atFiche=async function(){
   try{
     await libsPdf();
     statut('Lecture des comptes de l’entreprise…');
-    const F=await finDe(yt);
+    const F=await finCache(yt);
     if(F&&F.err)console.warn('comptes :',F.err);
     const pages=await fichePages(yt,th[yt],F,A0);
     const pdf=new window.jspdf.jsPDF({unit:'mm',format:'a4',orientation:'portrait',compress:true});
@@ -9535,7 +9575,8 @@ window.atFiche=async function(){
 };
 /* Les indicateurs « indispensables », année par année, avec un repère en mots simples.
    Vert = bon signe, orange = correct, rouge = à surveiller. */
-async function pageComptes(an,F,P,page,carte,nom,code,moisAn,txt2){
+/* Les indicateurs calculés une fois, pour la fiche PDF et pour l'onglet « Comptes » de l'analyse */
+function comptesListe(an,F,P){
   const cur=F.cur||'',sym=cur==='EUR'?'€':cur==='USD'?'$':cur==='GBP'?'£':cur==='CHF'?'CHF':cur,ab=Math.abs;
   const ok=v=>v!=null&&isFinite(v);
   const parA=x=>{if(x.nba>0)return x.nba;if(x.bpa&&x.rn)return x.rn/x.bpa;return null};
@@ -9543,35 +9584,44 @@ async function pageComptes(an,F,P,page,carte,nom,code,moisAn,txt2){
   const crois=vals=>{const v=vals.filter(x=>ok(x.v));if(v.length<2)return null;const a=v[0],z=v[v.length-1];return a.v>0&&z.v>0?Math.pow(z.v/a.v,1/(z.y-a.y))-1:null};
   const tendC=g=>g==null?P.muted:g>0.03?P.up:g>=0?P.accent:P.down;
   const I=[
-    {t:'Chiffre d’affaires',f:fm,v:x=>x.ca,c:v=>v<0?P.down:P.price,g:1,r:'Les ventes de l’entreprise. Bon signe : elles montent avec les années.'},
-    {t:'Bénéfice par action (BPA)',f:fps,v:x=>ok(x.bpa)?x.bpa:(x.rn&&parA(x)?x.rn/parA(x):null),c:v=>v<0?P.down:P.price,g:1,r:'Le bénéfice qui revient à une action. Bon signe : il monte régulièrement.'},
-    {t:'Free cash flow par action',f:fps,v:x=>ok(x.fcf)&&parA(x)?x.fcf/parA(x):null,c:v=>v<0?P.down:P.price,g:1,r:'L’argent qui reste vraiment après les investissements. C’est lui qui paie le dividende.'},
-    {t:'Marge d’exploitation',f:pc,v:x=>x.ca>0&&ok(x.ro!=null?x.ro:x.ebit)?(x.ro!=null?x.ro:x.ebit)/x.ca:null,c:v=>v>=0.15?P.up:v>=0.08?P.accent:P.down,
+    {t:'Chiffre d’affaires',f:fm,ax:v=>mm(v),v:x=>x.ca,c:v=>v<0?P.down:P.price,g:1,r:'Les ventes de l’entreprise. Bon signe : elles montent avec les années.'},
+    {t:'Bénéfice par action (BPA)',f:fps,ax:v=>nf1.format(v),v:x=>ok(x.bpa)?x.bpa:(x.rn&&parA(x)?x.rn/parA(x):null),c:v=>v<0?P.down:P.price,g:1,r:'Le bénéfice qui revient à une action. Bon signe : il monte régulièrement.'},
+    {t:'Free cash flow par action',f:fps,ax:v=>nf1.format(v),v:x=>ok(x.fcf)&&parA(x)?x.fcf/parA(x):null,c:v=>v<0?P.down:P.price,g:1,r:'L’argent qui reste vraiment après les investissements. C’est lui qui paie le dividende.'},
+    {t:'Marge d’exploitation',f:pc,ax:v=>Math.round(v*100)+' %',v:x=>x.ca>0&&ok(x.ro!=null?x.ro:x.ebit)?(x.ro!=null?x.ro:x.ebit)/x.ca:null,c:v=>v>=0.15?P.up:v>=0.08?P.accent:P.down,
       j:v=>v>=0.15?'Très bonne':v>=0.08?'Correcte':'Faible',r:'Sur 100 € de ventes, ce qui reste après les frais du métier. Plus de 15 % : très bien.'},
-    {t:'Rentabilité des fonds propres',f:pc,v:x=>x.cp>0&&ok(x.rn)?x.rn/x.cp:null,c:v=>v>=0.15?P.up:v>=0.08?P.accent:P.down,
+    {t:'Rentabilité des fonds propres',f:pc,ax:v=>Math.round(v*100)+' %',v:x=>x.cp>0&&ok(x.rn)?x.rn/x.cp:null,c:v=>v>=0.15?P.up:v>=0.08?P.accent:P.down,
       j:v=>v>=0.15?'Très bonne':v>=0.08?'Correcte':'Faible',r:'Ce que rapporte chaque année l’argent des actionnaires (ROE). Plus de 15 % : très bien.'},
-    {t:'Part du bénéfice versée en dividende',f:pc,v:x=>ok(x.div)&&x.div!==0&&x.rn>0?ab(x.div)/x.rn:null,c:v=>v<=0.7?P.up:v<=1?P.accent:P.down,
+    {t:'Part du bénéfice versée en dividende',f:pc,ax:v=>Math.round(v*100)+' %',v:x=>ok(x.div)&&x.div!==0&&x.rn>0?ab(x.div)/x.rn:null,c:v=>v<=0.7?P.up:v<=1?P.accent:P.down,
       j:v=>v<=0.7?'Raisonnable':v<=1?'Élevée':'Trop élevée',r:'Entre 30 et 70 % : sain. Au-dessus de 100 %, l’entreprise verse plus qu’elle ne gagne.',
       s:x=>ok(x.div)&&x.div!==0&&x.fcf>0?'sur le free cash flow : '+pc(ab(x.div)/x.fcf):''},
-    {t:'Dette nette / EBITDA',f:v=>v<=0?'Pas de dette nette':fx(v),v:x=>ok(x.dette)&&x.ebitda>0?(x.dette-(x.cash||0))/x.ebitda:null,c:v=>v<=2.5?P.up:v<=4?P.accent:P.down,
+    {t:'Dette nette / EBITDA',f:v=>v<=0?'Pas de dette nette':fx(v),ax:v=>nf1.format(v)+'x',v:x=>ok(x.dette)&&x.ebitda>0?(x.dette-(x.cash||0))/x.ebitda:null,c:v=>v<=2.5?P.up:v<=4?P.accent:P.down,
       j:v=>v<=0?'Plus de trésorerie que de dettes':v<=2.5?'Confortable':v<=4?'À suivre':'Lourde',r:'Le nombre d’années de résultat pour rembourser la dette. Moins de 2,5 : confortable. Plus de 4 : lourd.'},
-    {t:'Couverture des intérêts',f:fx,v:x=>{const e=x.ebit!=null?x.ebit:x.ro;return ok(e)&&ok(x.int)&&x.int!==0?e/ab(x.int):null},c:v=>v>=5?P.up:v>=2?P.accent:P.down,
+    {t:'Couverture des intérêts',f:fx,ax:v=>nf1.format(v)+'x',v:x=>{const e=x.ebit!=null?x.ebit:x.ro;return ok(e)&&ok(x.int)&&x.int!==0?e/ab(x.int):null},c:v=>v>=5?P.up:v>=2?P.accent:P.down,
       j:v=>v>=5?'Tranquille':v>=2?'Correcte':'Fragile',r:'Combien de fois le résultat paie les intérêts de la dette. Plus de 5 : tranquille. Moins de 2 : fragile.'}];
-  const cartes=[];
+  const out=[];
   for(const d of I){
     const vals=an.map(x=>({y:x.y,v:d.v(x)}));const dispo=vals.filter(x=>ok(x.v));if(dispo.length<2)continue;
     const der=dispo[dispo.length-1],g=d.g?crois(vals):null,x0=an.find(x=>x.y===der.y);
-    const img=await chartImg(322,118,{type:'bar',data:{labels:vals.map(x=>String(x.y)),datasets:[{data:vals.map(x=>ok(x.v)?x.v:null),backgroundColor:vals.map(x=>ok(x.v)?d.c(x.v):P.line),borderRadius:3,barPercentage:.7,categoryPercentage:.8}]},
-      options:{plugins:{legend:{display:false},tooltip:{enabled:false}},layout:{padding:{top:4}},scales:{x:{grid:{display:false},ticks:{color:P.muted,font:{size:10}}},
-        y:{beginAtZero:true,grid:{color:P.line},border:{display:false},ticks:{color:P.muted,font:{size:9},maxTicksLimit:4,callback:v=>d.f===pc?Math.round(v*100)+' %':d.f===fm?mm(v):d.f===fps?nf1.format(v):nf1.format(v)+'x'}}}}});
-    let jug='';
-    if(d.j){const c=d.c(der.v);jug='<span style="font-size:10px;padding:2px 8px;border-radius:999px;border:1px solid '+c+';color:'+c+';white-space:nowrap">'+d.j(der.v)+'</span>';}
-    else if(g!=null){const c=tendC(g);jug='<span style="font-size:10px;padding:2px 8px;border-radius:999px;border:1px solid '+c+';color:'+c+';white-space:nowrap">'+(g>=0?'+':'−')+nf1.format(ab(g*100))+' %/an</span>';}
-    const sous=d.s&&x0?d.s(x0):'';
-    cartes.push(carte(d.t,'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin:-2px 0 4px"><span><b style="font-size:17px">'+d.f(der.v)+'</b> <span style="font-size:10px;color:'+P.muted+'">en '+der.y+'</span></span>'+jug+'</div>'+
+    let jug=null;
+    if(d.j)jug={t:d.j(der.v),c:d.c(der.v)};
+    else if(g!=null)jug={t:(g>=0?'+':'−')+nf1.format(ab(g*100))+' %/an',c:tendC(g)};
+    out.push({t:d.t,r:d.r,txt:d.f(der.v),y:der.y,jug:jug,sous:d.s&&x0?d.s(x0):'',ax:d.ax,
+      labels:vals.map(x=>String(x.y)),data:vals.map(x=>ok(x.v)?x.v:null),colors:vals.map(x=>ok(x.v)?d.c(x.v):P.line)});
+  }
+  return {cur:cur,items:out};
+}
+function comptesGraphe(it,P,grand){return {type:'bar',data:{labels:it.labels,datasets:[{data:it.data,backgroundColor:it.colors,borderRadius:3,barPercentage:.7,categoryPercentage:.8}]},
+  options:{plugins:{legend:{display:false},tooltip:{enabled:!!grand,callbacks:{label:c=>' '+it.ax(c.raw)}}},layout:{padding:{top:4}},scales:{x:{grid:{display:false},ticks:{color:P.muted,font:{size:grand?11:10}}},
+    y:{beginAtZero:true,grid:{color:P.line},border:{display:false},ticks:{color:P.muted,font:{size:grand?10:9},maxTicksLimit:4,callback:v=>it.ax(v)}}}}};}
+function badge(j){return j?'<span style="font-size:10px;padding:2px 8px;border-radius:999px;border:1px solid '+j.c+';color:'+j.c+';white-space:nowrap">'+j.t+'</span>':''}
+async function pageComptes(an,F,P,page,carte,nom,code,moisAn,txt2){
+  const L=comptesListe(an,F,P),cur=L.cur,cartes=[];
+  for(const it of L.items){
+    const img=await chartImg(322,118,comptesGraphe(it,P,false));
+    cartes.push(carte(it.t,'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin:-2px 0 4px"><span><b style="font-size:17px">'+it.txt+'</b> <span style="font-size:10px;color:'+P.muted+'">en '+it.y+'</span></span>'+badge(it.jug)+'</div>'+
       (img?'<img src="'+img+'" style="width:100%;height:118px;display:block">':'')+
-      (sous?'<div style="font-size:10px;color:'+txt2+';margin-top:3px">'+sous+'</div>':'')+
-      '<div style="font-size:9.5px;color:'+P.muted+';margin-top:4px;line-height:1.4">'+d.r+'</div>','padding:12px 14px'));
+      (it.sous?'<div style="font-size:10px;color:'+txt2+';margin-top:3px">'+it.sous+'</div>':'')+
+      '<div style="font-size:9.5px;color:'+P.muted+';margin-top:4px;line-height:1.4">'+it.r+'</div>','padding:12px 14px'));
   }
   if(cartes.length<2)return null;
   const p=page(),a=an[0].y,z=an[an.length-1].y;
@@ -9582,6 +9632,31 @@ async function pageComptes(an,F,P,page,carte,nom,code,moisAn,txt2){
   p.innerHTML=h.replace(/[  ]/g,' ');
   return p;
 }
+/* ===== Onglet « Comptes » de l'analyse : les mêmes indicateurs, à l'écran ===== */
+const FINC={};let finJeton=0,finCh=[];
+async function finCache(yt){if(FINC[yt])return FINC[yt];const r=await finDe(yt);if(r&&r.an&&r.an.length)FINC[yt]=r;return r}
+function finVide(){finCh.forEach(c=>{try{c.destroy()}catch(e){}});finCh=[]}
+async function atComptes(){
+  const z=document.getElementById('at-finZ');if(!z||!T.key)return;
+  const yt=T.key;if(z.dataset.yt===yt&&z.dataset.ok==='1'){if(!finCh.length)dessineComptes(z,FINC[yt]);return}
+  const j=++finJeton;finVide();z.dataset.yt=yt;z.dataset.ok='';
+  if(/\b(ETF|UCITS)\b/i.test(T.name||'')){z.innerHTML='<p class="at-help">Un fonds (ETF) n’a pas de comptes d’entreprise : regarde plutôt son contenu et ses frais.</p>';return}
+  z.innerHTML='<p class="at-help">Lecture des comptes de l’entreprise…</p>';
+  const F=await finCache(yt);if(j!==finJeton||T.key!==yt)return;
+  const an=F&&F.an?F.an.filter(x=>x.ca>0).slice(-6):[];
+  if(an.length<2){z.innerHTML='<p class="at-help" style="color:var(--red)">Comptes indisponibles : '+pdfE((F&&F.err)||'moins de 2 années reçues')+'.</p>';return}
+  z.dataset.ok='1';dessineComptes(z,F);}
+function dessineComptes(z,F){
+  finVide();cols();const P={line:C.line,text:C.text,muted:C.muted,accent:C.accent,up:C.up,down:C.down,price:C.price};
+  const an=F.an.filter(x=>x.ca>0).slice(-6),L=comptesListe(an,F,P);
+  if(!L.items.length){z.innerHTML='<p class="at-help">Pas assez de chiffres publiés pour cette valeur.</p>';return}
+  z.innerHTML='<p class="at-help">Les chiffres publiés de '+an[0].y+' à '+an[an.length-1].y+(L.cur?', en '+pdfE(L.cur):'')+'. <b style="color:var(--green)">Vert</b> = bon signe, <b style="color:var(--orange)">orange</b> = correct, <b style="color:var(--red)">rouge</b> = à surveiller. Une banque ou une assurance se lit autrement.</p>'+
+    '<div class="at-finG">'+L.items.map((it,i)=>'<div class="at-finC"><div class="at-finT">'+it.t+'</div><div class="at-finV"><span><b>'+it.txt+'</b> <small>en '+it.y+'</small></span>'+badge(it.jug)+'</div>'+
+      '<div class="at-finCv"><canvas id="at-finCv'+i+'"></canvas></div>'+(it.sous?'<div class="at-finS">'+it.sous+'</div>':'')+'<div class="at-finR">'+it.r+'</div></div>').join('')+'</div>';
+  if(!window.Chart)return;
+  L.items.forEach((it,i)=>{const cv=document.getElementById('at-finCv'+i);if(!cv)return;const cfg=comptesGraphe(it,P,true);cfg.options.responsive=true;cfg.options.maintainAspectRatio=false;cfg.options.animation=false;
+    try{finCh.push(new Chart(cv.getContext('2d'),cfg))}catch(e){}});}
+window.atComptes=atComptes;
 async function fichePages(yt,TH,F,A0){
   cols();const A=T.A,N=A.note,D=T.div,P={bg:C.bg,card:C.panel,line:C.line,text:C.text,muted:C.muted,accent:C.accent,up:C.up,down:C.down,price:C.price,pru:C.pru};
   const cs=getComputedStyle(document.body),card2=cs.getPropertyValue('--card2').trim()||C.panel,txt2=cs.getPropertyValue('--text2').trim()||C.text;
