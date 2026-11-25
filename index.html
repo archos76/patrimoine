@@ -448,6 +448,10 @@ select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outl
 #page-techno .at-head{align-items:center}
 #page-techno .at-back{display:inline-flex;align-items:center;gap:8px;margin:0 0 10px;padding:8px 14px 8px 10px;min-height:40px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);font:inherit;font-size:13px;font-weight:500;cursor:pointer;max-width:100%}
 #page-techno .at-back[hidden]{display:none}
+#page-techno .at-fpdf{flex:none;height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap}
+#page-techno .at-fpdf:hover{border-color:var(--accent);color:var(--accent)}
+#page-techno .at-fpdf[hidden]{display:none}
+#page-techno .at-fpdf:disabled{opacity:.5;cursor:wait}
 #page-techno .at-ent{margin:14px 0 4px;padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:var(--card)}
 #page-techno .at-ent[hidden]{display:none}
 #page-techno .at-entH{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
@@ -647,6 +651,8 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 .opT .opCh{font-size:12px;color:var(--accent);white-space:nowrap}
 .opB .pb,.opF .pb{padding:6px 12px;font-size:12px}
 .mdlC input[type=date]{font-family:inherit;min-height:38px}
+.mdlC textarea{font:inherit;font-size:14px;line-height:1.5;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--text);resize:vertical;min-height:72px;width:100%;box-sizing:border-box}
+.mdlC textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
 .mdlC small{font-size:11px;color:var(--muted);line-height:1.4}
 .mdlL{display:flex;flex-direction:column;gap:8px}
 .mdlO{text-align:left;font-family:var(--font);font-size:14px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer}
@@ -697,7 +703,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 08h26</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 08h56</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -876,7 +882,7 @@ Avec ça, seul toi, une fois connecté avec ton compte Google, peux lire et écr
 <div class="at-pick"><select id="at-sel" aria-label="Valeur à analyser"></select><div class="at-qw"><input type="search" id="at-q" placeholder="Nom de l’action ou code Yahoo" aria-label="Chercher une action par son nom ou son code" autocomplete="off" autocapitalize="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="at-sug"><div class="at-sug" id="at-sug" role="listbox" hidden></div></div><button class="pb" id="at-go">Analyser</button><button class="pb" id="at-upd" hidden>Mettre à jour</button></div>
 <div class="tk" id="at-status" role="status"></div></div>
 <div id="at-body" style="display:none">
-<div class="at-head"><div class="at-hl"><button type="button" class="at-back" id="at-back" hidden onclick="atRevient()">←<span id="at-backL">Retour</span></button><div style="display:flex;align-items:center;gap:10px"><div class="at-title" id="at-title"></div><button type="button" class="at-star" id="at-star" hidden aria-pressed="false" onclick="atEtoileClic()">☆</button></div><div class="at-cours" id="at-cours"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div></div><section class="at-ent" id="at-ent" hidden aria-labelledby="at-entT"><div class="at-entH"><h3 id="at-entT">L’entreprise</h3><span class="at-entM" id="at-entM"></span></div><p id="at-entTx"></p><div class="at-entS" id="at-entS"></div></section>
+<div class="at-head"><div class="at-hl"><button type="button" class="at-back" id="at-back" hidden onclick="atRevient()">←<span id="at-backL">Retour</span></button><div style="display:flex;align-items:center;gap:10px"><div class="at-title" id="at-title"></div><button type="button" class="at-star" id="at-star" hidden aria-pressed="false" onclick="atEtoileClic()">☆</button><button type="button" class="at-fpdf" id="at-fpdf" hidden onclick="atFiche()" title="Télécharger ma fiche de cette action (PDF)" aria-label="Télécharger ma fiche de cette action en PDF">⤓ Fiche</button></div><div class="at-cours" id="at-cours"></div><div class="at-pills"><span class="at-pill" id="at-pillDate"></span><span class="at-pill" id="at-pillRange"></span><span class="at-pill" id="at-pillDemo" hidden></span><span class="at-pill" id="at-pillSrc" hidden></span></div></div></div><section class="at-ent" id="at-ent" hidden aria-labelledby="at-entT"><div class="at-entH"><h3 id="at-entT">L’entreprise</h3><span class="at-entM" id="at-entM"></span></div><p id="at-entTx"></p><div class="at-entS" id="at-entS"></div></section>
 <div class="card" id="at-cNote"><div class="ct">Fenêtre d’entrée</div>
 <div class="at-note"><div class="at-score"><div class="at-sn"><span id="at-noteNum"></span><small>/100</small></div><div class="at-noteLib" id="at-noteLib"></div><div id="at-regle"></div></div><div class="at-parts" id="at-parts"></div></div>
 <p class="at-help" style="margin:16px 0 0">Cette note est un calcul mécanique à partir du cours passé et du PER prévisionnel. Elle est haute quand une action en tendance haussière revient sur un prix bas pour elle, et plafonnée quand la tendance est baissière. Elle ne prévoit rien, ignore l’actualité et la santé de l’entreprise, et n’est pas un conseil d’investissement.</p><div class="at-ro" id="at-noteInfo" style="margin:10px 0 0"></div></div>
@@ -7927,6 +7933,14 @@ function opsLigneHTML(pk,l){
       '<div class="lr" style="font-weight:600"><span>Au total</span><span style="color:'+co(tot)+'">'+(hiddenMode?'•••':sg(tot))+'</span></div>'+
       '<div class="tk" style="margin-top:4px">D’après les opérations que tu as notées sur cette ligne.</div>';
   }
+  {const yt=String((typeof YM!=='undefined'&&YM[l.c])||l.c||''),TH=S.theses&&(S.theses[yt]||S.theses[String(l.c||'')]);
+    if(TH&&(TH.pq||TH.ri||TH.sv||TH.obj)){const hz={c:'moins d’un an',m:'1 à 3 ans',l:'3 à 5 ans',tl:'plus de 5 ans'}[TH.hz]||'';
+      h+='<div class="sect" style="margin-top:16px">Pourquoi je l’ai achetée <span style="font-weight:400;color:var(--muted)">· noté le '+opDateFr(TH.d)+'</span></div>'+
+        (TH.pq?'<div style="font-size:12.5px;line-height:1.55;white-space:pre-line">'+opE(TH.pq)+'</div>':'')+
+        (TH.ri?'<div style="font-size:12px;line-height:1.5;margin-top:6px;white-space:pre-line"><b style="color:var(--red)">Risques :</b> '+opE(TH.ri)+'</div>':'')+
+        (TH.sv?'<div style="font-size:12px;line-height:1.5;margin-top:6px;white-space:pre-line"><b style="color:var(--orange)">Je revendrai si :</b> '+opE(TH.sv)+'</div>':'')+
+        ((TH.obj>0||hz)?'<div class="tk" style="margin-top:6px">'+(TH.obj>0?'Objectif : '+opMtL(pk,l,TH.obj):'')+(TH.obj>0&&hz?' · ':'')+(hz?'Horizon : '+hz:'')+'</div>':'')+
+        '<div class="tk" style="margin-top:4px">Pour modifier : ouvre l’analyse et touche « ⤓ Fiche ».</div>';}}
   h+='<div class="sect" style="margin-top:16px">Alerte de prix</div><div class="lr"><span>'+
     (al>0||ah>0?'Te prévenir si le cours '+(al>0?'passe sous <b>'+opMtL(pk,l,al)+'</b>':'')+(al>0&&ah>0?' ou ':'')+(ah>0?'dépasse <b>'+opMtL(pk,l,ah)+'</b>':''):'Aucune alerte sur cette ligne')+
     '</span><span class="ed" onclick="opAlerte(\''+pk+'\',\''+l.id+'\')">'+(al>0||ah>0?'Modifier':'En poser une')+'</span></div>';
@@ -8696,6 +8710,7 @@ async function charge(yt,nom,force){
     T.src='Cours Yahoo Finance, chargés le '+new Date(d.ts||Date.now()).toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
     $('body').style.display='';refresh();statut('');try{window.atEtoile()}catch(e){}
     try{atEntreprise(yt,T.name)}catch(e){}
+    {const fb=$('fpdf');if(fb)fb.hidden=false;}
     const sel=$('sel');if([].some.call(sel.options,o=>o.value===yt))sel.value=yt;else sel.value='';
     try{$('body').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
   }catch(e){statut(e.message||'Une erreur est survenue. Réessaie.',true);}
@@ -9331,6 +9346,7 @@ window.modale=function(o){if(mdlCourante)mdlFerme(null);
     if(champs.length){h+='<div class="mdlG'+(champs.length===1?' un':'')+'">';
       champs.forEach((c,i)=>{h+='<label class="mdlC'+(c.large?' large':'')+'" for="mdl'+i+'">'+(c.lib?'<span>'+esc(c.lib)+(c.opt&&!c.muet?'<em>facultatif</em>':'')+'</span>':'');
         if(c.type==='choix')h+='<select id="mdl'+i+'">'+(c.options||[]).map(op=>'<option value="'+esc(op[0])+'"'+(String(op[0])===String(c.val)?' selected':'')+'>'+esc(op[1])+'</option>').join('')+'</select>';
+        else if(c.type==='zone')h+='<textarea id="mdl'+i+'" rows="'+(c.lignes||3)+'" aria-label="'+esc(c.lib||'Texte')+'"'+(c.ph?' placeholder="'+esc(c.ph)+'"':'')+'>'+esc(c.val!=null?c.val:'')+'</textarea>';
         else if(c.type==='date')h+='<input id="mdl'+i+'" type="date" max="'+esc(c.max||'')+'" aria-label="'+esc(c.lib||'Date')+'" value="'+esc(c.val!=null?c.val:'')+'">';
         else h+='<input id="mdl'+i+'" type="text" '+(c.type==='nombre'?'inputmode="decimal" ':'')+'autocomplete="off" aria-label="'+esc(c.lib||o.titre||'Valeur')+'" value="'+esc(c.val!=null?c.val:'')+'" placeholder="'+esc(c.ph||'')+'">';
         if(c.aide)h+='<small>'+esc(c.aide)+'</small>';h+='</label>';});
@@ -9347,7 +9363,8 @@ window.modale=function(o){if(mdlCourante)mdlFerme(null);
       if(o.verif&&champs.length){const pb=o.verif(v);if(pb)return erreur(el.querySelector('#mdl'+pb[0]),pb[1]);}
       mdlFerme(champs.length?v:true);};
     el.addEventListener('click',e=>{if(e.target===el||e.target.closest('.mdlX')||e.target.closest('.mdlA'))mdlFerme(null);else if(e.target.closest('.mdlV'))valide();else{const ob=e.target.closest('.mdlO');if(ob)mdlFerme(o.boutons[+ob.dataset.i][0]);}});
-    const kd=e=>{if((e.key==='Enter'||e.key==='Escape'||e.key==='ArrowDown'||e.key==='ArrowUp')&&e.target&&e.target.getAttribute&&e.target.getAttribute('aria-expanded')==='true')return;
+    const kd=e=>{if(e.key==='Enter'&&e.target&&e.target.tagName==='TEXTAREA')return;
+      if((e.key==='Enter'||e.key==='Escape'||e.key==='ArrowDown'||e.key==='ArrowUp')&&e.target&&e.target.getAttribute&&e.target.getAttribute('aria-expanded')==='true')return;
       if(e.key==='Escape'){e.preventDefault();e.stopPropagation();mdlFerme(null);}
       else if(e.key==='Enter'&&!o.boutons&&!(e.target.classList&&(e.target.classList.contains('mdlA')||e.target.classList.contains('mdlX')))){e.preventDefault();e.stopPropagation();valide();}
       else if(e.key==='Tab'){const f=[].slice.call(el.querySelectorAll('input,select,button'));if(!f.length)return;const i=f.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();f[f.length-1].focus();}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus();}}};
@@ -9437,6 +9454,178 @@ async function atEntreprise(yt,nomAff){
   else{$('entTx').className='vide';$('entTx').textContent=c.horsLigne?'Présentation indisponible pour le moment (connexion ?).':'Pas de présentation trouvée pour cette entreprise.';
     $('entS').innerHTML='<a href="https://fr.wikipedia.org/w/index.php?search='+encodeURIComponent(entNom(nom))+'" target="_blank" rel="noopener">Chercher sur Wikipédia</a>';}
   z.hidden=!($('entM').textContent||c.w||nom);
+}
+/* ===== FICHE PDF =====
+   Page 1 : l'entreprise et mes raisons d'acheter (gardées dans S.theses), les comptes si le script les donne.
+   Page 2 : l'analyse technique en un coup d'œil (graphiques de l'écran, note, prix juste, dividende).
+   Le PDF est fabriqué sur l'appareil : html2canvas photographie chaque page, jsPDF les assemble. */
+const LIBS_PDF=['https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js','https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js'];
+function chargeScript(u){return new Promise((ok,ko)=>{if(document.querySelector('script[data-src="'+u+'"]')){ok();return}const s=document.createElement('script');s.src=u;s.dataset.src=u;s.onload=()=>ok();s.onerror=()=>{s.remove();ko(new Error('Bibliothèque introuvable (connexion ?).'))};document.head.appendChild(s);});}
+async function libsPdf(){if(!window.html2canvas)await chargeScript(LIBS_PDF[0]);if(!(window.jspdf&&window.jspdf.jsPDF))await chargeScript(LIBS_PDF[1]);}
+const HZ=[['','Pas d’horizon précis'],['c','Moins d’un an'],['m','1 à 3 ans'],['l','3 à 5 ans'],['tl','Plus de 5 ans']];
+function thesesDe(){const st=etat();if(!st)return{};if(!st.theses)st.theses={};return st.theses}
+async function finDe(yt){try{const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),9000);
+  const r=await (await fetch(GAS+'?fin=1&t='+encodeURIComponent(yt),{signal:ctl.signal})).json();clearTimeout(t);
+  return r&&Array.isArray(r.an)&&r.an.length?r:null}catch(e){return null}}
+const UE=['FR','DE','NL','BE','IT','ES','PT','IE','LU','AT','FI','SE','DK','NO','IS','LI','GR','CY','MT','EE','LT','LV','PL','CZ','SK','SI','HU','RO','BG','HR'];
+function pdfE(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function pdfTxt(s){return pdfE(s).replace(/\n/g,'<br>')}
+function mm(v){const a=Math.abs(v);return (v<0?'−':'')+(a>=1e9?nf1.format(a/1e9)+' Md':a>=1e6?nf0.format(a/1e6)+' M':nf0.format(a))}
+function tcam(a,b,n){return a>0&&b>0&&n>0?Math.pow(b/a,1/n)-1:null}
+/* un graphique Chart.js dessiné hors écran, rendu en image */
+async function chartImg(w,h,cfg){if(!window.Chart)return null;const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.style.width=w+'px';cv.style.height=h+'px';
+  const z=document.createElement('div');z.style.cssText='position:fixed;left:-5000px;top:0;width:'+w+'px;height:'+h+'px';z.appendChild(cv);document.body.appendChild(z);
+  cfg.options=Object.assign({responsive:false,animation:false,devicePixelRatio:2},cfg.options||{});
+  let ch=null;try{ch=new Chart(cv.getContext('2d'),cfg);return cv.toDataURL('image/png')}catch(e){console.warn('graphique PDF :',e&&e.message);return null}finally{try{ch&&ch.destroy()}catch(e){}z.remove()}}
+/* une jauge en demi-cercle, dessinée à la main */
+function jauge(v,med,max,P){const W=300,H=170,cv=document.createElement('canvas');cv.width=W*2;cv.height=H*2;const c=cv.getContext('2d');c.scale(2,2);
+  const cx=W/2,cy=140,R=104,a0=Math.PI,seg=[[max*0.33,P.up],[max*0.66,P.accent],[max,P.down]];let a=0;
+  seg.forEach(s=>{c.beginPath();c.arc(cx,cy,R,a0+a/max*Math.PI,a0+s[0]/max*Math.PI);c.lineWidth=16;c.strokeStyle=s[1];c.globalAlpha=.85;c.stroke();a=s[0];});c.globalAlpha=1;
+  const ang=x=>a0+Math.min(1,Math.max(0,x/max))*Math.PI;
+  if(med>0){const t=ang(med);c.beginPath();c.moveTo(cx+Math.cos(t)*(R-14),cy+Math.sin(t)*(R-14));c.lineTo(cx+Math.cos(t)*(R+14),cy+Math.sin(t)*(R+14));c.lineWidth=3;c.strokeStyle=P.text;c.stroke();}
+  if(v>0){const t=ang(v);c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+Math.cos(t)*(R-22),cy+Math.sin(t)*(R-22));c.lineWidth=4;c.lineCap='round';c.strokeStyle=P.price;c.stroke();c.beginPath();c.arc(cx,cy,7,0,7);c.fillStyle=P.price;c.fill();}
+  c.fillStyle=P.muted;c.font='12px system-ui,sans-serif';c.textAlign='left';c.fillText('0',cx-R-8,cy+20);c.textAlign='right';c.fillText(nf0.format(max)+'x',cx+R+12,cy+20);
+  return cv.toDataURL('image/png');}
+/* capture d'un graphique de l'écran (on affiche l'onglet le temps de le dessiner) */
+function capture(onglet,cvId,larg){const carteEl=document.getElementById(onglet),av=T.onglet,st=carteEl?carteEl.getAttribute('style')||'':'';
+  try{T.onglet=onglet;majOnglet();if(carteEl){carteEl.style.width=(larg||700)+'px';carteEl.style.maxWidth='none';}drawAll();const cv=document.getElementById(cvId);return cv&&cv.width>10?cv.toDataURL('image/png'):null}
+  catch(e){return null}finally{if(carteEl)carteEl.setAttribute('style',st);T.onglet=av;majOnglet();try{drawAll()}catch(e){}}}
+window.atFiche=async function(){
+  if(!T.A||!T.key)return;
+  const yt=T.key,th=thesesDe(),t0=th[yt]||{},A0=(()=>{try{return (ACTIONS||[]).find(a=>a.s.toUpperCase()===yt.toUpperCase())}catch(e){return null}})();
+  const v=await modale({titre:'Ma fiche : '+(T.name||yt),sous:'Ce que tu notes ici sera dans le PDF et gardé dans l’application.',valider:'Créer le PDF',champs:[
+    {k:'pq',lib:'Pourquoi j’achète (ou je surveille) cette action',type:'zone',lignes:4,opt:true,val:t0.pq||'',ph:'Ex. : leader mondial, dividende régulier, prix bas par rapport à son habitude…'},
+    {k:'ri',lib:'Les risques que j’accepte',type:'zone',lignes:3,opt:true,val:t0.ri||'',ph:'Ex. : dette élevée, concurrence, dépendance à un produit…'},
+    {k:'sv',lib:'Je revendrai si…',type:'zone',lignes:2,opt:true,val:t0.sv||'',ph:'Ex. : le dividende baisse, l’objectif est atteint…'},
+    {k:'obj',lib:'Mon objectif de cours ('+(T.cur||'€')+')',type:'nombre',opt:true,val:t0.obj>0?String(t0.obj).replace('.',','):''},
+    {k:'hz',lib:'Mon horizon',type:'choix',val:t0.hz||'',options:HZ}]});
+  if(!v)return;
+  th[yt]={pq:v.pq,ri:v.ri,sv:v.sv,obj:v.obj>0?v.obj:0,hz:v.hz,d:new Date().toISOString().slice(0,10),n:T.name||yt};
+  try{if(typeof autoSave==='function')autoSave()}catch(e){}
+  const b=$('fpdf'),lib0=b?b.textContent:'';if(b){b.disabled=true;b.textContent='Création…';}
+  statut('Création de la fiche PDF…');
+  try{
+    await libsPdf();
+    const F=await finDe(yt);
+    const pages=await fichePages(yt,th[yt],F,A0);
+    const pdf=new window.jspdf.jsPDF({unit:'mm',format:'a4',orientation:'portrait',compress:true});
+    for(let i=0;i<pages.length;i++){
+      const cv=await window.html2canvas(pages[i],{scale:2,backgroundColor:null,useCORS:true,logging:false});
+      if(i)pdf.addPage();pdf.addImage(cv.toDataURL('image/jpeg',0.92),'JPEG',0,0,210,297,undefined,'FAST');}
+    pages.forEach(p=>p.parentNode&&p.parentNode.remove());
+    const nom=('Fiche '+(T.name||yt)+' ('+yt+') '+new Date().toISOString().slice(0,10)).replace(/[\\/:*?"<>|]+/g,'-')+'.pdf';
+    const blob=pdf.output('blob'),fic=new File([blob],nom,{type:'application/pdf'});
+    let partage=false;
+    if(navigator.canShare&&/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){try{if(navigator.canShare({files:[fic]})){await navigator.share({files:[fic],title:nom});partage=true}}catch(e){if(e&&e.name==='AbortError')partage=true}}
+    if(!partage)pdf.save(nom);
+    statut('');
+  }catch(e){console.error('fiche PDF :',e);statut('La fiche n’a pas pu être créée : '+((e&&e.message)||'erreur inconnue'),true);}
+  finally{if(b){b.disabled=false;b.textContent=lib0;}document.querySelectorAll('.pdfZone').forEach(z=>z.remove());}
+};
+async function fichePages(yt,TH,F,A0){
+  cols();const A=T.A,N=A.note,D=T.div,P={bg:C.bg,card:C.panel,line:C.line,text:C.text,muted:C.muted,accent:C.accent,up:C.up,down:C.down,price:C.price,pru:C.pru};
+  const cs=getComputedStyle(document.body),card2=cs.getPropertyValue('--card2').trim()||C.panel,txt2=cs.getPropertyValue('--text2').trim()||C.text;
+  const auj=new Date(),moisAn=auj.toLocaleDateString('fr-FR',{month:'long',year:'numeric'}).replace(/^./,c=>c.toUpperCase());
+  const nom=T.name||yt,code=yt.replace(/\.[A-Z]+$/,''),cur=T.cur||'€',fe=v=>eur(v);
+  const sec=A0&&A0.sec,pays=A0&&A0.pays,cP=A0&&A0.raw;
+  const etf=/\b(ETF|UCITS)\b/i.test((A0&&A0.n)||nom);
+  const paysCode=(()=>{try{return Object.keys(PAYS).find(k=>PAYS[k]===pays)||''}catch(e){return ''}})();
+  const pea=etf?/\bPEA\b/i.test((A0&&A0.n)||nom):(paysCode?UE.indexOf(paysCode)>=0:null);
+  let desc='';try{const c=JSON.parse(localStorage.getItem('atEnt:'+yt)||'null');if(c&&c.w)desc=c.w.e}catch(e){}
+  const zone=document.createElement('div');zone.className='pdfZone';zone.style.cssText='position:fixed;left:-20000px;top:0;z-index:-1';document.body.appendChild(zone);
+  const ff="font-family:"+(cs.fontFamily||'system-ui,sans-serif')+";";
+  const page=()=>{const p=document.createElement('div');p.style.cssText=ff+'font-variant-numeric:normal;font-feature-settings:normal;letter-spacing:normal;text-rendering:auto;width:794px;height:1123px;box-sizing:border-box;padding:34px 36px;background:'+P.bg+';color:'+P.text+';position:relative;overflow:hidden;font-size:12px;line-height:1.45';zone.appendChild(p);return p};
+  const carte=(titre,corps,extra)=>'<div style="background:'+P.card+';border:1px solid '+P.line+';border-radius:14px;padding:14px 16px;'+(extra||'')+'"><div style="font-size:13px;font-weight:600;margin-bottom:8px">'+titre+'</div>'+corps+'</div>';
+  const pill=(t,c)=>'<span style="display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid '+(c||P.line)+';font-size:11px;margin:0 6px 6px 0;color:'+(c||P.text)+'">'+t+'</span>';
+  const ini=nom.replace(/^L['’]\s*/,'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+  const sc=N.score,scC=sc==null?P.muted:sc>=70?P.up:sc>=45?P.accent:P.down;
+  const ring=(()=>{const c=document.createElement('canvas');c.width=192;c.height=192;const x=c.getContext('2d');x.lineWidth=16;x.lineCap='round';
+    x.beginPath();x.arc(96,96,80,0,Math.PI*2);x.strokeStyle=P.line;x.stroke();
+    if(sc!=null){x.beginPath();x.arc(96,96,80,-Math.PI/2,-Math.PI/2+Math.PI*2*sc/100);x.strokeStyle=scC;x.stroke();}return c.toDataURL('image/png')})();
+  const anneau='<div style="width:112px;text-align:center"><div style="width:96px;height:96px;margin:0 auto;position:relative"><img src="'+ring+'" style="width:96px;height:96px;display:block"><div style="position:absolute;left:0;top:0;width:96px;height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center"><b style="font-size:26px;line-height:1">'+(sc==null?'—':sc)+'</b><span style="font-size:10px;color:'+P.muted+'">sur 100</span></div></div><div style="font-size:9.5px;letter-spacing:.08em;margin-top:6px;color:'+P.muted+'">FENÊTRE D’ENTRÉE</div><div style="font-size:11px;font-weight:600;color:'+scC+'">'+pdfE(N.lib)+'</div></div>';
+  /* ---------- PAGE 1 ---------- */
+  const p1=page();
+  let h='<div style="display:flex;gap:18px;align-items:flex-start"><div style="flex:none;width:72px;height:72px;border-radius:18px;background:'+P.card+';border:1px solid '+P.line+';display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:'+P.accent+'">'+pdfE(ini)+'</div>'+
+    '<div style="flex:1;min-width:0"><div>'+pill('● '+pdfE(moisAn))+(sec?pill(pdfE(sec)):'')+(pays?pill(pdfE(pays)):'')+(pea===true?pill('✓ Éligible PEA',P.up):pea===false?pill('Hors PEA',P.muted):'')+'</div>'+
+    '<div style="display:flex;align-items:baseline;gap:10px;margin-top:2px"><span style="font-size:34px;font-weight:700;line-height:1.1">'+pdfE(nom)+'</span><span style="font-size:14px;color:'+P.muted+';letter-spacing:.06em">'+pdfE(code)+'</span></div>'+
+    '<div style="font-size:15px;margin-top:4px"><b>'+fe(A.last)+'</b> <span style="color:'+P.muted+';font-size:11px">cours au '+dstr(T.w.t[T.w.t.length-1])+'</span></div></div>'+anneau+'</div>';
+  if(desc)h+='<div style="margin:14px 0 0;font-size:12.5px;color:'+txt2+';line-height:1.55">'+pdfE(desc)+'</div>';
+  /* mes raisons */
+  const hz=(HZ.find(x=>x[0]===TH.hz)||['',''])[1],obj=TH.obj>0?TH.obj:0;
+  const bloc=(t,v,c)=>v?'<div style="margin-bottom:10px"><div style="font-size:10.5px;letter-spacing:.06em;color:'+(c||P.muted)+';font-weight:600;text-transform:uppercase;margin-bottom:3px">'+t+'</div><div style="font-size:12.5px;line-height:1.5">'+pdfTxt(v)+'</div></div>':'';
+  let raisons=bloc('Pourquoi j’achète',TH.pq,P.up)+bloc('Les risques que j’accepte',TH.ri,P.down)+bloc('Je revendrai si',TH.sv,P.accent);
+  if(!raisons)raisons='<div style="color:'+P.muted+'">Rien de noté. Tu pourras compléter en recréant la fiche.</div>';
+  const plan=[obj?['Objectif de cours',fe(obj)+' ('+pct(obj/A.last-1,0,true)+')']:null,hz?['Horizon',hz]:null,['Fiche créée le',auj.toLocaleDateString('fr-FR')]].filter(Boolean);
+  const pos=A.pos&&A.pos.q>0?A.pos:null;
+  if(pos){plan.push(['Ma position',nf2.format(pos.q).replace(/,00$/,'')+' titre'+(pos.q>1?'s':'')+(pos.pru?' à '+fe(pos.pru):'')]);
+    if(pos.pru)plan.push(['Gain en attente',pct(A.last/pos.pru-1,1,true)]);
+    if(pos.net!=null)plan.push(['PRU dividendes déduits',fe(pos.net)]);
+    const o1=(pos.ops||[]).filter(o=>o.a)[0];if(o1)plan.push(['Premier achat noté',dstr(o1.t)]);}
+  const planH='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:4px">'+plan.map(x=>'<div><div style="font-size:10px;color:'+P.muted+'">'+x[0]+'</div><div style="font-size:13px;font-weight:600">'+x[1]+'</div></div>').join('')+'</div>';
+  h+='<div style="display:grid;grid-template-columns:1.15fr 1fr;gap:14px;margin-top:16px">'+carte('Mes raisons',raisons,'min-height:250px')+carte('Mon plan',planH)+'</div>';
+  /* comptes de l'entreprise */
+  const an=F?F.an.filter(x=>x.ca>0).slice(-6):[];let finH='',indH='';
+  if(an.length>=2){
+    const img=await chartImg(420,200,{type:'bar',data:{labels:an.map(x=>"'"+String(x.y).slice(2)),datasets:[
+        {type:'line',label:'Marge nette',data:an.map(x=>x.rn!=null&&x.ca?x.rn/x.ca*100:null),borderColor:P.up,backgroundColor:P.up,yAxisID:'m',pointRadius:3,borderWidth:2,tension:.3},
+        {label:'Chiffre d’affaires',data:an.map(x=>x.ca),backgroundColor:P.text,borderRadius:4,yAxisID:'v',barPercentage:.75,categoryPercentage:.7},
+        {label:'Résultat net',data:an.map(x=>x.rn||0),backgroundColor:P.price,borderRadius:4,yAxisID:'v',barPercentage:.75,categoryPercentage:.7}]},
+      options:{plugins:{legend:{position:'bottom',labels:{color:P.muted,boxWidth:9,boxHeight:9,font:{size:10}}}},
+        scales:{x:{grid:{display:false},ticks:{color:P.muted,font:{size:10}}},v:{position:'left',grid:{color:P.line},ticks:{color:P.muted,font:{size:9},callback:v=>mm(v)}},m:{position:'right',grid:{display:false},ticks:{color:P.up,font:{size:9},callback:v=>v+' %'}}}}});
+    finH=carte('Résultats financiers <span style="font-weight:400;color:'+P.muted+';font-size:10.5px">en '+(F.cur||'devise locale')+'</span>',img?'<img src="'+img+'" style="width:100%;display:block">':'');
+    const a=an[0],z=an[an.length-1],n=z.y-a.y,last=z;
+    const I=[['CA · par an',tcam(a.ca,z.ca,n),'%'],['BPA · par an',tcam(a.bpa,z.bpa,n),'%'],['Marge nette',last.rn!=null?last.rn/last.ca:null,'%'],
+      ['FCF / résultat net',last.fcf!=null&&last.rn>0?last.fcf/last.rn:null,'%'],['Dette / fonds propres',last.dette!=null&&last.cp>0?last.dette/last.cp:null,'%'],
+      ['Dette nette / EBITDA',last.dette!=null&&last.ebitda>0?(last.dette-(last.cash||0))/last.ebitda:null,'x'],['Dividendes / FCF',last.div!=null&&last.fcf>0?Math.abs(last.div)/last.fcf:null,'%']];
+    indH=carte('Indicateurs clés <span style="font-weight:400;color:'+P.muted+';font-size:10.5px">sur '+n+' an'+(n>1?'s':'')+' ('+a.y+'-'+z.y+')</span>','<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px 16px">'+I.filter(x=>x[1]!=null&&isFinite(x[1])).map(x=>{
+      const v=x[1],t=x[2]==='x'?nf1.format(v)+'x':(v*100>=0?'':'−')+nf1.format(Math.abs(v*100))+' %',bon=x[0].startsWith('Dette')?(x[2]==='x'?v<2.5:v<1):v>0;
+      return '<div><div style="display:flex;justify-content:space-between;gap:6px;font-size:11px"><span style="color:'+txt2+'">'+x[0]+'</span><b style="white-space:nowrap;color:'+(bon?P.up:P.down)+'">'+t+'</b></div><div style="height:5px;border-radius:3px;background:'+P.line+';margin-top:4px"><div style="height:5px;border-radius:3px;width:'+Math.round(Math.min(1,Math.abs(x[2]==='x'?v/5:v))*100)+'%;background:'+(bon?P.up:P.down)+'"></div></div></div>'}).join('')+'</div>');
+  }
+  /* valorisation : deux jauges */
+  const Fd=A.fond||{};let valoH='';
+  if(Fd.pe>0||Fd.fpe>0||Fd.pfcf>0){
+    const g1=Fd.pe>0||Fd.fpe>0?jauge(Fd.pe||Fd.fpe,Fd.fpe>0&&Fd.pe>0?Fd.fpe:0,40,P):null,g2=Fd.pfcf>0?jauge(Fd.pfcf,0,40,P):null;
+    const g=(img,t,v,s)=>img?'<div style="flex:1;text-align:center"><img src="'+img+'" style="width:100%;max-width:190px"><div style="font-size:12px;font-weight:600;margin-top:-6px">'+t+' <span style="color:'+P.price+'">'+v+'</span></div><div style="font-size:10px;color:'+P.muted+'">'+s+'</div></div>':'';
+    valoH=carte('Valorisation','<div style="display:flex;gap:10px">'+g(g1,'PER',nf1.format(Fd.pe||Fd.fpe)+'x',Fd.fpe>0&&Fd.pe>0?'trait : PER prévisionnel '+nf1.format(Fd.fpe)+'x':Fd.pe>0?'sur les bénéfices passés':'prévisionnel')+g(g2,'P/FCF',Fd.pfcf>0?nf1.format(Fd.pfcf)+'x':'','prix / trésorerie dégagée')+'</div>');}
+  /* prix juste */
+  const PJ=A.juste||prixJuste(A,A.fond,D);let pjH='';
+  if(PJ&&PJ.v>0){const lo=Math.min(A.last,PJ.v)*0.75,hi=Math.max(A.last,PJ.v)*1.25,X=v=>Math.max(0,Math.min(100,(v-lo)/(hi-lo)*100)).toFixed(1)+'%',e=A.last/PJ.v-1;
+    pjH=carte('Prix juste estimé <span style="float:right;font-size:11px;padding:3px 10px;border-radius:999px;border:1px solid '+(e<-0.1?P.up:e>0.1?P.down:P.accent)+';color:'+(e<-0.1?P.up:e>0.1?P.down:P.accent)+'">'+(e<-0.1?pct(-e,0)+' sous le prix juste':e>0.1?pct(e,0)+' au-dessus':'proche du prix juste')+'</span>',
+      '<div style="position:relative;height:84px;margin:6px 0 6px"><div style="position:absolute;left:0;right:0;top:34px;height:22px;border-radius:8px;background:linear-gradient(90deg,'+P.up+' 0%,'+P.up+' '+X(PJ.v*0.9)+','+P.accent+' '+X(PJ.v*0.9)+','+P.accent+' '+X(PJ.v*1.1)+','+P.down+' '+X(PJ.v*1.1)+','+P.down+' 100%);opacity:.8"></div>'+
+      '<div style="position:absolute;left:'+X(PJ.v)+';top:-4px;transform:translateX(-50%);text-align:center;font-size:10px;white-space:nowrap">Prix juste<br><b style="font-size:15px">'+fe(PJ.v)+'</b></div>'+
+      '<div style="position:absolute;left:'+X(PJ.v)+';top:30px;width:3px;height:30px;background:'+P.text+'"></div>'+
+      '<div style="position:absolute;left:'+X(A.last)+';top:30px;width:3px;height:30px;background:'+P.price+'"></div>'+
+      '<div style="position:absolute;left:'+X(A.last)+';top:62px;transform:translateX(-50%);font-size:10px;white-space:nowrap;color:'+P.price+'">cours <b>'+fe(A.last)+'</b></div></div>'+
+      '<div style="font-size:10px;color:'+P.muted+'">Valeur du milieu de '+PJ.n+' méthode'+(PJ.n>1?'s':'')+' : '+PJ.M.filter(m=>m.v>0).map(m=>pdfE(m.k)+' '+fe(m.v)).join(' · ')+'.</div>');}
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">'+[finH,indH,valoH,pjH].filter(Boolean).join('')+'</div>';
+  if(!an.length&&!etf)h+='<div style="margin-top:10px;font-size:10.5px;color:'+P.muted+'">Comptes de l’entreprise indisponibles : mets à jour le script Google pour les ajouter à la fiche.</div>';
+  h+='<div style="position:absolute;left:36px;right:36px;bottom:24px;display:flex;justify-content:space-between;font-size:9.5px;color:'+P.muted+'"><span>Mon Patrimoine · fiche du '+auj.toLocaleDateString('fr-FR')+'</span><span>Sources : Yahoo Finance, Wikipédia, mes notes. Ce n’est pas un conseil d’investissement.</span><span>1/2</span></div>';
+  const net=x=>x.replace(/[\u202f\u00a0]/g,' ');
+  p1.innerHTML=net(h);
+  /* ---------- PAGE 2 ---------- */
+  const p2=page();
+  const prix=capture('at-cPrix','at-cvPrice',700),divI=D&&!D.aucun?capture('at-cDiv','at-cvDiv',340):null,histI=capture('at-cHist','at-cvHist',340);
+  const rad=await chartImg(320,230,{type:'radar',data:{labels:N.parts.map(p=>p.k.replace(/ \(.*\)$/,'').replace('Prix par rapport à son habitude','Prix vs habitude').replace('Proximité d’un support','Support').replace('Repli depuis le sommet','Repli')),
+      datasets:[{data:N.parts.map(p=>p.v==null?0:p.v/p.max*5),backgroundColor:P.accent+'66',borderColor:P.accent,borderWidth:2,pointRadius:2,pointBackgroundColor:P.accent}]},
+    options:{plugins:{legend:{display:false}},scales:{r:{min:0,max:5,ticks:{display:false,stepSize:1},grid:{color:P.line},angleLines:{color:P.line},pointLabels:{color:P.text,font:{size:10}}}}}});
+  let g='<div style="display:flex;justify-content:space-between;align-items:baseline"><div><span style="font-size:22px;font-weight:700">'+pdfE(nom)+'</span> <span style="color:'+P.muted+'">'+pdfE(code)+' · analyse technique</span></div><span style="font-size:11px;color:'+P.muted+'">'+pdfE(moisAn)+'</span></div>';
+  g+='<div style="display:grid;grid-template-columns:1fr 1.25fr;gap:14px;margin-top:14px">'+
+    carte('Fenêtre d’entrée : '+(sc==null?'—':sc+'/100')+' <span style="color:'+scC+';font-weight:500">· '+pdfE(N.lib)+'</span>',(rad?'<img src="'+rad+'" style="width:100%;height:210px;display:block;object-fit:contain">':'')+(N.plaf?'<div style="font-size:10px;color:'+P.down+'">Tendance baissière : note plafonnée à 55.</div>':''))+
+    carte('Le détail de la note',N.parts.map(p=>{const r=p.v==null?0:p.v/p.max,c=p.v==null?P.muted:r>=0.66?P.up:r>=0.33?P.accent:P.down;
+      return '<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:11px"><span>'+pdfE(p.k)+' <span style="color:'+P.muted+'">· '+pdfE(p.q)+'</span></span><b>'+(p.v==null?'—':p.v+'/'+p.max)+'</b></div><div style="height:5px;border-radius:3px;background:'+P.line+';margin-top:3px"><div style="height:5px;border-radius:3px;width:'+Math.round(r*100)+'%;background:'+c+'"></div></div></div>'}).join(''))+'</div>';
+  const rep=[['Écart au plus haut',A.ddNow>-0.005?'0 %':pct(A.ddNow),'plus haut : '+fe(A.ath)],['Prix / habitude',A.z>1.5?'Très haut':A.z>0.5?'Plutôt haut':A.z<-1.5?'Très bas':A.z<-0.5?'Plutôt bas':'Dans la moyenne','trajectoire '+pct(A.trend,1,true)+'/an'],
+    ['PER prévisionnel',Fd.fpe>0?nf1.format(Fd.fpe)+'x':'—',Fd.pe>0?'passé : '+nf1.format(Fd.pe)+'x':''],['Objectif analystes',Fd.tm>0?fe(Fd.tm):'—',Fd.tm>0?pct(Fd.tm/A.last-1,0,true)+' vs cours':'']];
+  g+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px">'+rep.map(r=>'<div style="background:'+P.card+';border:1px solid '+P.line+';border-radius:12px;padding:10px 12px"><div style="font-size:10px;color:'+P.muted+'">'+r[0]+'</div><div style="font-size:16px;font-weight:700;margin-top:2px">'+r[1]+'</div><div style="font-size:9.5px;color:'+P.muted+'">'+r[2]+'</div></div>').join('')+'</div>';
+  if(prix)g+='<div style="margin-top:14px">'+carte('Cours sur '+nf0.format(A.years)+' ans, moyennes et paliers'+(A.pos&&A.pos.ops&&A.pos.ops.length?' · mes achats ▲ et ventes ▼':''),'<img src="'+prix+'" style="width:100%;height:300px;display:block;object-fit:contain">')+'</div>';
+  const bas=[];
+  if(divI&&D){const k=[['Rendement',D.rdt!=null?pct(D.rdt,1):'—'],['Habituel',D.hab!=null?pct(D.hab,1):'—'],['Progression',D.g!=null?pct(D.g,1,true)+'/an':'—'],['Sans baisse',D.serie!=null?D.serie+' an'+(D.serie>1?'s':''):'—']];
+    bas.push(carte('Dividende'+(D.exact?'':' (≈ estimé)'),'<div style="display:flex;gap:12px;margin-bottom:6px">'+k.map(x=>'<div><div style="font-size:9.5px;color:'+P.muted+'">'+x[0]+'</div><b style="font-size:13px">'+x[1]+'</b></div>').join('')+'</div><img src="'+divI+'" style="width:100%;height:150px;display:block;object-fit:contain">'));}
+  if(histI)bas.push(carte('La note au fil du temps','<img src="'+histI+'" style="width:100%;height:182px;display:block;object-fit:contain">'));
+  if(bas.length)g+='<div style="display:grid;grid-template-columns:'+(bas.length>1?'1fr 1fr':'1fr')+';gap:14px;margin-top:14px">'+bas.join('')+'</div>';
+  g+='<div style="position:absolute;left:36px;right:36px;bottom:24px;display:flex;justify-content:space-between;font-size:9.5px;color:'+P.muted+'"><span>Mon Patrimoine · '+pdfE(nom)+'</span><span>Calculs automatiques sur l’historique des cours : un repère, pas une prévision.</span><span>2/2</span></div>';
+  p2.innerHTML=net(g);
+  await new Promise(r=>setTimeout(r,120));
+  return [p1,p2];
 }
 window.atEtoile=function(){const b=$('star');if(!b)return;if(!T.key){b.hidden=true;return}
   const on=typeof window.wlA==='function'&&window.wlA(T.key);b.hidden=false;b.textContent=on?'★':'☆';b.classList.toggle('on',on);
