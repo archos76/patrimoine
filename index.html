@@ -703,7 +703,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 11h04</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 11h26</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -1170,7 +1170,7 @@ await db.collection('users').doc(uid).set({patrimoine:clean,snapshots:snaps,upda
 function cleAV(){return (S&&S.cles&&S.cles.av)||''}let nxId=Date.now();const nid=()=>++nxId;
 const INDICES=[{t:'^GSPC',n:'S&P 500'},{t:'^IXIC',n:'Nasdaq'},{t:'^DJI',n:'Dow Jones'},{t:'^FCHI',n:'CAC 40'},{t:'^GDAXI',n:'DAX'},{t:'^STOXX50E',n:'Euro Stoxx 50'},{t:'^FTSE',n:'FTSE 100'},{t:'^N225',n:'Nikkei'},{t:'^HSI',n:'Hang Seng'},{t:'BTC-EUR',n:'Bitcoin'}];
 let idxData={};
-const GAS_DEF="https://script.google.com/macros/s/AKfycbyxJr3yJO5g4rIMZhKCj2oPrlHjiFM7cc8wz2vaHOVNQftY15wnepmPizUbuNVDHvfsGA/exec";
+const GAS_DEF="https://script.google.com/macros/s/AKfycbyCB_xYV_hB9P_EGmRF3onvzNLM_zAPZ5zgCFwlT3YeXAQMHji6bGhIokHYi_5cgNrX-g/exec";
 /* L'adresse du script se règle dans Réglages : elle vit dans les données, pas dans le fichier.
    GAS se lit comme avant partout dans le code ; il rend l'adresse choisie, sinon celle d'origine. */
 const GAS_RE=/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/;
