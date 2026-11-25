@@ -703,7 +703,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 08h56</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 09h13</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -9562,7 +9562,7 @@ async function fichePages(yt,TH,F,A0){
     if(pos.net!=null)plan.push(['PRU dividendes déduits',fe(pos.net)]);
     const o1=(pos.ops||[]).filter(o=>o.a)[0];if(o1)plan.push(['Premier achat noté',dstr(o1.t)]);}
   const planH='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:4px">'+plan.map(x=>'<div><div style="font-size:10px;color:'+P.muted+'">'+x[0]+'</div><div style="font-size:13px;font-weight:600">'+x[1]+'</div></div>').join('')+'</div>';
-  h+='<div style="display:grid;grid-template-columns:1.15fr 1fr;gap:14px;margin-top:16px">'+carte('Mes raisons',raisons,'min-height:250px')+carte('Mon plan',planH)+'</div>';
+  h+='<div style="display:grid;grid-template-columns:1.15fr 1fr;gap:14px;margin-top:16px">'+carte('Mes raisons',raisons)+carte('Mon plan',planH)+'</div>';
   /* comptes de l'entreprise */
   const an=F?F.an.filter(x=>x.ca>0).slice(-6):[];let finH='',indH='';
   if(an.length>=2){
@@ -9599,6 +9599,7 @@ async function fichePages(yt,TH,F,A0){
       '<div style="font-size:10px;color:'+P.muted+'">Valeur du milieu de '+PJ.n+' méthode'+(PJ.n>1?'s':'')+' : '+PJ.M.filter(m=>m.v>0).map(m=>pdfE(m.k)+' '+fe(m.v)).join(' · ')+'.</div>');}
   h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">'+[finH,indH,valoH,pjH].filter(Boolean).join('')+'</div>';
   if(!an.length&&!etf)h+='<div style="margin-top:10px;font-size:10.5px;color:'+P.muted+'">Comptes de l’entreprise indisponibles : mets à jour le script Google pour les ajouter à la fiche.</div>';
+  h='<div class="pdfFlux">'+h+'</div>';
   h+='<div style="position:absolute;left:36px;right:36px;bottom:24px;display:flex;justify-content:space-between;font-size:9.5px;color:'+P.muted+'"><span>Mon Patrimoine · fiche du '+auj.toLocaleDateString('fr-FR')+'</span><span>Sources : Yahoo Finance, Wikipédia, mes notes. Ce n’est pas un conseil d’investissement.</span><span>1/2</span></div>';
   const net=x=>x.replace(/[\u202f\u00a0]/g,' ');
   p1.innerHTML=net(h);
@@ -9609,18 +9610,30 @@ async function fichePages(yt,TH,F,A0){
       datasets:[{data:N.parts.map(p=>p.v==null?0:p.v/p.max*5),backgroundColor:P.accent+'66',borderColor:P.accent,borderWidth:2,pointRadius:2,pointBackgroundColor:P.accent}]},
     options:{plugins:{legend:{display:false}},scales:{r:{min:0,max:5,ticks:{display:false,stepSize:1},grid:{color:P.line},angleLines:{color:P.line},pointLabels:{color:P.text,font:{size:10}}}}}});
   let g='<div style="display:flex;justify-content:space-between;align-items:baseline"><div><span style="font-size:22px;font-weight:700">'+pdfE(nom)+'</span> <span style="color:'+P.muted+'">'+pdfE(code)+' · analyse technique</span></div><span style="font-size:11px;color:'+P.muted+'">'+pdfE(moisAn)+'</span></div>';
-  g+='<div style="display:grid;grid-template-columns:1fr 1.25fr;gap:14px;margin-top:14px">'+
-    carte('Fenêtre d’entrée : '+(sc==null?'—':sc+'/100')+' <span style="color:'+scC+';font-weight:500">· '+pdfE(N.lib)+'</span>',(rad?'<img src="'+rad+'" style="width:100%;height:210px;display:block;object-fit:contain">':'')+(N.plaf?'<div style="font-size:10px;color:'+P.down+'">Tendance baissière : note plafonnée à 55.</div>':''))+
+  const noteBloc=hr=>'<div style="display:grid;grid-template-columns:1fr 1.25fr;gap:14px;margin-top:14px">'+
+    carte('Fenêtre d’entrée : '+(sc==null?'—':sc+'/100')+' <span style="color:'+scC+';font-weight:500">· '+pdfE(N.lib)+'</span>',(rad?'<img src="'+rad+'" style="width:100%;height:'+hr+'px;display:block;object-fit:contain">':'')+(N.plaf?'<div style="font-size:10px;color:'+P.down+'">Tendance baissière : note plafonnée à 55.</div>':''))+
     carte('Le détail de la note',N.parts.map(p=>{const r=p.v==null?0:p.v/p.max,c=p.v==null?P.muted:r>=0.66?P.up:r>=0.33?P.accent:P.down;
-      return '<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:11px"><span>'+pdfE(p.k)+' <span style="color:'+P.muted+'">· '+pdfE(p.q)+'</span></span><b>'+(p.v==null?'—':p.v+'/'+p.max)+'</b></div><div style="height:5px;border-radius:3px;background:'+P.line+';margin-top:3px"><div style="height:5px;border-radius:3px;width:'+Math.round(r*100)+'%;background:'+c+'"></div></div></div>'}).join(''))+'</div>';
+      return '<div style="margin-bottom:'+(hr<200?5:8)+'px"><div style="display:flex;justify-content:space-between;font-size:11px"><span>'+pdfE(p.k)+' <span style="color:'+P.muted+'">· '+pdfE(p.q)+'</span></span><b>'+(p.v==null?'—':p.v+'/'+p.max)+'</b></div><div style="height:5px;border-radius:3px;background:'+P.line+';margin-top:3px"><div style="height:5px;border-radius:3px;width:'+Math.round(r*100)+'%;background:'+c+'"></div></div></div>'}).join(''))+'</div>';
+  let blocRep='';
   const rep=[['Écart au plus haut',A.ddNow>-0.005?'0 %':pct(A.ddNow),'plus haut : '+fe(A.ath)],['Prix / habitude',A.z>1.5?'Très haut':A.z>0.5?'Plutôt haut':A.z<-1.5?'Très bas':A.z<-0.5?'Plutôt bas':'Dans la moyenne','trajectoire '+pct(A.trend,1,true)+'/an'],
     ['PER prévisionnel',Fd.fpe>0?nf1.format(Fd.fpe)+'x':'—',Fd.pe>0?'passé : '+nf1.format(Fd.pe)+'x':''],['Objectif analystes',Fd.tm>0?fe(Fd.tm):'—',Fd.tm>0?pct(Fd.tm/A.last-1,0,true)+' vs cours':'']];
-  g+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px">'+rep.map(r=>'<div style="background:'+P.card+';border:1px solid '+P.line+';border-radius:12px;padding:10px 12px"><div style="font-size:10px;color:'+P.muted+'">'+r[0]+'</div><div style="font-size:16px;font-weight:700;margin-top:2px">'+r[1]+'</div><div style="font-size:9.5px;color:'+P.muted+'">'+r[2]+'</div></div>').join('')+'</div>';
-  if(prix)g+='<div style="margin-top:14px">'+carte('Cours sur '+nf0.format(A.years)+' ans, moyennes et paliers'+(A.pos&&A.pos.ops&&A.pos.ops.length?' · mes achats ▲ et ventes ▼':''),'<img src="'+prix+'" style="width:100%;height:300px;display:block;object-fit:contain">')+'</div>';
+  blocRep='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px">'+rep.map(r=>'<div style="background:'+P.card+';border:1px solid '+P.line+';border-radius:12px;padding:10px 12px"><div style="font-size:10px;color:'+P.muted+'">'+r[0]+'</div><div style="font-size:16px;font-weight:700;margin-top:2px">'+r[1]+'</div><div style="font-size:9.5px;color:'+P.muted+'">'+r[2]+'</div></div>').join('')+'</div>';
+  const net0=x=>x.replace(/[\u202f\u00a0]/g,' '),flux=p1.querySelector('.pdfFlux'),place=()=>flux.offsetHeight<=1123-34-56;
+  let surP1=0;
+  flux.insertAdjacentHTML('beforeend',net0(blocRep));if(place())surP1++;else flux.lastElementChild.remove();
+  /* la note : en entier si possible, sinon un peu plus compacte */
+  if(surP1)for(const hr of [210,165,140]){flux.insertAdjacentHTML('beforeend',net0(noteBloc(hr)));if(place()){surP1++;break}flux.lastElementChild.remove();}
+  if(surP1<2)g+=noteBloc(210);if(surP1<1)g+=blocRep;
+  const grand=surP1===2,hPrix=grand?330:300;
+  if(prix)g+='<div style="margin-top:14px">'+carte('Cours sur '+nf0.format(A.years)+' ans, moyennes et paliers'+(A.pos&&A.pos.ops&&A.pos.ops.length?' · mes achats ▲ et ventes ▼':''),'<img src="'+prix+'" style="width:100%;height:'+hPrix+'px;display:block;object-fit:contain">')+'</div>';
   const bas=[];
   if(divI&&D){const k=[['Rendement',D.rdt!=null?pct(D.rdt,1):'—'],['Habituel',D.hab!=null?pct(D.hab,1):'—'],['Progression',D.g!=null?pct(D.g,1,true)+'/an':'—'],['Sans baisse',D.serie!=null?D.serie+' an'+(D.serie>1?'s':''):'—']];
-    bas.push(carte('Dividende'+(D.exact?'':' (≈ estimé)'),'<div style="display:flex;gap:12px;margin-bottom:6px">'+k.map(x=>'<div><div style="font-size:9.5px;color:'+P.muted+'">'+x[0]+'</div><b style="font-size:13px">'+x[1]+'</b></div>').join('')+'</div><img src="'+divI+'" style="width:100%;height:150px;display:block;object-fit:contain">'));}
-  if(histI)bas.push(carte('La note au fil du temps','<img src="'+histI+'" style="width:100%;height:182px;display:block;object-fit:contain">'));
+    bas.push(carte('Dividende'+(D.exact?'':' (≈ estimé)'),'<div style="display:flex;gap:12px;margin-bottom:6px">'+k.map(x=>'<div><div style="font-size:9.5px;color:'+P.muted+'">'+x[0]+'</div><b style="font-size:13px">'+x[1]+'</b></div>').join('')+'</div><img src="'+divI+'" style="width:100%;height:'+(grand?175:150)+'px;display:block;object-fit:contain">'));}
+  if(histI)bas.push(carte('La note au fil du temps','<img src="'+histI+'" style="width:100%;height:'+(grand?207:182)+'px;display:block;object-fit:contain">'));
+  if(grand){const regI=capture('at-cReg','at-cvReg',340),ddI=capture('at-cDD','at-cvDD',340),mid=[];
+    if(regI)mid.push(carte('Trajectoire de long terme <span style="font-weight:400;color:'+P.muted+';font-size:10.5px">'+pct(A.trend,1,true)+'/an</span>','<img src="'+regI+'" style="width:100%;height:170px;display:block;object-fit:contain"><div style="font-size:9.5px;color:'+P.muted+';margin-top:4px">Zone verte : bas par rapport à son habitude. Zone rouge : haut.</div>'));
+    if(ddI)mid.push(carte('Baisse depuis le plus haut','<img src="'+ddI+'" style="width:100%;height:170px;display:block;object-fit:contain"><div style="font-size:9.5px;color:'+P.muted+';margin-top:4px">Aujourd’hui : '+(A.ddNow>-0.005?'au plus haut':pct(A.ddNow))+'.</div>'));
+    if(mid.length)g+='<div style="display:grid;grid-template-columns:'+(mid.length>1?'1fr 1fr':'1fr')+';gap:14px;margin-top:14px">'+mid.join('')+'</div>';}
   if(bas.length)g+='<div style="display:grid;grid-template-columns:'+(bas.length>1?'1fr 1fr':'1fr')+';gap:14px;margin-top:14px">'+bas.join('')+'</div>';
   g+='<div style="position:absolute;left:36px;right:36px;bottom:24px;display:flex;justify-content:space-between;font-size:9.5px;color:'+P.muted+'"><span>Mon Patrimoine · '+pdfE(nom)+'</span><span>Calculs automatiques sur l’historique des cours : un repère, pas une prévision.</span><span>2/2</span></div>';
   p2.innerHTML=net(g);
