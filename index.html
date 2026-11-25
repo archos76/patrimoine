@@ -703,7 +703,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 09h13</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 10h45</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -3033,7 +3033,14 @@ window.passeWatch=function(id){
   autoSave();R(true);
 };
 window.delWatch=function(id){S.watchlist=S.watchlist.filter(x=>x.id!==id);autoSave();R(true)};
-window.edWatchZone=async function(el,id,type){const w=S.watchlist.find(x=>x.id===id);if(!w)return;const v=parseFloat(await demande(type==='min'?'Prix MIN de la zone d\'achat':'Prix MAX de la zone d\'achat',type==='min'?w.zoneMin:w.zoneMax));if(isNaN(v))return;if(type==='min')w.zoneMin=v;else w.zoneMax=v;autoSave();R(true)};
+window.edWatchZone=async function(el,id){const w=S.watchlist.find(x=>x.id===id);if(!w)return;
+  const dev=w.cur==='USD'?'$':'€',f=x=>nb(x)>0?String(x).replace('.',','):'';
+  const v=await modale({titre:'Fourchette d’achat',sous:(w.nom||w.ticker)+(w.prix>0?' · cours '+(w.cur==='USD'?'$'+w.prix.toFixed(2):F2(w.prix)):''),valider:'Enregistrer',
+    texte:'Le prix entre lesquels tu serais prêt à acheter. Tu es prévenu sur la page d’accueil quand le cours y entre. Laisse les deux cases vides pour retirer la fourchette.',
+    champs:[{k:'a',lib:'Prix mini ('+dev+')',type:'nombre',opt:true,val:f(w.zoneMin)},{k:'b',lib:'Prix maxi ('+dev+')',type:'nombre',opt:true,val:f(w.zoneMax)}],
+    verif:x=>(x.a<0||x.b<0)?[x.a<0?0:1,'Un prix ne peut pas être négatif.']:((x.a>0)!==(x.b>0))?[x.a>0?1:0,'Indique aussi l’autre prix, ou laisse les deux cases vides.']:(x.a>0&&x.b>0&&x.a>=x.b)?[1,'Le prix maxi doit être plus grand que le prix mini.']:null});
+  if(!v)return;
+  w.zoneMin=v.a>0?v.a:0;w.zoneMax=v.b>0?v.b:0;autoSave();R(true)};
 
 /* Journal d'investissement */
 /* Edit helpers */
