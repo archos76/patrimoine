@@ -703,7 +703,7 @@ details.dHist>summary span{color:var(--muted);font-weight:400;margin-left:6px}
 </div>
 <button class="tab tab-regl" data-page="reglages"><span class="ti"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v2.2M12 18.8V21M4.2 7.5l1.9 1.1M17.9 15.4l1.9 1.1M4.2 16.5l1.9-1.1M17.9 8.6l1.9-1.1"/></svg></span>Réglages</button>
 </div>
-<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 10h45</div>
+<div id="appVersion" style="margin-top:auto;font-size:10px;color:var(--muted);text-align:center;padding:8px 0 2px;letter-spacing:.03em">version du 25/11 10h52</div>
 </aside>
 <div class="side-ov" id="sideOv" onclick="toggleSide()"></div>
 <div class="shell">
@@ -9529,6 +9529,55 @@ window.atFiche=async function(){
   }catch(e){console.error('fiche PDF :',e);statut('La fiche n’a pas pu être créée : '+((e&&e.message)||'erreur inconnue'),true);}
   finally{if(b){b.disabled=false;b.textContent=lib0;}document.querySelectorAll('.pdfZone').forEach(z=>z.remove());}
 };
+/* Les indicateurs « indispensables », année par année, avec un repère en mots simples.
+   Vert = bon signe, orange = correct, rouge = à surveiller. */
+async function pageComptes(an,F,P,page,carte,nom,code,moisAn,txt2){
+  const cur=F.cur||'',sym=cur==='EUR'?'€':cur==='USD'?'$':cur==='GBP'?'£':cur==='CHF'?'CHF':cur,ab=Math.abs;
+  const ok=v=>v!=null&&isFinite(v);
+  const parA=x=>{if(x.nba>0)return x.nba;if(x.bpa&&x.rn)return x.rn/x.bpa;return null};
+  const pc=v=>(v<0?'−':'')+nf1.format(ab(v*100))+' %',fx=v=>nf1.format(v)+'x',fps=v=>(v<0?'−':'')+nf2.format(ab(v))+' '+sym,fm=v=>mm(v)+' '+sym;
+  const crois=vals=>{const v=vals.filter(x=>ok(x.v));if(v.length<2)return null;const a=v[0],z=v[v.length-1];return a.v>0&&z.v>0?Math.pow(z.v/a.v,1/(z.y-a.y))-1:null};
+  const tendC=g=>g==null?P.muted:g>0.03?P.up:g>=0?P.accent:P.down;
+  const I=[
+    {t:'Chiffre d’affaires',f:fm,v:x=>x.ca,c:v=>v<0?P.down:P.price,g:1,r:'Les ventes de l’entreprise. Bon signe : elles montent avec les années.'},
+    {t:'Bénéfice par action (BPA)',f:fps,v:x=>ok(x.bpa)?x.bpa:(x.rn&&parA(x)?x.rn/parA(x):null),c:v=>v<0?P.down:P.price,g:1,r:'Le bénéfice qui revient à une action. Bon signe : il monte régulièrement.'},
+    {t:'Free cash flow par action',f:fps,v:x=>ok(x.fcf)&&parA(x)?x.fcf/parA(x):null,c:v=>v<0?P.down:P.price,g:1,r:'L’argent qui reste vraiment après les investissements. C’est lui qui paie le dividende.'},
+    {t:'Marge d’exploitation',f:pc,v:x=>x.ca>0&&ok(x.ro!=null?x.ro:x.ebit)?(x.ro!=null?x.ro:x.ebit)/x.ca:null,c:v=>v>=0.15?P.up:v>=0.08?P.accent:P.down,
+      j:v=>v>=0.15?'Très bonne':v>=0.08?'Correcte':'Faible',r:'Sur 100 € de ventes, ce qui reste après les frais du métier. Plus de 15 % : très bien.'},
+    {t:'Rentabilité des fonds propres',f:pc,v:x=>x.cp>0&&ok(x.rn)?x.rn/x.cp:null,c:v=>v>=0.15?P.up:v>=0.08?P.accent:P.down,
+      j:v=>v>=0.15?'Très bonne':v>=0.08?'Correcte':'Faible',r:'Ce que rapporte chaque année l’argent des actionnaires (ROE). Plus de 15 % : très bien.'},
+    {t:'Part du bénéfice versée en dividende',f:pc,v:x=>ok(x.div)&&x.div!==0&&x.rn>0?ab(x.div)/x.rn:null,c:v=>v<=0.7?P.up:v<=1?P.accent:P.down,
+      j:v=>v<=0.7?'Raisonnable':v<=1?'Élevée':'Trop élevée',r:'Entre 30 et 70 % : sain. Au-dessus de 100 %, l’entreprise verse plus qu’elle ne gagne.',
+      s:x=>ok(x.div)&&x.div!==0&&x.fcf>0?'sur le free cash flow : '+pc(ab(x.div)/x.fcf):''},
+    {t:'Dette nette / EBITDA',f:v=>v<=0?'Pas de dette nette':fx(v),v:x=>ok(x.dette)&&x.ebitda>0?(x.dette-(x.cash||0))/x.ebitda:null,c:v=>v<=2.5?P.up:v<=4?P.accent:P.down,
+      j:v=>v<=0?'Plus de trésorerie que de dettes':v<=2.5?'Confortable':v<=4?'À suivre':'Lourde',r:'Le nombre d’années de résultat pour rembourser la dette. Moins de 2,5 : confortable. Plus de 4 : lourd.'},
+    {t:'Couverture des intérêts',f:fx,v:x=>{const e=x.ebit!=null?x.ebit:x.ro;return ok(e)&&ok(x.int)&&x.int!==0?e/ab(x.int):null},c:v=>v>=5?P.up:v>=2?P.accent:P.down,
+      j:v=>v>=5?'Tranquille':v>=2?'Correcte':'Fragile',r:'Combien de fois le résultat paie les intérêts de la dette. Plus de 5 : tranquille. Moins de 2 : fragile.'}];
+  const cartes=[];
+  for(const d of I){
+    const vals=an.map(x=>({y:x.y,v:d.v(x)}));const dispo=vals.filter(x=>ok(x.v));if(dispo.length<2)continue;
+    const der=dispo[dispo.length-1],g=d.g?crois(vals):null,x0=an.find(x=>x.y===der.y);
+    const img=await chartImg(322,118,{type:'bar',data:{labels:vals.map(x=>String(x.y)),datasets:[{data:vals.map(x=>ok(x.v)?x.v:null),backgroundColor:vals.map(x=>ok(x.v)?d.c(x.v):P.line),borderRadius:3,barPercentage:.7,categoryPercentage:.8}]},
+      options:{plugins:{legend:{display:false},tooltip:{enabled:false}},layout:{padding:{top:4}},scales:{x:{grid:{display:false},ticks:{color:P.muted,font:{size:10}}},
+        y:{beginAtZero:true,grid:{color:P.line},border:{display:false},ticks:{color:P.muted,font:{size:9},maxTicksLimit:4,callback:v=>d.f===pc?Math.round(v*100)+' %':d.f===fm?mm(v):d.f===fps?nf1.format(v):nf1.format(v)+'x'}}}}});
+    let jug='';
+    if(d.j){const c=d.c(der.v);jug='<span style="font-size:10px;padding:2px 8px;border-radius:999px;border:1px solid '+c+';color:'+c+';white-space:nowrap">'+d.j(der.v)+'</span>';}
+    else if(g!=null){const c=tendC(g);jug='<span style="font-size:10px;padding:2px 8px;border-radius:999px;border:1px solid '+c+';color:'+c+';white-space:nowrap">'+(g>=0?'+':'−')+nf1.format(ab(g*100))+' %/an</span>';}
+    const sous=d.s&&x0?d.s(x0):'';
+    cartes.push(carte(d.t,'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin:-2px 0 4px"><span><b style="font-size:17px">'+d.f(der.v)+'</b> <span style="font-size:10px;color:'+P.muted+'">en '+der.y+'</span></span>'+jug+'</div>'+
+      (img?'<img src="'+img+'" style="width:100%;height:118px;display:block">':'')+
+      (sous?'<div style="font-size:10px;color:'+txt2+';margin-top:3px">'+sous+'</div>':'')+
+      '<div style="font-size:9.5px;color:'+P.muted+';margin-top:4px;line-height:1.4">'+d.r+'</div>','padding:12px 14px'));
+  }
+  if(cartes.length<2)return null;
+  const p=page(),a=an[0].y,z=an[an.length-1].y;
+  let h='<div style="display:flex;justify-content:space-between;align-items:baseline"><div><span style="font-size:22px;font-weight:700">'+pdfE(nom)+'</span> <span style="color:'+P.muted+'">'+pdfE(code)+' · les comptes de l’entreprise</span></div><span style="font-size:11px;color:'+P.muted+'">'+pdfE(moisAn)+'</span></div>';
+  h+='<div style="font-size:11px;color:'+txt2+';margin-top:6px">Les chiffres publiés de '+a+' à '+z+(cur?', en '+pdfE(cur):'')+'. Couleurs : <b style="color:'+P.up+'">vert</b> = bon signe, <b style="color:'+P.accent+'">orange</b> = correct, <b style="color:'+P.down+'">rouge</b> = à surveiller.</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">'+cartes.join('')+'</div>';
+  h+='<div style="position:absolute;left:36px;right:36px;bottom:24px;display:flex;justify-content:space-between;font-size:9.5px;color:'+P.muted+'"><span>Mon Patrimoine · '+pdfE(nom)+'</span><span>Source : comptes annuels publiés (Yahoo Finance). Une banque ou une assurance se lit autrement.</span><span class="pdfNo"></span></div>';
+  p.innerHTML=h.replace(/[  ]/g,' ');
+  return p;
+}
 async function fichePages(yt,TH,F,A0){
   cols();const A=T.A,N=A.note,D=T.div,P={bg:C.bg,card:C.panel,line:C.line,text:C.text,muted:C.muted,accent:C.accent,up:C.up,down:C.down,price:C.price,pru:C.pru};
   const cs=getComputedStyle(document.body),card2=cs.getPropertyValue('--card2').trim()||C.panel,txt2=cs.getPropertyValue('--text2').trim()||C.text;
@@ -9604,10 +9653,10 @@ async function fichePages(yt,TH,F,A0){
       '<div style="position:absolute;left:'+X(A.last)+';top:30px;width:3px;height:30px;background:'+P.price+'"></div>'+
       '<div style="position:absolute;left:'+X(A.last)+';top:62px;transform:translateX(-50%);font-size:10px;white-space:nowrap;color:'+P.price+'">cours <b>'+fe(A.last)+'</b></div></div>'+
       '<div style="font-size:10px;color:'+P.muted+'">Valeur du milieu de '+PJ.n+' méthode'+(PJ.n>1?'s':'')+' : '+PJ.M.filter(m=>m.v>0).map(m=>pdfE(m.k)+' '+fe(m.v)).join(' · ')+'.</div>');}
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">'+[finH,indH,valoH,pjH].filter(Boolean).join('')+'</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">'+[valoH,pjH].filter(Boolean).join('')+'</div>';
   if(!an.length&&!etf)h+='<div style="margin-top:10px;font-size:10.5px;color:'+P.muted+'">Comptes de l’entreprise indisponibles : mets à jour le script Google pour les ajouter à la fiche.</div>';
   h='<div class="pdfFlux">'+h+'</div>';
-  h+='<div style="position:absolute;left:36px;right:36px;bottom:24px;display:flex;justify-content:space-between;font-size:9.5px;color:'+P.muted+'"><span>Mon Patrimoine · fiche du '+auj.toLocaleDateString('fr-FR')+'</span><span>Sources : Yahoo Finance, Wikipédia, mes notes. Ce n’est pas un conseil d’investissement.</span><span>1/2</span></div>';
+  h+='<div style="position:absolute;left:36px;right:36px;bottom:24px;display:flex;justify-content:space-between;font-size:9.5px;color:'+P.muted+'"><span>Mon Patrimoine · fiche du '+auj.toLocaleDateString('fr-FR')+'</span><span>Sources : Yahoo Finance, Wikipédia, mes notes. Ce n’est pas un conseil d’investissement.</span><span class="pdfNo"></span></div>';
   const net=x=>x.replace(/[\u202f\u00a0]/g,' ');
   p1.innerHTML=net(h);
   /* ---------- PAGE 2 ---------- */
@@ -9642,10 +9691,15 @@ async function fichePages(yt,TH,F,A0){
     if(ddI)mid.push(carte('Baisse depuis le plus haut','<img src="'+ddI+'" style="width:100%;height:170px;display:block;object-fit:contain"><div style="font-size:9.5px;color:'+P.muted+';margin-top:4px">Aujourd’hui : '+(A.ddNow>-0.005?'au plus haut':pct(A.ddNow))+'.</div>'));
     if(mid.length)g+='<div style="display:grid;grid-template-columns:'+(mid.length>1?'1fr 1fr':'1fr')+';gap:14px;margin-top:14px">'+mid.join('')+'</div>';}
   if(bas.length)g+='<div style="display:grid;grid-template-columns:'+(bas.length>1?'1fr 1fr':'1fr')+';gap:14px;margin-top:14px">'+bas.join('')+'</div>';
-  g+='<div style="position:absolute;left:36px;right:36px;bottom:24px;display:flex;justify-content:space-between;font-size:9.5px;color:'+P.muted+'"><span>Mon Patrimoine · '+pdfE(nom)+'</span><span>Calculs automatiques sur l’historique des cours : un repère, pas une prévision.</span><span>2/2</span></div>';
+  g+='<div style="position:absolute;left:36px;right:36px;bottom:24px;display:flex;justify-content:space-between;font-size:9.5px;color:'+P.muted+'"><span>Mon Patrimoine · '+pdfE(nom)+'</span><span>Calculs automatiques sur l’historique des cours : un repère, pas une prévision.</span><span class="pdfNo"></span></div>';
   p2.innerHTML=net(g);
+  /* ---------- PAGE DES COMPTES ---------- */
+  const pages=[p1];
+  if(an.length>=2){try{const pf=await pageComptes(an,F,P,page,carte,nom,code,moisAn,txt2);if(pf)pages.push(pf)}catch(e){console.warn('page comptes :',e&&e.message)}}
+  pages.push(p2);
+  pages.forEach((p,i)=>{const n=p.querySelector('.pdfNo');if(n)n.textContent=(i+1)+'/'+pages.length});
   await new Promise(r=>setTimeout(r,120));
-  return [p1,p2];
+  return pages;
 }
 window.atEtoile=function(){const b=$('star');if(!b)return;if(!T.key){b.hidden=true;return}
   const on=typeof window.wlA==='function'&&window.wlA(T.key);b.hidden=false;b.textContent=on?'★':'☆';b.classList.toggle('on',on);
