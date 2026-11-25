@@ -1,32 +1,9 @@
-Aucun élément sélectionné
-
-Aller au contenu
-Utiliser Gmail avec un lecteur d'écran
-1 sur 3 521
-(aucun objet)
-Boîte de réception
-
-raphael rousselle <raphael.rousselle@gmail.com>
-Pièces jointes
-16:37 (il y a 0 minute)
-À moi
-
-
-
-
-Envoyé de mon iPhone
- Une pièce jointe
-  •  Analysé par Gmail
-Avertissement de l'analyse antivirus – 1 pièce jointe contient un virus ou un fichier bloqué. Le téléchargement de cette pièce jointe a été désactivé.
-
-sw.js
-100 %
 /* Mon Patrimoine : ce qui permet d'ouvrir l'application sans réseau.
    - la page elle-même : on essaie d'abord le réseau (pour avoir la dernière version),
      et on garde une copie pour les moments sans connexion ;
    - les bibliothèques (graphiques, Firebase) et l'icône : la copie gardée suffit.
    Les cours de bourse et tes données ne passent pas par ici : Firebase garde sa propre copie. */
-const CACHE = 'patrimoine-v2';
+const CACHE = 'patrimoine-v3';
 const PAGE = './index.html';
 const LIBS = [
   'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js',
@@ -69,4 +46,3 @@ self.addEventListener('fetch', e => {
     })));
   }
 });
-Affichage de sw.js en cours...pierre-edouard.alzon@1687.notaires.fr. Appuyez sur Tabulation pour insérer.
